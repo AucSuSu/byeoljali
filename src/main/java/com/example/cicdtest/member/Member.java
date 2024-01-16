@@ -2,6 +2,7 @@ package com.example.cicdtest.member;
 
 import com.example.cicdtest.fansign.Fansign;
 import com.example.cicdtest.group.Artist;
+import com.example.cicdtest.memberfansign.MemberFansign;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Member {
     private Artist artist;
 
     @OneToMany(mappedBy = "member")
-    private List<Fansign> fansignList = new ArrayList<>();
+    private List<MemberFansign> memberFansignList = new ArrayList<>();
 
     private String name;
     private String profileImage;

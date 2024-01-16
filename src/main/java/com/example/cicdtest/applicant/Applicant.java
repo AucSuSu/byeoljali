@@ -3,6 +3,8 @@ package com.example.cicdtest.applicant;
 
 import com.example.cicdtest.fan.Fan;
 import com.example.cicdtest.fansign.Fansign;
+import com.example.cicdtest.memberfansign.MemberFansign;
+import com.example.cicdtest.winning.Winning;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Generated;
@@ -24,10 +26,11 @@ public class Applicant {
     private Fan fan;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sign_id")
-    private Fansign fansign;
+    @JoinColumn(name = "memberfansign_id")
+    private MemberFansign memberfansign;
 
     private int boughtAlbum;
-    private int orders;
-    private boolean isWinning;
+
+    @OneToOne(mappedBy = "applicant")
+    private Winning winning;
 }

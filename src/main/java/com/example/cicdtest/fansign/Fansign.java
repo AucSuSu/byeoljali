@@ -2,6 +2,7 @@ package com.example.cicdtest.fansign;
 
 import com.example.cicdtest.applicant.Applicant;
 import com.example.cicdtest.member.Member;
+import com.example.cicdtest.memberfansign.MemberFansign;
 import com.example.cicdtest.photo.Photo;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -22,16 +23,12 @@ public class Fansign {
     @Column(name = "sign_id")
     private Long signId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
     private String title;
-    private String poster;
+    private String posterImage;
     private String notification;
-    private LocalDate startApply;
-    private LocalDate endApply;
-    private LocalDate startTime;
+    private LocalDate startApplyTime;
+    private LocalDate endApplyTime;
+    private LocalDate startFansignTime;
 
     @Enumerated(EnumType.STRING)
     private FansignStatus status;
@@ -40,10 +37,8 @@ public class Fansign {
     private FansignMode mode;
 
     @OneToMany(mappedBy = "fansign")
-    private List<Photo> photoList = new ArrayList<>();
+    private List<MemberFansign> memberFansignList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "fansign")
-    private List<Applicant> applicantList = new ArrayList<>();
 
 }
 

@@ -28,7 +28,7 @@ public class Fan {
     private String name;
     private String nickname;
     private LocalDate birth;
-    private String certificationPhoto;
+    private String certificationImage;
     private int changeCount;
     private boolean isBlacklist;
 
