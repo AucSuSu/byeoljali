@@ -31,6 +31,4 @@ public class Applicant {
 
     private int boughtAlbum;
 
-    @OneToOne(mappedBy = "applicant")
-    private Winning winning;
 }

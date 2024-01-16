@@ -3,6 +3,7 @@ package com.example.cicdtest.fan;
 
 import com.example.cicdtest.applicant.Applicant;
 import com.example.cicdtest.photo.Photo;
+import com.example.cicdtest.winning.Winning;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,4 +38,8 @@ public class Fan {
 
     @OneToMany(mappedBy = "fan")
     private List<Applicant> applicantList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fan")
+    private List<Winning> winningList = new ArrayList<>();
+
 }

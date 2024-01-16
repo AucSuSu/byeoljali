@@ -4,6 +4,7 @@ import com.example.cicdtest.applicant.Applicant;
 import com.example.cicdtest.fansign.Fansign;
 import com.example.cicdtest.member.Member;
 import com.example.cicdtest.photo.Photo;
+import com.example.cicdtest.winning.Winning;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -35,4 +36,7 @@ public class MemberFansign {
 
     @OneToMany(mappedBy = "memberfansign")
     private List<Applicant> applicantList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "memberfansign")
+    private List<Winning> winningList = new ArrayList<>();
 }
