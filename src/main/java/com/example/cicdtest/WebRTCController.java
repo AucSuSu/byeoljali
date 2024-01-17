@@ -42,7 +42,6 @@ public class WebRTCController {
      * -> 팬은 다른 세션에 존재하다가 시간이 되면 세션입장
      * -> 시간이 끝나면 자동으로 session에서 나가야함
      */
-
     // 자동 방 개설 (요청 : 자동)
     @GetMapping("/fansign")
     public ResponseEntity<String> makeByulZari()
@@ -128,6 +127,7 @@ public class WebRTCController {
      * 아이돌 퇴장 -> 세션 삭제
      */
     // 나가기 시 저장되어있던 세션 아이디로 -> 퇴장
+    @CrossOrigin("*")
     @PostMapping("/memeber/fansigns/exit/{sessionId}")
     public ResponseEntity<String> memberExitByulZari(@PathVariable("sessionId") String sessionId,
                                                      @RequestBody(required = false) Map<String, Object> params)
