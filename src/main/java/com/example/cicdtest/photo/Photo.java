@@ -1,5 +1,6 @@
 package com.example.cicdtest.photo;
 
+import com.example.cicdtest.common.BaseEntity;
 import com.example.cicdtest.fan.Fan;
 import com.example.cicdtest.fansign.Fansign;
 import com.example.cicdtest.memberfansign.MemberFansign;
@@ -13,7 +14,7 @@ import java.lang.reflect.Member;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Photo {
+public class Photo extends BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

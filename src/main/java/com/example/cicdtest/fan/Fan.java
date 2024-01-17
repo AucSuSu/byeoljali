@@ -2,6 +2,7 @@ package com.example.cicdtest.fan;
 
 
 import com.example.cicdtest.applicant.Applicant;
+import com.example.cicdtest.common.BaseEntity;
 import com.example.cicdtest.photo.Photo;
 import com.example.cicdtest.winning.Winning;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Fan {
+public class Fan extends BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

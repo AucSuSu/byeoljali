@@ -1,7 +1,7 @@
 package com.example.cicdtest.member;
 
-import com.example.cicdtest.fansign.Fansign;
-import com.example.cicdtest.group.Artist;
+import com.example.cicdtest.artist.Artist;
+import com.example.cicdtest.common.BaseEntity;
 import com.example.cicdtest.memberfansign.MemberFansign;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

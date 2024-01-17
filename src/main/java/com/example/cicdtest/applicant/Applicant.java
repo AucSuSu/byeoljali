@@ -1,6 +1,7 @@
 package com.example.cicdtest.applicant;
 
 
+import com.example.cicdtest.common.BaseEntity;
 import com.example.cicdtest.fan.Fan;
 import com.example.cicdtest.fansign.Fansign;
 import com.example.cicdtest.memberfansign.MemberFansign;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Applicant {
+public class Applicant extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

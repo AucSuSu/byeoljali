@@ -1,6 +1,7 @@
 package com.example.cicdtest.fansign;
 
 import com.example.cicdtest.applicant.Applicant;
+import com.example.cicdtest.common.BaseEntity;
 import com.example.cicdtest.member.Member;
 import com.example.cicdtest.memberfansign.MemberFansign;
 import com.example.cicdtest.photo.Photo;
@@ -10,13 +11,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Fansign {
+public class Fansign extends BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +27,10 @@ public class Fansign {
 
     private String title;
     private String posterImage;
-    private String notification;
-    private LocalDate startApplyTime;
-    private LocalDate endApplyTime;
-    private LocalDate startFansignTime;
+    private String information;
+    private LocalDateTime startApplyTime;
+    private LocalDateTime endApplyTime;
+    private LocalDateTime startFansignTime;
 
     @Enumerated(EnumType.STRING)
     private FansignStatus status;
@@ -38,7 +40,6 @@ public class Fansign {
 
     @OneToMany(mappedBy = "fansign")
     private List<MemberFansign> memberFansignList = new ArrayList<>();
-
 
 }
 
