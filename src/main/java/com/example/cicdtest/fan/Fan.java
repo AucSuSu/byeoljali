@@ -2,7 +2,9 @@ package com.example.cicdtest.fan;
 
 
 import com.example.cicdtest.applicant.Applicant;
+import com.example.cicdtest.common.BaseEntity;
 import com.example.cicdtest.photo.Photo;
+import com.example.cicdtest.winning.Winning;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +17,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Fan {
+public class Fan extends BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,7 @@ public class Fan {
     private String name;
     private String nickname;
     private LocalDate birth;
-    private String certificationPhoto;
+    private String certificationImage;
     private int changeCount;
     private boolean isBlacklist;
 
@@ -37,4 +39,8 @@ public class Fan {
 
     @OneToMany(mappedBy = "fan")
     private List<Applicant> applicantList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fan")
+    private List<Winning> winningList = new ArrayList<>();
+
 }
