@@ -1,10 +1,10 @@
-package com.example.cicdtest;
+package com.example.BE;
 
-import com.example.cicdtest.dto.SessionEnterResponseDto;
+import com.example.BE.dto.SessionEnterResponseDto;
 import io.openvidu.java.client.*;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,7 +63,6 @@ public class WebRTCController {
     // 아티스트/팬이냐에 따라 추가로 다른 요청 필요
 
     // 팬싸인회 클릭시 -> db에서 세션 아이디 조회 -> 입장
-    // @PostMapping("/fan/fansigns/enter/{sessionId}")
 //    @PostMapping("/fan/fansigns/enter/{sessionId}")
 //    public ResponseEntity<String> enterByulZari(@PathVariable("sessionId") String sessionId,
 //                                                   @RequestBody(required = false) Map<String, Object> params)
@@ -127,7 +126,7 @@ public class WebRTCController {
      * 아이돌 퇴장 -> 세션 삭제
      */
     // 나가기 시 저장되어있던 세션 아이디로 -> 퇴장
-    @CrossOrigin("*")
+
     @PostMapping("/memeber/fansigns/exit/{sessionId}")
     public ResponseEntity<String> memberExitByulZari(@PathVariable("sessionId") String sessionId,
                                                      @RequestBody(required = false) Map<String, Object> params)

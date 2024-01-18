@@ -1,4 +1,4 @@
-package com.example.cicdtest.dto;
+package com.example.BE.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,11 +1,11 @@
-package com.example.cicdtest.fan;
+package com.example.BE.fan;
 
 
-import com.example.cicdtest.applicant.Applicant;
-import com.example.cicdtest.common.BaseEntity;
-import com.example.cicdtest.photo.Photo;
-import com.example.cicdtest.winning.Winning;
-import jakarta.persistence.*;
+import com.example.BE.applicant.Applicant;
+import com.example.BE.common.BaseEntity;
+import com.example.BE.photo.Photo;
+import com.example.BE.winning.Winning;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,20 +21,19 @@ public class Fan extends BaseEntity  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "fan_id")
     private Long fanId;
 
     private String email;
-    private String profileImage;
+    private String profileImage; // 자기 프사
     private String name;
     private String nickname;
     private LocalDate birth;
-    private String certificationImage;
-    private int changeCount;
+    private String certificationImage; // 인증사진
+    private int changeCount; // 인증 사진 변경 횟수
     private boolean isBlacklist;
 
-    @OneToMany(mappedBy = "ownerFan")
+    @OneToMany(mappedBy = "fan")
     private List<Photo> photoList = new ArrayList<>();
 
     @OneToMany(mappedBy = "fan")

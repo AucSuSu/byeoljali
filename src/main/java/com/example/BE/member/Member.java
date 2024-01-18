@@ -1,9 +1,9 @@
-package com.example.cicdtest.member;
+package com.example.BE.member;
 
-import com.example.cicdtest.artist.Artist;
-import com.example.cicdtest.common.BaseEntity;
-import com.example.cicdtest.memberfansign.MemberFansign;
-import jakarta.persistence.*;
+import com.example.BE.artist.Artist;
+import com.example.BE.common.BaseEntity;
+import com.example.BE.memberfansign.MemberFansign;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

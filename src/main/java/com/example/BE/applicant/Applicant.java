@@ -1,14 +1,13 @@
-package com.example.cicdtest.applicant;
+package com.example.BE.applicant;
 
 
-import com.example.cicdtest.common.BaseEntity;
-import com.example.cicdtest.fan.Fan;
-import com.example.cicdtest.fansign.Fansign;
-import com.example.cicdtest.memberfansign.MemberFansign;
-import com.example.cicdtest.winning.Winning;
-import jakarta.persistence.*;
+import com.example.BE.common.BaseEntity;
+import com.example.BE.fan.Fan;
+import com.example.BE.fansign.Fansign;
+import com.example.BE.memberfansign.MemberFansign;
+
+import javax.persistence.*;
 import lombok.AccessLevel;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,6 +29,10 @@ public class Applicant extends BaseEntity {
     @JoinColumn(name = "memberfansign_id")
     private MemberFansign memberfansign;
 
-    private int boughtAlbum;
+    private int boughtAlbum; // 구매 앨범 개수
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sign_id")
+    private Fansign fansign;
 
 }

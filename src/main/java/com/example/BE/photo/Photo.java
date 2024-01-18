@@ -1,15 +1,12 @@
-package com.example.cicdtest.photo;
+package com.example.BE.photo;
 
-import com.example.cicdtest.common.BaseEntity;
-import com.example.cicdtest.fan.Fan;
-import com.example.cicdtest.fansign.Fansign;
-import com.example.cicdtest.memberfansign.MemberFansign;
-import jakarta.persistence.*;
+import com.example.BE.common.BaseEntity;
+import com.example.BE.fan.Fan;
+import com.example.BE.memberfansign.MemberFansign;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.lang.reflect.Member;
 
 @Entity
 @Getter
@@ -23,11 +20,11 @@ public class Photo extends BaseEntity  {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fan_id")
-    private Fan ownerFan;
+    private Fan fan;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberfansign_id")
     private MemberFansign memberfansign;
 
-    private boolean pay;
+    private boolean pay; // 결제 여부
 }

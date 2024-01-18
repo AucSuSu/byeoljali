@@ -1,12 +1,12 @@
-package com.example.cicdtest.memberfansign;
+package com.example.BE.memberfansign;
 
-import com.example.cicdtest.applicant.Applicant;
-import com.example.cicdtest.common.BaseEntity;
-import com.example.cicdtest.fansign.Fansign;
-import com.example.cicdtest.member.Member;
-import com.example.cicdtest.photo.Photo;
-import com.example.cicdtest.winning.Winning;
-import jakarta.persistence.*;
+import com.example.BE.applicant.Applicant;
+import com.example.BE.common.BaseEntity;
+import com.example.BE.fansign.Fansign;
+import com.example.BE.member.Member;
+import com.example.BE.photo.Photo;
+import com.example.BE.winning.Winning;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,13 +25,14 @@ public class MemberFansign extends BaseEntity {
     private Long memberfansignId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sign_id")
+    @JoinColumn(name = "fansign_id")
     private Fansign fansign;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
+    // 안쓸 거 같긴함 - 팬싸인회를 통해서 앨범을 보는 거니까
     @OneToMany(mappedBy = "memberfansign")
     private List<Photo> photoList = new ArrayList<>();
 
@@ -43,7 +44,7 @@ public class MemberFansign extends BaseEntity {
 
     // 팬싸인회 세션
     private String sessionId;
-    // 채팅방 세션
-    private String chantRoomSessionId;
+    // 대기방 세션
+    private String waitingroomSessionId;
 
 }

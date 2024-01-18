@@ -1,4 +1,4 @@
-package com.example.cicdtest;
+package com.example.BE;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

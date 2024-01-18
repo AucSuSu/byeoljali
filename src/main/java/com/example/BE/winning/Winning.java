@@ -1,10 +1,9 @@
-package com.example.cicdtest.winning;
+package com.example.BE.winning;
 
-import com.example.cicdtest.applicant.Applicant;
-import com.example.cicdtest.common.BaseEntity;
-import com.example.cicdtest.fan.Fan;
-import com.example.cicdtest.memberfansign.MemberFansign;
-import jakarta.persistence.*;
+import com.example.BE.common.BaseEntity;
+import com.example.BE.fan.Fan;
+import com.example.BE.memberfansign.MemberFansign;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,14 +11,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Winning extends BaseEntity {
+public class Winning extends BaseEntity { // 당첨자 테이블
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "winning_id")
     private Long winningId;
 
-    private int orders;
+    private int orders; // 순서
 
     @ManyToOne
     @JoinColumn(name = "fan_id")
@@ -29,6 +28,4 @@ public class Winning extends BaseEntity {
     @JoinColumn(name = "memberfansign_id")
     private MemberFansign memberfansign;
 
-    // 대기방 세션 (나혼자 들어감)
-    private String waitingSessionId;
 }
