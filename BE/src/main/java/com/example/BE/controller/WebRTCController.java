@@ -1,4 +1,4 @@
-package com.example.BE;
+package com.example.BE.controller;
 
 import com.example.BE.dto.SessionEnterResponseDto;
 import io.openvidu.java.client.*;

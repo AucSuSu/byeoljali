@@ -31,6 +31,8 @@ dependencies {
 
 	// openvidu 추가
 	implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.23.0'
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
