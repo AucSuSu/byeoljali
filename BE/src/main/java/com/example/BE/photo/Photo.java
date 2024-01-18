@@ -26,5 +26,7 @@ public class Photo extends BaseEntity  {
     @JoinColumn(name = "memberfansign_id")
     private MemberFansign memberfansign;
 
+    private String photoUrl;
+
     private boolean pay; // 결제 여부
 }

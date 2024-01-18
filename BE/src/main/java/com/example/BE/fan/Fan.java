@@ -25,11 +25,11 @@ public class Fan extends BaseEntity  {
     private Long fanId;
 
     private String email;
-    private String profileImage; // 자기 프사
+    private String profileImageUrl; // 자기 프사
     private String name;
     private String nickname;
     private LocalDate birth;
-    private String certificationImage; // 인증사진
+    private String certificationImageUrl; // 인증사진
     private int changeCount; // 인증 사진 변경 횟수
     private boolean isBlacklist;
 

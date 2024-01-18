@@ -42,9 +42,4 @@ public class MemberFansign extends BaseEntity {
     @OneToMany(mappedBy = "memberfansign")
     private List<Winning> winningList = new ArrayList<>();
 
-    // 팬싸인회 세션
-    private String sessionId;
-    // 대기방 세션
-    private String waitingroomSessionId;
-
 }

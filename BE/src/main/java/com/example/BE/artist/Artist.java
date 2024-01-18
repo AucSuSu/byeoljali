@@ -24,7 +24,7 @@ public class Artist extends BaseEntity  { // 사실은 그룹을 뜻하는 거�
     private String email;
     private String password;
     private String name;
-    private String artistImage;
+    private String artistImageUrl;
 
     @OneToMany(mappedBy = "artist")
     private List<Member> memberList = new ArrayList<>();

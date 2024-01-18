@@ -24,7 +24,7 @@ public class Fansign extends BaseEntity  { // 아티스트 기준 팬싸인회
     private Long fansignId;
 
     private String title;
-    private String posterImage;
+    private String posterImageUrl;
     private String information;
     private LocalDateTime startApplyTime;
     private LocalDateTime endApplyTime;

@@ -29,6 +29,6 @@ public class Member extends BaseEntity  {
     private List<MemberFansign> memberFansignList = new ArrayList<>();
 
     private String name;
-    private String profileImage;
+    private String profileImageUrl;
 
 }
