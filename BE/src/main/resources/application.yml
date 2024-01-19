@@ -1,0 +1,21 @@
+# JPA
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://testdb.chya8w8sy43m.ap-southeast-2.rds.amazonaws.com:3306/sample?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: admin
+    password: ssafy1234
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+  redis:
+    host: redis
+    port: 6379
+logging.level:
+  org.hibernate.SQL: debug
