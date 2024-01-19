@@ -35,9 +35,48 @@ class App extends Component {
         this.sendMessage = this.sendMessage.bind(this);
     }
 
+    //실시간 마이크 볼륨 확인
     componentDidMount() {
+        this.setupMicrophone();
         window.addEventListener('beforeunload', this.onbeforeunload);
+    }
 
+    setupMicrophone() {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                const audioContext = new AudioContext();
+                const microphone = audioContext.createMediaStreamSource(stream);
+                const analyser = audioContext.createAnalyser();
+
+                analyser.fftSize = 256;
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+
+                microphone.connect(analyser);
+
+                const volumeMeter = document.getElementById('volume-meter');
+                if(!volumeMeter) {
+                    console.error("volume-meter을 찾을 수 없음!");
+                    // return;
+                }
+
+                const updateVolume = () => {
+                    analyser.getByteFrequencyData(dataArray);
+                    const average = dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
+                    console.log('>>>>>>볼륨: '+average);
+
+                    // average 값으로 UI 업데이트 (예: CSS를 사용하여 높이 조절)
+                    // 수정된 부분: volumeMeter가 null이 아닌 경우에만 스타일 조작
+                    if(volumeMeter){
+                        volumeMeter.style.height = `${average}px`;
+                    }
+                };
+
+                setInterval(updateVolume, 100);
+            })
+            .catch(error => {
+                console.error('마이크 접근 중 오류 발생:', error);
+            });
     }
 
     componentWillUnmount() {
