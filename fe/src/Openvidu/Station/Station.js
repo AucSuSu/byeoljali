@@ -1,11 +1,11 @@
-import { OpenVidu } from 'openvidu-browser';
+import { OpenVidu, Session } from 'openvidu-browser';
 
 import axios from 'axios';
 import React, { Component } from 'react';
 import './Station.css';
 import UserVideoComponent from './comp/UserVideoComponent.js'
 
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
+const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
 
 class App extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class App extends Component {
 
         // These properties are in the state's component in order to re-render the HTML whenever their values change
         this.state = {
-            mySessionId: 'SessionABCQWEASD',
+            mySessionId: 'SessionB',
             myUserName: 'Participant' + Math.floor(Math.random() * 100),
             myUserWait: 1,
             session: undefined,
@@ -21,6 +21,7 @@ class App extends Component {
             publisher: undefined,
             subscribers: [],
             messages: [], // 채팅 메시지 저장
+
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -33,6 +34,7 @@ class App extends Component {
         this.onbeforeunload = this.onbeforeunload.bind(this);
         this.handleMessageInput = this.handleMessageInput.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
+        this.Meeting = this.Meeting.bind(this)
     }
 
     componentDidMount() {
@@ -225,7 +227,7 @@ class App extends Component {
         this.setState({
             session: undefined,
             subscribers: [],
-            mySessionId: 'SessionABCQWEASD',
+            mySessionId: 'SessionA',
             myUserName: 'Participant' + Math.floor(Math.random() * 100),
             mainStreamManager: undefined,
             publisher: undefined
@@ -265,6 +267,13 @@ class App extends Component {
         } catch (e) {
             console.error(e);
         }
+    }
+
+    Meeting(){
+        this.setState({
+            mySessionId: 'SessionA',
+        });
+        this.joinSession()
     }
 
     // 채팅 메시지 전송 메서드
@@ -346,7 +355,7 @@ class App extends Component {
                     <div id="session">
                         <div id="session-header">
                             {/* sessionId 가려놓음 */}
-                            {/* <h1 id="session-title">{mySessionId}</h1> */}
+                            <h1 id="session-title">{mySessionId}</h1>
                             <span><strong>내 대기번호 : </strong>{myUserWait}</span>
                             <span>  /  </span>
                             <span><strong>남은 인원 : </strong>인원적을 예정</span>
@@ -359,6 +368,7 @@ class App extends Component {
                                 onClick={this.leaveSession}
                                 value="Leave session"
                             />
+                            <button onClick={this.Meeting}>Metting</button>
                             {/* 카메라 바꾸기 버튼 삭제 */}
                             {/* <input
                                 className="btn btn-large btn-success"
@@ -372,7 +382,6 @@ class App extends Component {
                         {this.state.mainStreamManager !== undefined ? (
                             <div id="main-video" className="col-md-6">
                                 <UserVideoComponent streamManager={this.state.mainStreamManager} />
-
                             </div>
                         ) : null}
                         {/* 참여자 화면 끄려고 주석처리 */}
@@ -392,6 +401,7 @@ class App extends Component {
                             ))}
                         </div> */}
                         {/* 참여자 화면 끄려고 주석 처리 */}
+
 
                         {/* 채팅 추가 ui */}
                         <div id="chat">

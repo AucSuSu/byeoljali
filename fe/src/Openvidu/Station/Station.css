@@ -1,3 +1,13 @@
 .stream-container {
-	padding: 0;
+    padding: 0;
 }
+
+#chat {
+    height: 300px; /* 채팅창의 높이를 300px로 고정 */
+}
+
+#message-list {
+    height: 280px;
+    overflow-y: auto; /* 내용이 높이를 초과할 경우 스크롤바 표시 */
+}
+
