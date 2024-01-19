@@ -3,7 +3,7 @@ package com.example.BE.applicant;
 
 import com.example.BE.common.BaseEntity;
 import com.example.BE.fan.Fan;
-import com.example.BE.fansign.Fansign;
+import com.example.BE.artistfansign.ArtistFansign;
 import com.example.BE.memberfansign.MemberFansign;
 
 import javax.persistence.*;
@@ -32,7 +32,7 @@ public class Applicant extends BaseEntity {
     private int boughtAlbum; // 구매 앨범 개수
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sign_id")
-    private Fansign fansign;
+    @JoinColumn(name = "artistfansign_id")
+    private ArtistFansign artistFansign;
 
 }
