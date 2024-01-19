@@ -11,7 +11,8 @@ import UserModel from '../Fan/models/user-model'
 import ToolbarComponent from '../Fan/toolbar/ToolbarComponent'
 
 var localUser = new UserModel();
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
+const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
 
 
 class VideoRoomComponent extends Component {

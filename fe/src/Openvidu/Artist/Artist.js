@@ -11,7 +11,8 @@ import UserModel from '../Artist/models/user-model'
 import ToolbarComponent from '../Artist/toolbar/ToolbarComponent'
 
 var localUser = new UserModel();
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
+const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
 
 
 class VideoRoomComponent extends Component {
