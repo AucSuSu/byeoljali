@@ -1,5 +1,6 @@
 package com.example.BE.photo;
 
+import com.example.BE.artistfansign.ArtistFansign;
 import com.example.BE.common.BaseEntity;
 import com.example.BE.fan.Fan;
 import com.example.BE.memberfansign.MemberFansign;
@@ -29,4 +30,8 @@ public class Photo extends BaseEntity  {
     private String photoUrl;
 
     private boolean pay; // 결제 여부
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="artistfansign_id")
+    private ArtistFansign artistFansign;
 }

@@ -2,7 +2,7 @@ package com.example.BE.memberfansign;
 
 import com.example.BE.applicant.Applicant;
 import com.example.BE.common.BaseEntity;
-import com.example.BE.fansign.Fansign;
+import com.example.BE.artistfansign.ArtistFansign;
 import com.example.BE.member.Member;
 import com.example.BE.photo.Photo;
 import com.example.BE.winning.Winning;
@@ -25,8 +25,8 @@ public class MemberFansign extends BaseEntity {
     private Long memberfansignId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fansign_id")
-    private Fansign fansign;
+    @JoinColumn(name = "artistfansign_id")
+    private ArtistFansign artistFansign;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
