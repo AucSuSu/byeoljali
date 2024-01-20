@@ -16,13 +16,13 @@ class App extends Component {
             mySessionId: 'SessionStation',
             myUserName: 'Participant' + Math.floor(Math.random() * 100),
             myUserWait: 1, // 내 팬미팅 참여 순서 
-            curUser : 0, // 현재 참여중인 유저의 번호
+            curUser: 0, // 현재 참여중인 유저의 번호
             session: undefined,
             mainStreamManager: undefined,  // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
             publisher: undefined,
             subscribers: [],
             messages: [], // 채팅 메시지 저장
-
+            remainingTime: 600, // 대기 시간 임시 개발
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -35,13 +35,17 @@ class App extends Component {
         this.onbeforeunload = this.onbeforeunload.bind(this);
         this.handleMessageInput = this.handleMessageInput.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
-        this.Meeting = this.Meeting.bind(this)
+        this.Meeting = this.Meeting.bind(this);
+        this.updateWaitTime = this.updateWaitTime.bind(this);
     }
 
     //실시간 마이크 볼륨 확인
     componentDidMount() {
         this.setupMicrophone();
         window.addEventListener('beforeunload', this.onbeforeunload);
+
+
+        
     }
 
     setupMicrophone() {
@@ -84,6 +88,7 @@ class App extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('beforeunload', this.onbeforeunload);
+        clearInterval(this.timer); // 타이머 클리어
     }
 
     onbeforeunload(event) {
@@ -163,8 +168,10 @@ class App extends Component {
                     console.log('닉네임' + data.userName + ' 대기번호 ' + data.userWait + ' has left the session');
                     // 필요한 추가 처리를 여기에 작성합니다.
                     this.setState({
-                        curUser : data.userWait,
+                        curUser: data.userWait,
                     })
+                    // 타이머 실행
+                    this.updateWaitTime();
                 });
 
                 // --- 3) Specify the actions when events take place in the session ---
@@ -242,6 +249,20 @@ class App extends Component {
                 });
             },
         );
+
+        // 초기 reaminingTime
+        this.setState({
+            remainingTime : (this.state.myUserWait - this.state.curUser) * 600
+        })
+
+        // 타이머 설정
+        this.timer = setInterval(() => {
+            this.setState(prevState => ({
+                remainingTime: Math.max(prevState.remainingTime - 1, 0) // 0 이하로 내려가지 않도록
+            }));
+        }, 1000); // 매초마다 실행
+
+        
     }
 
     leaveSession() {
@@ -341,12 +362,21 @@ class App extends Component {
         });
     }
 
+    // 타이머 관련 메서드
+    updateWaitTime() {
+        // 남은 사람 수에 기반한 대기 시간 계산
+        const remainingUsers = Math.max(this.state.myUserWait - this.state.curUser, 0);
+        this.setState({ remainingTime: remainingUsers * 600 });
+    }
+
     render() {
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
         const myUserWait = this.state.myUserWait;
         const curUser = this.state.curUser;
         const remainingUsers = this.state.myUserWait - this.state.curUser; // 남은 인원 계산
+        const minutes = Math.floor(this.state.remainingTime / 60); // 남은 시간 관련 계산
+        const seconds = this.state.remainingTime % 60;
 
         return (
             <div className="container">
@@ -412,7 +442,7 @@ class App extends Component {
                             <span>  /  </span>
                             <span><strong>남은 인원 : </strong>{remainingUsers}</span>
                             <span>  /  </span>
-                            <span><strong>예상 대기 시간 : </strong>대기시간 적을예정</span>
+                            <span><strong>예상 대기 시간 : </strong>{`${minutes}분 ${seconds.toString().padStart(2, '0')}초`}</span>
                             <input
                                 className="btn btn-large btn-danger"
                                 type="button"
