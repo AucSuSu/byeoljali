@@ -13,9 +13,10 @@ class App extends Component {
 
         // These properties are in the state's component in order to re-render the HTML whenever their values change
         this.state = {
-            mySessionId: 'SessionB',
+            mySessionId: 'SessionStation',
             myUserName: 'Participant' + Math.floor(Math.random() * 100),
-            myUserWait: 1,
+            myUserWait: 1, // 내 팬미팅 참여 순서 
+            curUser : 0, // 현재 참여중인 유저의 번호
             session: undefined,
             mainStreamManager: undefined,  // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
             publisher: undefined,
@@ -57,7 +58,7 @@ class App extends Component {
                 microphone.connect(analyser);
 
                 const volumeMeter = document.getElementById('volume-meter');
-                if(!volumeMeter) {
+                if (!volumeMeter) {
                     console.error("volume-meter을 찾을 수 없음!");
                     // return;
                 }
@@ -65,11 +66,11 @@ class App extends Component {
                 const updateVolume = () => {
                     analyser.getByteFrequencyData(dataArray);
                     const average = dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
-                    console.log('>>>>>>볼륨: '+average);
+                    console.log('>>>>>>볼륨: ' + average);
 
                     // average 값으로 UI 업데이트 (예: CSS를 사용하여 높이 조절)
                     // 수정된 부분: volumeMeter가 null이 아닌 경우에만 스타일 조작
-                    if(volumeMeter){
+                    if (volumeMeter) {
                         volumeMeter.style.height = `${average}px`;
                     }
                 };
@@ -159,8 +160,11 @@ class App extends Component {
                 // 'session-left' 신호에 대한 리스너를 추가합니다.
                 mySession.on('signal:session-left', (event) => {
                     const data = JSON.parse(event.data);
-                    console.log(data.userName + ' 대기번호 ' + data.userWait + ' has left the session');
+                    console.log('닉네임' + data.userName + ' 대기번호 ' + data.userWait + ' has left the session');
                     // 필요한 추가 처리를 여기에 작성합니다.
+                    this.setState({
+                        curUser : data.userWait,
+                    })
                 });
 
                 // --- 3) Specify the actions when events take place in the session ---
@@ -247,26 +251,18 @@ class App extends Component {
         const mySession = this.state.session;
 
         // 세션을 떠나기 전에 다른 참여자들에게 신호를 보냅니다.
-        if (mySession) {
-            mySession.signal({
-                type: 'session-left',
-                data: JSON.stringify({ userName: this.state.myUserName, userWait: this.state.myUserWait }),
-            }).then(() => {
-                console.log(this.state.myUserName + ' has left the session');
-            }).catch(error => {
-                console.error(error);
-            });
 
-            // 세션에서 연결을 해제합니다.
-            mySession.disconnect();
-        }
+
+        // 세션에서 연결을 해제합니다.
+        mySession.disconnect();
+
 
         // Empty all properties...
         this.OV = null;
         this.setState({
             session: undefined,
             subscribers: [],
-            mySessionId: 'SessionA',
+            mySessionId: 'SessionStation',
             myUserName: 'Participant' + Math.floor(Math.random() * 100),
             mainStreamManager: undefined,
             publisher: undefined
@@ -308,11 +304,24 @@ class App extends Component {
         }
     }
 
-    Meeting(){
-        this.setState({
-            mySessionId: 'SessionA',
-        });
-        this.joinSession()
+    Meeting() {
+
+        const mySession = this.state.session;
+
+        // 세션을 이동하기 전 다른 참여자에게 signal을 보냄
+        if (mySession) {
+            mySession.signal({
+                type: 'session-left',
+                data: JSON.stringify({ userName: this.state.myUserName, userWait: this.state.myUserWait }),
+            }).then(() => {
+                console.log(this.state.myUserName + ' has left the session');
+            }).catch(error => {
+                console.error(error);
+            });
+        }
+
+
+        this.props.onMeetingClick()
     }
 
     // 채팅 메시지 전송 메서드
@@ -336,6 +345,8 @@ class App extends Component {
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
         const myUserWait = this.state.myUserWait;
+        const curUser = this.state.curUser;
+        const remainingUsers = this.state.myUserWait - this.state.curUser; // 남은 인원 계산
 
         return (
             <div className="container">
@@ -397,7 +408,9 @@ class App extends Component {
                             <h1 id="session-title">{mySessionId}</h1>
                             <span><strong>내 대기번호 : </strong>{myUserWait}</span>
                             <span>  /  </span>
-                            <span><strong>남은 인원 : </strong>인원적을 예정</span>
+                            <span><strong>현재 참여번호 : </strong>{curUser}</span>
+                            <span>  /  </span>
+                            <span><strong>남은 인원 : </strong>{remainingUsers}</span>
                             <span>  /  </span>
                             <span><strong>예상 대기 시간 : </strong>대기시간 적을예정</span>
                             <input
@@ -407,7 +420,7 @@ class App extends Component {
                                 onClick={this.leaveSession}
                                 value="Leave session"
                             />
-                            <button onClick={this.Meeting}>Metting</button>
+                            <button onClick={this.Meeting}>Meeting</button>
                             {/* 카메라 바꾸기 버튼 삭제 */}
                             {/* <input
                                 className="btn btn-large btn-success"

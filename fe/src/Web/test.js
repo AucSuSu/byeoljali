@@ -9,6 +9,8 @@ export default function App() {
     const fanPage = () => setFlag(2)
     const stationPage = () => setFlag(3)
 
+    const switchToFan = () => setFlag(2); // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
+
     return (
         <div>
             <div>
@@ -19,7 +21,7 @@ export default function App() {
             
             {flag === 1 && <Artist />}
             {flag === 2 && <Fan />}
-            {flag === 3 && <Station />}
+            {flag === 3 && <Station onMeetingClick={switchToFan}/>}
         </div>
     );
 }

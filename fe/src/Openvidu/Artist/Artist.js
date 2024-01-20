@@ -11,8 +11,8 @@ import UserModel from '../Artist/models/user-model'
 import ToolbarComponent from '../Artist/toolbar/ToolbarComponent'
 
 var localUser = new UserModel();
-// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
+const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
 
 
 class VideoRoomComponent extends Component {
@@ -20,7 +20,7 @@ class VideoRoomComponent extends Component {
         super(props);
         this.hasBeenUpdated = false;
         this.layout = new OpenViduLayout();
-        let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
+        let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionFanSign';
         let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
         this.remotes = [];
         this.localUserAccessAllowed = false;
@@ -209,7 +209,7 @@ class VideoRoomComponent extends Component {
         this.setState({
             session: undefined,
             subscribers: [],
-            mySessionId: 'SessionA',
+            mySessionId: 'SessionFanSign',
             myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
             localUser: undefined,
         });
