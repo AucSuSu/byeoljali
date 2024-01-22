@@ -1,6 +1,6 @@
 package com.example.BE.member;
 
-import com.example.BE.artist.Artist;
+import com.example.BE.artist.entity.Artist;
 import com.example.BE.common.BaseEntity;
 import com.example.BE.memberfansign.MemberFansign;
 import javax.persistence.*;
@@ -21,6 +21,7 @@ public class Member extends BaseEntity  {
     @Column(name = "member_id")
     private Long memberId;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")
     private Artist artist;
@@ -31,4 +32,9 @@ public class Member extends BaseEntity  {
     private String name;
     private String profileImageUrl;
 
+    public Member(Artist artist, String name, String profileImageUrl) {
+        this.artist = artist;
+        this.name = name;
+        this.profileImageUrl = profileImageUrl;
+    }
 }
