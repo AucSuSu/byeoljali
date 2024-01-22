@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bfa1c350-7824-4547-9eef-8ad5643989ad" name="Changes" comment="feat: ApplyPageResponseDto 생성, 필터 보류">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/dto/AddArtistFansignRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/member/repository/MemberRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/memberfansign/repository/MemberFansignRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/applicant/Applicant.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/applicant/Applicant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/Fan.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/photo/Photo.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/photo/Photo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/Winning.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/Winning.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/controller/ArtistFansignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/controller/ArtistFansignController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/entity/ArtistFansign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/entity/ArtistFansign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/ArtistFansignRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/ArtistFansignRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/service/ArtistFansignService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/service/ArtistFansignService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/memberfansign/MemberFansign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/memberfansign/MemberFansign.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="develop" />
+      </map>
+    </option>
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.BE [:StudyApplication.main()].executor": "Run",
+    "git-widget-placeholder": "feat/api/makeFansign"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="StudyApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.BE.StudyApplication" />
+      <module name="BE.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.BE.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.StudyApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task id="LOCAL-00001" summary="feat: ApplyPageResponseDto 생성, 필터 보류">
+      <option name="closed" value="true" />
+      <created>1705893602868</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1705893602868</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: cratedDate, modifiedDate null -&gt; auditing 추가" />
+    <MESSAGE value="feat: ApplyPageResponseDto 생성, 필터 보류" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: ApplyPageResponseDto 생성, 필터 보류" />
+  </component>
+</project>

@@ -38,5 +38,16 @@ public class ArtistFansign extends BaseEntity  { // 아티스트 기준 팬싸�
 
     @OneToMany(mappedBy = "artistFansign")
     private List<MemberFansign> memberFansignList = new ArrayList<>();
+
+    public ArtistFansign(String title, String posterImageUrl, String information, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, FansignStatus status, FansignMode mode) {
+        this.title = title;
+        this.posterImageUrl = posterImageUrl;
+        this.information = information;
+        this.startApplyTime = startApplyTime;
+        this.endApplyTime = endApplyTime;
+        this.startFansignTime = startFansignTime;
+        this.status = status;
+        this.mode = mode;
+    }
 }
 

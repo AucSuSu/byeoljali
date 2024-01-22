@@ -42,4 +42,8 @@ public class MemberFansign extends BaseEntity {
     @OneToMany(mappedBy = "memberfansign")
     private List<Winning> winningList = new ArrayList<>();
 
+    public MemberFansign(ArtistFansign artistFansign, Member member) {
+        this.artistFansign = artistFansign;
+        this.member = member;
+    }
 }

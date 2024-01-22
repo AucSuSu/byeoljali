@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Artist extends BaseEntity  { // 사실은 그룹을 뜻하는 거임
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_id")
