@@ -30,13 +30,21 @@ export default class OvVideoComponent extends Component {
     }
 
     render() {
+        const videoId = this.props.isFan ? 'fanVideo' : 'video'; // 아티스트 / 팬 값에 따라 id값 변동
         return (
+            <>
             <video
                 autoPlay={true}
-                id={'video-' + this.props.user.getStreamManager().stream.streamId}
+                className={videoId}
+                id={`${videoId} - ${this.props.user.getStreamManager().stream.streamId}`}
                 ref={this.videoRef}
                 muted={this.props.mutedSound}
             />
+            {videoId && <div>
+                <p>script</p>
+                <p>{this.props.script}</p>
+            </div>}
+            </>
         );
     }
 }

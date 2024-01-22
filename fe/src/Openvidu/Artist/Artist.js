@@ -12,6 +12,7 @@ import ToolbarComponent from '../Artist/toolbar/ToolbarComponent'
 
 var localUser = new UserModel();
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
 
 
 class VideoRoomComponent extends Component {
@@ -19,7 +20,7 @@ class VideoRoomComponent extends Component {
         super(props);
         this.hasBeenUpdated = false;
         this.layout = new OpenViduLayout();
-        let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionA';
+        let sessionName = this.props.sessionName ? this.props.sessionName : 'SessionFanSign';
         let userName = this.props.user ? this.props.user : 'OpenVidu_User' + Math.floor(Math.random() * 100);
         this.remotes = [];
         this.localUserAccessAllowed = false;
@@ -31,6 +32,11 @@ class VideoRoomComponent extends Component {
             subscribers: [],
             chatDisplay: 'none',
             currentVideoDevice: undefined,
+            postit: undefined, // postit 저장
+            count: 0, // 참여인원 수
+            waitingNumber : 1, // 대기번호
+            signTime : 30, // 팬싸인 시간
+
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -48,6 +54,10 @@ class VideoRoomComponent extends Component {
         this.toggleChat = this.toggleChat.bind(this);
         this.checkNotification = this.checkNotification.bind(this);
         this.checkSize = this.checkSize.bind(this);
+        this.addCount = this.addCount.bind(this);
+        this.removeCount = this.removeCount.bind(this);
+        this.goodbye = this.goodbye.bind(this);
+        this.timerEvnet = this.timerEvnet.bind(this);
     }
 
     componentDidMount() {
@@ -92,8 +102,34 @@ class VideoRoomComponent extends Component {
             async () => {
                 this.subscribeToStreamCreated();
                 await this.connectToSession();
+                // 참여 인원 카운트
+                this.countEvent()
+
+                // fanData 시그널 리스너
+                this.state.session.on('signal', (event) => {
+                    const data = JSON.parse(event.data);
+                    if (data.type === 'fanData') {
+                        this.setState({
+                            postit: data.postit,
+                        });
+                    }
+                });
             },
         );
+    }
+
+    // fan의 create 및 destroyed 이벤트 리스너 
+    countEvent(){
+        const session = this.state.session
+        // connectionCreatd, connectionDestroyed는 openvidu에서 제공하는 기본 이벤트
+        session.on('connectionCreated', ()=>{
+            this.addCount()
+        })
+        session.on('connectionDestroyed', ()=>{
+            this.removeCount()
+        })
+        
+
     }
 
     async connectToSession() {
@@ -187,6 +223,7 @@ class VideoRoomComponent extends Component {
                     this.sendSignalUserChanged({
                         isAudioActive: this.state.localUser.isAudioActive(),
                         isVideoActive: this.state.localUser.isVideoActive(),
+                        
                         nickname: this.state.localUser.getNickname(),
                         isScreenShareActive: this.state.localUser.isScreenShareActive(),
                     });
@@ -195,7 +232,7 @@ class VideoRoomComponent extends Component {
             },
         );
     }
-
+    
     leaveSession() {
         const mySession = this.state.session;
 
@@ -208,7 +245,7 @@ class VideoRoomComponent extends Component {
         this.setState({
             session: undefined,
             subscribers: [],
-            mySessionId: 'SessionA',
+            mySessionId: 'SessionFanSign',
             myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
             localUser: undefined,
         });
@@ -216,6 +253,7 @@ class VideoRoomComponent extends Component {
             this.props.leaveSession();
         }
     }
+
     camStatusChanged() {
         localUser.setVideoActive(!localUser.isVideoActive());
         localUser.getStreamManager().publishVideo(localUser.isVideoActive());
@@ -491,6 +529,77 @@ class VideoRoomComponent extends Component {
         }
     }
 
+
+
+    // 인원 증가/감소 메서드
+    addCount(){
+        const count = this.state.count
+        this.setState({count : count + 1})
+        if(this.state.count === 2){
+            this.setState({signTime : 30}) // 팬미팅 시간 갱신
+            this.timerEvnet()
+        }
+
+    }
+    
+    removeCount(){
+        const count = this.state.count
+        const waitingNumber = this.state.waitingNumber
+        console.log(`#@#@#@#@############### 1번 ${this.state.waitingNumber}`)
+        this.setState({count : count - 1})
+        this.setState({waitingNumber : waitingNumber + 1})
+        console.log(`#@#@#@#@############### 2번${this.state.waitingNumber}`)
+        // if(this.state.count === 1){
+        //     this.invite()
+        // }
+    }
+
+    
+    // 자동 입장 및 퇴장 타이머
+    timerEvnet(){
+        this.timer = setInterval(() => {
+            this.setState(prevState => ({
+                signTime: Math.max(prevState.signTime - 1, 0) // 0 이하로 내려가지 않도록
+            }));
+            if(this.state.signTime === 0){
+                clearInterval(this.timer)
+                this.goodbye()
+            }
+        }, 1000); // 매초마다 실행
+    }
+
+    // 시간 종료 인원 자동 퇴장
+    goodbye() {
+        const mySession = this.state.session;
+        if (mySession) {
+            mySession.signal({
+                type: 'timeOut',
+                data: JSON.stringify({type: 'timeOut', userWait: this.state.waitingNumber}),
+            }).then(() => {
+                this.setState({postit : undefined})
+                console.log('timeOut 전송 성공', this.state.waitingNumber);
+
+            }).catch(error => {
+                console.error('timeOut 전송 실패', error);
+            });
+
+        }
+    }
+
+    // // 임시 팬 자동 호출 ** 로직 고민해야 함 **
+    // invite(){
+    //     const mySession = this.state.session;
+    //     if (mySession) {
+    //         mySession.signal({
+    //             data: JSON.stringify({type: 'intive', userWait: this.state.waitingNumber}),
+    //         }).then(() => {
+    //             console.log('timeintiveOut 전송 성공', this.state.waitingNumber);
+    //         }).catch(error => {
+    //             console.error('intive 전송 실패', error);
+    //         });
+    //     }
+    // }
+
     render() {
         const mySessionId = this.state.mySessionId;
         const localUser = this.state.localUser;
@@ -510,6 +619,7 @@ class VideoRoomComponent extends Component {
                     switchCamera={this.switchCamera}
                     leaveSession={this.leaveSession}
                     toggleChat={this.toggleChat}
+                    timer={this.state.signTime}
                 />
 
                 <DialogExtensionComponent showDialog={this.state.showExtensionDialog} cancelClicked={this.closeDialogExtension} />?
@@ -517,14 +627,23 @@ class VideoRoomComponent extends Component {
                 <div id="layout" className="bounds">
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                         <div className="OT_root OT_publisher custom-class" id="localUser">
-                            <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
+                            <StreamComponent postit={this.state.postit} isFan={false} user={localUser} handleNickname={this.nicknameChanged} />
                         </div>
                     )}
-                    {this.state.subscribers.map((sub, i) => (
-                        <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
-                            <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
-                        </div>
-                    ))}
+                    <div>
+                        {this.state.subscribers.map((sub, i) => (
+                            <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
+                                {/* fan 화면에 isFan='true' 값 추가 */}
+                                <StreamComponent postit={this.state.postit} isFan={true} user={sub} streamId={sub.streamManager.stream.streamId} /> 
+                            </div>
+                        ))}
+                    {/* 입장 인원이 없으면 띄워줌 */}
+                    {this.state.postit === undefined && <div>
+                        <p>postit</p>
+                        <p>준비중이다냥</p>
+                    </div>
+                    }
+                    </div>
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                         <div className="OT_root OT_publisher custom-class" style={chatDisplay}>
                             <ChatComponent

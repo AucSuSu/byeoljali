@@ -20,7 +20,12 @@ export default class OpenViduVideoComponent extends Component {
     }
 
     render() {
-        return <video autoPlay={true} ref={this.videoRef} />;
+        const videoStyle = {
+            width: '50%', // 원하는 너비로 설정
+            height: 'auto', // 높이를 자동으로 조정
+        };
+
+        return <video autoPlay={true} ref={this.videoRef} style={videoStyle} />;
     }
 
 }
