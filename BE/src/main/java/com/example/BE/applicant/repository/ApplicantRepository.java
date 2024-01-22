@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface ApplicantRepository extends JpaRepository<Applicant, Long> {
 
-    @Query("SELECT af.title, af.posterImageUrl, m.name " +
-            "FROM MemberFansign mf " +
-            "JOIN FETCH mf.artistFansign af " +
-            "JOIN FETCH mf.member m")
-    List<ApplyPageDto> findAllFetchJoin(Long fanId);
+//    @Query("SELECT af.title, af.posterImageUrl, m.name " +
+//            "FROM MemberFansign mf " +
+//            "JOIN FETCH mf.artistFansign af " +
+//            "JOIN FETCH mf.member m")
+//    List<ApplyPageDto> findApplyPageAllFetchJoin(Long fanId);
 
 }

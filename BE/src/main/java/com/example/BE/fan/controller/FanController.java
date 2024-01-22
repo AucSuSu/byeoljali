@@ -41,8 +41,8 @@ public class FanController
 
     // 블랙리스트 등록
     @PostMapping("/blacklist/{id}")
-    public int addBlacklist(@PathVariable("id") Long id){
-        return 1;
+    public Long addBlacklist(@PathVariable("id") Long id){
+        return fanService.addBlacklist(id);
     }
 
 
