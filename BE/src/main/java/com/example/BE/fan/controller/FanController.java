@@ -39,5 +39,11 @@ public class FanController
         return fanService.updateCertificationImageUrl(id, certificationImageUrl);
     }
 
+    // 블랙리스트 등록
+    @PostMapping("/blacklist/{id}")
+    public int addBlacklist(@PathVariable("id") Long id){
+        return 1;
+    }
+
 
 }
