@@ -6,5 +6,5 @@ import com.example.BE.artistfansign.entity.ArtistFansign;
 import java.util.List;
 
 public interface CustomArtistFansignRepository {
-    List<FansignResponseDto> findArtistFansignAndApplyInfo();
+    List<FansignResponseDto> findArtistFansignAndApplyInfo(Long fanId);
 }

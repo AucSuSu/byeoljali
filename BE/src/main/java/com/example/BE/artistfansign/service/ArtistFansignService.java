@@ -58,9 +58,9 @@ public class ArtistFansignService {
     }
 
     // 팬싸인회 리스트 가져오기
-    public List<FansignResponseDto> getFansign(){
+    public List<FansignResponseDto> getFansign(Long fanId){
         List<FansignResponseDto> list =
-                artistFansignRepository.findArtistFansignAndApplyInfo();
+                artistFansignRepository.findArtistFansignAndApplyInfo(fanId);
 
         return list;
     }
