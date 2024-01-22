@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,24 @@ public class Artist extends BaseEntity  { // 사실은 그룹을 뜻하는 거�
     private String password;
     private String name;
     private String artistImageUrl;
+    private String roles;
+
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
+
+    public static Artist createArtist(String email, String password, String name){
+        Artist artist = new Artist();
+        artist.email = email;
+        artist.password = password;
+        artist.name = name;
+        artist.roles = "ROLE_ARTIST";
+
+        return artist;
+    }
 
     @OneToMany(mappedBy = "artist")
     private List<Member> memberList = new ArrayList<>();

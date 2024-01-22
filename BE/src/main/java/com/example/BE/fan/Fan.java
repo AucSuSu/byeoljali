@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,15 @@ public class Fan extends BaseEntity  {
     private LocalDate birth;
     private String certificationImageUrl; // 인증사진
     private int changeCount; // 인증 사진 변경 횟수
-    private boolean isBlacklist;
+    private boolean isBlacklist = false;
+    private String roles;
+
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
 
     @OneToMany(mappedBy = "fan")
     private List<Photo> photoList = new ArrayList<>();
