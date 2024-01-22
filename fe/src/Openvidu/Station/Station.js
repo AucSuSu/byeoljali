@@ -368,10 +368,134 @@ class App extends Component {
         (device) => device.kind === 'videoinput',
       );
 
+<<<<<<< HEAD
       if (videoDevices && videoDevices.length > 1) {
         var newVideoDevice = videoDevices.filter(
           (device) =>
             device.deviceId !== this.state.currentVideoDevice.deviceId,
+=======
+        this.OV = new OpenVidu();
+
+        // --- 2) Init a session ---
+
+        this.setState(
+            {
+                session: this.OV.initSession(),
+            },
+            () => {
+                var mySession = this.state.session;
+
+                // 채팅 관련 수정부분
+                this.state.session.on('signal:chat', (event) => {
+                    const messageData = JSON.parse(event.data);
+                    const messages = this.state.messages;
+                    messages.push(messageData);
+                    this.setState({ messages });
+                });
+
+                // 자동 초대 리스너
+                mySession.on('signal:invite', (event)=>{
+                    const data = JSON.parse(event.data)
+                    /// 지금 === 쓰면 안됨, 하나가 str고 하나가 int인듯
+                    if (data.userWait == this.state.myUserWait){
+                        this.Meeting()
+                    }
+                })
+
+                // 'session-left' 신호에 대한 리스너를 추가합니다.
+                mySession.on('signal:session-left', (event) => {
+                    const data = JSON.parse(event.data);
+                    console.log('닉네임' + data.userName + ' 대기번호 ' + data.userWait + ' has left the session');
+                    // 필요한 추가 처리를 여기에 작성합니다.
+                    this.setState({
+                        curUser: data.userWait,
+                    })
+                    // 타이머 실행
+                    this.updateWaitTime();
+                });
+
+                // --- 3) Specify the actions when events take place in the session ---
+
+                // On every new Stream received...
+                mySession.on('streamCreated', (event) => {
+                    // Subscribe to the Stream to receive it. Second parameter is undefined
+                    // so OpenVidu doesn't create an HTML video by its own
+                    var subscriber = mySession.subscribe(event.stream, undefined);
+                    var subscribers = this.state.subscribers;
+                    subscribers.push(subscriber);
+
+                    // Update the state with the new subscribers
+                    this.setState({
+                        subscribers: subscribers,
+                    });
+                    
+                    console.log(this.state.subscribers)
+                });
+
+                // On every Stream destroyed...
+                mySession.on('streamDestroyed', (event) => {
+
+                    // Remove the stream from 'subscribers' array
+                    this.deleteSubscriber(event.stream.streamManager);
+                });
+
+                // On every asynchronous exception...
+                mySession.on('exception', (exception) => {
+                    console.warn(exception);
+                });
+
+                // --- 4) Connect to the session with a valid user token ---
+
+                // Get a token from the OpenVidu deployment
+                this.getToken().then((token) => {
+                    // First param is the token got from the OpenVidu deployment. Second param can be retrieved by every user on event
+                    // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
+                    mySession.connect(token, { clientData: this.state.myUserName })
+                        .then(async () => {
+
+                            // --- 5) Get your own camera stream ---
+
+                            // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
+                            // element: we will manage it on our own) and with the desired properties
+                            let publisher = await this.OV.initPublisherAsync(undefined, {
+                                audioSource: undefined, // The source of audio. If undefined default microphone
+                                videoSource: undefined, // The source of video. If undefined default webcam
+                                publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                                publishVideo: true, // Whether you want to start publishing with your video enabled or not
+                                resolution: '640x480', // The resolution of your video
+                                frameRate: 30, // The frame rate of your video
+                                insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+                                mirror: false, // Whether to mirror your local video or not
+                            });
+
+                            // --- 6) Publish your stream ---
+
+                            mySession.publish(publisher);
+
+                            // Obtain the current video device in use
+                            var devices = await this.OV.getDevices();
+                            var videoDevices = devices.filter(device => device.kind === 'videoinput');
+                            var currentVideoDeviceId = publisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
+                            var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
+
+                            // Set the main video in the page to display our webcam and store our Publisher
+                            this.setState({
+                                currentVideoDevice: currentVideoDevice,
+                                mainStreamManager: publisher,
+                                publisher: publisher,
+                            });
+                        })
+                        .then(() => {
+                            if(this.state.myUserWait === 0){
+                                this.invite()
+                            }
+                        })
+                        .catch((error) => {
+                            console.log('There was an error connecting to the session:', error.code, error.message);
+                        });
+                });
+            },
+>>>>>>> b6c7411adbff2e890b967a46d833863588322b7a
         );
 
         if (newVideoDevice.length > 0) {
@@ -421,11 +545,46 @@ class App extends Component {
             userWait: this.state.myUserWait,
           }),
         })
+<<<<<<< HEAD
         .then(() => {
           console.log(this.state.myUserName + ' has left the session');
         })
         .catch((error) => {
           console.error(error);
+=======
+
+        // 타이머 설정
+        this.timer = setInterval(() => {
+            this.setState(prevState => ({
+                remainingTime: Math.max(prevState.remainingTime - 1, 0) // 0 이하로 내려가지 않도록
+            }));
+        }, 1000); // 매초마다 실행
+
+    }
+
+    leaveSession() {
+
+        // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
+
+        const mySession = this.state.session;
+
+        // 세션을 떠나기 전에 다른 참여자들에게 신호를 보냅니다.
+
+
+        // 세션에서 연결을 해제합니다.
+        mySession.disconnect();
+
+
+        // Empty all properties...
+        this.OV = null;
+        this.setState({
+            session: undefined,
+            subscribers: [],
+            mySessionId: 'SessionStation',
+            myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            mainStreamManager: undefined,
+            publisher: undefined
+>>>>>>> b6c7411adbff2e890b967a46d833863588322b7a
         });
     }
     this.leaveSession();
