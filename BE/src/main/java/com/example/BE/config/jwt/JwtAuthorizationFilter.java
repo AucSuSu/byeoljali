@@ -2,7 +2,7 @@ package com.example.BE.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.BE.artist.Artist;
+import com.example.BE.artist.entity.Artist;
 import com.example.BE.artist.repository.ArtistRepository;
 import com.example.BE.config.auth.PrincipalDetails;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,7 +1,21 @@
 package com.example.BE.artistfansign.repository;
 
+import com.example.BE.artistfansign.dto.FansignResponseDto;
 import com.example.BE.artistfansign.entity.ArtistFansign;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface ArtistFansignRepository extends JpaRepository<ArtistFansign, Long> {
+import java.util.List;
+
+public interface ArtistFansignRepository extends JpaRepository<ArtistFansign, Long>, CustomArtistFansignRepository {
+
+    List<ArtistFansign> findTop3ByOrderByCreatedDateDesc();
+
+//    @Query("select new com.example.BE.artistfansign.dto.FansignResponseDto(af.artistfansignId, af.postImageUrl, a.applicantId, af.status) " +
+//            "from Applicant a right join a.artistFansign af " +
+//            "join a.fan f" +
+//            "where f.fanId := fanId")
+//    List<FansignResponseDto> getFansigns(@Param("fanId") Long fanId);
+
 }

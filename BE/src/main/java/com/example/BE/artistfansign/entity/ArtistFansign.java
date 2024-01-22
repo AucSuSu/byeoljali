@@ -1,9 +1,11 @@
 package com.example.BE.artistfansign.entity;
 
 import com.example.BE.common.BaseEntity;
-import com.example.BE.memberfansign.MemberFansign;
+import com.example.BE.memberfansign.entity.MemberFansign;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +39,7 @@ public class ArtistFansign extends BaseEntity  { // 아티스트 기준 팬싸�
     private FansignMode mode;
 
     @OneToMany(mappedBy = "artistFansign")
+    @JsonBackReference
     private List<MemberFansign> memberFansignList = new ArrayList<>();
 
     public ArtistFansign(String title, String posterImageUrl, String information, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, FansignStatus status, FansignMode mode) {
