@@ -64,4 +64,8 @@ public class Fan extends BaseEntity  {
         this.certificationImageUrl = certificationImageUrl;
         this.changeCount += 1;
     }
+
+    public void addBlacklist(){
+        this.isBlacklist = true;
+    }
 }

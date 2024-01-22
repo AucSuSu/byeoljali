@@ -1,6 +1,5 @@
 package com.example.BE.photo.dto;
 
-import com.example.BE.artistfansign.ArtistFansign;
 import com.example.BE.fan.entity.Fan;
 import com.example.BE.memberfansign.MemberFansign;
 

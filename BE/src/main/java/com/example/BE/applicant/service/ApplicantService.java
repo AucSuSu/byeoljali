@@ -16,14 +16,14 @@ public class ApplicantService {
 
     private final ApplicantRepository applicantRepository;
 
-    public ApplyPageDto findById(Long id){
-
-        Applicant applicant = applicantRepository.findById(id).
-                orElseThrow(() -> new IllegalArgumentException("해당 응모자 정보가 없습니다."));
-
-        List<ApplyPageDto> result = applicantRepository.findAllFetchJoin(applicant.getApplicantId());
-
-        return new ApplyPageDto(entity.getPosterImageUrl(), entity.getTitle(), entity.get);
-    }
+//    public ApplyPageDto findById(Long id){
+//
+//        Applicant applicant = applicantRepository.findById(id).
+//                orElseThrow(() -> new IllegalArgumentException("해당 응모자 정보가 없습니다."));
+//
+//        List<ApplyPageDto> result = applicantRepository.findAllFetchJoin(applicant.getApplicantId());
+//
+//        return new ApplyPageDto(entity.getPosterImageUrl(), entity.getTitle(), entity.get);
+//    }
 
 }

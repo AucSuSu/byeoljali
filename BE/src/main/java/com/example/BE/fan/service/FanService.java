@@ -48,6 +48,14 @@ public class FanService {
     }
 
     // 블랙리스트 등록
-    public
+    public Long addBlacklist(Long id){
+        Fan entity = fanRepsitory.findById(id).
+                orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
+
+        entity.addBlacklist();
+
+        return id;
+
+    }
 
 }
