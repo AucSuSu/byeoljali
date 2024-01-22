@@ -109,7 +109,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feat/api/artistFansign",
+    "git-widget-placeholder": "feat/api/blacklist",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/SSAFY/IdeaProjects/S10P12E104/BE/src/main/java/com/example/BE/artist"
   }
@@ -123,7 +123,7 @@
       <recent name="com.example.BE.artist.entity" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="애플리케이션.StudyApplication">
     <configuration name="StudyApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.BE.StudyApplication" />
       <module name="BE.main" />
@@ -137,11 +137,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.StudyApplication" />
-      </list>
-    </recent_temporary>
+    <configuration name="StudyApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="BE.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.BE.StudyApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -179,5 +181,17 @@
     <MESSAGE value="feat: artistMypage 상세보기 api, member 추가 api 개발" />
     <MESSAGE value="feat: cratedDate, modifiedDate null -&gt; auditing 추가" />
     <option name="LAST_COMMIT_MESSAGE" value="feat: cratedDate, modifiedDate null -&gt; auditing 추가" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/BE/applicant/dto/ApplyFormRequestDto.java</url>
+          <line>9</line>
+          <properties field="fanId" class="com.example.BE.applicant.dto.ApplyFormRequestDto" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
