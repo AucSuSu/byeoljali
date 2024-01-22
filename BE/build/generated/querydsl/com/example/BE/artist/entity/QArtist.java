@@ -42,6 +42,8 @@ public class QArtist extends EntityPathBase<Artist> {
 
     public final StringPath password = createString("password");
 
+    public final StringPath roles = createString("roles");
+
     public QArtist(String variable) {
         super(Artist.class, forVariable(variable));
     }

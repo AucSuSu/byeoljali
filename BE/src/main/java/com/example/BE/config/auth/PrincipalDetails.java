@@ -1,6 +1,5 @@
 package com.example.BE.config.auth;
-
-import com.example.BE.artist.Artist;
+import com.example.BE.artist.entity.Artist;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

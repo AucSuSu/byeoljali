@@ -50,6 +50,8 @@ public class QFan extends EntityPathBase<Fan> {
 
     public final StringPath profileImageUrl = createString("profileImageUrl");
 
+    public final StringPath roles = createString("roles");
+
     public final ListPath<com.example.BE.winning.entity.Winning, com.example.BE.winning.entity.QWinning> winningList = this.<com.example.BE.winning.entity.Winning, com.example.BE.winning.entity.QWinning>createList("winningList", com.example.BE.winning.entity.Winning.class, com.example.BE.winning.entity.QWinning.class, PathInits.DIRECT2);
 
     public QFan(String variable) {

@@ -1,6 +1,6 @@
 package com.example.BE.config.oauth;
 
-import com.example.BE.fan.Fan;
+import com.example.BE.fan.entity.Fan;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
