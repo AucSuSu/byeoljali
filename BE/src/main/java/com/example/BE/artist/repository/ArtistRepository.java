@@ -1,6 +1,6 @@
 package com.example.BE.artist.repository;
 
-import com.example.BE.artist.Artist;
+import com.example.BE.artist.entity.Artist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,10 @@
 package com.example.BE.artist.service;
 
-import com.example.BE.artist.Artist;
+import com.example.BE.artist.dto.ArtistMemberAddRequestDto;
+import com.example.BE.artist.dto.ArtistMypageResponseDto;
 import com.example.BE.artist.dto.ArtistSignUpDto;
 import com.example.BE.artist.dto.SignUpResponseDto;
+import com.example.BE.artist.entity.Artist;
 import com.example.BE.artist.repository.ArtistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
