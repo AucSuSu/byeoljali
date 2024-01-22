@@ -2,23 +2,30 @@ package com.example.BE.artist.controller;
 
 import com.example.BE.artist.dto.ArtistMemberAddRequestDto;
 import com.example.BE.artist.dto.ArtistMypageResponseDto;
+import com.example.BE.artist.dto.ArtistSignUpDto;
+import com.example.BE.artist.dto.SignUpResponseDto;
 import com.example.BE.artist.service.ArtistService;
 import com.example.BE.common.HttpStatusEnum;
 import com.example.BE.common.Message;
-import com.example.BE.fan.dto.FanMyPageResponseDto;
-import com.example.BE.fan.dto.FanMyPageUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/artist")
 @RequiredArgsConstructor
-public class ArtistController
-{
+public class ArtistController {
 
     private final ArtistService artistService;
 
+    @PostMapping("/signUp")
+    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody ArtistSignUpDto dto){
+        System.out.println("컨트롤러");
+        SignUpResponseDto responseDto = artistService.signUp(dto);
+
+        return ResponseEntity.ok(responseDto);
+    }
     // 아티스트 마이페이지 조회
     @GetMapping("/artists/{artistId}")
     public ResponseEntity<Message> mypage(@PathVariable("artistId") Long id){
@@ -31,11 +38,10 @@ public class ArtistController
     @PostMapping("/artists/members")
     public ResponseEntity<Message> addMember(@RequestBody ArtistMemberAddRequestDto requestDto) {
         Long memberId =
-        artistService.addMember(requestDto);
+                artistService.addMember(requestDto);
         Message message = new Message(HttpStatusEnum.OK, "회원 추가 성공", memberId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
-
 
 
 }
