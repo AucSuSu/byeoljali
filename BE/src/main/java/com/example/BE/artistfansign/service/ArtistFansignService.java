@@ -28,7 +28,7 @@ public class ArtistFansignService {
         ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), dto.getPostImageUrl(), dto.getInformation(), dto.getStartApplyTime()
                 ,dto.getEndApplyTime(), dto.getStartFansignTime(), FansignStatus.READY_APPLYING, dto.getMode());
         artistFansignRepository.save(artistFansign);
-        Long artisFansignId = artistFansign.getArtistfansignId();
+        Long artistFansignId = artistFansign.getArtistfansignId();
 
         // memberFansign 개설
         for(Long memberId : dto.getMemberIdList()){
@@ -39,6 +39,8 @@ public class ArtistFansignService {
             MemberFansign memberFansign = new MemberFansign(artistFansign, member);
             memberFansignRepository.save(memberFansign);
         }
-        return artisFansignId;
+        return artistFansignId;
     }
+
+
 }

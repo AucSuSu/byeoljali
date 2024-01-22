@@ -35,4 +35,10 @@ public class Applicant extends BaseEntity {
     @JoinColumn(name = "artistfansign_id")
     private ArtistFansign artistFansign;
 
+    public Applicant(Fan fan, MemberFansign memberfansign, int boughtAlbum, ArtistFansign artistFansign) {
+        this.fan = fan;
+        this.memberfansign = memberfansign;
+        this.boughtAlbum = boughtAlbum;
+        this.artistFansign = artistFansign;
+    }
 }

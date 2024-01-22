@@ -26,4 +26,6 @@ public class ArtistFansignController {
         Message message = new Message(HttpStatusEnum.OK, "개설 완료", aritstFansignId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+
 }
