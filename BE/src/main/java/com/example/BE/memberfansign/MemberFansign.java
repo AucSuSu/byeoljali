@@ -2,7 +2,7 @@ package com.example.BE.memberfansign;
 
 import com.example.BE.applicant.Applicant;
 import com.example.BE.common.BaseEntity;
-import com.example.BE.artistfansign.ArtistFansign;
+import com.example.BE.artistfansign.entity.ArtistFansign;
 import com.example.BE.member.Member;
 import com.example.BE.photo.Photo;
 import com.example.BE.winning.Winning;
