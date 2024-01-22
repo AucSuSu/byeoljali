@@ -47,4 +47,7 @@ public class FanService {
         return entity.getChangeCount();
     }
 
+    // 블랙리스트 등록
+    public
+
 }
