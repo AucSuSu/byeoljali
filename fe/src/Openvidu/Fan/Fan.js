@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
+
 import ChatComponent from './chat/ChatComponent';
 import DialogExtensionComponent from './dialog-extension/DialogExtension';
 import StreamComponent from './stream/StreamComponent';
@@ -32,6 +33,8 @@ class VideoRoomComponent extends Component {
             subscribers: [],
             chatDisplay: 'none',
             currentVideoDevice: undefined,
+            fanData : props.fanData, // 팬 정보
+            signTime: 30, // 팬싸인회 시간
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -49,6 +52,7 @@ class VideoRoomComponent extends Component {
         this.toggleChat = this.toggleChat.bind(this);
         this.checkNotification = this.checkNotification.bind(this);
         this.checkSize = this.checkSize.bind(this);
+        this.sendData = this.sendData.bind(this);
     }
 
     componentDidMount() {
@@ -70,6 +74,17 @@ class VideoRoomComponent extends Component {
         window.addEventListener('resize', this.updateLayout);
         window.addEventListener('resize', this.checkSize);
         this.joinSession();
+
+        // 팬싸인방 Mount 되면 바로 timer 실행
+        this.timer = setInterval(() => {
+            this.setState(prevState => ({
+                signTime: Math.max(prevState.signTime - 1, 0) // 0 이하로 내려가지 않도록
+            }));
+            if(this.state.signTime === 0){
+                clearInterval(this.timer)
+            }
+        }, 1000); // 매초마다 실행
+
     }
 
     componentWillUnmount() {
@@ -86,6 +101,7 @@ class VideoRoomComponent extends Component {
     joinSession() {
         this.OV = new OpenVidu();
 
+
         this.setState(
             {
                 session: this.OV.initSession(),
@@ -93,6 +109,15 @@ class VideoRoomComponent extends Component {
             async () => {
                 this.subscribeToStreamCreated();
                 await this.connectToSession();
+
+            // timeOut 시그널 리스너
+            this.state.session.on('signal:timeOut', (event) => {
+                const data = JSON.parse(event.data);
+                // 값 하나는 str, 하나는 int임 === 사용 안됨
+                if (data.type === 'timeOut' && data.userWait == this.state.fanData.userWait) {
+                    this.props.goBackStation(data.userWait + 1)
+                }
+            });
             },
         );
     }
@@ -157,6 +182,8 @@ class VideoRoomComponent extends Component {
                     if (this.props.joinSession) {
                         this.props.joinSession();
                     }
+                    // sendData 호출 위치 변경
+                    this.sendData()
                 });
             });
 
@@ -217,6 +244,23 @@ class VideoRoomComponent extends Component {
             this.props.leaveSession();
         }
     }
+
+    // fanData를 Artist에게 전달.
+    sendData() {
+        const mySession = this.state.session;
+        if (mySession) {
+            mySession.signal({
+                type: 'fanData',
+                data: JSON.stringify(this.state.fanData),
+            }).then(() => {
+                console.log('fanData 전송 성공', this.state.fanData);
+            }).catch(error => {
+                console.error('fanData 전송 실패', error);
+            });
+
+        }
+    }
+
     camStatusChanged() {
         localUser.setVideoActive(!localUser.isVideoActive());
         localUser.getStreamManager().publishVideo(localUser.isVideoActive());
@@ -258,6 +302,7 @@ class VideoRoomComponent extends Component {
                 this.checkSomeoneShareScreen();
                 subscriber.videos[0].video.parentElement.classList.remove('custom-class');
             });
+
             const newUser = new UserModel();
             newUser.setStreamManager(subscriber);
             newUser.setConnectionId(event.stream.connection.connectionId);
@@ -511,6 +556,7 @@ class VideoRoomComponent extends Component {
                     switchCamera={this.switchCamera}
                     leaveSession={this.leaveSession}
                     toggleChat={this.toggleChat}
+                    timer={this.state.signTime}
                 />
 
                 <DialogExtensionComponent showDialog={this.state.showExtensionDialog} cancelClicked={this.closeDialogExtension} />?
@@ -518,12 +564,12 @@ class VideoRoomComponent extends Component {
                 <div id="layout" className="bounds">
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (
                         <div className="OT_root OT_publisher custom-class" id="localUser">
-                            <StreamComponent user={localUser} handleNickname={this.nicknameChanged} />
+                            <StreamComponent script={this.state.fanData.script} isFan={true} user={localUser} handleNickname={this.nicknameChanged} />
                         </div>
                     )}
                     {this.state.subscribers.map((sub, i) => (
                         <div key={i} className="OT_root OT_publisher custom-class" id="remoteUsers">
-                            <StreamComponent user={sub} streamId={sub.streamManager.stream.streamId} />
+                            <StreamComponent script={this.state.fanData.script} isFan={false} user={sub} streamId={sub.streamManager.stream.streamId} />
                         </div>
                     ))}
                     {localUser !== undefined && localUser.getStreamManager() !== undefined && (

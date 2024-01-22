@@ -73,6 +73,9 @@ export default class ToolbarComponent extends Component {
     render() {
         const mySessionId = this.props.sessionId;
         const localUser = this.props.user;
+        // 시간계산 - station 가져옴
+        const minutes = Math.floor(this.props.timer / 60); // 남은 시간 관련 계산
+        const seconds = this.props.timer % 60;
         return (
             <AppBar className="toolbar" id="header">
                 <Toolbar className="toolbar">
@@ -86,6 +89,10 @@ export default class ToolbarComponent extends Component {
                         {this.props.sessionId && <div id="titleContent">
                             <span id="session-title">{mySessionId}</span>
                         </div>}
+                        {/* 남은시간 보여주기(임시)*/}
+                        <div>
+                        <p> 남은시간 : {`${minutes}분 ${seconds.toString().padStart(2, '0')}초`}</p>
+                        </div>
                     </div>
 
                     <div className="buttonsContent">

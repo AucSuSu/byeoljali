@@ -16,11 +16,18 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 export default class StreamComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { nickname: this.props.user.getNickname(), showForm: false, mutedSound: false, isFormValid: true };
+        this.state = { postit : props.postit, nickname: this.props.user.getNickname(), showForm: false, mutedSound: false, isFormValid: true };
         this.handleChange = this.handleChange.bind(this);
         this.handlePressKey = this.handlePressKey.bind(this);
         this.toggleNicknameForm = this.toggleNicknameForm.bind(this);
         this.toggleSound = this.toggleSound.bind(this);
+    }
+    // 포스트잇 업데이트
+    componentDidUpdate(prevProps) {
+        const newPostit = this.props.postit;
+        if (newPostit !== prevProps.postit) {
+            this.setState({ postit: newPostit });
+        }
     }
 
     handleChange(event) {
@@ -88,7 +95,7 @@ export default class StreamComponent extends Component {
 
                 {this.props.user !== undefined && this.props.user.getStreamManager() !== undefined ? (
                     <div className="streamComponent">
-                        <OvVideoComponent user={this.props.user} mutedSound={this.state.mutedSound} />
+                        <OvVideoComponent postit={this.state.postit} isFan={this.props.isFan} user={this.props.user} mutedSound={this.state.mutedSound} />
                         <div id="statusIcons">
                             {!this.props.user.isVideoActive() ? (
                                 <div id="camIcon">

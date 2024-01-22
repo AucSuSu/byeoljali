@@ -23,6 +23,9 @@ class App extends Component {
             subscribers: [],
             messages: [], // 채팅 메시지 저장
             remainingTime: 600, // 대기 시간 임시 개발
+            myScript: '스크립트를 작성해주세요', // 스크립트 작성 내용
+            myPostit: '포스트잇을 작성해주세요', // 포스트잇 작성 내용
+            wait: props.wait // 대기번호
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -37,15 +40,23 @@ class App extends Component {
         this.sendMessage = this.sendMessage.bind(this);
         this.Meeting = this.Meeting.bind(this);
         this.updateWaitTime = this.updateWaitTime.bind(this);
+        this.handleMyScript = this.handleMyScript.bind(this); // 스크립트 작성 바인드
+        this.handleMyPostit = this.handleMyPostit.bind(this); // 포스트잇 작성 바인드
+        this.invite = this.invite.bind(this) // 자동 초대 바인드
     }
 
     //실시간 마이크 볼륨 확인
     componentDidMount() {
         this.setupMicrophone();
         window.addEventListener('beforeunload', this.onbeforeunload);
-
-
         
+        // 팬미팅이 종료 됬으면 초대 로직 실행
+        if(this.state.wait !== undefined){
+            this.setState({myUserWait : 0})
+            this.setState({myUserName : `팬미팅이 종료된 유저${this.state.wait - 1}`})
+            this.joinSession() 
+        }
+
     }
 
     setupMicrophone() {
@@ -70,7 +81,7 @@ class App extends Component {
                 const updateVolume = () => {
                     analyser.getByteFrequencyData(dataArray);
                     const average = dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
-                    console.log('>>>>>>볼륨: ' + average);
+                    // console.log('>>>>>>볼륨: ' + average);
 
                     // average 값으로 UI 업데이트 (예: CSS를 사용하여 높이 조절)
                     // 수정된 부분: volumeMeter가 null이 아닌 경우에만 스타일 조작
@@ -120,12 +131,40 @@ class App extends Component {
             });
         }
     }
+    // 스크립트 & 포스트잇 양방향 바인딩
+    handleMyScript(e) {
+        this.setState({
+            myScript: e.target.value,
+        });
+    }
+
+    handleMyPostit(e) {
+        this.setState({
+            myPostit: e.target.value,
+        });
+    }
 
     // 채팅 메시지 입력 처리 메서드
     handleMessageInput(event) {
         if (event.key === 'Enter') {
             this.sendMessage(event.target.value);
             event.target.value = '';
+        }
+    }
+
+    // 임시 팬 자동 호출 ** 로직 고민해야 함 **
+    invite(){
+        const mySession = this.state.session;
+        if (mySession) {
+            mySession.signal({
+                type : 'invite',
+                data: JSON.stringify({type: 'intive', userWait: this.state.wait}),
+            }).then(() => {
+                console.log('intive 전송 성공');
+                this.leaveSession()
+            }).catch(error => {
+                console.error('intive 전송 실패', error);
+            });
         }
     }
 
@@ -161,6 +200,15 @@ class App extends Component {
                     messages.push(messageData);
                     this.setState({ messages });
                 });
+
+                // 자동 초대 리스너
+                mySession.on('signal:invite', (event)=>{
+                    const data = JSON.parse(event.data)
+                    /// 지금 === 쓰면 안됨, 하나가 str고 하나가 int인듯
+                    if (data.userWait == this.state.myUserWait){
+                        this.Meeting()
+                    }
+                })
 
                 // 'session-left' 신호에 대한 리스너를 추가합니다.
                 mySession.on('signal:session-left', (event) => {
@@ -242,6 +290,11 @@ class App extends Component {
                                 mainStreamManager: publisher,
                                 publisher: publisher,
                             });
+                        })
+                        .then(() => {
+                            if(this.state.myUserWait === 0){
+                                this.invite()
+                            }
                         })
                         .catch((error) => {
                             console.log('There was an error connecting to the session:', error.code, error.message);
@@ -326,6 +379,8 @@ class App extends Component {
     }
 
     Meeting() {
+        // 팬싸방 이전 할 때 script와 postit Data를 전달
+        const sendData = {type: 'fanData', userWait: this.state.myUserWait, script: this.state.myScript, postit: this.state.myPostit}
 
         const mySession = this.state.session;
 
@@ -339,11 +394,12 @@ class App extends Component {
             }).catch(error => {
                 console.error(error);
             });
+
         }
-
-
-        this.props.onMeetingClick()
+        this.leaveSession()
+        this.props.onMeetingClick(sendData)
     }
+
 
     // 채팅 메시지 전송 메서드
     sendMessage(message) {
@@ -432,94 +488,66 @@ class App extends Component {
 
                 {/* 입장후 화면 */}
                 {this.state.session !== undefined ? (
-                    <div id="session">
-                        <div id="session-header">
-                            {/* sessionId 가려놓음 */}
-                            <h1 id="session-title">{mySessionId}</h1>
-                            <span><strong>내 대기번호 : </strong>{myUserWait}</span>
-                            <span>  /  </span>
-                            <span><strong>현재 참여번호 : </strong>{curUser}</span>
-                            <span>  /  </span>
-                            <span><strong>남은 인원 : </strong>{remainingUsers}</span>
-                            <span>  /  </span>
-                            <span><strong>예상 대기 시간 : </strong>{`${minutes}분 ${seconds.toString().padStart(2, '0')}초`}</span>
-                            <input
-                                className="btn btn-large btn-danger"
+                    <div id="session" className="p-4">
+                        <div id="session-header" className="flex items-center justify-between mb-4">
+                            {/* sessionId 가리기(테스트 중이라 열어놓음) */}
+                            <h1 id="session-title" className="text-2xl font-bold">{mySessionId}</h1>
+                            <div className="flex space-x-4">
+                                <span><strong>내 대기번호 :</strong> {myUserWait}</span>
+                                <span><strong>현재 참여번호 :</strong> {curUser}</span>
+                                <span><strong>남은 인원 :</strong> {remainingUsers}</span>
+                                <span><strong>예상 대기 시간 :</strong> {`${minutes}분 ${seconds.toString().padStart(2, '0')}초`}</span>
+                            </div>
+                            <div className="flex space-x-4">
+                                <input
+                                className="btn btn-danger"
                                 type="button"
                                 id="buttonLeaveSession"
                                 onClick={this.leaveSession}
                                 value="Leave session"
-                            />
-                            <button onClick={this.Meeting}>Meeting</button>
-                            {/* 카메라 바꾸기 버튼 삭제 */}
-                            {/* <input
-                                className="btn btn-large btn-success"
-                                type="button"
-                                id="buttonSwitchCamera"
-                                onClick={this.switchCamera}
-                                value="Switch Camera"
-                            /> */}
+                                />
+                                <button className="btn" onClick={this.Meeting}>Meeting</button>
+                            </div>
                         </div>
 
-                        {this.state.mainStreamManager !== undefined ? (
-                            <div id="main-video" className="col-md-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div id="main-video">
                                 <UserVideoComponent streamManager={this.state.mainStreamManager} />
                             </div>
-                        ) : null}
-                        {/* 참여자 화면 끄려고 주석처리 */}
-                        {/* 화면 끌 경우 상대방 소리도 안들림 */}
-                        {/* <div id="video-container" className="col-md-6">
-                            {this.state.publisher !== undefined ? (
-                                <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
-                                    <UserVideoComponent
-                                        streamManager={this.state.publisher} />
-                                </div>
-                            ) : null}
-                            {this.state.subscribers.map((sub, i) => (
-                                <div key={sub.id} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
-                                    <span>{sub.id}</span>
-                                    <UserVideoComponent streamManager={sub} />
-                                </div>
-                            ))}
-                        </div> */}
-                        {/* 참여자 화면 끄려고 주석 처리 */}
 
-
-                        {/* 채팅 추가 ui */}
-                        <div id="chat">
-                            <h2>Chat</h2>
-                            <div id="message-list">
-                                {this.state.messages.map((messageData, index) => (
-                                    <div key={index}><strong>{messageData.user} '대기순서'{messageData.wait}:</strong> {messageData.text}</div>
-                                ))}
+                            {/* 스크립트 & 포스트잇 */}
+                            <div id="script-postit">
+                                <div className="mb-4">
+                                    <label className="font-bold text-lg text-blue-500">Script</label>
+                                    <input className="border rounded p-2 w-full" type="text" value={this.state.myScript} onChange={this.handleMyScript}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="font-bold text-lg">Postit</label>
+                                    <input className="border rounded p-2 w-full" type="text" value={this.state.myPostit} onChange={this.handleMyPostit}/>
+                                </div>
                             </div>
-                            <input type="text" placeholder="Enter a message" onKeyPress={this.handleMessageInput} />
-                        </div>
-                        {/* 채팅 추가 ui */}
-                    </div>
 
+                            {/* 채팅 추가 UI */}
+                            <div id="chat">
+                                <h2 className="text-xl font-bold mb-2">Chat</h2>
+                                <div id="message-list" className="mb-4">
+                                {this.state.messages.map((messageData, index) => (
+                                    <div key={index} className="mb-2"><strong>{messageData.user} '대기순서'{messageData.wait}:</strong> {messageData.text}</div>
+                                ))}
+                                </div>
+                                <input type="text" placeholder="Enter a message" onKeyPress={this.handleMessageInput} className="border rounded p-2 w-full" />
+                            </div>
+                        </div>
+                    </div> 
                 ) : null}
+
 
             </div>
         );
     }
 
 
-    /**
-     * --------------------------------------------
-     * GETTING A TOKEN FROM YOUR APPLICATION SERVER
-     * --------------------------------------------
-     * The methods below request the creation of a Session and a Token to
-     * your application server. This keeps your OpenVidu deployment secure.
-     *
-     * In this sample code, there is no user control at all. Anybody could
-     * access your application server endpoints! In a real production
-     * environment, your application server must identify the user to allow
-     * access to the endpoints.
-     *
-     * Visit https://docs.openvidu.io/en/stable/application-server to learn
-     * more about the integration of OpenVidu in your application server.
-     */
     async getToken() {
         const sessionId = await this.createSession(this.state.mySessionId);
         return await this.createToken(sessionId);
