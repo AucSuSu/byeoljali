@@ -1,8 +1,8 @@
 package com.example.BE.photo;
 
-import com.example.BE.artistfansign.ArtistFansign;
+import com.example.BE.artistfansign.entity.ArtistFansign;
 import com.example.BE.common.BaseEntity;
-import com.example.BE.fan.Fan;
+import com.example.BE.fan.entity.Fan;
 import com.example.BE.memberfansign.MemberFansign;
 import javax.persistence.*;
 import lombok.AccessLevel;

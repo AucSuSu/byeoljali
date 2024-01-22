@@ -2,7 +2,7 @@ package com.example.BE.memberfansign;
 
 import com.example.BE.applicant.Applicant;
 import com.example.BE.common.BaseEntity;
-import com.example.BE.artistfansign.ArtistFansign;
+import com.example.BE.artistfansign.entity.ArtistFansign;
 import com.example.BE.member.Member;
 import com.example.BE.photo.Photo;
 import com.example.BE.winning.Winning;
@@ -42,4 +42,8 @@ public class MemberFansign extends BaseEntity {
     @OneToMany(mappedBy = "memberfansign")
     private List<Winning> winningList = new ArrayList<>();
 
+    public MemberFansign(ArtistFansign artistFansign, Member member) {
+        this.artistFansign = artistFansign;
+        this.member = member;
+    }
 }
