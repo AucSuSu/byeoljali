@@ -2,7 +2,7 @@ package com.example.BE.member;
 
 import com.example.BE.artist.entity.Artist;
 import com.example.BE.common.BaseEntity;
-import com.example.BE.memberfansign.MemberFansign;
+import com.example.BE.memberfansign.entity.MemberFansign;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
