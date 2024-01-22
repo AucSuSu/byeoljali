@@ -1,4 +1,4 @@
-package com.example.BE.fan;
+package com.example.BE.fan.entity;
 
 
 import com.example.BE.applicant.Applicant;
@@ -42,4 +42,26 @@ public class Fan extends BaseEntity  {
     @OneToMany(mappedBy = "fan")
     private List<Winning> winningList = new ArrayList<>();
 
+    public Fan(String email, String profileImageUrl, String name, String nickname, LocalDate birth, String certificationImageUrl, int changeCount, boolean isBlacklist) {
+        this.email = email;
+        this.profileImageUrl = profileImageUrl;
+        this.name = name;
+        this.nickname = nickname;
+        this.birth = birth;
+        this.certificationImageUrl = certificationImageUrl;
+        this.changeCount = changeCount;
+        this.isBlacklist = isBlacklist;
+    }
+
+    // update profile
+    public void update(String nickname, String profileImageUrl){
+        this.nickname = nickname;
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    // update profile
+    public void updateCertificationImageUrl(String certificationImageUrl){
+        this.certificationImageUrl = certificationImageUrl;
+        this.changeCount += 1;
+    }
 }
