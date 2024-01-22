@@ -236,6 +236,8 @@ class App extends Component {
                     this.setState({
                         subscribers: subscribers,
                     });
+                    
+                    console.log(this.state.subscribers)
                 });
 
                 // On every Stream destroyed...
@@ -315,7 +317,6 @@ class App extends Component {
             }));
         }, 1000); // 매초마다 실행
 
-        
     }
 
     leaveSession() {
