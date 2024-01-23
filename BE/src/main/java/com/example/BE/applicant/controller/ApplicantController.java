@@ -32,12 +32,12 @@ public class ApplicantController {
     }
 
     // 응모 전체 페이지 조회하기
-    @GetMapping("/applyPage/{id}")
-    public ResponseEntity<Message> applyPage(@PathVariable("id") Long id){
-        ApplyPageDto dto = applicantService.findById(id);
-        Message message = new Message(HttpStatusEnum.OK, "성공", dto);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
+//    @GetMapping("/applyPage/{id}")
+//    public ResponseEntity<Message> applyPage(@PathVariable("id") Long id){
+//        ApplyPageDto dto = applicantService.findById(id);
+//        Message message = new Message(HttpStatusEnum.OK, "성공", dto);
+//        return new ResponseEntity<>(message, HttpStatus.OK);
+//    }
 
     // 응모 상세 페이지 조회하기
 
