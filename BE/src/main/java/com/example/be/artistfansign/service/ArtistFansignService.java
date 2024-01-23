@@ -1,6 +1,7 @@
 package com.example.be.artistfansign.service;
 
 import com.example.be.artistfansign.dto.AddArtistFansignRequestDto;
+import com.example.be.artistfansign.dto.ArtistsMyFansignResponseDto;
 import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.dto.RecentFansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
@@ -62,6 +63,13 @@ public class ArtistFansignService {
         List<FansignResponseDto> list =
                 artistFansignRepository.findArtistFansignAndApplyInfo(fanId);
 
+        return list;
+    }
+
+    // 아티스트가 내가 개설한 팬싸 목록 가져오기 (아티스트가 속한 멤버의 팬싸인회)
+    public List<ArtistsMyFansignResponseDto> getArtistsFansign(Long artistId, FansignStatus status){
+        List<ArtistsMyFansignResponseDto> list
+                = artistFansignRepository.findArtistsMyFansign(artistId, status);
         return list;
     }
 }
