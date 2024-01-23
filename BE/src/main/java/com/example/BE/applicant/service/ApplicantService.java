@@ -7,7 +7,7 @@ import com.example.BE.artistfansign.entity.ArtistFansign;
 import com.example.BE.artistfansign.repository.ArtistFansignRepository;
 import com.example.BE.fan.entity.Fan;
 import com.example.BE.fan.repository.FanRepository;
-import com.example.BE.memberfansign.MemberFansign;
+import com.example.BE.memberfansign.entity.MemberFansign;
 import com.example.BE.memberfansign.repository.MemberFansignRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
