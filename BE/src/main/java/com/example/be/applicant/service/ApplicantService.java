@@ -1,8 +1,11 @@
 package com.example.be.applicant.service;
 
 import com.example.be.applicant.dto.ApplyFormRequestDto;
+import com.example.be.applicant.dto.ApplyPageDto;
 import com.example.be.applicant.entity.Applicant;
 import com.example.be.applicant.repository.ApplicantRepository;
+import com.example.be.applicant.repository.CustomApplyPageRepository;
+import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
 import com.example.be.fan.entity.Fan;
@@ -12,6 +15,8 @@ import com.example.be.memberfansign.repository.MemberFansignRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -45,14 +50,11 @@ public class ApplicantService {
         return applicant.getApplicantId();
     }
 
-//    public ApplyPageDto findById(Long id){
-//
-//        Applicant applicant = applicantRepository.findById(id).
-//                orElseThrow(() -> new IllegalArgumentException("해당 응모자 정보가 없습니다."));
-//
-//        List<ApplyPageDto> result = applicantRepository.findAllFetchJoin(applicant.getApplicantId());
-//
-//        return new ApplyPageDto(entity.getPosterImageUrl(), entity.getTitle(), entity.get);
-//    }
+    public List<ApplyPageDto> findAllApplyPageById(Long fanId){
+
+        List<ApplyPageDto> result = applicantRepository.findAllApplyPageById(fanId);
+
+        return result;
+    }
 
 }
