@@ -1,6 +1,7 @@
 package com.example.be.applicant.controller;
 
 import com.example.be.applicant.dto.ApplyFormRequestDto;
+import com.example.be.applicant.dto.ApplyPageDetailDto;
 import com.example.be.applicant.dto.ApplyPageDto;
 import com.example.be.applicant.service.ApplicantService;
 import com.example.be.common.HttpStatusEnum;
@@ -41,11 +42,18 @@ public class ApplicantController {
     public ResponseEntity<Message> applyPage(@PathVariable("fanId") Long fanId){
         log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
         List<ApplyPageDto> dto = applicantService.findAllApplyPageById(fanId);
-        Message message = new Message(HttpStatusEnum.OK, "성공", dto);
+        Message message = new Message(HttpStatusEnum.OK, "응모 내역 페이지 전체 출력 성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // 응모 상세 페이지 조회하기
+    // 응모 상세 페이지 조회하기 - 팬싸인회 정보 보여주기
+//    @GetMapping("/applyPage/detail/{memberfansignId}/{fanId}")
+//    public ResponseEntity<Message> applyDetail(@PathVariable("memberfansignId") Long memberfansignId, @PathVariable("fanId") Long fanId){
+//        log.info(" ** 응모 상세 페이지 조회 api 입니다 ** ");
+//        ApplyPageDetailDto dto = applicantService.getDetailApplyFansign(memberfansignId, fanId);
+//        Message message = new Message(HttpStatusEnum.OK, "응모 팬싸 상세보기 성공", dto);
+//        return new ResponseEntity<>(message, HttpStatus.OK);
+//    }
 
     // 필터 기능 - 멤버별
 }

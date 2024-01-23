@@ -1,5 +1,6 @@
 package com.example.be.applicant.repository;
 
+import com.example.be.applicant.dto.ApplyPageDetailDto;
 import com.example.be.applicant.entity.Applicant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +13,14 @@ public interface ApplicantRepository extends JpaRepository<Applicant, Long>, Cus
 //            "JOIN FETCH mf.artistFansign af " +
 //            "JOIN FETCH mf.member m")
 //    List<ApplyPageDto> findAllFetchJoin(Long fanId);
+
+    // 상세보기 페이지
+//    @Query("select mf.memberfansignId from MemberFansign mf join mf.artistFansign af join mf.member m"
+//            + " where af.artistfansignId = :artistfansignId"
+//            + " and m.memberId = :memberId")
+//    Long findDetailFSBymemberFSId(@Param("artistfansignId") Long artistfansignId, @Param("memberId") Long memberId);
+
+
 
     // 입력받은 artistfansignId 와 memberId로
     // memberfansignId 찾아주기

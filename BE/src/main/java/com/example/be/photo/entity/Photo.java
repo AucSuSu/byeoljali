@@ -1,4 +1,4 @@
-package com.example.be.photo;
+package com.example.be.photo.entity;
 
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.common.BaseEntity;
@@ -35,4 +35,6 @@ public class Photo extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="artistfansign_id")
     private ArtistFansign artistFansign;
+
+
 }

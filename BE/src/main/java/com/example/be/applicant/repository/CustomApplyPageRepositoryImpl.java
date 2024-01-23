@@ -1,5 +1,6 @@
 package com.example.be.applicant.repository;
 
+import com.example.be.applicant.dto.ApplyPageDetailDto;
 import com.example.be.applicant.dto.ApplyPageDto;
 import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.querydsl.core.types.Projections;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 import static com.example.be.applicant.entity.QApplicant.applicant;
@@ -57,4 +59,43 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                         .where(fan.fanId.eq(fanId)))) // 입력받은 fanId가 당첨자 fanId와 동일한 것만
                 .fetch();
     }
+
+//    @Override
+//    public ApplyPageDetailDto findDetailFSBymemberFSId(Long memberFansignId, Long fanId){
+//        queryFactory = new JPAQueryFactory(em);
+//
+//        return queryFactory.select(
+//                        Projections.constructor(
+//                                ApplyPageDetailDto.class,
+//                                artistFansign.posterImageUrl,
+//                                artistFansign.title,
+//                                member.name,
+//                                artistFansign.information,
+//                                artistFansign.startApplyTime,
+//                                artistFansign.endApplyTime,
+//                                artistFansign.startFansignTime,
+//                                winning.orders,
+//                                artistFansign.status
+//                        )
+//                ).from(memberFansign)
+//                .join(artistFansign)
+//                .on(artistFansign.eq(memberFansign.artistFansign)) // 아티스트팬싸인이 겹치고
+//                .join(member)
+//                .on(memberFansign.member.eq(member)) // 해당 멤버가 같은 멤버 팬싸인에서
+//                .leftJoin(fan)
+//                .on(winning.fan.eq(JPAExpressions.select(fan)
+//                        .from(fan)
+//                        .where(fan.fanId.eq(fanId))))
+//                .leftJoin(winning)
+//                .on(winning.memberfansign.eq(memberFansign))
+//                .where(memberFansign.memberfansignId.eq(memberFansignId))
+//                .join(applicant)
+//                .on(applicant.fan)
+//                        // 입력받은 fanId가 당첨자 fanId와 동일한 것만
+//                .fetchOne();
+//
+//
+//    }
+
+
 }

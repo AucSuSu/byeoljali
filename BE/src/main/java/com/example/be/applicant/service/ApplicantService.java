@@ -1,6 +1,7 @@
 package com.example.be.applicant.service;
 
 import com.example.be.applicant.dto.ApplyFormRequestDto;
+import com.example.be.applicant.dto.ApplyPageDetailDto;
 import com.example.be.applicant.dto.ApplyPageDto;
 import com.example.be.applicant.entity.Applicant;
 import com.example.be.applicant.repository.ApplicantRepository;
@@ -56,5 +57,10 @@ public class ApplicantService {
 
         return result;
     }
+
+//    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId){
+//        return
+//                applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId);
+//    }
 
 }
