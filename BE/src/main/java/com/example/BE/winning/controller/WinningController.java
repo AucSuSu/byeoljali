@@ -1,12 +1,12 @@
-package com.example.BE.winning.controller;
+package com.example.be.winning.controller;
 
-import com.example.BE.common.HttpStatusEnum;
-import com.example.BE.common.Message;
-import com.example.BE.winning.dto.FansignFanResponseDto;
-import com.example.BE.winning.service.WinningService;
+
+import com.example.be.common.HttpStatusEnum;
+import com.example.be.common.Message;
+import com.example.be.winning.dto.FansignFanResponseDto;
+import com.example.be.winning.service.WinningService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

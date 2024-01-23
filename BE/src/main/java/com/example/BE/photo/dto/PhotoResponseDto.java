@@ -1,4 +1,4 @@
-package com.example.BE.photo.dto;
+package com.example.be.photo.dto;
 
 import lombok.Getter;
 

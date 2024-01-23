@@ -1,11 +1,11 @@
-package com.example.BE.config.jwt;
+package com.example.be.config.jwt;
 
 // 클라이언트에서 /login, POST방식으로 보내면 스프링 시큐리티에서 UsernamePasswordAuthenticationFilter가 호출됨
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.BE.artist.entity.Artist;
-import com.example.BE.config.auth.PrincipalDetails;
+import com.example.be.artist.entity.Artist;
+import com.example.be.config.auth.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

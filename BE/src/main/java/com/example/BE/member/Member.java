@@ -1,20 +1,21 @@
-package com.example.BE.member;
+package com.example.be.member;
 
-import com.example.BE.artist.entity.Artist;
-import com.example.BE.common.BaseEntity;
-import com.example.BE.memberfansign.entity.MemberFansign;
-import javax.persistence.*;
+
+import com.example.be.artist.entity.Artist;
+import com.example.be.common.BaseEntity;
+import com.example.be.memberfansign.entity.MemberFansign;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseEntity  {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

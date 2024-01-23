@@ -1,4 +1,4 @@
-//package com.example.BE.common;
+package com.example.be.common;//package com.example.BE.common;
 //
 //import io.lettuce.core.dynamic.annotation.CommandNaming;
 //

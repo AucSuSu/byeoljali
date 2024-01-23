@@ -1,7 +1,7 @@
-package com.example.BE.artist.entity;
+package com.example.be.artist.entity;
 
-import com.example.BE.common.BaseEntity;
-import com.example.BE.member.Member;
+import com.example.be.common.BaseEntity;
+import com.example.be.member.Member;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Artist extends BaseEntity  { // 사실은 그룹을 뜻하는 거임
+public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_id")

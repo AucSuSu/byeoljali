@@ -1,15 +1,15 @@
-package com.example.BE.artist.service;
+package com.example.be.artist.service;
 
-import com.example.BE.artist.dto.ArtistMemberAddRequestDto;
-import com.example.BE.artist.dto.ArtistMypageResponseDto;
-import com.example.BE.artist.dto.ArtistSignUpDto;
-import com.example.BE.artist.dto.SignUpResponseDto;
-import com.example.BE.artist.entity.Artist;
-import com.example.BE.artist.repository.ArtistRepository;
+import com.example.be.artist.dto.ArtistMemberAddRequestDto;
+import com.example.be.artist.dto.ArtistMypageResponseDto;
+import com.example.be.artist.dto.ArtistSignUpDto;
+import com.example.be.artist.dto.SignUpResponseDto;
+import com.example.be.artist.entity.Artist;
+import com.example.be.artist.repository.ArtistRepository;
+import com.example.be.member.Member;
+import com.example.be.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.example.BE.member.Member;
-import com.example.BE.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

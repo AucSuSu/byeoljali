@@ -1,4 +1,4 @@
-package com.example.BE.artist.dto;
+package com.example.be.artist.dto;
 
 import lombok.Getter;
 

@@ -1,20 +1,21 @@
-package com.example.BE.applicant.controller;
+package com.example.be.applicant.controller;
 
-import com.example.BE.applicant.service.ApplicantService;
-import com.example.BE.applicant.dto.ApplyFormRequestDto;
-import com.example.BE.common.HttpStatusEnum;
-import com.example.BE.common.Message;
+import com.example.be.applicant.dto.ApplyFormRequestDto;
+import com.example.be.applicant.service.ApplicantService;
+import com.example.be.common.HttpStatusEnum;
+import com.example.be.common.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
 public class ApplicantController {
 
-
-    
     private final ApplicantService applicantService;
 
     // 응모 폼 제출

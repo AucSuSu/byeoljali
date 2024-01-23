@@ -1,6 +1,6 @@
-package com.example.BE.photo.repository;
+package com.example.be.photo.repository;
 
-import com.example.BE.photo.Photo;
+import com.example.be.photo.Photo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {

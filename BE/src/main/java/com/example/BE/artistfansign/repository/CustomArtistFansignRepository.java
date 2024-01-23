@@ -1,7 +1,7 @@
-package com.example.BE.artistfansign.repository;
+package com.example.be.artistfansign.repository;
 
-import com.example.BE.artistfansign.dto.FansignResponseDto;
-import com.example.BE.artistfansign.entity.ArtistFansign;
+
+import com.example.be.artistfansign.dto.FansignResponseDto;
 
 import java.util.List;
 

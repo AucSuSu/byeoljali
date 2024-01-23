@@ -1,6 +1,7 @@
-package com.example.BE.winning.repository;
+package com.example.be.winning.repository;
 
-import com.example.BE.winning.entity.Winning;
+
+import com.example.be.winning.entity.Winning;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WinningRepository extends JpaRepository<Winning, Long> {

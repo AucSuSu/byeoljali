@@ -1,16 +1,16 @@
-package com.example.BE.memberfansign.entity;
+package com.example.be.memberfansign.entity;
 
-import com.example.BE.applicant.entity.Applicant;
-import com.example.BE.common.BaseEntity;
-import com.example.BE.artistfansign.entity.ArtistFansign;
-import com.example.BE.member.Member;
-import com.example.BE.photo.Photo;
-import com.example.BE.winning.entity.Winning;
-import javax.persistence.*;
+import com.example.be.applicant.entity.Applicant;
+import com.example.be.artistfansign.entity.ArtistFansign;
+import com.example.be.common.BaseEntity;
+import com.example.be.member.Member;
+import com.example.be.photo.Photo;
+import com.example.be.winning.entity.Winning;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.BE.photo.controller;
+package com.example.be.photo.controller;
 
 public class PhotoController {
 }

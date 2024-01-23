@@ -1,14 +1,14 @@
-package com.example.BE.applicant.service;
+package com.example.be.applicant.service;
 
-import com.example.BE.applicant.dto.ApplyFormRequestDto;
-import com.example.BE.applicant.entity.Applicant;
-import com.example.BE.applicant.repository.ApplicantRepository;
-import com.example.BE.artistfansign.entity.ArtistFansign;
-import com.example.BE.artistfansign.repository.ArtistFansignRepository;
-import com.example.BE.fan.entity.Fan;
-import com.example.BE.fan.repository.FanRepository;
-import com.example.BE.memberfansign.entity.MemberFansign;
-import com.example.BE.memberfansign.repository.MemberFansignRepository;
+import com.example.be.applicant.dto.ApplyFormRequestDto;
+import com.example.be.applicant.entity.Applicant;
+import com.example.be.applicant.repository.ApplicantRepository;
+import com.example.be.artistfansign.entity.ArtistFansign;
+import com.example.be.artistfansign.repository.ArtistFansignRepository;
+import com.example.be.fan.entity.Fan;
+import com.example.be.fan.repository.FanRepository;
+import com.example.be.memberfansign.entity.MemberFansign;
+import com.example.be.memberfansign.repository.MemberFansignRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

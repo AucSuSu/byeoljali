@@ -1,4 +1,4 @@
-package com.example.BE.applicant.dto;
+package com.example.be.applicant.dto;
 
 import lombok.Getter;
 

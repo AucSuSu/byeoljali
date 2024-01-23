@@ -1,5 +1,4 @@
-package com.example.BE.fan.dto;
-import lombok.Builder;
+package com.example.be.fan.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

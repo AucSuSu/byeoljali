@@ -1,12 +1,12 @@
-package com.example.BE.artist.controller;
+package com.example.be.artist.controller;
 
-import com.example.BE.artist.dto.ArtistMemberAddRequestDto;
-import com.example.BE.artist.dto.ArtistMypageResponseDto;
-import com.example.BE.artist.dto.ArtistSignUpDto;
-import com.example.BE.artist.dto.SignUpResponseDto;
-import com.example.BE.artist.service.ArtistService;
-import com.example.BE.common.HttpStatusEnum;
-import com.example.BE.common.Message;
+import com.example.be.artist.dto.ArtistMemberAddRequestDto;
+import com.example.be.artist.dto.ArtistMypageResponseDto;
+import com.example.be.artist.dto.ArtistSignUpDto;
+import com.example.be.artist.dto.SignUpResponseDto;
+import com.example.be.artist.service.ArtistService;
+import com.example.be.common.HttpStatusEnum;
+import com.example.be.common.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/artist")
 @RequiredArgsConstructor
 public class ArtistController {
-
+//asdfsadf
     private final ArtistService artistService;
 
     @PostMapping("/signUp")

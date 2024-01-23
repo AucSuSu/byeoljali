@@ -1,15 +1,13 @@
-package com.example.BE.artistfansign.entity;
+package com.example.be.artistfansign.entity;
 
-import com.example.BE.common.BaseEntity;
-import com.example.BE.memberfansign.entity.MemberFansign;
-
-import javax.persistence.*;
-
+import com.example.be.common.BaseEntity;
+import com.example.be.memberfansign.entity.MemberFansign;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ArtistFansign extends BaseEntity  { // 아티스트 기준 팬싸인회
+public class ArtistFansign extends BaseEntity { // 아티스트 기준 팬싸인회
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

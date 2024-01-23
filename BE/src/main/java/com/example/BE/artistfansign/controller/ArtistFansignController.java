@@ -1,11 +1,11 @@
-package com.example.BE.artistfansign.controller;
+package com.example.be.artistfansign.controller;
 
-import com.example.BE.artistfansign.dto.AddArtistFansignRequestDto;
-import com.example.BE.artistfansign.dto.FansignResponseDto;
-import com.example.BE.artistfansign.dto.RecentFansignResponseDto;
-import com.example.BE.artistfansign.service.ArtistFansignService;
-import com.example.BE.common.HttpStatusEnum;
-import com.example.BE.common.Message;
+import com.example.be.artistfansign.dto.AddArtistFansignRequestDto;
+import com.example.be.artistfansign.dto.FansignResponseDto;
+import com.example.be.artistfansign.dto.RecentFansignResponseDto;
+import com.example.be.artistfansign.service.ArtistFansignService;
+import com.example.be.common.HttpStatusEnum;
+import com.example.be.common.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

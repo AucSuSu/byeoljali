@@ -1,6 +1,4 @@
-package com.example.BE.photo.dto;
-
-import com.example.BE.fan.entity.Fan;
+package com.example.be.photo.dto;
 
 public class PhotoDto {
 

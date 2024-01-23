@@ -1,10 +1,10 @@
-package com.example.BE.config.jwt;
+package com.example.be.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.BE.artist.entity.Artist;
-import com.example.BE.artist.repository.ArtistRepository;
-import com.example.BE.config.auth.PrincipalDetails;
+import com.example.be.artist.entity.Artist;
+import com.example.be.artist.repository.ArtistRepository;
+import com.example.be.config.auth.PrincipalDetails;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
