@@ -1,5 +1,8 @@
 package com.example.be.photo.dto;
 
+import lombok.Data;
+
+@Data
 public class PhotoDto {
 
     private Long photoId;
