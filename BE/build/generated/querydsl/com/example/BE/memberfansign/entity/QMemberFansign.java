@@ -24,7 +24,7 @@ public class QMemberFansign extends EntityPathBase<MemberFansign> {
 
     public final com.example.BE.common.QBaseEntity _super = new com.example.BE.common.QBaseEntity(this);
 
-    public final ListPath<com.example.BE.applicant.Applicant, com.example.BE.applicant.QApplicant> applicantList = this.<com.example.BE.applicant.Applicant, com.example.BE.applicant.QApplicant>createList("applicantList", com.example.BE.applicant.Applicant.class, com.example.BE.applicant.QApplicant.class, PathInits.DIRECT2);
+    public final ListPath<com.example.BE.applicant.entity.Applicant, com.example.BE.applicant.entity.QApplicant> applicantList = this.<com.example.BE.applicant.entity.Applicant, com.example.BE.applicant.entity.QApplicant>createList("applicantList", com.example.BE.applicant.entity.Applicant.class, com.example.BE.applicant.entity.QApplicant.class, PathInits.DIRECT2);
 
     public final com.example.BE.artistfansign.entity.QArtistFansign artistFansign;
 
