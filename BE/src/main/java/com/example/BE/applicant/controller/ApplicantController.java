@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ApplicantController {
 
+
+    
     private final ApplicantService applicantService;
 
     // 응모 폼 제출
