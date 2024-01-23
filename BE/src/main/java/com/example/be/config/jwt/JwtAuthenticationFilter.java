@@ -6,8 +6,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.be.artist.entity.Artist;
 import com.example.be.config.auth.PrincipalDetails;
+import com.example.be.config.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +27,8 @@ import java.util.Date;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+
+    // private final RedisService redisService;
 
     // /login 요청을 하면 로그인 시도를 위해서 아래 메소드가 실행된다. 로그인 성공시 return인 authentication이 세션에 저장됨.
     @Override
@@ -79,6 +84,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME)) //30분
                 .withClaim("artistId", principalDetails.getArtist().getArtistId())
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET));
+
+        // Refresh token 발급하고 redis에 저장하기
+        /**
+         * redis 키는 뭘로 보통 ? string concat해서 사용하는 경우도 있는듯 ?
+         * 일단 여기서는 artistId를 key로 두었음
+         * key, value, expiretime
+         */
+        // redisService.setValuesWithTimeout(String.valueOf(principalDetails.getArtist().getArtistId()), refreshToken, JwtProperties.REFRESH_EXPIRATION_TIME);
+
+        // Redis에서 값 꺼내기
+        // redisService.getValues(String.valueOf(principalDetails.getArtist().getArtistId()));
 
         // 응답 헤더에 두 개의 토큰 추가
         response.addHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
