@@ -2,9 +2,11 @@ package com.example.BE.artistfansign.dto;
 
 import com.example.BE.artistfansign.entity.ArtistFansign;
 import com.example.BE.artistfansign.entity.FansignStatus;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
+@Data
 public class FansignResponseDto {
 
     private Long artistfansignId;

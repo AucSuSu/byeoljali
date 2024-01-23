@@ -16,7 +16,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import java.util.List;
 
-import static com.example.BE.applicant.QApplicant.applicant;
+import static com.example.BE.applicant.entity.QApplicant.applicant;
 import static com.example.BE.artistfansign.entity.QArtistFansign.artistFansign;
 import static com.example.BE.fan.entity.QFan.fan;
 

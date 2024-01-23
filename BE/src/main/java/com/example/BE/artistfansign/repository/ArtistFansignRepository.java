@@ -12,10 +12,5 @@ public interface ArtistFansignRepository extends JpaRepository<ArtistFansign, Lo
 
     List<ArtistFansign> findTop3ByOrderByCreatedDateDesc();
 
-//    @Query("select new com.example.BE.artistfansign.dto.FansignResponseDto(af.artistfansignId, af.postImageUrl, a.applicantId, af.status) " +
-//            "from Applicant a right join a.artistFansign af " +
-//            "join a.fan f" +
-//            "where f.fanId := fanId")
-//    List<FansignResponseDto> getFansigns(@Param("fanId") Long fanId);
 
 }

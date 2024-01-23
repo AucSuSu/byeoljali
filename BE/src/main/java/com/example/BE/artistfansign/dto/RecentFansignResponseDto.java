@@ -1,15 +1,20 @@
 package com.example.BE.artistfansign.dto;
 
 import com.example.BE.artistfansign.entity.ArtistFansign;
+import com.example.BE.artistfansign.entity.FansignStatus;
+import lombok.Data;
 
+@Data
 public class RecentFansignResponseDto {
 
     private Long artistfansignId;
     private String posterImageUrl;
+    private FansignStatus status;
 
     public RecentFansignResponseDto(ArtistFansign artistFansign) {
         this.artistfansignId = artistFansign.getArtistfansignId();
         this.posterImageUrl = artistFansign.getPosterImageUrl();
+        this.status = artistFansign.getStatus();
     }
 
 }

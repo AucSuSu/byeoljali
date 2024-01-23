@@ -4,85 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74504dbd-269e-4253-94f6-438088c1d085" name="Changes" comment="feat: cratedDate, modifiedDate null -&gt; auditing 추가">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/StudyApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/StudyApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/applicant/Applicant.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/applicant/Applicant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/applicant/QApplicant.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/applicant/QApplicant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/controller/ArtistController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/controller/ArtistController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/dto/ArtistMemberAddRequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/dto/ArtistMemberAddRequestDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/dto/ArtistMypageResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/dto/ArtistMypageResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/entity/Artist.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/entity/Artist.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/entity/QArtist.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/entity/QArtist.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/repository/ArtistRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/repository/ArtistRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/service/ArtistService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artist/service/ArtistService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/ArtistFansign.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/FansignMode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/FansignStatus.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/controller/ArtistFansignController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/controller/ArtistFansignController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/AddArtistFansignRequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/AddArtistFansignRequestDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/ApplyPageResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/ApplyPageResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/FansignResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/FansignResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/RecentFansignResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/dto/RecentFansignResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/ArtistFansign.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/ArtistFansign.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/FansignMode.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/FansignMode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/FansignStatus.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/FansignStatus.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/QArtistFansign.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/entity/QArtistFansign.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/repository/ArtistFansignRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/repository/ArtistFansignRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/repository/CustomArtistFansignRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/repository/CustomArtistFansignRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/repository/CustomArtistFansignRepositoryImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/repository/CustomArtistFansignRepositoryImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/service/ArtistFansignService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/artistfansign/service/ArtistFansignService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/BaseEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/BaseEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/HttpStatusEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/HttpStatusEnum.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/QBaseEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/common/QBaseEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/controller/TestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/controller/TestController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/controller/WebRTCController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/controller/WebRTCController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/dto/SessionEnterResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/dto/SessionEnterResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/controller/FanController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/controller/FanController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/dto/FanMyPageResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/dto/FanMyPageResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/dto/FanMyPageUpdateRequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/dto/FanMyPageUpdateRequestDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/entity/Fan.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/entity/Fan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/entity/QFan.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/entity/QFan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/repository/FanRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/repository/FanRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/service/FanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/fan/service/FanService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/member/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/member/Member.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/member/QMember.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/member/QMember.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/member/repository/MemberRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/member/repository/MemberRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/memberfansign/entity/MemberFansign.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/memberfansign/entity/MemberFansign.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/memberfansign/entity/QMemberFansign.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/memberfansign/entity/QMemberFansign.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/memberfansign/repository/MemberFansignRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/memberfansign/repository/MemberFansignRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/photo/Photo.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/photo/Photo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/photo/QPhoto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/photo/QPhoto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/controller/WinningController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/controller/WinningController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/dto/FansignFanResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/dto/FansignFanResponseDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/entity/QWinning.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/entity/QWinning.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/entity/Winning.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/entity/Winning.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/repository/WinningRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/repository/WinningRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/service/WinningService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/example/BE/winning/service/WinningService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/controller/ArtistFansignController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/controller/ArtistFansignController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/dto/FansignResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/dto/FansignResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/entity/ArtistFansign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/entity/ArtistFansign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/ArtistFansignRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/ArtistFansignRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/CustomArtistFansignRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/CustomArtistFansignRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/CustomArtistFansignRepositoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/repository/CustomArtistFansignRepositoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/service/ArtistFansignService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/BE/artistfansign/service/ArtistFansignService.java" afterDir="false" />
-    </list>
+    <list default="true" id="74504dbd-269e-4253-94f6-438088c1d085" name="Changes" comment="feat: cratedDate, modifiedDate null -&gt; auditing 추가" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,9 +18,28 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BE" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BE" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="BE" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -152,11 +93,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.StudyApplication.executor": "Run",
     "Gradle.BE [:StudyApplication.main()].executor": "Run",
+    "Gradle.BE [compileJava].executor": "Run",
+    "Gradle.BE [compileQuerydsl].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "feat/api/fixFansignList",
+    "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/SSAFY/IdeaProjects/S10P12E104/BE/src/main/java/com/example/BE/artist",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
@@ -167,11 +111,14 @@
       <recent name="C:\Users\SSAFY\IdeaProjects\S10P12E104\BE\src\main\java\com\example\BE\artist" />
       <recent name="C:\Users\SSAFY\IdeaProjects\S10P12E104\BE\src\main\java\com\example\BE\fan" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\SSAFY\IdeaProjects\S10P12E104\BE" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.BE.artist.entity" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.StudyApplication">
     <configuration name="StudyApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.BE.StudyApplication" />
       <module name="BE.main" />
@@ -185,8 +132,78 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BE [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="BE [compileJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="compileJava" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="BE [compileQuerydsl]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="compileQuerydsl" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.StudyApplication" />
+        <item itemvalue="Gradle.BE [compileJava]" />
+        <item itemvalue="Gradle.BE [clean]" />
+        <item itemvalue="Gradle.BE [compileQuerydsl]" />
         <item itemvalue="Application.StudyApplication" />
       </list>
     </recent_temporary>
@@ -234,7 +251,8 @@
     <MESSAGE value="feat: ResponseDto common package내 생성, Mypage Api작성" />
     <MESSAGE value="feat: artistMypage 상세보기 api, member 추가 api 개발" />
     <MESSAGE value="feat: cratedDate, modifiedDate null -&gt; auditing 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: cratedDate, modifiedDate null -&gt; auditing 추가" />
+    <MESSAGE value="fix: 최근팬싸인회 3개 가져오기 상태값 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: 최근팬싸인회 3개 가져오기 상태값 추가" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

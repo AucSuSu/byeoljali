@@ -1,7 +1,9 @@
 package com.example.BE.common;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Message {
 
     private HttpStatusEnum status;
