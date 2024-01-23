@@ -3,12 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import List from '../Utils/List';
 import axios from 'axios';
-import { setDataList } from '../Stores/actions.js';
 
 const HomeView = () => {
   //redux 적용
   const dispatch = useDispatch();
-  const dataList = useSelector((state) => state.dataList);
+  const dataList = useSelector((state) => state.applyList.dataList);
 
   //CORS 에러 발생 - 배포 후 실행할 것!
   /*
