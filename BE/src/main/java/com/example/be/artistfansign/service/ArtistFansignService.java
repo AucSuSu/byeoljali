@@ -49,19 +49,16 @@ public class ArtistFansignService {
 
     // 팬싸인회 최근 3개 리스트 가져오기
     public List<RecentFansignResponseDto> getRecent3Fansign(){
-        List<ArtistFansign> list =
+        List<RecentFansignResponseDto> list =
         artistFansignRepository.findTop3ByOrderByCreatedDateDesc();
-        List<RecentFansignResponseDto> top3List = new ArrayList<>();
-        for(ArtistFansign artistFansign : list){
-            top3List.add(new RecentFansignResponseDto(artistFansign));
-        }
-        return top3List;
+
+        return list;
     }
 
     // 팬싸인회 리스트 가져오기
-    public List<FansignResponseDto> getFansign(Long fanId){
+    public List<FansignResponseDto> getFansign(Long fanId, String keyword, String orderCondition, FansignStatus status){
         List<FansignResponseDto> list =
-                artistFansignRepository.findArtistFansignAndApplyInfo(fanId);
+                artistFansignRepository.findArtistFansignAndApplyInfo(fanId, keyword, orderCondition, status);
 
         return list;
     }

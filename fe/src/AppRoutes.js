@@ -5,16 +5,18 @@ import ArtistInfoView from './Web/Pages/ArtistInfoView.jsx';
 import HomeView from './Web/Pages/HoemView.jsx';
 import Test from './Web/test.js';
 import CounterView from './Web/Pages/CounterView.jsx';
+import FanInfoView from './Web/Pages/FanInfoView.jsx';
 
 export default function AppRoutes() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<LoginView />} /> */}
-        <Route path="/" element={<CounterView />} />
+        <Route path="/" element={<LoginView />} />
+        <Route path="counter" element={<CounterView />} />
         <Route path="/artistInfo" element={<ArtistInfoView />} />
         <Route path="/home" element={<HomeView />} />
         <Route path="/test" element={<Test />} />
+        <Route path="/userinfo" element={<FanInfoView />} />
         {/* 라우트 여기에 추가하세용 */}
       </Routes>
     </Router>

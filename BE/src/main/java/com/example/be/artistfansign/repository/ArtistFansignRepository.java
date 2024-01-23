@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface ArtistFansignRepository extends JpaRepository<ArtistFansign, Long>, CustomArtistFansignRepository {
 
-    List<ArtistFansign> findTop3ByOrderByCreatedDateDesc();
 
 
 }
