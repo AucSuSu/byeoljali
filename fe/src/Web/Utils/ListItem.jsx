@@ -7,11 +7,11 @@ const ListItem = ({ data }) => {
       style={{ textAlign: 'center', margin: '10px', display: 'inline-block' }}
     >
       <img
-        src={data.imageUrl}
-        alt={data.altText}
+        src={data.posterImageUrl}
+        alt={data.title}
         style={{ width: '100px', borderRadius: '50%' }}
       />
-      <p>{data.text}</p>
+      <p>{data.title}</p>
     </div>
   );
 };
