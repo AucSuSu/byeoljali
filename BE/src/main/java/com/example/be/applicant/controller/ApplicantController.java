@@ -1,19 +1,21 @@
 package com.example.be.applicant.controller;
 
 import com.example.be.applicant.dto.ApplyFormRequestDto;
+import com.example.be.applicant.dto.ApplyPageDto;
 import com.example.be.applicant.service.ApplicantService;
 import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ApplicantController {
 
     private final ApplicantService applicantService;
@@ -34,13 +36,14 @@ public class ApplicantController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // 응모 전체 페이지 조회하기
-//    @GetMapping("/applyPage/{id}")
-//    public ResponseEntity<Message> applyPage(@PathVariable("id") Long id){
-//        ApplyPageDto dto = applicantService.findById(id);
-//        Message message = new Message(HttpStatusEnum.OK, "성공", dto);
-//        return new ResponseEntity<>(message, HttpStatus.OK);
-//    }
+    // 응모 내역 페이지 조회하기 - 응모된 거 안된거
+    @GetMapping("/applyPage/{fanId}")
+    public ResponseEntity<Message> applyPage(@PathVariable("fanId") Long fanId){
+        log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
+        List<ApplyPageDto> dto = applicantService.findAllApplyPageById(fanId);
+        Message message = new Message(HttpStatusEnum.OK, "성공", dto);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 
     // 응모 상세 페이지 조회하기
 
