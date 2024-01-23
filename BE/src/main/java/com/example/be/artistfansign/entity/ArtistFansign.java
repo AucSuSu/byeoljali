@@ -1,5 +1,6 @@
 package com.example.be.artistfansign.entity;
 
+import com.example.be.artist.entity.Artist;
 import com.example.be.common.BaseEntity;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -39,6 +40,10 @@ public class ArtistFansign extends BaseEntity { // 아티스트 기준 팬싸인
     @OneToMany(mappedBy = "artistFansign")
     @JsonBackReference
     private List<MemberFansign> memberFansignList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "artist_id")
+    private Artist artist;
 
     public ArtistFansign(String title, String posterImageUrl, String information, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, FansignStatus status, FansignMode mode) {
         this.title = title;
