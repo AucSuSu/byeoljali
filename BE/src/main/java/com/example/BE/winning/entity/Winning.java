@@ -1,8 +1,8 @@
-package com.example.BE.winning;
+package com.example.BE.winning.entity;
 
 import com.example.BE.common.BaseEntity;
 import com.example.BE.fan.entity.Fan;
-import com.example.BE.memberfansign.MemberFansign;
+import com.example.BE.memberfansign.entity.MemberFansign;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -26,6 +26,7 @@
   },
   "version": "2.29.0",
   "devDependencies": {
+    "prettier": "^3.2.4",
     "tailwindcss": "^3.4.1"
   }
 }

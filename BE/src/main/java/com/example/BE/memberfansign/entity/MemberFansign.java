@@ -1,11 +1,11 @@
-package com.example.BE.memberfansign;
+package com.example.BE.memberfansign.entity;
 
 import com.example.BE.applicant.entity.Applicant;
 import com.example.BE.common.BaseEntity;
 import com.example.BE.artistfansign.entity.ArtistFansign;
 import com.example.BE.member.Member;
 import com.example.BE.photo.Photo;
-import com.example.BE.winning.Winning;
+import com.example.BE.winning.entity.Winning;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

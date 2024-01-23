@@ -16,7 +16,6 @@ public class FanController
 {
 
     private final FanService fanService;
-
     /**
      * 팬 마이페이지 조회 하기
      */
@@ -28,15 +27,19 @@ public class FanController
     }
 
     @PutMapping("/mypage/edit/profile/{id}")
-    public Long update(@PathVariable("id") Long id,
+    public ResponseEntity<Message> update(@PathVariable("id") Long id,
                        @RequestBody FanMyPageUpdateRequestDto requestDto){
-        return fanService.update(id, requestDto);
+        Long fanId = fanService.update(id, requestDto);
+        Message message = new Message(HttpStatusEnum.OK, "상세 정보 수정 성공", fanId);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PutMapping("/mypage/edit/certImage/{id}")
-    public int updateCertificationImage(@PathVariable("id") Long id,
+    public ResponseEntity<Message> updateCertificationImage(@PathVariable("id") Long id,
                                         @RequestBody String certificationImageUrl){
-        return fanService.updateCertificationImageUrl(id, certificationImageUrl);
+        int count = fanService.updateCertificationImageUrl(id, certificationImageUrl);
+        Message message = new Message(HttpStatusEnum.OK, "인증 사진 수정 성공", count);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     // 블랙리스트 등록
