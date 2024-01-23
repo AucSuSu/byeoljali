@@ -1,6 +1,6 @@
 package com.example.BE.memberfansign.entity;
 
-import com.example.BE.applicant.Applicant;
+import com.example.BE.applicant.entity.Applicant;
 import com.example.BE.common.BaseEntity;
 import com.example.BE.artistfansign.entity.ArtistFansign;
 import com.example.BE.member.Member;
