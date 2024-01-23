@@ -17,4 +17,9 @@ public class RecentFansignResponseDto {
         this.status = artistFansign.getStatus();
     }
 
+    public RecentFansignResponseDto(Long artistfansignId, String posterImageUrl, FansignStatus status) {
+        this.artistfansignId = artistfansignId;
+        this.posterImageUrl = posterImageUrl;
+        this.status = status;
+    }
 }
