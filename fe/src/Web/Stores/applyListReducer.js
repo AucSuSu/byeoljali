@@ -36,4 +36,4 @@ const applyListSlice = createSlice({
 });
 
 export default applyListSlice.reducer;
-export const { setDataList } = applyListSlice.actions;
+export const { applyListAction } = applyListSlice.actions;
