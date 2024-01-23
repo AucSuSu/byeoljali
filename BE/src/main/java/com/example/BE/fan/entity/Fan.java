@@ -1,15 +1,15 @@
-package com.example.BE.fan.entity;
+package com.example.be.fan.entity;
 
 
-import com.example.BE.applicant.entity.Applicant;
-import com.example.BE.common.BaseEntity;
-import com.example.BE.photo.Photo;
-import com.example.BE.winning.entity.Winning;
-import javax.persistence.*;
+import com.example.be.applicant.entity.Applicant;
+import com.example.be.common.BaseEntity;
+import com.example.be.photo.Photo;
+import com.example.be.winning.entity.Winning;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Fan extends BaseEntity  {
+public class Fan extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

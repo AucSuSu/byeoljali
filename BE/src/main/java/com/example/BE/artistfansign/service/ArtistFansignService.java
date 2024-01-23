@@ -1,15 +1,15 @@
-package com.example.BE.artistfansign.service;
+package com.example.be.artistfansign.service;
 
-import com.example.BE.artistfansign.dto.AddArtistFansignRequestDto;
-import com.example.BE.artistfansign.dto.FansignResponseDto;
-import com.example.BE.artistfansign.dto.RecentFansignResponseDto;
-import com.example.BE.artistfansign.entity.ArtistFansign;
-import com.example.BE.artistfansign.entity.FansignStatus;
-import com.example.BE.artistfansign.repository.ArtistFansignRepository;
-import com.example.BE.member.Member;
-import com.example.BE.member.repository.MemberRepository;
-import com.example.BE.memberfansign.entity.MemberFansign;
-import com.example.BE.memberfansign.repository.MemberFansignRepository;
+import com.example.be.artistfansign.dto.AddArtistFansignRequestDto;
+import com.example.be.artistfansign.dto.FansignResponseDto;
+import com.example.be.artistfansign.dto.RecentFansignResponseDto;
+import com.example.be.artistfansign.entity.ArtistFansign;
+import com.example.be.artistfansign.entity.FansignStatus;
+import com.example.be.artistfansign.repository.ArtistFansignRepository;
+import com.example.be.member.Member;
+import com.example.be.member.repository.MemberRepository;
+import com.example.be.memberfansign.entity.MemberFansign;
+import com.example.be.memberfansign.repository.MemberFansignRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

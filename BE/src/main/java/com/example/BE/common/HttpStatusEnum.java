@@ -1,4 +1,4 @@
-package com.example.BE.common;
+package com.example.be.common;
 public enum HttpStatusEnum {
 
     OK(200, "OK"),

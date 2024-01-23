@@ -1,6 +1,5 @@
-package com.example.BE.applicant.dto;
+package com.example.be.applicant.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ApplyPageDto { // 응모 페이지에서 보여야 할 값

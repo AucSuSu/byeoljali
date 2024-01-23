@@ -1,7 +1,8 @@
-package com.example.BE.config.auth;
+package com.example.be.config.auth;
 
-import com.example.BE.artist.entity.Artist;
-import com.example.BE.artist.repository.ArtistRepository;
+
+import com.example.be.artist.entity.Artist;
+import com.example.be.artist.repository.ArtistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,6 +1,6 @@
-package com.example.BE.applicant.repository;
+package com.example.be.applicant.repository;
 
-import com.example.BE.applicant.entity.Applicant;
+import com.example.be.applicant.entity.Applicant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,10 +1,11 @@
-package com.example.BE.fan.controller;
+package com.example.be.fan.controller;
 
-import com.example.BE.common.HttpStatusEnum;
-import com.example.BE.common.Message;
-import com.example.BE.fan.dto.FanMyPageResponseDto;
-import com.example.BE.fan.dto.FanMyPageUpdateRequestDto;
-import com.example.BE.fan.service.FanService;
+
+import com.example.be.common.HttpStatusEnum;
+import com.example.be.common.Message;
+import com.example.be.fan.dto.FanMyPageResponseDto;
+import com.example.be.fan.dto.FanMyPageUpdateRequestDto;
+import com.example.be.fan.service.FanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

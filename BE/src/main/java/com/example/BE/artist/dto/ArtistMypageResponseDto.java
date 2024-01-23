@@ -1,10 +1,10 @@
-package com.example.BE.artist.dto;
-import com.example.BE.artist.entity.Artist;
-import com.example.BE.member.Member;
+package com.example.be.artist.dto;
+
+import com.example.be.artist.entity.Artist;
+import com.example.be.member.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 

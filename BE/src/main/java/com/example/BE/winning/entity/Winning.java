@@ -1,12 +1,14 @@
-package com.example.BE.winning.entity;
+package com.example.be.winning.entity;
 
-import com.example.BE.common.BaseEntity;
-import com.example.BE.fan.entity.Fan;
-import com.example.BE.memberfansign.entity.MemberFansign;
-import javax.persistence.*;
+
+import com.example.be.common.BaseEntity;
+import com.example.be.fan.entity.Fan;
+import com.example.be.memberfansign.entity.MemberFansign;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Getter

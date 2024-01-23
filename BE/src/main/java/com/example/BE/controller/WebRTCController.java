@@ -1,10 +1,7 @@
-package com.example.BE.controller;
+package com.example.be.controller;
 
-import com.example.BE.dto.SessionEnterResponseDto;
+import com.example.be.dto.SessionEnterResponseDto;
 import io.openvidu.java.client.*;
-import io.openvidu.java.client.OpenViduHttpException;
-import io.openvidu.java.client.OpenViduJavaClientException;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 

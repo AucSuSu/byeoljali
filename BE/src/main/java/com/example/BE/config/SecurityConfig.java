@@ -1,8 +1,8 @@
-package com.example.BE.config;
+package com.example.be.config;
 
-import com.example.BE.artist.repository.ArtistRepository;
-import com.example.BE.config.jwt.JwtAuthenticationFilter;
-import com.example.BE.config.jwt.JwtAuthorizationFilter;
+import com.example.be.artist.repository.ArtistRepository;
+import com.example.be.config.jwt.JwtAuthenticationFilter;
+import com.example.be.config.jwt.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,9 +1,10 @@
-package com.example.BE.fan.service;
+package com.example.be.fan.service;
 
-import com.example.BE.fan.entity.Fan;
-import com.example.BE.fan.dto.FanMyPageResponseDto;
-import com.example.BE.fan.dto.FanMyPageUpdateRequestDto;
-import com.example.BE.fan.repository.FanRepository;
+
+import com.example.be.fan.dto.FanMyPageResponseDto;
+import com.example.be.fan.dto.FanMyPageUpdateRequestDto;
+import com.example.be.fan.entity.Fan;
+import com.example.be.fan.repository.FanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

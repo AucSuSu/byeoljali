@@ -1,7 +1,5 @@
-package com.example.BE.artist.dto;
+package com.example.be.artist.dto;
 
-import com.example.BE.artist.entity.Artist;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter

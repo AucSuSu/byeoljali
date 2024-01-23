@@ -1,5 +1,5 @@
-package com.example.BE.fan.dto;
-import com.example.BE.fan.entity.Fan;
+package com.example.be.fan.dto;
+import com.example.be.fan.entity.Fan;
 import lombok.Getter;
 
 import java.time.LocalDate;

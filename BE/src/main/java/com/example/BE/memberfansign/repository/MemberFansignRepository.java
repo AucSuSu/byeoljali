@@ -1,6 +1,7 @@
-package com.example.BE.memberfansign.repository;
+package com.example.be.memberfansign.repository;
 
-import com.example.BE.memberfansign.entity.MemberFansign;
+
+import com.example.be.memberfansign.entity.MemberFansign;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberFansignRepository  extends JpaRepository<MemberFansign, Long> {

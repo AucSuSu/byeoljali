@@ -1,4 +1,4 @@
-package com.example.BE.artistfansign.entity;
+package com.example.be.artistfansign.entity;
 
 public enum FansignStatus {
     // 응모대기, 응모중, 응모완료(=팬싸인회 대기), 팬싸인회중, 팬싸인회끝

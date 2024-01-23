@@ -1,6 +1,6 @@
-package com.example.BE.photo.service;
+package com.example.be.photo.service;
 
-import com.example.BE.photo.repository.PhotoRepository;
+import com.example.be.photo.repository.PhotoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

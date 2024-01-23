@@ -1,4 +1,4 @@
-package com.example.BE.config.jwt;
+package com.example.be.config.jwt;
 
 public interface JwtProperties {
     String ACCESS_TOKEN = "Access";

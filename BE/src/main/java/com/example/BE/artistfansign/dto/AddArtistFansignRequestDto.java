@@ -1,13 +1,11 @@
-package com.example.BE.artistfansign.dto;
+package com.example.be.artistfansign.dto;
 
-import com.example.BE.artistfansign.entity.FansignMode;
-import com.example.BE.member.Member;
+
+import com.example.be.artistfansign.entity.FansignMode;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

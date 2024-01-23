@@ -1,10 +1,7 @@
-package com.example.BE.artistfansign.repository;
+package com.example.be.artistfansign.repository;
 
-import com.example.BE.artistfansign.dto.FansignResponseDto;
-import com.example.BE.artistfansign.entity.ArtistFansign;
-import io.lettuce.core.dynamic.annotation.Param;
+import com.example.be.artistfansign.entity.ArtistFansign;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

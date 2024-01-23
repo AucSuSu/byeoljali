@@ -1,7 +1,6 @@
-package com.example.BE.artistfansign.dto;
+package com.example.be.artistfansign.dto;
 
-import com.example.BE.artistfansign.entity.ArtistFansign;
-import com.example.BE.artistfansign.entity.FansignStatus;
+import com.example.be.artistfansign.entity.FansignStatus;
 import lombok.Data;
 import lombok.Getter;
 

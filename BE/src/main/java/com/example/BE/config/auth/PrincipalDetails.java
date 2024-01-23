@@ -1,10 +1,10 @@
-package com.example.BE.config.auth;
-import com.example.BE.artist.entity.Artist;
+package com.example.be.config.auth;
+
+import com.example.be.artist.entity.Artist;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 
