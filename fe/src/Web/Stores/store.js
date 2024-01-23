@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import applyListReducer from './applyListReducer.js';
+import authReducer from './authReducer.js';
 import counterReducer from './counterReducer.js'; // 추가 리듀서
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -13,6 +14,7 @@ const persistConfig = {
 // 여러 리듀서를 결합
 const rootReducer = combineReducers({
   applyList: applyListReducer,
+  auth: authReducer,
   counter: counterReducer, // 추가 리듀서 추가
 });
 

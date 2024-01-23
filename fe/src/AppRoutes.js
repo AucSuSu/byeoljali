@@ -12,7 +12,7 @@ export default function AppRoutes() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginView />} />
-        {/* <Route path="/" element={<CounterView />} /> */}
+        <Route path="counter" element={<CounterView />} />
         <Route path="/artistInfo" element={<ArtistInfoView />} />
         <Route path="/home" element={<HomeView />} />
         <Route path="/test" element={<Test />} />
