@@ -1,4 +1,4 @@
-package com.example.BE.applicant;
+package com.example.BE.applicant.entity;
 
 
 import com.example.BE.common.BaseEntity;

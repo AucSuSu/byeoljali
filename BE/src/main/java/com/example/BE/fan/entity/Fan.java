@@ -1,7 +1,7 @@
 package com.example.BE.fan.entity;
 
 
-import com.example.BE.applicant.Applicant;
+import com.example.BE.applicant.entity.Applicant;
 import com.example.BE.common.BaseEntity;
 import com.example.BE.photo.Photo;
 import com.example.BE.winning.Winning;
@@ -63,5 +63,9 @@ public class Fan extends BaseEntity  {
     public void updateCertificationImageUrl(String certificationImageUrl){
         this.certificationImageUrl = certificationImageUrl;
         this.changeCount += 1;
+    }
+
+    public void addBlacklist(){
+        this.isBlacklist = true;
     }
 }
