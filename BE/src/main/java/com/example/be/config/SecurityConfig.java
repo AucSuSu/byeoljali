@@ -25,7 +25,7 @@ public class SecurityConfig {
     private final CorsConfig corsConfig;
 
     @Bean
-    public BCryptPasswordEncoder encodepwd(){
+    public BCryptPasswordEncoder encodePwd(){
         return new BCryptPasswordEncoder();
     }
 
@@ -46,7 +46,9 @@ public class SecurityConfig {
                 .authorizeRequests()
 //                .antMatchers("/artist/**") // 여기에 권한추가해줘야함
 //                .access("hasRole('ROLE_ARTIST')")
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and();
+
 
         return http.build();
 

@@ -40,7 +40,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    // Thymeleaf 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     // jwt 추가
     implementation group: 'com.auth0', name: 'java-jwt', version: '4.4.0'
     // openvidu 추가
