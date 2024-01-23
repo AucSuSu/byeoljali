@@ -16,7 +16,8 @@
     "react-dom": "16.13.1",
     "react-redux": "^7.2.5",
     "react-router-dom": "^6.21.3",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^3.4.3",
+    "redux-persist": "^6.0.0"
   },
   "name": "openvidu-call-react",
   "private": true,
