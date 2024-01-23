@@ -1,5 +1,7 @@
 package com.example.be.controller;
 
+import com.example.be.config.oauth.OauthToken;
+import com.example.be.fan.service.FanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,10 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OAuthController {
 
-    @GetMapping("/oauth")
-    public String oauth(@RequestParam("code") String code){
 
-        System.out.println(code);
-        return code;
+    private final FanService fanService;
+
+    // 프론트 측에서 인가코드를 받아오는 메소드
+    @GetMapping("/oauth")
+    public OauthToken getLogin(@RequestParam("code") String code){
+
+        // 넘어온 인가 코드를 통해 카카오 유저 정보를 얻기위한 access_token 발급
+        OauthToken oauthToken = fanService.getAccessToken(code);
+
+
+        // 발급받은 accessToken 으로 카카오 회원 정보 DB 저장
+        fanService.saveFan(oauthToken.getAccess_token());
+        return oauthToken;
     }
 }
