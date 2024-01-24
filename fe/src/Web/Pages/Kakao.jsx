@@ -21,6 +21,7 @@ export default function Kakao() {
 
   const getData = async (code) => {
     try {
+      console.log('시작');
       // 백엔드로 인가 코드를 전송하여 데이터 요청
       const res = await axios.get(`http://localhost:5000/oauth`, {
         params: {
@@ -28,6 +29,8 @@ export default function Kakao() {
         },
       });
       console.log('로그인 성공', res); // 받은 데이터 출력
+      console.log(res.headers['authorization']);
+      console.log(res.headers['authorization-refresh']);
       console.log(code);
     } catch (error) {
       console.error('백엔드 전송 실패', error);
@@ -36,9 +39,10 @@ export default function Kakao() {
   };
 
   // 추후 .env에 숨겨야함.
-  const Rest_api_key = 'aa942ad78b7dca415ad4c16b40ef95d2'; // REST API KEY
+  // const Rest_api_key = 'aa942ad78b7dca415ad4c16b40ef95d2'; // REST API KEY
+  const Rest_api_key = '218aa28a9e8fa4d947c106cb95b2ec1b'; // REST API KEY
   const redirect_uri = 'http://localhost:3000'; // Redirect URI
-  const client_secret = 'Ih48q40vxhB3U37ThaAMCVcVkgvjH9k6' // 프론트에서 사용하진 않음.  참고용
+  const client_secret = 'Ih48q40vxhB3U37ThaAMCVcVkgvjH9k6'; // 프론트에서 사용하진 않음.  참고용
   // OAuth 요청 URL
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Rest_api_key}&redirect_uri=${redirect_uri}`;
 

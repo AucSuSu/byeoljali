@@ -22,7 +22,7 @@ public class OAuthController {
     @GetMapping("/oauth")
     public ResponseEntity<String> getLogin(@RequestParam("code") String code){
 
-        System.out.println("여기");
+        System.out.println(code);
         // 넘어온 인가 코드를 통해 카카오 유저 정보를 얻기위한 access_token 발급
         OauthToken oauthToken = fanService.getAccessToken(code);
 
@@ -31,6 +31,7 @@ public class OAuthController {
         JwtToken jwtToken = fanService.saveFanAndGetToken(oauthToken.getAccess_token());
 
         HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
         headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
         headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
 
