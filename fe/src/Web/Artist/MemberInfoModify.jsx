@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { handleAddMember } from '../Stores/modalReducer';
+import { handleModifyMember } from '../Stores/modalReducer';
 import { useDispatch } from 'react-redux';
 
-export default function ArtistInfoModify() {
+export default function MemberInfoModify({ data }) {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch(handleAddMember());
+    dispatch(handleModifyMember(null));
   };
-  const hello = () => {
-    console.log('hi~~');
-  };
-  const data = {
-    title: '에스파파',
-    posterImageUrl: '/aspa.png',
-  };
+
+  // const data = {
+  //   title: '에스파파',
+  //   posterImageUrl: '/aspa.png',
+  // };
 
   const customStyle = {
     content: {
@@ -31,17 +29,17 @@ export default function ArtistInfoModify() {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        contentLabel={data.title}
+        contentLabel={data.name}
         style={customStyle}
       >
         <div>
-          <h2>{data.title}</h2>
+          <h2>{data.name}</h2>
           <img
             src={data.posterImageUrl}
-            alt={data.title}
+            alt={data.name}
             style={{ width: '200px', borderRadius: '10px' }}
           />
-          <p>Other details about the item...</p>
+          <p>맴버 정보 수정</p>
           <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>

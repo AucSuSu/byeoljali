@@ -1,5 +1,7 @@
 package com.example.be.controller;
 
+import com.example.be.common.HttpStatusEnum;
+import com.example.be.common.Message;
 import com.example.be.config.redis.RedisService;
 import com.example.be.dto.SessionEnterResponseDto;
 import io.openvidu.java.client.*;
@@ -34,16 +36,7 @@ public class WebRTCController {
 
     // Redis 연결 서버
      private final RedisService redisService;
-    /**
-     * test 목표
-     * 연예인과 팬이 같은 방에 입장하도록 해보자
-     *
-     * 1. 팬싸인회가 시작되면 자동으로 하나의 세션 발생
-     * -> 세션 아이디가 할당되면 해당 방에 연예인은 입장 되어있는 상태
-     * -> 팬은 다른 세션에 존재하다가 시간이 되면 세션입장
-     * -> 시간이 끝나면 자동으로 session에서 나가야함
-     */
-    // 자동 방 개설 (요청 : 자동)
+
     @GetMapping("/fansign")
     public ResponseEntity<String> makeByulZari()
             throws OpenViduJavaClientException, OpenViduHttpException {
@@ -72,50 +65,55 @@ public class WebRTCController {
     }
 
 
-    // 방으로 입장하기 (이건 정말 방 입장만 해당하는 것임) !
-    // 아티스트 -> 바로 방으로
-    // 팬 -> 대기방에서 팬싸방으로 이동할때 해당 post
-    // 아티스트/팬이냐에 따라 추가로 다른 요청 필요
-
-    // 팬싸인회 클릭시 -> db에서 세션 아이디 조회 -> 입장
-//    @PostMapping("/fan/fansigns/enter/{sessionId}")
-//    public ResponseEntity<String> enterByulZari(@PathVariable("sessionId") String sessionId,
-//                                                   @RequestBody(required = false) Map<String, Object> params)
-//            throws OpenViduJavaClientException, OpenViduHttpException {
-//        log.info("*** 입장 메서드 호출 ***");
-//        Session session = openvidu.getActiveSession(sessionId);
-//        if (session == null) { // 방이 없는 경우
-//            log.info("*** " + sessionId + "번방이 없음 ***");
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-//        Connection connection = session.createConnection(properties);
-//        log.info("*** 입장 완료***");
-//
-//        // return type wss://13.54.62.153?sessionId=ses_TU0gAC9hdr&token=tok_LtfbBU7NwuMMHXnt
-//        return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
-//    }
-
-    @GetMapping("/fan/fansigns/enter/v2/{sessionId}")
-    public SessionEnterResponseDto enterByulZari(@PathVariable("sessionId") String sessionId)
+    // 대기방 세션아이디, 토큰 발급하기
+    @GetMapping("/fan/fansigns/enterwaiting/{memberFansignId}")
+    public ResponseEntity<Message> enterByulZariWaiting(@PathVariable("memberFansignId") Long memberFansignId
+                                                      )
             throws OpenViduJavaClientException, OpenViduHttpException {
         Map<String, Object> params = new HashMap<>();
-        log.info("*** 입장 메서드 호출 ***");
-        Session session = openvidu.getActiveSession(sessionId);
-        if (session == null) { // 방이 없는 경우
-            log.info("*** " + sessionId + "번방이 없음 ***");
-            return new SessionEnterResponseDto(null, null);
+        log.info("*** 대기방 입장 메서드 호출 ***");
+
+        String watingRoomFansignSessionId =
+                redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)));
+        Session waitingRoomSession = openvidu.getActiveSession(watingRoomFansignSessionId);
+        if (waitingRoomSession == null) { // 방이 없는 경우
+            log.info("*** " + watingRoomFansignSessionId + "번방이 없음 ***");
+            Message msg = new Message(HttpStatusEnum.NOT_FOUND, "sessionId 찾기 실패", new SessionEnterResponseDto(null, null));
+            return new ResponseEntity<>(msg, HttpStatus.OK);
+
         }
 
-        /**
-         * 혹시 나갔다가 들어와도 다시 들어왔을때 똑같은 토큰을 주면됨. 굳이 발급을 새로할 필요 없다.
-         */
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-        Connection connection = session.createConnection(properties);
-        log.info("*** 입장 완료***");
+        Connection connection = waitingRoomSession.createConnection(properties);
+        log.info("*** 대기방 입장 완료***");
 
-        // return type wss://13.54.62.153?sessionId=ses_TU0gAC9hdr&token=tok_LtfbBU7NwuMMHXnt
-        return new SessionEnterResponseDto(sessionId, connection.getToken());
+        Message msg = new Message(HttpStatusEnum.OK, "대기방 입장 허가", new SessionEnterResponseDto(watingRoomFansignSessionId, connection.getToken()));
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+    // 대기방 세션아이디, 토큰 발급하기
+    @GetMapping("/fan/fansigns/enterFansign/{memberFansignId}")
+    public ResponseEntity<Message> enterByulZariEntering(@PathVariable("memberFansignId") Long memberFansignId
+                                                      )
+            throws OpenViduJavaClientException, OpenViduHttpException {
+        Map<String, Object> params = new HashMap<>();
+        log.info("*** 팬싸인회 입장 메서드 호출 ***");
+
+        String FansignSessionId =
+                redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId)));
+        Session FansignSession = openvidu.getActiveSession(FansignSessionId);
+        if (FansignSession == null) { // 방이 없는 경우
+            log.info("*** " + FansignSessionId + " 방이 없음 ***");
+            Message msg = new Message(HttpStatusEnum.NOT_FOUND, "sessionId 찾기 실패", new SessionEnterResponseDto(null, null));
+            return new ResponseEntity<>(msg, HttpStatus.OK);
+        }
+
+        ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
+        Connection connection = FansignSession.createConnection(properties);
+        log.info("*** 팬싸인회 입장 완료***");
+
+        Message msg = new Message(HttpStatusEnum.OK, "팬싸인회 입장 허가", new SessionEnterResponseDto(FansignSessionId, connection.getToken()));
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
     /**

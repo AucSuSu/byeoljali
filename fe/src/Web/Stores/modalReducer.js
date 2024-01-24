@@ -4,15 +4,16 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     addMember: false,
-    modifyMember: false,
+    modifyMember: { open: false, key: null },
     modifyArtist: false,
   },
   reducers: {
     handleAddMember: (state) => {
       state.addMember = !state.addMember;
     },
-    handleModifyMember: (state) => {
-      state.modifyMember = !state.modifyMember;
+    handleModifyMember: (state, action) => {
+      state.modifyMember.open = !state.modifyMember.open;
+      state.modifyMember.key = action.payload;
     },
     handleModifyArtist: (state) => {
       state.modifyArtist = !state.modifyArtist;
