@@ -21,7 +21,6 @@ public class ArtistController {
 
     @PostMapping("/signUp")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody ArtistSignUpDto dto){
-        System.out.println("컨트롤러");
         SignUpResponseDto responseDto = artistService.signUp(dto);
 
         return ResponseEntity.ok(responseDto);

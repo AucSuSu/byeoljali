@@ -1,6 +1,11 @@
 package com.example.be.fan.service;
 
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.example.be.config.jwt.JwtProperties;
+import com.example.be.config.jwt.JwtToken;
+import com.example.be.config.oauth.KakaoProfile;
 import com.example.be.config.oauth.OauthToken;
 import com.example.be.fan.dto.FanMyPageResponseDto;
 import com.example.be.fan.dto.FanMyPageUpdateRequestDto;
@@ -19,6 +24,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -85,11 +98,54 @@ public class FanService {
      */
 
     // 카카오 에서 발급받은 Token으로 카카오 회원 정보 가져오기
-    public Fan saveFan(String token){
-        return null;
+    public JwtToken saveFanAndGetToken(String token){
+
+        // 카카오 에서 발급받은 Token으로 카카오 회원 정보 가져오기
+        KakaoProfile profile = findProfile(token);
+        Optional<Fan> fan = fanRepsitory.findByEmail(profile.getKakao_account().getEmail());
+
+        Fan realFan = fan.orElseGet(() -> {
+            Fan newFan = new Fan(profile.getKakao_account().getEmail(),
+                    profile.getKakao_account().getProfile().getProfile_image_url(),
+                    profile.getKakao_account().getProfile().getNickname(),
+                    4, false);
+            fanRepsitory.save(newFan);
+            return newFan;
+        });
+        return createToken(realFan);
+
     }
 
+    private KakaoProfile findProfile(String token) {
 
+        RestTemplate restTemplate = new RestTemplate();
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        headers.add("Authorization", "Bearer " + token);
+
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
+
+        ResponseEntity<String> kakaoProfileResponse = restTemplate.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.POST,
+                kakaoProfileRequest,
+                String.class
+        );
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoProfile kakaoProfile = null;
+        System.out.println(kakaoProfileResponse.getBody());
+        try {
+            kakaoProfile = objectMapper.readValue(kakaoProfileResponse.getBody(), KakaoProfile.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return kakaoProfile;
+
+    }
 
 
     // 카카오 회원 정보를 가져오기 위한 토큰 발급
@@ -128,5 +184,25 @@ public class FanService {
     }
 
 
+    // 로그인할 fan 정보로 Token 만들기
+    public JwtToken createToken(Fan fan){
+        System.out.println(fan.getFanId());
+        // HMAC 방식의 access 토큰
+        String accessToken = JWT.create()
+                .withSubject(JwtProperties.ACCESS_TOKEN)
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME)) //30분
+                .withClaim("fanId", fan.getFanId())
+                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
+
+        // HMAC 방식의 refresh 토큰
+        String refreshToken = JWT.create()
+                .withSubject(JwtProperties.REFRESH_TOKEN)
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME)) //2주
+                .withClaim("fanId", fan.getFanId())
+                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
+        JwtToken jwtToken = new JwtToken(accessToken, refreshToken);
+        return jwtToken;
+
+    }
 
 }

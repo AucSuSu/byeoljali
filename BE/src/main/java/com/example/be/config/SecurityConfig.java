@@ -3,6 +3,7 @@ package com.example.be.config;
 import com.example.be.artist.repository.ArtistRepository;
 import com.example.be.config.jwt.JwtAuthenticationFilter;
 import com.example.be.config.jwt.JwtAuthorizationFilter;
+import com.example.be.fan.repository.FanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final ArtistRepository artistRepository;
+    private final FanRepository fanRepository;
     private final CorsConfig corsConfig;
 
     @Bean
@@ -44,6 +46,8 @@ public class SecurityConfig {
                 .apply(new CustomFilter()) // 커스텀 필터 추가
                 .and()
                 .authorizeRequests()
+//                .antMatchers("/fan/**") // 여기에 권한추가해줘야함
+//                .access("hasRole('ROLE_FAN')")
 //                .antMatchers("/artist/**") // 여기에 권한추가해줘야함
 //                .access("hasRole('ROLE_ARTIST')")
                 .anyRequest().permitAll()
@@ -66,7 +70,7 @@ public class SecurityConfig {
             http
                     .addFilter(corsConfig.corsFilter())
                     .addFilter(new JwtAuthenticationFilter(authenticationManager))
-                    .addFilter(new JwtAuthorizationFilter(authenticationManager, artistRepository));
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager, artistRepository, fanRepository));
         }
     }
 }
