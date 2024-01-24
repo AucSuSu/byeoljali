@@ -29,11 +29,11 @@ public class PhotoService {
     private final MemberFansignRepository memberFansignRepository;
 
     // 인생 네컷 페이지 - 전체 조회
-    public List<PhotoResponseDto> showPhoto(Long fanId){
-        return photoRepository.findAllPhotoByArtistFSIdandFanId(fanId);
-    }
+//    public List<PhotoResponseDto> showPhoto(Long fanId){
+//        return photoRepository.findAllPhotoByArtistFSIdandFanId(fanId);
+//    }
 
-    // 필터 - 날짜별, 결제완료, 아티스트 별
+    // 전체, 검색어(아티스트 명), 필터(결제완료/미결제) 조회
     public List<PhotoResponseDto> showAllandFilteredPhoto(Long fanId, String keyword, Boolean payOrNot){
         return photoRepository.findAllandFilteredPhoto(fanId,keyword,payOrNot);
     }
