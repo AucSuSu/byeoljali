@@ -27,7 +27,7 @@ import java.util.Date;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
-    private final RedisService redisService;
+    // private final RedisService redisService;
 
     // /login 요청을 하면 로그인 시도를 위해서 아래 메소드가 실행된다. 로그인 성공시 return인 authentication이 세션에 저장됨.
     @Override
