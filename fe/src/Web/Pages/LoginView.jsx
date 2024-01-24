@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { authAction } from '../Stores/authReducer.js';
-
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../Stores/authReducer.js';
 import './LoginView.css';
 
 export default function LoginView() {
@@ -12,29 +10,20 @@ export default function LoginView() {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const auth = useSelector((state) => state.auth.auth);
+
+  const data = {
+    username: email,
+    password: password,
+  };
 
   const handleFanLogin = () => {
-    dispatch(authAction.login());
+    console.log('카톡 로그인 클릭');
     navigate('/artistInfo');
   };
 
   const handleArtistLogin = (e) => {
     e.preventDefault();
-    dispatch(authAction.logout());
-
-    // 로그인
-    // axios.post('url',{
-    //   email : email,
-    //   password : password
-    // })
-    // .then(res => {
-    //   console.log('로그인 성공', res)
-    //   navigate('/home')
-    // })
-    // .catch(err =>{
-    //   console.log('로그인 실패', err)
-    // })
+    dispatch(loginUser(data));
   };
 
   return (
@@ -42,7 +31,6 @@ export default function LoginView() {
       <div>
         <h1>별자리에 오신 것을 환영합니다.</h1>
         <p>로그인하여 당신의 스타와 만나보세요</p>
-        <p> {auth ? 'True' : 'False'}</p>
       </div>
 
       <div className="login-section">
