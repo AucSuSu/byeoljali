@@ -3,17 +3,9 @@ import axios from 'axios';
 
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
-  async () => {
+  async (artistId) => {
     const response = await axios.get(
-      'http://localhost:5000/artists/apply/1?status=READY_APPLYING',
-      // {
-      //   headers: {
-      //     'Content-Type': `application/json;charset=UTF-8`,
-      //     Accept: 'application/json',
-      //     'Access-Control-Allow-Origin': `http://localhost:3000`,
-      //     'Access-Control-Allow-Credentials': 'true',
-      //   },
-      // },
+      `http://localhost:5000/artists/${artistId}/`,
     );
     return response.data;
   },
@@ -21,8 +13,10 @@ export const getArtistInfo = createAsyncThunk(
 
 export const modifyArtistInfo = createAsyncThunk(
   'axios/modifyArtistInfo',
-  async () => {
-    const response = await axios.get('url');
+  async (data) => {
+    const response = await axios.get(
+      'http://localhost:5000/artists/apply/1?status=READY_APPLYING',
+    );
     return response.data;
   },
 );
@@ -30,7 +24,14 @@ export const modifyArtistInfo = createAsyncThunk(
 const artistInfoSlice = createSlice({
   name: 'artistInfo',
   initialState: {
-    data: [],
+    data: {
+      object: {
+        artistImageUrl: 'hi',
+        name: 'bye',
+        companyName: 'zz',
+        memberList: [],
+      },
+    },
     status: 'idle',
     error: null,
   },
@@ -43,6 +44,7 @@ const artistInfoSlice = createSlice({
       .addCase(getArtistInfo.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.data = action.payload;
+        console.log('데이터:', state.data);
       })
       .addCase(getArtistInfo.rejected, (state, action) => {
         state.status = 'failed';

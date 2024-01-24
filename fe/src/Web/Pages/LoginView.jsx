@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../Stores/authReducer.js';
+import Kakao from './Kakao.jsx';
 import './LoginView.css';
 
 export default function LoginView() {
@@ -18,7 +19,7 @@ export default function LoginView() {
 
   const handleFanLogin = () => {
     console.log('카톡 로그인 클릭');
-    navigate('/artistInfo');
+    navigate('/');
   };
 
   const handleArtistLogin = (e) => {
