@@ -6,6 +6,7 @@ import com.example.be.photo.dto.PhotoDBDto;
 import com.example.be.photo.dto.PhotoResponseDto;
 import com.example.be.photo.entity.Photo;
 import com.example.be.photo.service.PhotoService;
+import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -47,11 +48,24 @@ public class PhotoController {
 //        Message message = new Message(HttpStatusEnum.OK, "인생네컷 " + keyword +"에 따른 사진 조회 성공", dto);
 //        return new ResponseEntity<>(message, HttpStatus.OK);
 //    }
+    // 인생네컷 전체 조회 api
+//    @GetMapping("/myalbum/{fanId}")
+//    public ResponseEntity<Message> showPhoto(@PathVariable("fanId") Long fanId){
+//        log.info(" ** 인생네컷 페이지 조회 api 입니다 ** ");
+//        List<PhotoResponseDto> dto = photoService.showPhoto(fanId);
+//        Message message = new Message(HttpStatusEnum.OK, "전체 인생네컷 사진 조회 성공", dto);
+//        return new ResponseEntity<>(message, HttpStatus.OK);
+//    }
+
+    // 인생네컷 조회 + 필터 + 검색기능 api
     @GetMapping("/myalbum/{fanId}")
-    public ResponseEntity<Message> showPhoto(@PathVariable("fanId") Long fanId){
-        log.info(" ** 인생네컷 페이지 조회 api 입니다 ** ");
-        List<PhotoResponseDto> dto = photoService.showPhoto(fanId);
-        Message message = new Message(HttpStatusEnum.OK, "전체 인생네컷 사진 조회 성공", dto);
+    public ResponseEntity<Message> showAllandFilteredPhoto(@PathVariable("fanId") Long fanId,
+                                                           @RequestParam(name ="searchKeyword", required = false) String searchKeyword,
+                                                           @RequestParam(name = "payOrNot", required = false) Boolean payOrNot){
+        log.info(" ** 인생네컷 페이지 조회 - 전체/필터/검색 api 입니다 ** ");
+        boolean finalValue = (payOrNot != null) ? payOrNot : true;
+        List<PhotoResponseDto> list = photoService.showAllandFilteredPhoto(fanId, searchKeyword, payOrNot);
+        Message message = new Message(HttpStatusEnum.OK, "전체 인생네컷 사진 전체/필터/검색어 조회 성공", list);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
