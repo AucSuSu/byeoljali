@@ -15,7 +15,10 @@ spring:
       hibernate:
         format_sql: true
   redis:
-    host: localhost
+    host: http://i10e104.p.ssafy.io
     port: 6379
+    password: 'ssafy'
+    ssl:
+      enabled: true
 logging.level:
   org.hibernate.SQL: debug

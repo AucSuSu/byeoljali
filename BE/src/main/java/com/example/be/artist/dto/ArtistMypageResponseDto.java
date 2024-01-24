@@ -14,11 +14,13 @@ public class ArtistMypageResponseDto {
 
     private String name;
     private String artistImageUrl;
+    private String companyName;
     private List<ArtistMypageResponseMemberDto> memberList = new ArrayList<>();
 
     public ArtistMypageResponseDto(Artist entity) {
         this.name = entity.getName();
         this.artistImageUrl = entity.getArtistImageUrl();
+        this.companyName = entity.getCompanyName();
         this.memberList = new ArrayList<>();
         for(Member entityMember : entity.getMemberList()){
             memberList.add(new ArtistMypageResponseMemberDto(entityMember.getMemberId(), entityMember.getName(), entityMember.getProfileImageUrl()));
