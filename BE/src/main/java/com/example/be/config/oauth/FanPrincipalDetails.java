@@ -7,10 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class fanPrincipalDetails implements UserDetails {
+public class FanPrincipalDetails implements UserDetails {
 
     private Fan fan;
-    public fanPrincipalDetails(Fan fan){
+
+    public FanPrincipalDetails(Fan fan){
         this.fan = fan;
     }
 
