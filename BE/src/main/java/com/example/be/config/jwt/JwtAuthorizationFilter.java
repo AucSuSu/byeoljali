@@ -27,8 +27,8 @@ import java.io.IOException;
 // 인가
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private ArtistRepository artistRepository;
-    private FanRepository fanRepository;
+    private final ArtistRepository artistRepository;
+    private final FanRepository fanRepository;
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, ArtistRepository artistRepository, FanRepository fanRepository) {
         super(authenticationManager);
         this.artistRepository = artistRepository;

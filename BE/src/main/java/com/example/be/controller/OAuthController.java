@@ -3,7 +3,6 @@ package com.example.be.controller;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
 import com.example.be.config.oauth.OauthToken;
-import com.example.be.fan.entity.Fan;
 import com.example.be.fan.service.FanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
