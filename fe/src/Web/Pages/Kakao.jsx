@@ -29,8 +29,8 @@ export default function Kakao() {
         },
       });
       console.log('로그인 성공', res); // 받은 데이터 출력
-      console.log(res.headers['authorization']);
-      console.log(res.headers['authorization-refresh']);
+      console.log(res.headers['authorization']); // 이게 access-token
+      console.log(res.headers['authorization-refresh']); // 이게 refresh-token
       console.log(code);
     } catch (error) {
       console.error('백엔드 전송 실패', error);
