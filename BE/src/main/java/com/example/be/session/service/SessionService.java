@@ -30,7 +30,7 @@ public class SessionService {
     private final OpenVidu openVidu;
     private final SessionRepository sessionRepository;
 
-    @Scheduled(cron = "00 00 14 * * ?") // 매일 00:00:00 에
+    @Scheduled(cron = "00 00 00 * * ?") // 매일 00:00:00 에
     public void makeByulZari()
             throws OpenViduJavaClientException, OpenViduHttpException {
 

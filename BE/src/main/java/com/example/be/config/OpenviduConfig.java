@@ -24,5 +24,4 @@ public class OpenviduConfig {
         return new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
     }
 
-
 }
