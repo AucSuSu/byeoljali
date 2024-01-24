@@ -27,21 +27,7 @@ public class SessionService {
 
     // Redis 연결 서버
     private final RedisService redisService;
-
-    // Bean 등록하면 지우기 ^^&
-    @Value("${OPENVIDU_URL}")
-    private String OPENVIDU_URL;
-
-    @Value("${OPENVIDU_SECRET}")
-    private String OPENVIDU_SECRET;
-
-    private OpenVidu openviduService;
-
-    @PostConstruct
-    public void init() {
-        this.openviduService = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-    }
-    // 여기까지
+    private final OpenVidu openVidu;
     private final SessionRepository sessionRepository;
 
     @Scheduled(cron = "00 00 14 * * ?") // 매일 00:00:00 에
@@ -70,9 +56,9 @@ public class SessionService {
 
             Map<String, Object> param = new HashMap<>(); // 이거 어떻게 다르게 쓰는지 조사좀 ^^&.. 해야할 듯
             SessionProperties propertiesFansign = SessionProperties.fromJson(param).build();
-            Session fansignSession = openviduService.createSession(propertiesFansign); // 개설
+            Session fansignSession = openVidu.createSession(propertiesFansign); // 개설
             SessionProperties propertiesWaitingRoom = SessionProperties.fromJson(param).build();
-            Session waitingRoomSession = openviduService.createSession(propertiesWaitingRoom); // 개설
+            Session waitingRoomSession = openVidu.createSession(propertiesWaitingRoom); // 개설
 
             /**
              * 개설되면 memberFansignSession + memberFansignId key, sessionId를 value로 redis에 sessionId 저장

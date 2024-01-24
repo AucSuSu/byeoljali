@@ -31,7 +31,7 @@ class SessionRepositoryImplTest {
         sessionRepository.getMemberFansignList(now);
 
         for(MemberFansign e : list){
-
+            System.out.println("sessionId 발급해야할 entity -> " + e.getMemberfansignId());
         }
     }
 
