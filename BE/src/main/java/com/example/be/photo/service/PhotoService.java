@@ -7,11 +7,14 @@ import com.example.be.fan.repository.FanRepository;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.memberfansign.repository.MemberFansignRepository;
 import com.example.be.photo.dto.PhotoDBDto;
+import com.example.be.photo.dto.PhotoResponseDto;
 import com.example.be.photo.entity.Photo;
 import com.example.be.photo.repository.PhotoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +27,21 @@ public class PhotoService {
     private final MemberFansignRepository memberFansignRepository;
 
     // 인생 네컷 페이지 - 전체 조회
+    public List<PhotoResponseDto> showPhoto(Long fanId){
+//        List<PhotoResponseDto> result;
+//        if (keyword==null){ // 키워드에 아무것도 안들어가면 전체 인생네컷 보여줌
+//            result = photoRepository.findAllPhotoByArtistFSIdandFanId(fanId);
+//        }else{ // 키워드에 뭐라도 있으면 그걸로 필터링한 결과만 보여줘
+//            // 이 작업은 repository에서 해야할 듯?
+//            result = null;
+//        }
+//        return result;
+
+        return photoRepository.findAllPhotoByArtistFSIdandFanId(fanId);
+    }
+
+    // 필터 - 날짜별, 결제완료, 아티스트 별
+
     // 인생네컷 결제
     // 인생네컷 삭제
     public Long deletePhoto(Long photoId){
@@ -53,5 +71,5 @@ public class PhotoService {
         photoRepository.save(photo);
         return photo.getPhotoId();
     }
-    // 필터 - 날짜별, 결제완료, 아티스트 별
+
 }
