@@ -56,5 +56,10 @@ public class ArtistFansign extends BaseEntity { // 아티스트 기준 팬싸인
         this.mode = mode;
         this.artist = artist;
     }
+
+    // status 변경 update
+    public void updateStatus(FansignStatus status){
+        this.status = status;
+    }
 }
 
