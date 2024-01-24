@@ -3,6 +3,7 @@ import applyListReducer from './applyListReducer.js';
 import recentListReducer from './recentListReducer.js';
 import authReducer from './authReducer.js';
 import artistInfoReducer from './artistInfoReducer.js';
+import kakaopayReducer from './kakaopayReducer.js';
 import counterReducer from './counterReducer.js'; // 추가 리듀서
 import modalReducer from './modalReducer.js';
 import storage from 'redux-persist/lib/storage';
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   artistInfo: artistInfoReducer,
   counter: counterReducer, // 추가 리듀서 추가
   recentList: recentListReducer,
+  kakaopay: kakaopayReducer,
 });
 
 // rootReducer에 대한 Persist Reducer 생성
