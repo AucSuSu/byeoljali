@@ -24,10 +24,10 @@ public class ArtistFansignController {
 
     private final ArtistFansignService artistFansignService;
 
-    @PostMapping("/artists/fansign")
-    public ResponseEntity<Message> addFansign(@RequestBody AddArtistFansignRequestDto requestDto) {
+    @PostMapping("/artists/fansign/{artistId}")
+    public ResponseEntity<Message> addFansign(@PathVariable("artistId") Long artistId, @RequestBody AddArtistFansignRequestDto requestDto) {
         log.info(" ** 팬싸인회 생성 요청 api 입니다.** ");
-        Long aritstFansignId = artistFansignService.addFansign(requestDto);
+        Long aritstFansignId = artistFansignService.addFansign(artistId, requestDto);
         Message message = new Message(HttpStatusEnum.OK, "개설 완료", aritstFansignId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
