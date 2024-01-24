@@ -1,5 +1,8 @@
 package com.example.be.photo.dto;
 
+import com.example.be.artistfansign.entity.FansignStatus;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.dsl.*;
 import lombok.Data;
 import lombok.Getter;
 import net.bytebuddy.asm.Advice;
@@ -24,4 +27,5 @@ public class PhotoResponseDto {
         this.pay = pay;
         this.artistFansignTitle = artistFansignTitle;
     }
+
 }

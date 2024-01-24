@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface PhotoRepository extends JpaRepository<Photo, Long> {
+public interface PhotoRepository extends JpaRepository<Photo, Long>, CustomPhotoRepository {
 
     // 전체 인생네컷 조회하기
     // - fan의 모든 인생네컷을 확인하기!
