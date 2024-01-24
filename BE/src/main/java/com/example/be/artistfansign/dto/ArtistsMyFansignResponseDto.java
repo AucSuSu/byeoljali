@@ -19,12 +19,15 @@ public class ArtistsMyFansignResponseDto {
     private LocalDateTime endApplyTime;
     private LocalDateTime startFansignTime;
 
-    public ArtistsMyFansignResponseDto(Long artistFansignId, Long memberFansignId, String title, String memberName, String posterImageUrl, FansignStatus status) {
+    public ArtistsMyFansignResponseDto(Long artistFansignId, Long memberFansignId, String title, String memberName, String posterImageUrl, FansignStatus status, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime) {
         this.artistFansignId = artistFansignId;
         this.memberFansignId = memberFansignId;
         this.title = title;
         this.memberName = memberName;
         this.posterImageUrl = posterImageUrl;
         this.status = status;
+        this.startApplyTime = startApplyTime;
+        this.endApplyTime = endApplyTime;
+        this.startFansignTime = startFansignTime;
     }
 }
