@@ -25,7 +25,7 @@ public class RedisRepositoryConfig {
     @Value("${spring.redis.host}")
     private String host;
 
-    @Value("{spring.redis.password}")
+    @Value("${spring.redis.password}")
     private String password;
 
     @Bean
