@@ -22,6 +22,7 @@ public class OAuthController {
     @GetMapping("/oauth")
     public ResponseEntity<String> getLogin(@RequestParam("code") String code){
 
+        System.out.println("여기");
         // 넘어온 인가 코드를 통해 카카오 유저 정보를 얻기위한 access_token 발급
         OauthToken oauthToken = fanService.getAccessToken(code);
 
