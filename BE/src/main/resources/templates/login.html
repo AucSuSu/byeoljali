@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 페이지</title>
+</head>
+<body>
+<h1>로그인 페이지</h1>
+<hr/>
+<!-- 시큐리티는 x-www-form-url-encoded 타입만 인식 -->
+<form action="/loginProc" method="post">
+  <input type="text" name="username" />
+  <input type="password" name="password" />
+  <button>로그인</button>
+</form>
+
+<br />
+
+<h1>Social Login</h1>
+<br />
+<!-- javascript:; 는 클릭해도 반응을 없게 하는 키워드 -->
+<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=218aa28a9e8fa4d947c106cb95b2ec1b&redirect_uri=http://localhost:5000/oauth">
+  kakao 로그인
+</a>
+<br />
+</body>
+</html>
