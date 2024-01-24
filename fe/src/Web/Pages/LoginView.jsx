@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../Stores/authReducer.js';
 import Kakao from './Kakao.jsx';
+=======
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from '../Stores/authReducer.js';
+
+>>>>>>> fe/feat/myphoto
 import './LoginView.css';
 
 export default function LoginView() {
@@ -18,13 +25,35 @@ export default function LoginView() {
   };
 
   const handleFanLogin = () => {
+<<<<<<< HEAD
     console.log('카톡 로그인 클릭');
     navigate('/');
+=======
+    dispatch(login());
+    navigate('/artistInfo');
+>>>>>>> fe/feat/myphoto
   };
 
   const handleArtistLogin = (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     dispatch(loginUser(data));
+=======
+    dispatch(logout());
+
+    // 로그인
+    // axios.post('url',{
+    //   email : email,
+    //   password : password
+    // })
+    // .then(res => {
+    //   console.log('로그인 성공', res)
+    //   navigate('/home')
+    // })
+    // .catch(err =>{
+    //   console.log('로그인 실패', err)
+    // })
+>>>>>>> fe/feat/myphoto
   };
 
   return (
