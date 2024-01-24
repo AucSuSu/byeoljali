@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { authAction } from '../Stores/authReducer.js';
+import { login, logout } from '../Stores/authReducer.js';
 
 import './LoginView.css';
 
@@ -15,13 +15,13 @@ export default function LoginView() {
   const auth = useSelector((state) => state.auth.auth);
 
   const handleFanLogin = () => {
-    dispatch(authAction.login());
+    dispatch(login());
     navigate('/artistInfo');
   };
 
   const handleArtistLogin = (e) => {
     e.preventDefault();
-    dispatch(authAction.logout());
+    dispatch(logout());
 
     // 로그인
     // axios.post('url',{
