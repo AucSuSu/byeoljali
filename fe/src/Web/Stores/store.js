@@ -1,7 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import applyListReducer from './applyListReducer.js';
+import recentListReducer from './recentListReducer.js';
 import authReducer from './authReducer.js';
+import artistInfoReducer from './artistInfoReducer.js';
 import counterReducer from './counterReducer.js'; // 추가 리듀서
+import modalReducer from './modalReducer.js';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
@@ -15,7 +18,10 @@ const persistConfig = {
 const rootReducer = combineReducers({
   applyList: applyListReducer,
   auth: authReducer,
+  modal: modalReducer,
+  artistInfo: artistInfoReducer,
   counter: counterReducer, // 추가 리듀서 추가
+  recentList: recentListReducer,
 });
 
 // rootReducer에 대한 Persist Reducer 생성

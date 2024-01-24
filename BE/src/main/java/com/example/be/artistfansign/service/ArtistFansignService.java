@@ -1,5 +1,7 @@
 package com.example.be.artistfansign.service;
 
+import com.example.be.artist.entity.Artist;
+import com.example.be.artist.repository.ArtistRepository;
 import com.example.be.artistfansign.dto.AddArtistFansignRequestDto;
 import com.example.be.artistfansign.dto.ArtistsMyFansignResponseDto;
 import com.example.be.artistfansign.dto.FansignResponseDto;
@@ -25,13 +27,18 @@ public class ArtistFansignService {
 
     private final ArtistFansignRepository artistFansignRepository;
     private final MemberFansignRepository memberFansignRepository;
+    private final ArtistRepository artistRepository;
     private final MemberRepository memberRepository;
 
     // 팬싸인회 개설하기
-    public Long addFansign(AddArtistFansignRequestDto dto){
+    public Long addFansign(Long artistId, AddArtistFansignRequestDto dto){
+        // artist 조회
+        Artist artist = artistRepository.findById(artistId).
+                orElseThrow(() -> new IllegalArgumentException("해당 아티스트 정보가 없습니다."));
+
         // artistFansign 개설
         ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), dto.getPostImageUrl(), dto.getInformation(), dto.getStartApplyTime()
-                ,dto.getEndApplyTime(), dto.getStartFansignTime(), FansignStatus.READY_APPLYING, dto.getMode());
+                ,dto.getEndApplyTime(), dto.getStartFansignTime(), FansignStatus.READY_APPLYING, dto.getMode(), artist);
         artistFansignRepository.save(artistFansign);
         Long artisFansignId = artistFansign.getArtistfansignId();
 

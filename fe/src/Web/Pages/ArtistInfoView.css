@@ -1,3 +1,23 @@
 .artistImg {
   border-radius: 100%;
 }
+.artist {
+  display: flex;
+}
+.members {
+  border: 1px solid black;
+  background-color: lightcyan;
+}
+
+.bar {
+  display: flex;
+  background-color: lightblue;
+}
+.bar p {
+  margin-right: 10px; /* 텍스트와 버튼 간격을 추가 */
+}
+.bar button {
+  width: 50px;
+  border-radius: 50%;
+  font-size: 25px;
+}
