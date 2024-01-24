@@ -20,22 +20,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class WebRTCController {
-// trigger test
-    @Value("${OPENVIDU_URL}")
-    private String OPENVIDU_URL;
-
-    @Value("${OPENVIDU_SECRET}")
-    private String OPENVIDU_SECRET;
-
-    private OpenVidu openvidu;
-
-    @PostConstruct
-    public void init() {
-        this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-    }
-
     // Redis 연결 서버
      private final RedisService redisService;
+     private final OpenVidu openVidu;
 
     @GetMapping("/fansign")
     public ResponseEntity<String> makeByulZari()
@@ -75,7 +62,7 @@ public class WebRTCController {
 
         String watingRoomFansignSessionId =
                 redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)));
-        Session waitingRoomSession = openvidu.getActiveSession(watingRoomFansignSessionId);
+        Session waitingRoomSession = openVidu.getActiveSession(watingRoomFansignSessionId);
         if (waitingRoomSession == null) { // 방이 없는 경우
             log.info("*** " + watingRoomFansignSessionId + "번방이 없음 ***");
             Message msg = new Message(HttpStatusEnum.NOT_FOUND, "sessionId 찾기 실패", new SessionEnterResponseDto(null, null));
@@ -101,7 +88,7 @@ public class WebRTCController {
 
         String FansignSessionId =
                 redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId)));
-        Session FansignSession = openvidu.getActiveSession(FansignSessionId);
+        Session FansignSession = openVidu.getActiveSession(FansignSessionId);
         if (FansignSession == null) { // 방이 없는 경우
             log.info("*** " + FansignSessionId + " 방이 없음 ***");
             Message msg = new Message(HttpStatusEnum.NOT_FOUND, "sessionId 찾기 실패", new SessionEnterResponseDto(null, null));
@@ -131,7 +118,7 @@ public class WebRTCController {
          *   front에서 leaveSession 호출
          */
 
-        Session session = openvidu.getActiveSession(sessionId);
+        Session session = openVidu.getActiveSession(sessionId);
         if (session == null) { // 방이 없는 경우
             log.info("*** " + sessionId + "번방이 없음 ***");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -163,8 +150,8 @@ public class WebRTCController {
         redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId)));
         String watingRoomFansignSession =
                 redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)));
-        Session fansignSession = openvidu.getActiveSession(fanSessionId);
-        Session waitingRoomSession = openvidu.getActiveSession(watingRoomFansignSession);
+        Session fansignSession = openVidu.getActiveSession(fanSessionId);
+        Session waitingRoomSession = openVidu.getActiveSession(watingRoomFansignSession);
 
         if (fansignSession == null) { // 방이 없는 경우
             log.info("*** " + fanSessionId + "번 팬싸인회 방이 없음 ***");
