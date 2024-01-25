@@ -2,6 +2,7 @@ package com.example.be.session.service;
 
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.memberfansign.entity.MemberFansign;
+import com.example.be.scheduling.repository.SchedulingRepository;
 import com.example.be.session.repository.SessionRepository;
 import com.example.be.config.redis.RedisService;
 import io.openvidu.java.client.*;
@@ -13,11 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +29,15 @@ import java.util.Map;
 @Slf4j
 public class SessionService {
 
-    // Redis 연결 서버
+
     private final RedisService redisService;
     private final OpenVidu openVidu;
     private final SessionRepository sessionRepository;
+    private final SchedulingRepository schedulingRepository;
+
 
     @Scheduled(cron = "00 00 00 * * ?") // 매일 00:00:00 에
+    @Transactional
     public void makeByulZari()
             throws OpenViduJavaClientException, OpenViduHttpException {
 
@@ -45,15 +51,22 @@ public class SessionService {
          * 3. session 을 두개 발급 받음
          * 4. Redis에 저장함 !
          * 4-1) redis-cli 에서 확인하기
+         * 5. 멤버 팬싸인회의 리스트 -> 에서 아티스트 팬싸인회 집합(set) 구하기
+         * 5-1) set 사용하기
+         * 6. 아티스트 팬싸인회 집합을 돌면서 해당 아티스트 팬싸인회 status -> session_connected 상태로 변경해주기
          */
 
         // 1.
         List<MemberFansign> list =
         sessionRepository.getMemberFansignList(now);
 
+        // artistId (status를 session_created로 바꿔줘야할) set
+        HashSet<Long> artistSet = new HashSet<>();
+
         // 2.
         for(MemberFansign mf : list){
-            Long memberFansignId = mf.getMemberfansignId(); // 예시 데이터
+            Long memberFansignId = mf.getMemberfansignId();
+            artistSet.add(mf.getArtistFansign().getArtistfansignId());
 
             Map<String, Object> param = new HashMap<>(); // 이거 어떻게 다르게 쓰는지 조사좀 ^^&.. 해야할 듯
             SessionProperties propertiesFansign = SessionProperties.fromJson(param).build();
@@ -70,8 +83,11 @@ public class SessionService {
             redisService.setValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))));
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId))));
+        }
 
-            mf.getArtistFansign().updateStatus(FansignStatus.SESSION_CONNECTED); // <- 변경 감지 되는지 확인좀..
+
+        for(Long artistFansignId : artistSet){
+            schedulingRepository.updateStatusToSessionConnected(artistFansignId);
         }
     }
 }

@@ -12,6 +12,6 @@ public interface SchedulingRepositoryCustom {
     void updateStatusToEndApply(String date);
     void updateStatusToApplying(String date);
     void updateStatusToFansign(String date);
-
+    void updateStatusToSessionConnected(Long memberFansignId);
     int insertWinner(List<WinningInsertDto> list);
 }

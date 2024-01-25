@@ -14,7 +14,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -29,9 +31,11 @@ import static com.example.be.winning.entity.QWinning.winning;
 
 @Repository
 @RequiredArgsConstructor
+@Transactional
 @Slf4j
 public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
 
+    private final EntityManager em;
     private final JdbcTemplate jdbcTemplate;
     private final JPAQueryFactory jpaQueryFactory;
 
@@ -71,6 +75,8 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                                         artistFansign.endApplyTime,
                                         "%Y-%m-%d").eq(date),
                         artistFansign.status.eq(FansignStatus.APPLYING)).execute();
+        em.flush();
+        em.clear();
     }
 
     @Override
@@ -85,7 +91,10 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                                 dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
                                         artistFansign.startApplyTime,
                                         "%Y-%m-%d").eq(date),
-                        artistFansign.status.eq(FansignStatus.READY_APPLYING)).execute();
+                        artistFansign.status.eq(FansignStatus.READY_APPLYING))
+                .execute();
+        em.flush();
+        em.clear();
     }
 
     @Override
@@ -99,8 +108,24 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                                 dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
                                         artistFansign.startFansignTime,
                                         "%Y-%m-%d HH").eq(date),
-                        artistFansign.status.eq(FansignStatus.SESSION_CONNECTED)).execute();
+                        artistFansign.status.eq(FansignStatus.SESSION_CONNECTED))
+                .execute();
+        em.flush();
+        em.clear();
+    }
 
+    @Override
+    public void updateStatusToSessionConnected(Long artistFansignId) {
+
+        log.info(" *** repository : session 발급한 팬싸인회 status 변경 *** " + artistFansignId);
+
+        jpaQueryFactory
+                .update(artistFansign)
+                .set(artistFansign.status, FansignStatus.SESSION_CONNECTED)
+                .where(artistFansign.artistfansignId.eq(artistFansignId))
+                .execute();
+        em.flush();
+        em.clear();
     }
 
     @Override
