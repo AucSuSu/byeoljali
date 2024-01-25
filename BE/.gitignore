@@ -27,7 +27,7 @@ out/
 !**/src/test/**/out/
 application.properties
 application.yml
-application.oauth.yml
+application-oauth.yml
 
 ### NetBeans ###
 /nbproject/private/
