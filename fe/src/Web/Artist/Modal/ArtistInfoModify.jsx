@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { handleModifyMember } from '../Stores/modalReducer';
+import { handleModifyArtist } from '../../Stores/modalReducer';
 import { useDispatch } from 'react-redux';
 
-export default function MemberInfoModify({ data }) {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+export default function ArtistInfoModify({ data }) {
+  const modalIsOpen = useState(true);
 
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch(handleModifyMember(null));
+    dispatch(handleModifyArtist());
   };
 
   const customStyle = {
@@ -30,11 +30,11 @@ export default function MemberInfoModify({ data }) {
         <div>
           <h2>{data.name}</h2>
           <img
-            src={data.posterImageUrl}
+            src={data.artistImageUrl}
             alt={data.name}
             style={{ width: '200px', borderRadius: '10px' }}
           />
-          <p>맴버 정보 수정</p>
+          <p>아티스트(그룹)정보 수정</p>
           <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>
