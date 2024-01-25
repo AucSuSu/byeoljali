@@ -1,5 +1,6 @@
 package com.example.be.session.service;
 
+import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.session.repository.SessionRepository;
 import com.example.be.config.redis.RedisService;
@@ -67,9 +68,10 @@ public class SessionService {
 
             redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId());
             redisService.setValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
-            log.info("*** 읽기 ***" + redisService.getValues("1"));
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))));
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId))));
+
+            mf.getArtistFansign().updateStatus(FansignStatus.SESSION_CONNECTED); // <- 변경 감지 되는지 확인좀..
         }
     }
 }

@@ -11,9 +11,15 @@ import javax.persistence.*;
 public class WinningInsertDto {
 
 
-    private MemberFansign memberfansign;
-    private Fan fan;
+    private Long memberfansignId;
+    private Long fanId;
+    private Long applicantId;
     private int orders; // 순서
-    private Applicant applicant;
 
+    public WinningInsertDto(Long memberfansignId, Long fanId, Long applicantId, int orders) {
+        this.memberfansignId = memberfansignId;
+        this.fanId = fanId;
+        this.applicantId = applicantId;
+        this.orders = orders;
+    }
 }

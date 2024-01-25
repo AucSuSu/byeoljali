@@ -9,6 +9,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,6 +29,7 @@ import static com.example.be.winning.entity.QWinning.winning;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
 
     private final JdbcTemplate jdbcTemplate;
@@ -55,48 +57,11 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
         return batchCount;
     }
 
-    @Override
-    public List<ArtistFansign> findByendApplyTime(LocalDateTime date) {
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = date.format(formatter);
-
-        // 당첨자를 뽑아야하는 artistFansign 가져오기 -> 상태 바꾸기
-        // 당첨자를 뽑아야하는 memberFansign의 응모자에서 random으로 100명 뽑기
-        // 뽑은 list를 bulk insert 해주기
-
-        List<ArtistFansign> list =
-        jpaQueryFactory.selectFrom(artistFansign)
-                .where(Expressions.
-                        dateTemplate(String.class, "DATE_FORMAT({0}, {1})", artistFansign.endApplyTime,
-                                "%Y-%m-%d").eq(formattedDate),
-                        artistFansign.status.eq(FansignStatus.APPLYING)).fetch();
-        return list;
-    }
 
     @Override
-    public void updateStatusToEndApply(LocalDateTime date) {
+    public void updateStatusToEndApply(String date) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = date.format(formatter);
-
-        jpaQueryFactory
-                .update(artistFansign).set(artistFansign.status, FansignStatus.READY_FANSIGN)
-                .where(Expressions.
-                                dateTemplate(String.class, "DATE_FORMAT({0}, {1})", artistFansign.endApplyTime,
-                                        "%Y-%m-%d").eq(formattedDate),
-                        artistFansign.status.eq(FansignStatus.APPLYING)).execute();
-
-    }
-
-
-    public void getWinningList(LocalDateTime date){
-
-        // 한번에 당첨을 모두 시켜버리기 (모든 멤버 팬싸인)의 문제점
-        // 순서를 정하는데 row-num을 못 씀
-        // groupby
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = date.format(formatter);
+        log.info(" *** repository : 응모마감으로 status 변경 *** ");
 
         jpaQueryFactory
                 .update(artistFansign)
@@ -104,9 +69,44 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 .where(Expressions.
                                 dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
                                         artistFansign.endApplyTime,
-                                        "%Y-%m-%d").eq(formattedDate),
+                                        "%Y-%m-%d").eq(date),
                         artistFansign.status.eq(FansignStatus.APPLYING)).execute();
+    }
 
+    @Override
+    public void updateStatusToApplying(String date) {
+
+        log.info(" *** repository : applying 가능하도록 status 변경 *** ");
+
+        jpaQueryFactory
+                .update(artistFansign)
+                .set(artistFansign.status, FansignStatus.APPLYING)
+                .where(Expressions.
+                                dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
+                                        artistFansign.startApplyTime,
+                                        "%Y-%m-%d").eq(date),
+                        artistFansign.status.eq(FansignStatus.READY_APPLYING)).execute();
+    }
+
+    @Override
+    public void updateStatusToFansign(String date) {
+        log.info(" *** repository : fansign 진행중 status 변경 *** ");
+
+        jpaQueryFactory
+                .update(artistFansign)
+                .set(artistFansign.status, FansignStatus.FANSIGN)
+                .where(Expressions.
+                                dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
+                                        artistFansign.startFansignTime,
+                                        "%Y-%m-%d HH").eq(date),
+                        artistFansign.status.eq(FansignStatus.SESSION_CONNECTED)).execute();
 
     }
+
+    @Override
+    public int insertWinner(List<WinningInsertDto> list) {
+        log.info(" *** repository : 당첨자 insert *** ");
+       return batchInsert(BATCH_SIZE, 0, list);
+    }
+
 }
