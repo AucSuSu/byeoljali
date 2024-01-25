@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 
+import List from './HomeApplyList';
+
 const ApplyFormModal = ({ data, isModalOpen, closeModal }) => {
   const customStyle = {
     content: {
@@ -18,7 +20,10 @@ const ApplyFormModal = ({ data, isModalOpen, closeModal }) => {
       style={customStyle}
     >
       <div>
+        {/* 팬 사인회 명 */}
         <h2>{data.title}</h2>
+        {/* 응모 가능 멤버 */}
+        <List></List>
         <img
           src={data.posterImageUrl}
           alt={data.title}

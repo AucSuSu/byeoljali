@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ApplyFormModal from '../Home/ApplyFormModal';
+import ApplyFormModal from '../Home/HomeApplyFormModal';
 
 const ListItem = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

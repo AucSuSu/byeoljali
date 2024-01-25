@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginView from './Web/Pages/LoginView.jsx';
 import ArtistInfoView from './Web/Pages/ArtistInfoView.jsx';
-import HomeView from './Web/Pages/HoemView.jsx';
+import HomeView from './Web/Pages/HomeView.jsx';
 import Test from './Web/test.js';
 import CounterView from './Web/Pages/CounterView.jsx';
 import FanInfoView from './Web/Pages/FanInfoView.jsx';
