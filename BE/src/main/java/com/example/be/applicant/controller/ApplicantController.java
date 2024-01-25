@@ -47,13 +47,14 @@ public class ApplicantController {
     }
 
     // 응모 상세 페이지 조회하기 - 팬싸인회 정보 보여주기
-//    @GetMapping("/applyPage/detail/{memberfansignId}/{fanId}")
-//    public ResponseEntity<Message> applyDetail(@PathVariable("memberfansignId") Long memberfansignId, @PathVariable("fanId") Long fanId){
-//        log.info(" ** 응모 상세 페이지 조회 api 입니다 ** ");
-//        ApplyPageDetailDto dto = applicantService.getDetailApplyFansign(memberfansignId, fanId);
-//        Message message = new Message(HttpStatusEnum.OK, "응모 팬싸 상세보기 성공", dto);
-//        return new ResponseEntity<>(message, HttpStatus.OK);
-//    }
+    @GetMapping("/applyPage/detail/{fanId}/{memberfansignId}/{isWon}")
+    public ResponseEntity<Message> applyDetail(@PathVariable("memberfansignId") Long memberfansignId,
+                                               @PathVariable("fanId") Long fanId,
+                                               @PathVariable("isWon") Boolean isWon){
+        log.info(" ** 응모 상세 페이지 조회 api 입니다 ** ");
+        ApplyPageDetailDto dto = applicantService.getDetailApplyFansign(memberfansignId, fanId, isWon);
+        Message message = new Message(HttpStatusEnum.OK, "응모 팬싸 상세 조회 성공", dto);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 
-    // 필터 기능 - 멤버별
 }

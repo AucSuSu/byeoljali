@@ -51,6 +51,7 @@ public class ApplicantService {
         return applicant.getApplicantId();
     }
 
+    // 응모페이지 전체 조회
     public List<ApplyPageDto> findAllApplyPageById(Long fanId){
 
         List<ApplyPageDto> result = applicantRepository.findAllApplyPageById(fanId);
@@ -58,9 +59,10 @@ public class ApplicantService {
         return result;
     }
 
-//    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId){
-//        return
-//                applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId);
-//    }
+    // 응모 페이지 상세 조회
+    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId, Boolean isWon){
+        return
+                applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId, isWon);
+    }
 
 }
