@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class ApplyPageDetailDto { // 응모 페이지에서 보여야 할 값
 
-
+    private Long memberfansignId;
     private String posterImageUrl; // 포스터 사진
     private String artistFansignTitle; // 팬싸인회 이름
     private String memberName; // 해당 멤버 이름
@@ -19,7 +19,8 @@ public class ApplyPageDetailDto { // 응모 페이지에서 보여야 할 값
     private int orders;
     private FansignStatus status;
 
-    public ApplyPageDetailDto(String posterImageUrl, String artistFansignTitle, String memberName, String information, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, int orders, FansignStatus status) {
+    public ApplyPageDetailDto(Long memberfansignId, String posterImageUrl, String artistFansignTitle, String memberName, String information, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, int orders, FansignStatus status) {
+        this.memberfansignId = memberfansignId;
         this.posterImageUrl = posterImageUrl;
         this.artistFansignTitle = artistFansignTitle;
         this.memberName = memberName;
