@@ -25,8 +25,8 @@ public class ApplicantService {
 
     private final ApplicantRepository applicantRepository;
     private final FanRepository fanRepository;
-    private final ArtistFansignRepository artistFansignRepository;
     private final MemberFansignRepository memberFansignRepository;
+    private final ArtistFansignRepository artistFansignRepository;
 
     // 팬싸인회 응모 폼을 만드는 거 - 프론트에 보내줄 값
     public ApplyFormResponseDto makeApplyForm(Long artistfansign_id){
