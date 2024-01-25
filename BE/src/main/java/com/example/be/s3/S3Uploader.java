@@ -24,15 +24,14 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException{
+    public String upload(MultipartFile multipartFile, String dirName, String name) throws IOException{
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
-        return upload(uploadFile, dirName);
+        return upload(uploadFile, dirName, name);
     }
 
-    private String upload(File uploadFile, String dirName){
-        String fileName = dirName + "/" + uploadFile.getName();
+    private String upload(File uploadFile, String dirName, String name){
+        String fileName = dirName + "/" + name + "/" + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);
-
         removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
 
         return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환

@@ -62,27 +62,34 @@ public class ArtistService {
         return new ArtistMypageResponseDto(entity);
     }
 
-    public Long addMember(ArtistMemberAddRequestDto dto){
-        Artist artist = artistRepository.findById(dto.getArtistId()).
-                orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
-        Member member = new Member(artist, dto.getName(), dto.getProfileImageUrl());
-        memberRepository.save(member);
-
-        return member.getMemberId();
+    public Long addMember(ArtistMemberAddRequestDto dto, MultipartFile image){
+        Artist artist = getArtist();
+        try {
+            String uploadUrl = s3Uploader.upload(image, "artist/" + artist.getName() + "/member", dto.getName());
+            Member member = new Member(artist, dto.getName(), uploadUrl);
+            memberRepository.save(member);
+            return member.getMemberId();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String updateImage(MultipartFile image){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        Artist artist = principalDetails.getArtist();
-
+        Artist artist = getArtist();
         try {
-            String uploadUrl = s3Uploader.upload(image, "artist");
+            String uploadUrl = s3Uploader.upload(image, "artist", artist.getName());
             artist.setArtistImageUrl(uploadUrl);
+            artistRepository.save(artist); // 필터단에서 artist를 가져오는데 이건 트랜잭션 단위가 아니라서 1차 캐시에 저장되지않는다. 그래서 강제적으로 save 호출
             return "완료";
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private Artist getArtist(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        return principalDetails.getArtist();
     }
 }
