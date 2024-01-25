@@ -74,7 +74,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
     }
 
     @Override
-    public ApplyPageDetailDto findDetailFSBymemberFSId(Long memberFansignId, Long fanId, Boolean isWon){
+    public ApplyPageDetailDto findDetailFSBymemberFSId(Long memberFansignId, Long fanId){
         queryFactory = new JPAQueryFactory(em);
 
         return queryFactory.select(

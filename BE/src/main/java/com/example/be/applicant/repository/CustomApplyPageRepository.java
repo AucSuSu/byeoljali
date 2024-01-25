@@ -12,5 +12,5 @@ public interface CustomApplyPageRepository {
     List<ApplyPageDto> findAllApplyPageById(Long fanId);
 
     // 선택된 페이지 클릭 시, 응모 상세 페이지
-    ApplyPageDetailDto findDetailFSBymemberFSId(Long memberFansignId, Long fanId, Boolean isWon);
+    ApplyPageDetailDto findDetailFSBymemberFSId(Long memberFansignId, Long fanId);
 }
