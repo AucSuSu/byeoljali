@@ -3,6 +3,7 @@ package com.example.be.applicant.service;
 import com.example.be.applicant.dto.ApplyFormRequestDto;
 import com.example.be.applicant.dto.ApplyPageDetailDto;
 import com.example.be.applicant.dto.ApplyPageDto;
+import com.example.be.applicant.dto.SeparatedApplyPageDto;
 import com.example.be.applicant.entity.Applicant;
 import com.example.be.applicant.repository.ApplicantRepository;
 import com.example.be.applicant.repository.CustomApplyPageRepository;
@@ -55,6 +56,20 @@ public class ApplicantService {
     public List<ApplyPageDto> findAllApplyPageById(Long fanId){
 
         List<ApplyPageDto> result = applicantRepository.findAllApplyPageById(fanId);
+
+        return result;
+    }
+
+    public List<SeparatedApplyPageDto> findAllApplyPageById2(Long fanId, boolean isWon){
+
+        List<SeparatedApplyPageDto> result;
+        if (isWon == false){
+            // 응모한 페이지만
+            result = applicantRepository.findApplyingPageById(fanId);
+        }else{
+            // 당첨만
+            result = applicantRepository.findWonPageById(fanId);
+        }
 
         return result;
     }

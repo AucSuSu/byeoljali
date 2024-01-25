@@ -3,6 +3,7 @@ package com.example.be.applicant.controller;
 import com.example.be.applicant.dto.ApplyFormRequestDto;
 import com.example.be.applicant.dto.ApplyPageDetailDto;
 import com.example.be.applicant.dto.ApplyPageDto;
+import com.example.be.applicant.dto.SeparatedApplyPageDto;
 import com.example.be.applicant.service.ApplicantService;
 import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
@@ -45,6 +46,19 @@ public class ApplicantController {
         Message message = new Message(HttpStatusEnum.OK, "응모 내역 페이지 전체 출력 성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    // 응모 내역 페이지 - 응모 중인 것만 !!!!
+    @GetMapping("/applyPage/{fanId}/{isWon}")
+    public ResponseEntity<Message> onlyAppliedList(@PathVariable("fanId") Long fanId,
+                                                   @PathVariable("isWon") boolean isWon){
+        log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
+        List<SeparatedApplyPageDto> dto = applicantService.findAllApplyPageById2(fanId, isWon);
+
+        String str = isWon?"당첨된 ":"응모 중인 ";
+        Message message = new Message(HttpStatusEnum.OK, str+"팬싸 내역 페이지 출력 성공", dto);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
     // 응모 상세 페이지 조회하기 - 팬싸인회 정보 보여주기
     @GetMapping("/applyPage/detail/{fanId}/{memberfansignId}")
