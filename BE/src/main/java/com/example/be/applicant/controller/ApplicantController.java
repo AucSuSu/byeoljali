@@ -47,12 +47,11 @@ public class ApplicantController {
     }
 
     // 응모 상세 페이지 조회하기 - 팬싸인회 정보 보여주기
-    @GetMapping("/applyPage/detail/{fanId}/{memberfansignId}/{isWon}")
+    @GetMapping("/applyPage/detail/{fanId}/{memberfansignId}")
     public ResponseEntity<Message> applyDetail(@PathVariable("memberfansignId") Long memberfansignId,
-                                               @PathVariable("fanId") Long fanId,
-                                               @PathVariable("isWon") Boolean isWon){
+                                               @PathVariable("fanId") Long fanId){
         log.info(" ** 응모 상세 페이지 조회 api 입니다 ** ");
-        ApplyPageDetailDto dto = applicantService.getDetailApplyFansign(memberfansignId, fanId, isWon);
+        ApplyPageDetailDto dto = applicantService.getDetailApplyFansign(memberfansignId, fanId);
         Message message = new Message(HttpStatusEnum.OK, "응모 팬싸 상세 조회 성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

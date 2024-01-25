@@ -60,9 +60,9 @@ public class ApplicantService {
     }
 
     // 응모 페이지 상세 조회
-    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId, Boolean isWon){
+    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId){
         return
-                applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId, isWon);
+                applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId);
     }
 
 }
