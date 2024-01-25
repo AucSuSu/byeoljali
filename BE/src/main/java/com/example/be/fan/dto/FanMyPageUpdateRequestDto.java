@@ -1,16 +1,16 @@
 package com.example.be.fan.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class FanMyPageUpdateRequestDto {
 
+    private String name;
     private String nickname;
-    private String profileImageUrl;
+    private MultipartFile profileImage;
 
-    public FanMyPageUpdateRequestDto(String nickname, String profileImageUrl) {
-        this.nickname = nickname;
-        this.profileImageUrl = profileImageUrl;
-    }
 }
