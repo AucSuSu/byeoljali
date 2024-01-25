@@ -6,13 +6,20 @@ import com.example.be.artist.dto.ArtistSignUpDto;
 import com.example.be.artist.dto.SignUpResponseDto;
 import com.example.be.artist.entity.Artist;
 import com.example.be.artist.repository.ArtistRepository;
+import com.example.be.config.auth.PrincipalDetails;
 import com.example.be.member.Member;
 import com.example.be.member.repository.MemberRepository;
+import com.example.be.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -22,6 +29,7 @@ public class ArtistService {
     private final ArtistRepository artistRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberRepository memberRepository;
+    private final S3Uploader s3Uploader;
 
     public SignUpResponseDto signUp(ArtistSignUpDto dto){
 
@@ -61,5 +69,20 @@ public class ArtistService {
         memberRepository.save(member);
 
         return member.getMemberId();
+    }
+
+    public String updateImage(MultipartFile image){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Artist artist = principalDetails.getArtist();
+
+        try {
+            String uploadUrl = s3Uploader.upload(image, "artist");
+            artist.setArtistImageUrl(uploadUrl);
+            return "완료";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
