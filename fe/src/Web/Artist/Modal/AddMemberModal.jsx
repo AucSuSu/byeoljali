@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { handleModifyMember } from '../../Stores/modalReducer';
 import { useDispatch } from 'react-redux';
 
-export default function MemberInfoModify({ data }) {
-  const modalIsOpen = useState(true);
+export default function AddMemberModal({}) {
+  const [modalIsOpen, setModalIsOpen] = useState(true);
 
   const dispatch = useDispatch();
   const closeModal = () => {
-    dispatch(handleModifyMember(null));
+    setModalIsOpen(!modalIsOpen);
   };
 
   const modify = () => {};
+
+  const add = () => {};
 
   const customStyle = {
     content: {
@@ -36,12 +37,11 @@ export default function MemberInfoModify({ data }) {
         <div>
           <h2>{data.name}</h2>
           <img
-            // src={data.posterImageUrl}
-            src={'/aspa.png'}
+            src={data.posterImageUrl}
             alt={data.name}
             style={{ width: '400px', borderRadius: '10px' }}
           />
-          <button onClick={modify}>수정하기</button>
+          <button onClick={add}>추가하기</button>
           <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>
