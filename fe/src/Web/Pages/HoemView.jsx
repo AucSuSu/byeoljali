@@ -1,17 +1,26 @@
 // HomeView.jsx
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+// Reducer 추가
+import { setRecentList } from '../Stores/recentListReducer';
+import { setDataList } from '../Stores/applyListReducer';
+
 import List from '../Utils/List';
 import Carousel from '../Home/Carousel';
 import axios from 'axios';
 
-// Reducer 추가
-import { setRecentList } from '../Stores/recentListReducer';
+//Navbar
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from '../Utils/NavBar';
+
+const Home = () => <h2>홈 페이지</h2>;
+const About = () => <h2>소개 페이지</h2>;
+const Contact = () => <h2>문의 페이지</h2>;
 
 const HomeView = () => {
   //redux 적용
   const dispatch = useDispatch();
-  const dataList = useSelector((state) => state.applyList.dataList);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,24 +35,28 @@ const HomeView = () => {
         console.error('최근 팬 사인회 정보 로드 실패: ', error);
       }
 
-      /*try {
+      try {
         const response = await axios.get(
-          'http://192.168.30.152:5000/mainpage/1',
+          'http://localhost:5000/mainpage/1?searchKeyword=&order=register&status=READY_APPLYING',
         );
-        dispatch(setDataList(response.data[0].object));
+        console.log('팬 사인회 정보 로드 성공');
+        console.log(response.data.object);
+        dispatch(setDataList(response.data.object));
       } catch (error) {
         console.error('팬 사인회 정보 로드 실패: ', error);
-      }*/
+      }
     };
 
     fetchData();
   }, [dispatch]);
   return (
     <div>
+      <Navbar isFan={true}></Navbar>
+
       <h1>동글이 리스트</h1>
       {/* 캐러셀 */}
       <Carousel />
-      <List dataList={dataList[0].object} />
+      <List />
     </div>
   );
 };
