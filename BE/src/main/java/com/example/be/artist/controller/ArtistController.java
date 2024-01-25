@@ -10,8 +10,10 @@ import com.example.be.common.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/artists")
@@ -46,5 +48,12 @@ public class ArtistController {
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
 
+
+    // 아티스트 프로필 이미지 변경
+
+    @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String updateImage(@RequestParam(value = "image") MultipartFile image){
+        return artistService.updateImage(image);
+    }
 
 }
