@@ -11,11 +11,6 @@ export default function MemberInfoModify({ data }) {
     dispatch(handleModifyMember(null));
   };
 
-  // const data = {
-  //   title: '에스파파',
-  //   posterImageUrl: '/aspa.png',
-  // };
-
   const customStyle = {
     content: {
       width: '500px',

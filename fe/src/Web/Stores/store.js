@@ -32,6 +32,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 // Store 구성
 const store = configureStore({
   reducer: persistedReducer, // 여기에서 persistedReducer 사용
+  middleware: (
+    getDefaultMiddleware, // 에러 제거  - middleware에서 serialize 체크 안함
+  ) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 const persistor = persistStore(store);
