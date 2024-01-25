@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +25,10 @@ public class ArtistFansignController {
 
     private final ArtistFansignService artistFansignService;
 
-    @PostMapping("/artists/fansign/{artistId}")
-    public ResponseEntity<Message> addFansign(@PathVariable("artistId") Long artistId, @RequestBody AddArtistFansignRequestDto requestDto) {
+    @PostMapping(value = "/artists/fansign", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Message> addFansign(AddArtistFansignRequestDto requestDto) {
         log.info(" ** 팬싸인회 생성 요청 api 입니다.** ");
-        Long aritstFansignId = artistFansignService.addFansign(artistId, requestDto);
+        Long aritstFansignId = artistFansignService.addFansign(requestDto);
         Message message = new Message(HttpStatusEnum.OK, "개설 완료", aritstFansignId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
