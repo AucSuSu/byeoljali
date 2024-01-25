@@ -26,8 +26,8 @@ public class ApplicantService {
 
     private final ApplicantRepository applicantRepository;
     private final FanRepository fanRepository;
-    private final ArtistFansignRepository artistFansignRepository;
     private final MemberFansignRepository memberFansignRepository;
+    private final ArtistFansignRepository artistFansignRepository;
 
     // 팬싸인회 응모 폼 제출
     public Long submitApplyForm(ApplyFormRequestDto requestDto){

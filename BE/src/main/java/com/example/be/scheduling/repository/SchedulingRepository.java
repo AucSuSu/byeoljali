@@ -4,10 +4,10 @@ import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignMode;
 import com.example.be.memberfansign.dto.MemberFansignInfoDto;
 import com.example.be.memberfansign.entity.MemberFansign;
-import com.example.be.winning.dto.WinningInsertDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import com.example.be.winning.dto.WinningInsertDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,7 +27,7 @@ public interface SchedulingRepository extends JpaRepository<ArtistFansign, Long>
     @Query(value = "select new com.example.be.winning.dto.WinningInsertDto(mf.memberfansignId, a.fanId, a.applicantId,ROW_NUMBER()) " +
             "from applicant a " +
             "join a.mf mf " +
-            "where mf.memberfansign_id = :memberFansignId " +
+            "where mf.memberfansignId = :memberFansignId " +
             "order by " +
             "case " +
             "when :ordercon = 'RANDOM' then RAND() " +
