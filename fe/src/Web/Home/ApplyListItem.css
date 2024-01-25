@@ -1,0 +1,10 @@
+.item {
+  text-align: 'center';
+  margin: '10px';
+  display: 'inline-block';
+}
+
+.image {
+  width: '100px';
+  border-radius: '50%';
+}
