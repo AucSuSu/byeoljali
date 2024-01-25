@@ -30,10 +30,10 @@ logging.level:
 cloud:
   aws:
     s3:
-      bucket: testbyeoljari
+      bucket: 'testbyeoljari'
     credentials:
-      access-key: AKIA2XMTXK5MPFBZ3PSM
-      secret-key: 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
+      access-key: 'AKIA2XMTXK5MPFBZ3PSM'
+      secret-key: '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'
     region:
       static: ap-northeast-2
       auto: false

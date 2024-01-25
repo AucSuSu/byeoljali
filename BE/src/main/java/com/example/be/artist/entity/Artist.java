@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
     private String email;
     private String password;
     private String name;
+    @Setter
     private String artistImageUrl;
     private String roles;
 
