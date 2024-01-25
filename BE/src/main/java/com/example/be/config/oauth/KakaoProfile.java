@@ -34,6 +34,8 @@ public class KakaoProfile {
         public String email;
         public Boolean has_birthday;
         public Boolean birthday_needs_agreement;
+        public String birthday;
+        public String birthday_type;
 
         @Getter @Setter
         @ToString
