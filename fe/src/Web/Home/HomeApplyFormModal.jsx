@@ -23,7 +23,7 @@ const ApplyFormModal = ({ data, isModalOpen, closeModal }) => {
         {/* 팬 사인회 명 */}
         <h2>{data.title}</h2>
         {/* 응모 가능 멤버 */}
-        <List></List>
+        <List type="member"></List>
         <img
           src={data.posterImageUrl}
           alt={data.title}

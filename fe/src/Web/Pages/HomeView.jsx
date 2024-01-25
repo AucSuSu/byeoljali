@@ -23,11 +23,11 @@ const HomeView = () => {
   return (
     <div>
       <Navbar isFan={true}></Navbar>
-
-      <h1>동글이 리스트</h1>
+      <h1>홈</h1>
       {/* 캐러셀 */}
       <Carousel />
-      <List />
+      <h1>응모 리스트</h1>
+      <List type="current" />
     </div>
   );
 };

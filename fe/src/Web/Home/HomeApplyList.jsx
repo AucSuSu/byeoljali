@@ -14,7 +14,7 @@ const List = (type) => {
   return (
     <div>
       {dataList.map((item, index) => (
-        <ListItem key={index} data={item} />
+        <ListItem data={item} type={type} />
       ))}
     </div>
   );
