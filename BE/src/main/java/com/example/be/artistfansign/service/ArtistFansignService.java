@@ -9,14 +9,21 @@ import com.example.be.artistfansign.dto.RecentFansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
+import com.example.be.config.auth.PrincipalDetails;
 import com.example.be.member.Member;
 import com.example.be.member.repository.MemberRepository;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.memberfansign.repository.MemberFansignRepository;
+import com.example.be.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,29 +36,37 @@ public class ArtistFansignService {
     private final MemberFansignRepository memberFansignRepository;
     private final ArtistRepository artistRepository;
     private final MemberRepository memberRepository;
+    private final S3Uploader s3Uploader;
 
     // 팬싸인회 개설하기
-    public Long addFansign(Long artistId, AddArtistFansignRequestDto dto){
+    public Long addFansign(AddArtistFansignRequestDto dto){
         // artist 조회
-        Artist artist = artistRepository.findById(artistId).
-                orElseThrow(() -> new IllegalArgumentException("해당 아티스트 정보가 없습니다."));
+        Artist artist = getArtist();
+        LocalDateTime startApplyTime = convertDateTime(dto.getStartApplyTime());
+        LocalDateTime endApplyTime = convertDateTime(dto.getEndApplyTime());
+        LocalDateTime startFansignTime = convertDateTime(dto.getStartFansignTime());
 
-        // artistFansign 개설
-        ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), dto.getPostImageUrl(), dto.getInformation(), dto.getStartApplyTime()
-                ,dto.getEndApplyTime(), dto.getStartFansignTime(), FansignStatus.READY_APPLYING, dto.getMode(), artist);
-        artistFansignRepository.save(artistFansign);
-        Long artisFansignId = artistFansign.getArtistfansignId();
+        try {
+            String imageUrl = s3Uploader.uploadPoster(dto.getImage(), "fansignPoster", artist.getName(), startFansignTime);
+            // artistFansign 개설
+            ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
+                    , endApplyTime, startFansignTime, FansignStatus.READY_APPLYING, dto.getMode(), artist);
+            artistFansignRepository.save(artistFansign);
+            Long artisFansignId = artistFansign.getArtistfansignId();
 
-        // memberFansign 개설
-        for(Long memberId : dto.getMemberIdList()){
-            // 멤버 조회
-            Member member = memberRepository.findById(memberId).
-                    orElseThrow(() -> new IllegalArgumentException("해당 멤버가 없습니다."));
+            // memberFansign 개설
+            for(Long memberId : dto.getMemberIdList()){
+                // 멤버 조회
+                Member member = memberRepository.findById(memberId).
+                        orElseThrow(() -> new IllegalArgumentException("해당 멤버가 없습니다."));
 
-            MemberFansign memberFansign = new MemberFansign(artistFansign, member);
-            memberFansignRepository.save(memberFansign);
+                MemberFansign memberFansign = new MemberFansign(artistFansign, member);
+                memberFansignRepository.save(memberFansign);
+            }
+            return artisFansignId;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return artisFansignId;
     }
 
     // 팬싸인회 최근 3개 리스트 가져오기
@@ -75,5 +90,16 @@ public class ArtistFansignService {
         List<ArtistsMyFansignResponseDto> list
                 = artistFansignRepository.findArtistsMyFansign(artistId, status);
         return list;
+    }
+
+    private Artist getArtist(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        return principalDetails.getArtist();
+    }
+
+    private LocalDateTime convertDateTime(String dateString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(dateString, formatter);
     }
 }
