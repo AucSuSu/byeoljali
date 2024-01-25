@@ -22,15 +22,7 @@ const authSlice = createSlice({
     status: 'idle', // 'idle === 동작 전
     error: null,
   },
-  reducers: {
-    login(state, action) {
-      axios
-        .post('url')
-        .then((res) => {})
-        .catch((err) => {});
-    },
-    logout() {},
-  },
+  reducers: {},
   /// extraReducers(반고정) /  builder(유동) / addCase, pending, fulfiled, rejected 고정
   extraReducers: (builder) => {
     builder
@@ -50,5 +42,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, logout } = authSlice.actions;
 export default authSlice.reducer;
+export const selectToken = (state) => state.auth.token;
