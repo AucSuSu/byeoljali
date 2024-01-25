@@ -10,6 +10,7 @@ import FanPhoto from './Web/Pages/FanPhotoView.jsx';
 import FanPhotoPayReady from './Web/Fan/FanPhotoPayReady.jsx';
 import FanPhotoPayResult from './Web/Fan/FanPhotoPayResult.jsx';
 import ArtistFanSignView from './Web/Pages/ArtistFanSignView.jsx';
+import ArtistReadyFansignView from './Web/Pages/ArtistReadyFansignView.jsx';
 
 export default function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ export default function AppRoutes() {
         <Route path="/userphoto" element={<FanPhoto />} />
         <Route path="/userphoto/payresult" element={<FanPhotoPayResult />} />
         <Route path="/fansign" element={<ArtistFanSignView />} />
+        <Route path="/readyfansign" element={<ArtistReadyFansignView />} />
 
         {/* 라우트 여기에 추가하세용 */}
       </Routes>

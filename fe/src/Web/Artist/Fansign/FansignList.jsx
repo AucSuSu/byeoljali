@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import FansignModal from './FansignModal.jsx';
-import { handleFansignInfo } from '../Stores/modalReducer.js';
+import FansignModal from '../Modal/FansignModal.jsx';
+import { handleFansignInfo } from '../../Stores/modalReducer.js';
 
 export default function MemberList({ data }) {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function MemberList({ data }) {
       <p>{data.title}</p>
       <p>{data.memberName}</p>
       {fansignInfo.open && fansignInfo.key === data.artistFansignId && (
-        <FansignModal data={data} />
+        <FansignModal type="info" data={data} />
       )}
     </div>
   );
