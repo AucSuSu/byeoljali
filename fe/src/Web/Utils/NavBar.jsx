@@ -70,13 +70,13 @@ const Navbar = ({ isFan }) => {
         {!isFan && (
           <>
             <NavbarItem>
-              <NavbarLink to="/about">응모 관리</NavbarLink>
+              <NavbarLink to="/readyfansign">응모 관리</NavbarLink>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/contact">팬싸 관리</NavbarLink>
+              <NavbarLink to="/fansign">팬싸 관리</NavbarLink>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/artist-profile">
+              <NavbarLink to="/artistInfo">
                 <ProfileImage imageUrl={profileImageUrl} />
               </NavbarLink>
             </NavbarItem>

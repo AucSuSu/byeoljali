@@ -22,6 +22,15 @@ public class PhotoController {
 
     private final PhotoService photoService;
 
+    // 인생네컷 결제 정보 변경
+    @PutMapping("/myalbum/{photoId}")
+    public ResponseEntity<Message> changePayInfo(@PathVariable("photoId") Long photoId){
+        log.info(" ** 인생네컷 결제 정보 변경(결제X -> 결제O) api입니다 ** ");
+        Long id = photoService.payComplete(photoId);
+        Message message = new Message(HttpStatusEnum.OK, "인생네컷 결제로 변경 성공", id);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
     // 인생네컷 DB에 저장하기
     @PostMapping("/myalbum")
     public ResponseEntity<Message> savePhotoDB(@RequestBody PhotoDBDto photoDBDto){
