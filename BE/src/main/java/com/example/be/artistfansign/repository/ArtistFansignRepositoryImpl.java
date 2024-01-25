@@ -12,6 +12,7 @@ import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,14 +32,14 @@ import static com.example.be.memberfansign.entity.QMemberFansign.memberFansign;
 
 
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepository {
 
     @Autowired
     EntityManager em;
 
-    // 빈 등록해주세요 ㅜ.ㅜ
-    JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+    JPAQueryFactory queryFactory;
 
 
     @Override

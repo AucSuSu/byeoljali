@@ -1,6 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import applyListReducer from './applyListReducer.js';
-import recentListReducer from './recentListReducer.js';
+import homeListReducer from './HomeListReducer.js';
 import authReducer from './authReducer.js';
 import artistInfoReducer from './artistInfoReducer.js';
 import kakaopayReducer from './kakaopayReducer.js';
@@ -17,12 +16,11 @@ const persistConfig = {
 
 // 여러 리듀서를 결합
 const rootReducer = combineReducers({
-  applyList: applyListReducer,
+  home: homeListReducer,
   auth: authReducer,
   modal: modalReducer,
   artistInfo: artistInfoReducer,
   counter: counterReducer, // 추가 리듀서 추가
-  recentList: recentListReducer,
   kakaopay: kakaopayReducer,
 });
 

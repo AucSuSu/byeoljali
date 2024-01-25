@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../Stores/authReducer.js';
+import { setToken } from '../Stores/authReducer.js';
 import axios from 'axios';
 import './LoginView.css';
 
@@ -12,10 +13,7 @@ export default function LoginView() {
 
   const dispatch = useDispatch();
 
-  const data = {
-    username: email,
-    password: password,
-  };
+  const data = { email: email, password: password };
 
   // Kakao Test
 
@@ -47,7 +45,12 @@ export default function LoginView() {
       console.log('로그인 성공', res); // 받은 데이터 출력
       console.log(res.headers['authorization']); // 이게 access-token
       console.log(res.headers['authorization-refresh']); // 이게 refresh-token
-      console.log(code);
+      dispatch(
+        setToken({
+          token: res.headers['authorization'],
+          tokenRefresh: res.headers['authorization-refresh'],
+        }),
+      );
     } catch (error) {
       console.error('백엔드 전송 실패', error);
       console.log(code);
@@ -98,7 +101,7 @@ export default function LoginView() {
           <h3> 아티스트 로그인</h3>
           <form onSubmit={handleArtistLogin}>
             <div>
-              <label>ID : </label>
+              <label>email : </label>
               <input
                 type="text"
                 value={email}

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MemberInfoModify from './MemberInfoModify.jsx';
-import { handleModifyMember } from '../Stores/modalReducer.js';
+import MemberInfoModify from '../Modal/MemberInfoModify.jsx';
+import { handleModifyMember } from '../../Stores/modalReducer.js';
 
 export default function MemberList({ data }) {
   const dispatch = useDispatch();

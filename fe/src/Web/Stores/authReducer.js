@@ -3,12 +3,9 @@ import axios from 'axios';
 
 export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
   try {
-    const response = await axios.post(
-      'http://127.0.0.1:8000/accounts/login/',
-      data,
-    );
+    const response = await axios.post('http://localhost:8080/login', data);
 
-    return response.data;
+    return response.headers;
   } catch (error) {
     throw error; // 실패 시 에러를 던져서 rejected 상태로 전달
   }
@@ -18,11 +15,17 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: null,
+    tokenRefresh: null,
     data: [],
     status: 'idle', // 'idle === 동작 전
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setToken(state, action) {
+      state.token = action.payload.token;
+      state.tokenRefresh = action.payload.tokenRefresh;
+    },
+  },
   /// extraReducers(반고정) /  builder(유동) / addCase, pending, fulfiled, rejected 고정
   extraReducers: (builder) => {
     builder
@@ -31,9 +34,8 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded'; // 성공
-        state.data = action.payload;
-        state.token = action.payload.key;
-        console.log('데이터', state.data, '토큰', state.token);
+        state.token = action.payload.authorization;
+        state.tokenRefresh = action.payload['authorization-refresh'];
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed'; // 실패 => 에러 메세지 전달(UX)
@@ -44,3 +46,4 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 export const selectToken = (state) => state.auth.token;
+export const { setToken } = authSlice.actions;
