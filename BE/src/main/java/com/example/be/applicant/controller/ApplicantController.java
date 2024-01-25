@@ -1,9 +1,6 @@
 package com.example.be.applicant.controller;
 
-import com.example.be.applicant.dto.ApplyFormRequestDto;
-import com.example.be.applicant.dto.ApplyPageDetailDto;
-import com.example.be.applicant.dto.ApplyPageDto;
-import com.example.be.applicant.dto.SeparatedApplyPageDto;
+import com.example.be.applicant.dto.*;
 import com.example.be.applicant.service.ApplicantService;
 import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
@@ -21,6 +18,15 @@ import java.util.List;
 public class ApplicantController {
 
     private final ApplicantService applicantService;
+
+    // 응모 폼을 위해 프론트에 전달하기
+    @GetMapping("/mainpage/makeApplyForm/{artistfansign_id}")
+    public ResponseEntity<Message> makeApplyForm(@PathVariable("artistfansign_id") Long artistfansign_id){
+        log.info(" ** 응모 폼을 구성할 내용을 제공하는 api 입니다 ** ");
+        ApplyFormResponseDto dto = applicantService.makeApplyForm(artistfansign_id);
+        Message message = new Message(HttpStatusEnum.OK, "응모폼 만들기 전송 완료", dto);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 
     // 응모 폼 제출
     @PostMapping("/mainpage/{artistfansign_id}")

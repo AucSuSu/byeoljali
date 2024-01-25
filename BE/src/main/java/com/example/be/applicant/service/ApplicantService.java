@@ -1,12 +1,10 @@
 package com.example.be.applicant.service;
 
-import com.example.be.applicant.dto.ApplyFormRequestDto;
-import com.example.be.applicant.dto.ApplyPageDetailDto;
-import com.example.be.applicant.dto.ApplyPageDto;
-import com.example.be.applicant.dto.SeparatedApplyPageDto;
+import com.example.be.applicant.dto.*;
 import com.example.be.applicant.entity.Applicant;
 import com.example.be.applicant.repository.ApplicantRepository;
 import com.example.be.applicant.repository.CustomApplyPageRepository;
+import com.example.be.artist.entity.Artist;
 import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
@@ -29,6 +27,14 @@ public class ApplicantService {
     private final FanRepository fanRepository;
     private final ArtistFansignRepository artistFansignRepository;
     private final MemberFansignRepository memberFansignRepository;
+
+    // 팬싸인회 응모 폼을 만드는 거 - 프론트에 보내줄 값
+    public ApplyFormResponseDto makeApplyForm(Long artistfansign_id){
+        ArtistFansign entity = artistFansignRepository.findById(artistfansign_id).
+                orElseThrow(() -> new IllegalArgumentException("해당 아티스트 팬싸인회 정보가 없습니다."));
+
+        return new ApplyFormResponseDto(entity);
+    }
 
     // 팬싸인회 응모 폼 제출
     public Long submitApplyForm(ApplyFormRequestDto requestDto){
