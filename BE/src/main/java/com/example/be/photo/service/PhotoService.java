@@ -39,6 +39,12 @@ public class PhotoService {
     }
 
     // 인생네컷 결제
+    public Long payComplete(Long id){
+        Photo entity = photoRepository.findById(id).
+                orElseThrow(() -> new IllegalArgumentException("해당 인생네컷 정보가 없습니다."));
+        entity.payComplete();
+        return id;
+    }
     // 인생네컷 삭제
     public Long deletePhoto(Long photoId){
         Photo entity = photoRepository.findById(photoId) // 해당 사진을 가지고 온다
