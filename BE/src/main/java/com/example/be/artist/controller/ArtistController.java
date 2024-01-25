@@ -39,11 +39,12 @@ public class ArtistController {
     }
 
     // 멤버 추가하기
-    @PostMapping("/members")
-    public ResponseEntity<Message> addMember(@RequestBody ArtistMemberAddRequestDto requestDto) {
+    @PostMapping(value = "/members", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Message> addMember(ArtistMemberAddRequestDto requestDto, @RequestParam(value = "image") MultipartFile image) {
         log.info("*** 아티스트 멤버 추가하기 ***");
+        System.out.println(requestDto.getName());
         Long memberId =
-                artistService.addMember(requestDto);
+                artistService.addMember(requestDto, image);
         Message message = new Message(HttpStatusEnum.OK, "회원 추가 성공", memberId);
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
@@ -52,8 +53,10 @@ public class ArtistController {
     // 아티스트 프로필 이미지 변경
 
     @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String updateImage(@RequestParam(value = "image") MultipartFile image){
-        return artistService.updateImage(image);
+    public ResponseEntity<Message> updateImage(@RequestParam(value = "image") MultipartFile image){
+        String s = artistService.updateImage(image);
+        Message message = new Message(HttpStatusEnum.OK, "프로필 이미지 변경 성공", s);
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 }
