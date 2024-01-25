@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const kakaopayReducer = createSlice({
+const kakaopaySlice = createSlice({
   name: 'kakaopay',
   initialState: {
     tid: 0, // pay로 얻은 tid값
@@ -12,5 +12,5 @@ const kakaopayReducer = createSlice({
   },
 });
 
-export const { setTid } = kakaopayReducer.actions;
-export default kakaopayReducer.reducer;
+export const { setTid } = kakaopaySlice.actions;
+export default kakaopaySlice.reducer;
