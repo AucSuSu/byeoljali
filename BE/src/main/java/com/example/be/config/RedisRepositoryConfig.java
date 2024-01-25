@@ -44,7 +44,7 @@ public class RedisRepositoryConfig {
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(host);
-        configuration.setPassword(password);
+        configuration.setPassword("ssafy");
         configuration.setPort(port);
         return new LettuceConnectionFactory(configuration);
     }

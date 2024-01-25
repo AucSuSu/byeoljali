@@ -1,6 +1,8 @@
 package com.example.be.winning.entity;
 
 
+import com.example.be.applicant.entity.Applicant;
+import com.example.be.applicant.repository.ApplicantRepository;
 import com.example.be.common.BaseEntity;
 import com.example.be.fan.entity.Fan;
 import com.example.be.memberfansign.entity.MemberFansign;
@@ -29,5 +31,9 @@ public class Winning extends BaseEntity { // 당첨자 테이블
     @ManyToOne
     @JoinColumn(name = "memberfansign_id")
     private MemberFansign memberfansign;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="applicant_id")
+    private Applicant applicant;
 
 }

@@ -2,6 +2,7 @@ package com.example.be.config;
 
 import io.openvidu.java.client.OpenVidu;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 @Configuration
+@Slf4j
 public class OpenviduConfig {
-
-    // 이후에 bean 등록으로 바꾸기 지금은 테스트용 ㅜ.ㅜ
 
     @Value("${spring.openvidu.url}")
     private String OPENVIDU_URL;
@@ -21,6 +21,7 @@ public class OpenviduConfig {
 
     @Bean
     public OpenVidu openVidu() {
+        log.info("openvidu 연결 테스트 -> " + OPENVIDU_URL + "(" + OPENVIDU_SECRET + ")");
         return new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
     }
 
