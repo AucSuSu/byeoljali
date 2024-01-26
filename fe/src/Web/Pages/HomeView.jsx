@@ -18,7 +18,7 @@ const HomeView = () => {
   useEffect(() => {
     dispatch(applyList);
     dispatch(recentList);
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>

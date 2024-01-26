@@ -4,6 +4,8 @@ import { getFanSignInfo } from '../../Stores/artistFansignReducer.js';
 import FansignList from './FansignList.jsx';
 import { ReadyApplyData } from '../../data.js';
 
+import ImgUpload from '../Modal/ImgUpload.jsx';
+
 export default function ReadyApply() {
   const dispatch = useDispatch();
   // const fansignList = useSelector((state) => state.artistInfo.data1.object);
@@ -16,6 +18,7 @@ export default function ReadyApply() {
 
   return (
     <>
+      <ImgUpload></ImgUpload>
       <div>
         {fansignList.map((fansign) => (
           <FansignList key={fansign.memberFansignId} data={fansign} />
