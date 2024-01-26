@@ -4,12 +4,18 @@ import ApplyFormModal from './HomeApplyFormModal';
 const ListItem = ({ data, type }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  //모달 관리
   const openModal = () => {
+    handleSelectItem(data.artistfansignId.fansignId);
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  // 아이템 선택 이벤트 핸들러
+  const handleSelectItem = (fansignId) => {
+    detailList({ fansignId });
   };
 
   return (

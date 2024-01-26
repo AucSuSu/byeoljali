@@ -1,0 +1,7 @@
+.gallery-image {
+  transition: filter 0.3s ease;
+}
+
+.inactive {
+  filter: grayscale(100%) opacity(0.5);
+}

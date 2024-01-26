@@ -5,7 +5,7 @@ import axios from 'axios';
 export const recentList = createAsyncThunk('axios/recentList', async (data) => {
   try {
     const response = await axios.get(
-      'http://localhost:5000/mainpage/recent',
+      'http://localhost:8080/mainpage/recent',
       data,
     );
 
@@ -18,7 +18,21 @@ export const recentList = createAsyncThunk('axios/recentList', async (data) => {
 export const applyList = createAsyncThunk('axios/applyList', async (data) => {
   try {
     const response = await axios.get(
-      'http://localhost:5000/mainpage/1?searchKeyword=&order=register&status=READY_APPLYING',
+      'http://localhost:8080/mainpage/1?searchKeyword=&order=register&status=READY_APPLYING',
+      data,
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('팬 사인회 정보 로드 실패: ', error);
+  }
+});
+
+//팬 사인회 응모를 위한 디테일한 정보
+export const detailList = createAsyncThunk('axios/detailList', async (data) => {
+  try {
+    const response = await axios.get(
+      'http://localhost:8080/mainpage/makeApplyForm/',
       data,
     );
 
@@ -29,9 +43,8 @@ export const applyList = createAsyncThunk('axios/applyList', async (data) => {
 });
 
 const homeListSlice = createSlice({
-  name: 'applyList',
+  name: 'homeList',
   initialState: {
-    applyList: [],
     status: 'idle', // 'idle === 동작 전
     token: null,
     error: null,
