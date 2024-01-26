@@ -3,6 +3,7 @@ package com.example.be.config;
 import com.example.be.artist.repository.ArtistRepository;
 import com.example.be.config.jwt.JwtAuthenticationFilter;
 import com.example.be.config.jwt.JwtAuthorizationFilter;
+import com.example.be.config.jwt.TokenService;
 import com.example.be.fan.repository.FanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,7 @@ public class SecurityConfig {
 
     private final ArtistRepository artistRepository;
     private final FanRepository fanRepository;
+    private final TokenService tokenService;
     private final CorsConfig corsConfig;
 
     @Bean
@@ -69,7 +71,7 @@ public class SecurityConfig {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             http
                     .addFilter(corsConfig.corsFilter())
-                    .addFilter(new JwtAuthenticationFilter(authenticationManager))
+                    .addFilter(new JwtAuthenticationFilter(authenticationManager, tokenService))
                     .addFilter(new JwtAuthorizationFilter(authenticationManager, artistRepository, fanRepository));
         }
     }

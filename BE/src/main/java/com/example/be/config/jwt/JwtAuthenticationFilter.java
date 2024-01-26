@@ -27,6 +27,7 @@ import java.util.Date;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
     // private final RedisService redisService;
 
     // /login 요청을 하면 로그인 시도를 위해서 아래 메소드가 실행된다. 로그인 성공시 return인 authentication이 세션에 저장됨.
@@ -69,20 +70,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         System.out.println("로그인이 완료되었으므로 JWT 토큰 생성하는 successfulAuthentication 실행");
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-
-        // HMAC 방식의 access 토큰
-        String accessToken = JWT.create()
-                .withSubject(JwtProperties.ACCESS_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME)) //30분
-                .withClaim("artistId", principalDetails.getArtist().getArtistId())
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
-
-        // HMAC 방식의 refresh 토큰
-        String refreshToken = JWT.create()
-                .withSubject(JwtProperties.REFRESH_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME)) //30분
-                .withClaim("artistId", principalDetails.getArtist().getArtistId())
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
+        Long artistId = principalDetails.getArtist().getArtistId();
+        // HMAC 방식으로 암호화 된 토큰
+        String accessToken = tokenService.generateAccessToken(artistId, "ROLE_ARTIST");
+        String refreshToken = tokenService.generateRefreshToken(artistId, "ROLE_ARTIST");
 
         // 응답 헤더에 두 개의 토큰 추가
         response.addHeader("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음

@@ -1,7 +1,10 @@
 package com.example.be.controller;
 
+import com.example.be.common.HttpStatusEnum;
+import com.example.be.common.Message;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
+import com.example.be.config.jwt.TokenService;
 import com.example.be.config.oauth.OauthToken;
 import com.example.be.fan.service.FanService;
 import lombok.RequiredArgsConstructor;
@@ -11,13 +14,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequiredArgsConstructor
 public class OAuthController {
 
 
     private final FanService fanService;
-
+    private final TokenService tokenService;
     // 프론트 측에서 인가코드를 받아오는 메소드
     @GetMapping("/oauth")
     public ResponseEntity<String> getLogin(@RequestParam("code") String code){
@@ -37,5 +42,36 @@ public class OAuthController {
 
         return ResponseEntity.ok().headers(headers).body("success");
 
+    }
+
+//    @PostMapping("/refresh-token")
+//    public TokenDto refreshToken(@RequestBody TokenDto tokenDto) {
+//        String refreshToken = tokenDto.getRefreshToken();
+//        if (tokenProvider.validateToken(refreshToken)) {
+//            Authentication authentication = tokenProvider.getAuthentication(refreshToken);
+//
+//            // 새로운 액세스 토큰 생성
+//            TokenDto newTokenDto = tokenProvider.generateTokenDto(authentication);
+//            System.out.println("새로운 액세스 토큰:" + newTokenDto.getRefreshToken());
+//            // 새로운 토큰 DTO를 클라이언트로 전송합니다.
+//            return newTokenDto;
+//        } else {
+//            throw new RuntimeException("유효하지 않은 리프레시 토큰입니다.");
+//        }
+//    }
+    @GetMapping("/refreshToken")
+    public ResponseEntity<Message> getRefreshToken(HttpServletRequest request){
+
+        String refreshToken = request.getHeader("authorization-refresh");
+        System.out.println(refreshToken);
+        Message message = new Message(HttpStatusEnum.OK, "리프레시 토큰 발급 완료", refreshToken);
+
+        tokenService.verifyRefreshToken(refreshToken, 1L);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
+        headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + refreshToken);
+
+        return ResponseEntity.ok().headers(headers).body(message);
     }
 }

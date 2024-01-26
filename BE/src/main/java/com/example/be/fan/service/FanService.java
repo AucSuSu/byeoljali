@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
+import com.example.be.config.jwt.TokenService;
 import com.example.be.config.oauth.FanPrincipalDetails;
 import com.example.be.config.oauth.KakaoProfile;
 import com.example.be.config.oauth.OauthToken;
@@ -40,6 +41,7 @@ import java.util.Optional;
 public class FanService {
 
     private final FanRepository fanRepsitory;
+    private final TokenService tokenService;
     private final S3Uploader s3Uploader;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
@@ -179,7 +181,6 @@ public class FanService {
             String.class
         );
 
-
         ObjectMapper objectMapper = new ObjectMapper();
         OauthToken oauthToken = null;
         try {
@@ -194,22 +195,10 @@ public class FanService {
 
     // 로그인할 fan 정보로 Token 만들기
     public JwtToken createToken(Fan fan){
-        System.out.println(fan.getFanId());
-        // HMAC 방식의 access 토큰
-        String accessToken = JWT.create()
-                .withSubject(JwtProperties.ACCESS_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME)) //30분
-                .withClaim("fanId", fan.getFanId())
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
-
-        // HMAC 방식의 refresh 토큰
-        String refreshToken = JWT.create()
-                .withSubject(JwtProperties.REFRESH_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME)) //2주
-                .withClaim("fanId", fan.getFanId())
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
-        JwtToken jwtToken = new JwtToken(accessToken, refreshToken);
-        return jwtToken;
+        // HMAC 방식으로 암호화 된 토큰
+        String accessToken = tokenService.generateAccessToken(fan.getFanId(), "ROLE_FAN");
+        String refreshToken = tokenService.generateRefreshToken(fan.getFanId(), "ROLE_FAN");
+        return new JwtToken(accessToken, refreshToken);
 
     }
 
