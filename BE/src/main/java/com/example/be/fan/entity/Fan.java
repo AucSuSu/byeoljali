@@ -72,7 +72,8 @@ public class Fan extends BaseEntity {
     }
 
     // update profile
-    public void update(String nickname, String profileImageUrl){
+    public void update(String name, String nickname, String profileImageUrl){
+        this.name = name;
         this.nickname = nickname;
         this.profileImageUrl = profileImageUrl;
     }
