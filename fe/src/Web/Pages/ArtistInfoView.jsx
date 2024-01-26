@@ -6,7 +6,9 @@ export default function ArtistInfoView() {
   return (
     <>
       <NavBar />
-      <ArtistInfo />
+      <div style={{ marginTop: '60px' }}>
+        <ArtistInfo />
+      </div>
     </>
   );
 }

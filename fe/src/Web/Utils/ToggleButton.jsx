@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const ToggleSwitch = styled.div`
   width: 60px;
   height: 30px;
-  background: ${(props) => (props.isToggled ? '#4caf50' : '#ccc')};
+  background: ${(props) => (props.isToggled ? '#4caf50' : '#3f51b5')};
   border-radius: 15px;
   position: relative;
   cursor: pointer;
