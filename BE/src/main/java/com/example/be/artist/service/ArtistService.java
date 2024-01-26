@@ -1,9 +1,6 @@
 package com.example.be.artist.service;
 
-import com.example.be.artist.dto.ArtistMemberAddRequestDto;
-import com.example.be.artist.dto.ArtistMypageResponseDto;
-import com.example.be.artist.dto.ArtistSignUpDto;
-import com.example.be.artist.dto.SignUpResponseDto;
+import com.example.be.artist.dto.*;
 import com.example.be.artist.entity.Artist;
 import com.example.be.artist.repository.ArtistRepository;
 import com.example.be.config.auth.PrincipalDetails;
@@ -84,7 +81,19 @@ public class ArtistService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public Long updateMember(Long memberId, MultipartFile image, ArtistMemberRequestDto dto){
+        Artist artist = getArtist();
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 아티스트 멤버 정보가 없습니다."));
+        member.setName(dto.getName());
+        try {
+            String uploadUrl = s3Uploader.upload(image, "artist/" + artist.getName() + "/member", dto.getName());
+            member.setProfileImageUrl(uploadUrl);
+            return memberId;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Artist getArtist(){
