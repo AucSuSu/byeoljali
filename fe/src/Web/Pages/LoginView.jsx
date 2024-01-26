@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../Stores/authReducer.js';
 import { setToken } from '../Stores/authReducer.js';
 import axios from 'axios';
@@ -14,6 +14,13 @@ export default function LoginView() {
   const dispatch = useDispatch();
 
   const data = { email: email, password: password };
+
+  const token = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (token) {
+      navigate('/artistInfo');
+    }
+  }, [token]);
 
   // Kakao Test
 

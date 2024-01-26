@@ -36,6 +36,7 @@ const authSlice = createSlice({
         state.status = 'succeeded'; // 성공
         state.token = action.payload.authorization;
         state.tokenRefresh = action.payload['authorization-refresh'];
+        console.log(action.payload);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed'; // 실패 => 에러 메세지 전달(UX)
