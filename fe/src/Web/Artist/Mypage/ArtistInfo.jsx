@@ -1,28 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import ArtistInfoModify from '../Modal/ArtistInfoModify.jsx';
 import MemberList from '../Mypage/MemberList.jsx';
+import AddMemberModal from '../Modal/AddMemberModal.jsx';
 import './ArtistInfo.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  handleAddMember,
-  handleModifyArtist,
-} from '../../Stores/modalReducer.js';
 import { getArtistInfo } from '../../Stores/artistInfoReducer.js';
-
+import { artistData } from '../../data.js';
 export default function ArtistInfo() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getArtistInfo(1));
+    dispatch(getArtistInfo(1)); // artistId
   }, []);
 
-  const artistData = useSelector((state) => state.artistInfo.data.object);
-  const modifyArtist = useSelector((state) => state.modal.modifyArtist);
-  const addMember = useSelector((state) => state.modal.addMember);
-
-  const modifyArtistInfo = () => {
-    dispatch(handleModifyArtist());
-  };
+  // const artistData = useSelector((state) => state.artistInfo.data.object);
 
   return (
     <>
@@ -37,18 +27,15 @@ export default function ArtistInfo() {
         <div>
           <h3>{artistData.name}</h3>
           <p>{artistData.companyName}</p>
-          <button onClick={modifyArtistInfo}>수정하기</button>
         </div>
       </div>
       <div className="members">
         <div className="bar">
-          <p>아티스트</p>
-          <button>+</button>
-          {modifyArtist && <ArtistInfoModify data={artistData} />}
+          <p>Members</p>
+          <AddMemberModal />
         </div>
 
         <div>
-          <h1>맴버 리스트</h1>
           <div>
             {artistData.memberList.map((member) => (
               <MemberList key={member.memberId} data={member} />

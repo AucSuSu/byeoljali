@@ -5,31 +5,32 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
+import com.example.be.config.oauth.FanPrincipalDetails;
 import com.example.be.config.oauth.KakaoProfile;
 import com.example.be.config.oauth.OauthToken;
 import com.example.be.fan.dto.FanMyPageResponseDto;
 import com.example.be.fan.dto.FanMyPageUpdateRequestDto;
 import com.example.be.fan.entity.Fan;
 import com.example.be.fan.repository.FanRepository;
+import com.example.be.s3.S3Uploader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 
@@ -39,6 +40,7 @@ import java.util.Optional;
 public class FanService {
 
     private final FanRepository fanRepsitory;
+    private final S3Uploader s3Uploader;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
     private String kakaoClientId;
@@ -60,25 +62,31 @@ public class FanService {
         return new FanMyPageResponseDto(entity);
     }
 
-    public Long update(Long id, FanMyPageUpdateRequestDto requestDto){
-        Fan entity = fanRepsitory.findById(id).
-                orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
-        entity.update(requestDto.getNickname(),requestDto.getProfileImageUrl());
-        return id;
+    public Long update(FanMyPageUpdateRequestDto dto){
+        Fan fan = getFan();
+        try {
+            String imageUrl = s3Uploader.uploadProfile(dto.getProfileImage(), "fan", fan.getEmail());
+            fan.update(dto.getName(), dto.getNickname(), imageUrl);
+            fanRepsitory.save(fan);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return fan.getFanId();
     }
 
-    public int updateCertificationImageUrl(Long id, String certificationImageUrl){
-        Fan entity = fanRepsitory.findById(id).
-                orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
-
-        // 이거 질문하기
-        if(entity.getChangeCount() == 4){
-            new IllegalArgumentException("변경횟수를 초과하였습니다."); // 어차피 front에서 막겠지만 만약
+    public int updateCertificationImageUrl(MultipartFile certImage){
+        Fan fan = getFan();
+        if(fan.getChangeCount() == 4){
+            new IllegalArgumentException("변경횟수를 초과하였습니다.");
         }else {
-            entity.updateCertificationImageUrl(certificationImageUrl);
+            try {
+                String imageUrl = s3Uploader.uploadCertImage(certImage, "fan", fan.getEmail());
+                fan.updateCertificationImageUrl(imageUrl);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-
-        return entity.getChangeCount();
+        return fan.getChangeCount();
     }
 
     // 블랙리스트 등록
@@ -108,7 +116,7 @@ public class FanService {
             Fan newFan = new Fan(profile.getKakao_account().getEmail(),
                     profile.getKakao_account().getProfile().getProfile_image_url(),
                     profile.getKakao_account().getProfile().getNickname(),
-                    4, false);
+                    0, false);
             fanRepsitory.save(newFan);
             return newFan;
         });
@@ -203,6 +211,12 @@ public class FanService {
         JwtToken jwtToken = new JwtToken(accessToken, refreshToken);
         return jwtToken;
 
+    }
+
+    private Fan getFan(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        FanPrincipalDetails fanPrincipalDetails = (FanPrincipalDetails) authentication.getPrincipal();
+        return fanPrincipalDetails.getFan();
     }
 
 }

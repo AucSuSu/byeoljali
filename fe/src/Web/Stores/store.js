@@ -3,8 +3,10 @@ import homeListReducer from './homeListReducer.js';
 import authReducer from './authReducer.js';
 import artistInfoReducer from './artistInfoReducer.js';
 import kakaopayReducer from './kakaopayReducer.js';
-import counterReducer from './counterReducer.js'; // 추가 리듀서
+import counterReducer from './counterReducer.js';
 import modalReducer from './modalReducer.js';
+import fanApplyReducer from './fanApplyListReducer.js';
+// 추가 리듀서
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
@@ -20,8 +22,10 @@ const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalReducer,
   artistInfo: artistInfoReducer,
-  counter: counterReducer, // 추가 리듀서 추가
+  counter: counterReducer,
   kakaopay: kakaopayReducer,
+  fanapply: fanApplyReducer,
+  // 추가 리듀서 추가
 });
 
 // rootReducer에 대한 Persist Reducer 생성

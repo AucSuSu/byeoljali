@@ -1,12 +1,14 @@
 package com.example.be.config.oauth;
 
 import com.example.be.fan.entity.Fan;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Getter
 public class FanPrincipalDetails implements UserDetails {
 
     private Fan fan;
