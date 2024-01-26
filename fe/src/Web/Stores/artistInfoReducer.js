@@ -24,9 +24,15 @@ export const addMember = createAsyncThunk(
 
 export const modifyMember = createAsyncThunk(
   'axios/modifyArtistInfo',
-  async (payload) => {
-    const response = await axios.get(
-      'http://localhost:8080/artists/apply/1?status=READY_APPLYING',
+  async (formData) => {
+    const response = await axios.post(
+      'http://localhost:8080/artists/members/12',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
     return response.data;
   },
