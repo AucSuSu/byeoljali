@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from '../Utils/NavBar';
 
-function FanSignView() {
+function FanWinView() {
   return (
     <>
       <NavBar isFan={true} />
@@ -9,4 +9,4 @@ function FanSignView() {
   );
 }
 
-export default FanSignView;
+export default FanWinView;
