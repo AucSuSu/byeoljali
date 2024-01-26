@@ -7,9 +7,11 @@ import com.example.be.fan.dto.FanMyPageResponseDto;
 import com.example.be.fan.dto.FanMyPageUpdateRequestDto;
 import com.example.be.fan.service.FanService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,14 +32,13 @@ public class FanController
     @PutMapping("/mypage/edit/profile")
     public ResponseEntity<Message> update(FanMyPageUpdateRequestDto requestDto){
         Long fanId = fanService.update(requestDto);
-        Message message = new Message(HttpStatusEnum.OK, "상세 정보 수정 성공", fanId);
+        Message message = new Message(HttpStatusEnum.OK, "팬 상세 정보 수정 성공", fanId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PutMapping("/mypage/edit/certImage/{fanId}")
-    public ResponseEntity<Message> updateCertificationImage(@PathVariable("fanId") Long id,
-                                        @RequestBody String certificationImageUrl){
-        int count = fanService.updateCertificationImageUrl(id, certificationImageUrl);
+    @PutMapping("/mypage/edit/certImage")
+    public ResponseEntity<Message> updateCertificationImage(@Param("image") MultipartFile certImage){
+        int count = fanService.updateCertificationImageUrl(certImage);
         Message message = new Message(HttpStatusEnum.OK, "인증 사진 수정 성공", count);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

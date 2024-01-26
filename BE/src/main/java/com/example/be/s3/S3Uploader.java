@@ -15,6 +15,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * AWS s3 업로드를 위한 클래스
+ * 해당 클래스는 5가지 종류의 이미지를 업로드하는걸 구현했다.
+ * 아티스트 프로필 멤버 프로필, 팬싸인회 포스터, 아티스트 멤버 프로필, 팬이 맞는지 검증하는 검증용, 팬의 인생네컷
+ */
+
 
 @Slf4j
 @Service
@@ -25,19 +31,41 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    // 기본 사진 업로드
+    /**
+     * 아티스트 프로필, 멤버 프로필
+     */
     public String upload(MultipartFile multipartFile, String dirName, String name) throws IOException{
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
         return upload(uploadFile, dirName, name);
     }
 
-    // 팬싸인회 포스터 업로드
+    private String upload(File uploadFile, String dirName, String name){
+        String fileName = dirName + "/" + name + "/" + uploadFile.getName();
+        String uploadImageUrl = putS3(uploadFile, fileName);
+        removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
+
+        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
+    }
+
+    /**
+     * 팬싸인회 포스터
+     */
     public String uploadPoster(MultipartFile multipartFile, String dirName, String name, LocalDateTime localDateTime) throws IOException{
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
         return uploadPoster(uploadFile, dirName, name, localDateTime);
     }
 
-    // 팬 프로필 이미지
+    private String uploadPoster(File uploadFile, String dirName, String name, LocalDateTime localDateTime){
+        String fileName = dirName + "/" + name + "/" + uploadFile.getName() + localDateTime.toString();
+        String uploadImageUrl = putS3(uploadFile, fileName);
+        removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
+
+        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
+    }
+
+    /**
+     * 팬 프로필 이미지
+     */
     public String uploadProfile(MultipartFile multipartFile, String dirName, String name)throws IOException{
         File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
         return uploadProfile(uploadFile, dirName, name);
@@ -50,22 +78,28 @@ public class S3Uploader {
 
         return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
     }
-    private String uploadPoster(File uploadFile, String dirName, String name, LocalDateTime localDateTime){
-        String fileName = dirName + "/" + name + "/" + uploadFile.getName() + localDateTime.toString();
+
+    /**
+     * 팬 검증용 이미지
+     */
+    public String uploadCertImage(MultipartFile multipartFile, String dirName, String name)throws IOException{
+        File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+        return uploadCertImage(uploadFile, dirName, name);
+    }
+
+    private String uploadCertImage(File uploadFile, String dirName, String name){
+        String fileName = dirName + "/" + name + "/certificate/" + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
 
         return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
     }
 
-    private String upload(File uploadFile, String dirName, String name){
-        String fileName = dirName + "/" + name + "/" + uploadFile.getName();
-        String uploadImageUrl = putS3(uploadFile, fileName);
-        removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
 
-        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
-    }
 
+    /**
+     * 밑의 메소드들은 5가지의 이미지에서 공통적으로 사용.
+     */
     private String putS3(File uploadFile, String fileName){
         amazonS3Client.putObject(
                 new PutObjectRequest(bucket, fileName, uploadFile)
@@ -76,9 +110,9 @@ public class S3Uploader {
 
     private void removeNewFile(File targetFile){
         if (targetFile.delete()){
-            log.info("파일이 삭제되었습니다.");
+            log.info("스프링 서버 이미지 파일이 삭제되었습니다.(s3엔 정상적으로 올라감)");
         }else {
-            log.info("파일이 삭제되지 못했습니다.");
+            log.info("스프링 서버 이미지 파일이 삭제되지 못했습니다.");
         }
     }
 

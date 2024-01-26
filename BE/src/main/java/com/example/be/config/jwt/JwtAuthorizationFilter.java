@@ -9,6 +9,7 @@ import com.example.be.config.auth.PrincipalDetails;
 import com.example.be.config.oauth.FanPrincipalDetails;
 import com.example.be.fan.entity.Fan;
 import com.example.be.fan.repository.FanRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,6 +26,7 @@ import java.io.IOException;
 // 권한이나 인증이 필요한 특정 주소를 요청했을 때 위 필터를 무조건 타게 되어있음.
 // 만약에 권한이나 인증이 필요한 주소가 아니라면 이 필터를 안탄다.
 // 인가
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final ArtistRepository artistRepository;
@@ -39,6 +41,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
+        // Authentication에 남았는지 검증로직.
+//        Authentication authenticationBefore = SecurityContextHolder.getContext().getAuthentication();
+//        log.info("Before processing request: Authentication is {}", authenticationBefore);
+
         String jwtHeader = request.getHeader(JwtProperties.ACCESS_HEADER_STRING);
         // 요청 헤더에 Authorization 값이 없거나 Bearer로 시작하지 않으면
         // 즉 정상적인 사용자가 아니면 다음 필터로 넘기자
@@ -84,5 +91,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         // 다 했으니까 chain 타게하자.
         chain.doFilter(request, response);
+
+//        Authentication authenticationAfter = SecurityContextHolder.getContext().getAuthentication();
+//        log.info("After processing request: Authentication is {}", authenticationAfter);
     }
 }

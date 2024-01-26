@@ -29,6 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -72,18 +74,19 @@ public class FanService {
         return fan.getFanId();
     }
 
-    public int updateCertificationImageUrl(Long id, String certificationImageUrl){
-        Fan entity = fanRepsitory.findById(id).
-                orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
-
-        // 이거 질문하기
-        if(entity.getChangeCount() == 4){
-            new IllegalArgumentException("변경횟수를 초과하였습니다."); // 어차피 front에서 막겠지만 만약
+    public int updateCertificationImageUrl(MultipartFile certImage){
+        Fan fan = getFan();
+        if(fan.getChangeCount() == 4){
+            new IllegalArgumentException("변경횟수를 초과하였습니다.");
         }else {
-            entity.updateCertificationImageUrl(certificationImageUrl);
+            try {
+                String imageUrl = s3Uploader.uploadCertImage(certImage, "fan", fan.getEmail());
+                fan.updateCertificationImageUrl(imageUrl);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-
-        return entity.getChangeCount();
+        return fan.getChangeCount();
     }
 
     // 블랙리스트 등록
@@ -113,7 +116,7 @@ public class FanService {
             Fan newFan = new Fan(profile.getKakao_account().getEmail(),
                     profile.getKakao_account().getProfile().getProfile_image_url(),
                     profile.getKakao_account().getProfile().getNickname(),
-                    4, false);
+                    0, false);
             fanRepsitory.save(newFan);
             return newFan;
         });
