@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
 import ApplyFormModal from './HomeApplyFormModal';
 
+// Reducer 추가
+import { useDispatch } from 'react-redux';
+import { detailList } from '../Stores/homeListReducer';
+
 const ListItem = ({ data, type }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  //컨트롤러
+  const controller = () => {
+    console.log('컨트롤러 입장');
+
+    openModal;
+  };
+
   //모달 관리
   const openModal = () => {
-    handleSelectItem(data.artistfansignId.fansignId);
     setIsModalOpen(true);
   };
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  // 아이템 선택 이벤트 핸들러
-  const handleSelectItem = (fansignId) => {
-    detailList({ fansignId });
-  };
+  //redux 적용
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(detailList);
+    dispatch(detailList);
+  }, [dispatch]);
 
   return (
     <div
@@ -26,7 +39,7 @@ const ListItem = ({ data, type }) => {
         src={data.posterImageUrl}
         alt={data.title}
         style={{ width: '100px', borderRadius: '50%', cursor: 'pointer' }}
-        onClick={openModal}
+        onClick={controller}
       />
       <p>{data.title}</p>
 
