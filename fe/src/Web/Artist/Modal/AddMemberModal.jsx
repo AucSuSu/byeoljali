@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
+import { addMember } from '../../Stores/artistInfoReducer';
 
-export default function AddMemberModal({}) {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+export default function AddMemberModal() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [name, setName] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
 
   const dispatch = useDispatch();
-  const closeModal = () => {
-    setModalIsOpen(!modalIsOpen);
+
+  const openModal = () => {
+    setModalIsOpen(true);
   };
 
-  const modify = () => {};
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
-  const add = () => {};
+  const payload = {
+    artistId: 1,
+    name: name,
+    profileImageUrl: profileImageUrl,
+  };
+
+  const add = (e) => {
+    e.preventDefault();
+    dispatch(addMember(payload));
+    closeModal();
+  };
 
   const customStyle = {
     content: {
@@ -28,20 +44,34 @@ export default function AddMemberModal({}) {
 
   return (
     <>
+      <button onClick={openModal}>+</button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        contentLabel={data.name}
+        contentLabel="맴버를 추가해주세요"
         style={customStyle}
       >
         <div>
-          <h2>{data.name}</h2>
-          <img
-            src={data.posterImageUrl}
-            alt={data.name}
-            style={{ width: '400px', borderRadius: '10px' }}
-          />
-          <button onClick={add}>추가하기</button>
+          <h2>맴버를 추가해주세요</h2>
+          <form onSubmit={add}>
+            <div>
+              <label>프로필 사진(바꿔야함) : </label>
+              <input
+                type="text"
+                value={profileImageUrl}
+                onChange={(e) => setProfileImageUrl(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>이름 : </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <button type="submit">추가하기</button>
+          </form>
           <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>

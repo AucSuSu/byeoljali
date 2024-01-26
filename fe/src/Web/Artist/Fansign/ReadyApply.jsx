@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFanSignInfo } from '../../Stores/artistInfoReducer.js';
+import { getFanSignInfo } from '../../Stores/artistFansignReducer.js';
 import FansignList from './FansignList.jsx';
+import { ReadyApplyData } from '../../data.js';
 
 export default function ReadyApply() {
   const dispatch = useDispatch();
-  const fansignList = useSelector((state) => state.artistInfo.data1.object);
+  // const fansignList = useSelector((state) => state.artistInfo.data1.object);
+  const fansignList = ReadyApplyData.object;
 
+  const payload = { artistId: 1, status: 'READY_APPLYING' };
   useEffect(() => {
-    dispatch(getFanSignInfo('READY_APPLYING'));
+    dispatch(getFanSignInfo('payload'));
   }, []);
 
-  console.log('리스트 : ', fansignList);
   return (
     <>
       <div>

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { handleAddFansign } from '../../Stores/modalReducer';
 import { useDispatch } from 'react-redux';
-
-export default function AddFansignModal({}) {
+import { createFansign } from '../../Stores/artistFansignReducer';
+export default function CreateFansignModal({}) {
   const modalIsOpen = useState(true);
 
   const dispatch = useDispatch();
@@ -12,24 +12,38 @@ export default function AddFansignModal({}) {
     dispatch(handleAddFansign());
   };
 
-  const createFansign = (e) => {
+  const payload = {
+    // artistId: 1,
+    // data: {
+    //   title: title,
+    //   information: information,
+    //   startApplyTime: startApplyTime,
+    //   endApplyTime: endApplyTime,
+    //   startFansignTime: startFansignTime,
+    //   mode: mode,
+    //   postImageUrl: postImageUrl,
+    //   memberIdList: memberIdList,
+    //   image: image,
+    // },
+  };
+
+  const fansignCreate = (e) => {
     e.preventDefault();
+    dispatch(createFansign(payload));
     console.log('팬싸인회 개설 요청');
   };
 
   // 데이터 관리
   const [title, setTitle] = useState('');
-  const [notice, setNotice] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [entryMethod, setEntryMethod] = useState('');
-  const [fanSign, setFanSign] = useState('');
-  const [createMember, setCreateMember] = useState('');
+  const [information, setInformation] = useState('');
+  const [startApplyTime, setStartApplyTime] = useState('');
+  const [endApplyTime, setEndApplyTime] = useState('');
+  const [mode, setMode] = useState('');
+  const [startFansignTime, setStartFansignTime] = useState('');
+  const [memberIdList, setMemberIdList] = useState('');
+  const [image, setImage] = useState('');
+  const [postImageUrl, setPostImageUrl] = useState('');
   //
-
-  useEffect(() => {
-    // dispatch() // 실제 axios 요청으로 변경
-  }, []);
 
   const customStyle = {
     content: {
@@ -49,7 +63,7 @@ export default function AddFansignModal({}) {
       >
         <div>
           <h2>타이틀</h2>
-          <form onSubmit={createFansign}>
+          <form onSubmit={fansignCreate}>
             <div>
               <label>타이틀 : </label>
               <input
@@ -62,48 +76,48 @@ export default function AddFansignModal({}) {
               <label>공지사항 : </label>
               <input
                 type="text"
-                value={notice}
-                onChange={(e) => setNotice(e.target.value)}
+                value={information}
+                onChange={(e) => setInformation(e.target.value)}
               />
             </div>
             <div>
               <label>응모시작 : </label>
               <input
                 type="text"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+                value={startApplyTime}
+                onChange={(e) => setStartApplyTime(e.target.value)}
               />
             </div>
             <div>
               <label>응모마감 : </label>
               <input
                 type="text"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
+                value={endApplyTime}
+                onChange={(e) => setEndApplyTime(e.target.value)}
               />
             </div>
             <div>
               <label>응모방식 : </label>
               <input
                 type="text"
-                value={entryMethod}
-                onChange={(e) => setEntryMethod(e.target.value)}
+                value={mode}
+                onChange={(e) => setMode(e.target.value)}
               />
             </div>
             <div>
               <label>팬싸인회 : </label>
               <input
                 type="text"
-                value={fanSign}
-                onChange={(e) => setFanSign(e.target.value)}
+                value={startFansignTime}
+                onChange={(e) => setStartFansignTime(e.target.value)}
               />
             </div>
             <div>
               <label> 개설맴버 : </label>
               <input
                 type="text"
-                value={createMember}
-                onChange={(e) => setCreateMember(e.target.value)}
+                value={memberIdList}
+                onChange={(e) => setMemberIdList(e.target.value)}
               />
             </div>
             <button type="submit">팬싸인 개설하기</button>

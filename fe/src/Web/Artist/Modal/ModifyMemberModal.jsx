@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { handleModifyMember } from '../../Stores/modalReducer';
+import { modifyMember } from '../../Stores/artistInfoReducer';
 import { useDispatch } from 'react-redux';
 
-export default function MemberInfoModify({ data }) {
+export default function ModifyMember({ data }) {
   const modalIsOpen = useState(true);
 
   const dispatch = useDispatch();
@@ -11,7 +12,12 @@ export default function MemberInfoModify({ data }) {
     dispatch(handleModifyMember(null));
   };
 
-  const modify = () => {};
+  const payload = {};
+  const modify = (e) => {
+    e.preventDefault();
+    dispatch(modifyMember(payload));
+    closeModal();
+  };
 
   const customStyle = {
     content: {
@@ -36,12 +42,14 @@ export default function MemberInfoModify({ data }) {
         <div>
           <h2>{data.name}</h2>
           <img
-            // src={data.posterImageUrl}
-            src={'/aspa.png'}
+            src={data.profileImageUrl}
             alt={data.name}
             style={{ width: '400px', borderRadius: '10px' }}
           />
-          <button onClick={modify}>수정하기</button>
+          <p>{data.name}</p>
+          <form onSubmit={modify}>
+            <button type="submit">수정하기</button>
+          </form>
           <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>

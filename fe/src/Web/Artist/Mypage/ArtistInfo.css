@@ -1,23 +1,47 @@
+/* 기존 스타일시트에 추가할 내용 */
+
 .artistImg {
-  border-radius: 100%;
-}
-.artist {
-  display: flex;
-}
-.members {
-  border: 1px solid black;
-  background-color: lightcyan;
+  border-radius: 50%; /* 원형 이미지로 설정 */
+  width: 400px; /* 원하는 크기로 조절하세요 */
+  height: 400px; /* 원하는 크기로 조절하세요 */
+  margin-right: 20px; /* 이미지와 텍스트 간격 조절 */
 }
 
+.artist {
+  display: flex;
+  align-items: center; /* 수직 가운데 정렬 */
+}
+
+.artist div {
+  padding-left: 50px;
+  text-align: left; /* 텍스트를 이미지의 왼쪽에 정렬 */
+}
+
+.artist h3 {
+  font-size: 1.5em; /* 이름에 대한 폰트 크기 증가 */
+  font-weight: bold; /* 이름을 굵은 글씨로 설정 */
+  margin-bottom: 5px; /* 이름과 회사 이름 간격 조절 */
+}
+
+.artist p {
+  font-size: 1em; /* 회사 이름에 대한 폰트 크기 조절 */
+}
+
+/* 바 부분에 대한 스타일 */
 .bar {
   display: flex;
   background-color: lightblue;
+  padding: 10px; /* 보다 예쁜 스타일을 위해 패딩 추가 */
 }
+
 .bar p {
-  margin-right: 10px; /* 텍스트와 버튼 간격을 추가 */
+  margin-right: 10px;
+  font-size: 1em;
 }
+
 .bar button {
   width: 50px;
+  height: 50px;
   border-radius: 50%;
-  font-size: 25px;
+  font-size: 1.5em;
 }

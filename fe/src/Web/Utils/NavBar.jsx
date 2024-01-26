@@ -35,12 +35,19 @@ const NavbarLink = styled(Link)`
   }
 `;
 
+const fixNavbar = {
+  position: 'fixed',
+  top: 0,
+  width: '100%',
+  zIndex: 1000,
+};
+
 const Navbar = ({ isFan }) => {
   const profileImageUrl =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpqYJDnLH7XxH1vrI3VCvNq6E5JipsPi5WrqrlMrWqsA&s';
 
   return (
-    <NavbarContainer>
+    <NavbarContainer style={fixNavbar}>
       <h2>Logo</h2>
       <NavbarList>
         <NavbarItem>
