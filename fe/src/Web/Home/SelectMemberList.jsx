@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './SelectMemberList.css';
-
-import { useDispatch } from 'react-redux';
 
 // Reducer 추가
 import { detailList } from '../Stores/homeListReducer';
 
 const SelectList = () => {
-  //redux 적용
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(detailList);
-  }, [dispatch]);
-
   console.log('팬 사인회 정보');
   console.log(detailList);
 

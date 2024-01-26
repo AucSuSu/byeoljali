@@ -30,11 +30,14 @@ export const applyList = createAsyncThunk('axios/applyList', async (data) => {
 
 //팬 사인회 응모를 위한 디테일한 정보
 export const detailList = createAsyncThunk('axios/detailList', async (data) => {
+  console.log('디테일 스토어 방문');
   try {
     const response = await axios.get(
       'http://localhost:8080/mainpage/makeApplyForm/',
       data,
     );
+
+    console.log(response.data);
 
     return response.data;
   } catch (error) {
@@ -72,6 +75,17 @@ const homeListSlice = createSlice({
         console.log('데이터', state.data, '토큰', state.token);
       })
       .addCase(recentList.rejected, (state, action) => {
+        state.status = 'failed'; // 실패 => 에러 메세지 전달(UX)
+        state.error = action.error.message;
+      })
+      .addCase(detailList.fulfilled, (state, action) => {
+        state.status = 'succeeded'; // 성공
+        console.log('팬 사인회 디테일 정보 로드 성공');
+        state.data = action.payload;
+        state.token = action.payload.key;
+        console.log('데이터', state.data, '토큰', state.token);
+      })
+      .addCase(detailList.rejected, (state, action) => {
         state.status = 'failed'; // 실패 => 에러 메세지 전달(UX)
         state.error = action.error.message;
       });
