@@ -10,11 +10,11 @@ function FanListApply() {
     dispatch(loadApply());
   }, [dispatch]);
 
+  console.log(data);
+
   return (
     <div>
-      {data.map((item, index) => (
-        <div key={index}>{/* 구현예정 */}</div>
-      ))}
+      <h1>하이요</h1>
     </div>
   );
 }

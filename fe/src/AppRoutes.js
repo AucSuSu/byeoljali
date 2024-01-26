@@ -11,7 +11,8 @@ import FanPhotoPayResult from './Web/Fan/FanPhotoPayResult.jsx';
 import ArtistFanSignView from './Web/Pages/ArtistReadyFansignView.jsx';
 import ImgUploadModal from './Web/Utils/ImgUploadModal.jsx';
 import ArtistReadyFansignView from './Web/Pages/ArtistFanSignView.jsx';
-import FanSignView from './Web/Pages/FanSignView.jsx';
+import FanApplyView from './Web/Pages/FanApplyView.jsx';
+import FanWinView from './Web/Pages/FanWinView.jsx';
 
 export default function AppRoutes() {
   return (
@@ -22,13 +23,14 @@ export default function AppRoutes() {
         <Route path="/artistInfo" element={<ArtistInfoView />} />
         <Route path="/home" element={<HomeView />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/userinfo" element={<FanInfoView />} />
-        <Route path="/userphoto" element={<FanPhoto />} />
-        <Route path="/userphoto/payresult" element={<FanPhotoPayResult />} />
+        <Route path="/faninfo" element={<FanInfoView />} />
+        <Route path="/fanphoto" element={<FanPhoto />} />
+        <Route path="/fanphoto/payresult" element={<FanPhotoPayResult />} />
         <Route path="/fansign" element={<ArtistFanSignView />} />
         <Route path="/imguploadtest" element={<ImgUploadModal />} />
         <Route path="/readyfansign" element={<ArtistReadyFansignView />} />
-        <Route path="/userapply" element={<FanSignView />} />
+        <Route path="/fan/apply" element={<FanApplyView />} />
+        <Route path="/fan/win" element={<FanWinView />} />
 
         {/* 라우트 여기에 추가하세용 */}
       </Routes>
