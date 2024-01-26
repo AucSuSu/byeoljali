@@ -29,6 +29,7 @@ import java.util.Map;
 @Slf4j
 public class SessionService {
 
+    // openvidu에 session 발급 요청하고 redis에 저장하는 서비스 입니다.
 
     private final RedisService redisService;
     private final OpenVidu openVidu;
