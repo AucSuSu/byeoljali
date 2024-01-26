@@ -8,6 +8,7 @@ import lombok.ToString;
 @ToString
 public class KakaoProfile {
 
+    public Boolean setPrivacyInfo;
     public Long id;
     public String connected_at;
     public Properties properties;

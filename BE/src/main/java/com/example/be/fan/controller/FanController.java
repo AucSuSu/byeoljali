@@ -27,10 +27,9 @@ public class FanController
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PutMapping("/mypage/edit/profile/{fanId}")
-    public ResponseEntity<Message> update(@PathVariable("fanId") Long id,
-                       @RequestBody FanMyPageUpdateRequestDto requestDto){
-        Long fanId = fanService.update(id, requestDto);
+    @PutMapping("/mypage/edit/profile")
+    public ResponseEntity<Message> update(FanMyPageUpdateRequestDto requestDto){
+        Long fanId = fanService.update(requestDto);
         Message message = new Message(HttpStatusEnum.OK, "상세 정보 수정 성공", fanId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

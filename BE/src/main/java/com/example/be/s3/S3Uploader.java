@@ -37,6 +37,19 @@ public class S3Uploader {
         return uploadPoster(uploadFile, dirName, name, localDateTime);
     }
 
+    // 팬 프로필 이미지
+    public String uploadProfile(MultipartFile multipartFile, String dirName, String name)throws IOException{
+        File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+        return uploadProfile(uploadFile, dirName, name);
+    }
+
+    private String uploadProfile(File uploadFile, String dirName, String name){
+        String fileName = dirName + "/" + name + "/profile/" + uploadFile.getName();
+        String uploadImageUrl = putS3(uploadFile, fileName);
+        removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
+
+        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
+    }
     private String uploadPoster(File uploadFile, String dirName, String name, LocalDateTime localDateTime){
         String fileName = dirName + "/" + name + "/" + uploadFile.getName() + localDateTime.toString();
         String uploadImageUrl = putS3(uploadFile, fileName);
