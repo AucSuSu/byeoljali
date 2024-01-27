@@ -44,33 +44,16 @@ public class OAuthController {
 
     }
 
-//    @PostMapping("/refresh-token")
-//    public TokenDto refreshToken(@RequestBody TokenDto tokenDto) {
-//        String refreshToken = tokenDto.getRefreshToken();
-//        if (tokenProvider.validateToken(refreshToken)) {
-//            Authentication authentication = tokenProvider.getAuthentication(refreshToken);
-//
-//            // 새로운 액세스 토큰 생성
-//            TokenDto newTokenDto = tokenProvider.generateTokenDto(authentication);
-//            System.out.println("새로운 액세스 토큰:" + newTokenDto.getRefreshToken());
-//            // 새로운 토큰 DTO를 클라이언트로 전송합니다.
-//            return newTokenDto;
-//        } else {
-//            throw new RuntimeException("유효하지 않은 리프레시 토큰입니다.");
-//        }
-//    }
     @GetMapping("/refreshToken")
     public ResponseEntity<Message> getRefreshToken(HttpServletRequest request){
 
         String refreshToken = request.getHeader("authorization-refresh");
-        System.out.println(refreshToken);
-        Message message = new Message(HttpStatusEnum.OK, "리프레시 토큰 발급 완료", refreshToken);
+        String accessToken = tokenService.verifyRefreshToken(refreshToken);
 
-        tokenService.verifyRefreshToken(refreshToken, 1L);
-
+        Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰 발급 완료", refreshToken);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
-        headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + refreshToken);
+        headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
 
         return ResponseEntity.ok().headers(headers).body(message);
     }

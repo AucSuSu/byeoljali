@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.be.config.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,29 +15,49 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class TokenService {
 
+    private final RedisService redisService;
 
     // refresh 토큰 검증
-    public void verifyRefreshToken(String token, Long userId) {
+    public String verifyRefreshToken(String token) {
         try {
             // JWT 서명 검증
-            System.out.println("들어옴");
             String refreshToken = token.substring(7);
             Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(refreshToken);
 
-            System.out.println(token);
-            System.out.println(jwt.toString());
-            System.out.println("여기");
-            // Redis에서 저장된 리프레시 토큰 가져오기
-//            String storedToken = redisService.getValues("REFRESH_TOKEN_" + userId);
+            // artist인지 fan인지 확인
+            String artistId = jwt.getClaim("artistId").toString();
 
-            // Redis에 저장된 토큰과 비교
-//            return token.equals(storedToken);
-        } catch (JWTVerificationException exception) {
-            System.out.println("에러발생");
-            // 토큰 검증 실패
+            String key = "REFRESH_TOKEN_";
+            String role = null;
+            String id = null;
+            if(!artistId.equals("Missing claim")){ // artist 이면
+                id = artistId;
+                role = "ARTIST";
+            }else{
+                String fanId = jwt.getClaim("fanId").toString();
+                if(!fanId.equals("Missing claim")){
+                    id = fanId;
+                    role = "FAN";
+                }
+            }
+
+            if( id == null) return "유효하지 않은 리프레시 토큰입니다.";
+            System.out.println("내가 가지고 있던 refresh token : " + refreshToken);
+            System.out.println();
+
+            String redisToken = redisService.getValues(key + role + "_" + id);
+
+            System.out.println("레디스 리프레시 토큰  : " + redisToken);
+
+            if (refreshToken.equals(redisToken)){
+                return generateAccessToken(Long.parseLong(id), "ROLE_" + role);
+            }
+        } catch (JWTVerificationException e) {
+            e.printStackTrace();
         }
+        return "올바르지 않은 리프레시 토큰입니다.";
     }
     public String generateAccessToken(Long id, String role){
         String key = null;

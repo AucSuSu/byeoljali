@@ -2,15 +2,11 @@ package com.example.be.config.jwt;
 
 // 클라이언트에서 /login, POST방식으로 보내면 스프링 시큐리티에서 UsernamePasswordAuthenticationFilter가 호출됨
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.example.be.artist.entity.Artist;
 import com.example.be.config.auth.PrincipalDetails;
 import com.example.be.config.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,12 +17,12 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final RedisService redisService;
     private final TokenService tokenService;
     // private final RedisService redisService;
 
@@ -37,7 +33,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // username, password를 받는다.
         ObjectMapper om = new ObjectMapper();
-        Artist artist = null;
+        Artist artist;
         try {
             System.out.println(request.getInputStream());
             artist = om.readValue(request.getInputStream(), Artist.class);
@@ -74,6 +70,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // HMAC 방식으로 암호화 된 토큰
         String accessToken = tokenService.generateAccessToken(artistId, "ROLE_ARTIST");
         String refreshToken = tokenService.generateRefreshToken(artistId, "ROLE_ARTIST");
+
+        // 레디스에 refresh-token 저장
+        redisService.setValuesWithTimeout("REFRESH_TOKEN_ARTIST_" + artistId, refreshToken, JwtProperties.ACCESS_EXPIRATION_TIME);
 
         // 응답 헤더에 두 개의 토큰 추가
         response.addHeader("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
