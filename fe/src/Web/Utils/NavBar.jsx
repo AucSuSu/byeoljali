@@ -36,7 +36,7 @@ const NavbarLink = styled(Link)`
 `;
 
 const fixNavbar = {
-  position: 'fixed',
+  position: 'sticky',
   top: 0,
   width: '100%',
   zIndex: 1000,

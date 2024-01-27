@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
@@ -24,12 +25,14 @@ export const addMember = createAsyncThunk(
 
 export const modifyMember = createAsyncThunk(
   'axios/modifyArtistInfo',
-  async (formData) => {
-    const response = await axios.post(
+  async (formData, { getState }) => {
+    const token = getState().auth.token;
+    const response = await axios.put(
       'http://localhost:8080/artists/members/12',
       formData,
       {
         headers: {
+          authorization: token,
           'Content-Type': 'multipart/form-data',
         },
       },
@@ -88,11 +91,13 @@ const artistInfoSlice = createSlice({
       })
       .addCase(modifyMember.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        console.log('성공했어요', action.payload);
         state.data = action.payload;
       })
       .addCase(modifyMember.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        console.log('실패했어요 ㅠㅠ', state.error);
       });
   },
 });

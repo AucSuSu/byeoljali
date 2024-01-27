@@ -1,13 +1,12 @@
 package com.example.be.fan.service;
 
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
+import com.example.be.config.jwt.TokenService;
 import com.example.be.config.oauth.FanPrincipalDetails;
 import com.example.be.config.oauth.KakaoProfile;
 import com.example.be.config.oauth.OauthToken;
+import com.example.be.config.redis.RedisService;
 import com.example.be.fan.dto.FanMyPageResponseDto;
 import com.example.be.fan.dto.FanMyPageUpdateRequestDto;
 import com.example.be.fan.entity.Fan;
@@ -31,7 +30,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -40,7 +38,9 @@ import java.util.Optional;
 public class FanService {
 
     private final FanRepository fanRepsitory;
+    private final TokenService tokenService;
     private final S3Uploader s3Uploader;
+    private final RedisService redisService;
 
     @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
     private String kakaoClientId;
@@ -77,7 +77,7 @@ public class FanService {
     public int updateCertificationImageUrl(MultipartFile certImage){
         Fan fan = getFan();
         if(fan.getChangeCount() == 4){
-            new IllegalArgumentException("변경횟수를 초과하였습니다.");
+            throw new IllegalArgumentException("변경횟수를 초과하였습니다.");
         }else {
             try {
                 String imageUrl = s3Uploader.uploadCertImage(certImage, "fan", fan.getEmail());
@@ -179,7 +179,6 @@ public class FanService {
             String.class
         );
 
-
         ObjectMapper objectMapper = new ObjectMapper();
         OauthToken oauthToken = null;
         try {
@@ -194,22 +193,14 @@ public class FanService {
 
     // 로그인할 fan 정보로 Token 만들기
     public JwtToken createToken(Fan fan){
-        System.out.println(fan.getFanId());
-        // HMAC 방식의 access 토큰
-        String accessToken = JWT.create()
-                .withSubject(JwtProperties.ACCESS_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME)) //30분
-                .withClaim("fanId", fan.getFanId())
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
+        // HMAC 방식으로 암호화 된 토큰
+        Long fanId = fan.getFanId();
+        String accessToken = tokenService.generateAccessToken(fanId, "ROLE_FAN");
+        String refreshToken = tokenService.generateRefreshToken(fanId, "ROLE_FAN");
+        redisService.setValuesWithTimeout("REFRESH_TOKEN_FAN_" + fanId.toString(), refreshToken,
+            JwtProperties.ACCESS_EXPIRATION_TIME);
 
-        // HMAC 방식의 refresh 토큰
-        String refreshToken = JWT.create()
-                .withSubject(JwtProperties.REFRESH_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME)) //2주
-                .withClaim("fanId", fan.getFanId())
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
-        JwtToken jwtToken = new JwtToken(accessToken, refreshToken);
-        return jwtToken;
+        return new JwtToken(accessToken, refreshToken);
 
     }
 

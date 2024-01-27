@@ -26,7 +26,7 @@ export default function ModifyMember({ data }) {
     }
 
     console.log(formData);
-    console.log('페이로드 : ', payload);
+    console.log('payload : ', payload);
 
     dispatch(modifyMember(formData));
     closeModal();
