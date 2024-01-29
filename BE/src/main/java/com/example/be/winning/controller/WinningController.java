@@ -21,7 +21,7 @@ public class WinningController {
     private final WinningService winningService;
     // 당첨자 - 팬싸인회에 들어있는 팬 정보 가져오기
 
-    @GetMapping("/fansigns/{fanId}")
+    @GetMapping("/api/fansigns/{fanId}")
     public ResponseEntity<Message> fanInfo(@PathVariable("fanId") Long fanId) {
         log.info(" ** 팬싸인회 - 팬정보 요청 ** ");
         FansignFanResponseDto dto = winningService.findById(fanId);
