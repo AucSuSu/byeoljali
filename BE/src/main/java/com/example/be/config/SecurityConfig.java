@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +39,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
+        http.addFilterBefore(corsConfig.corsFilter(), UsernamePasswordAuthenticationFilter.class); // CORS 필터를 가장 먼저 적용
         // Spring Security의 필터는 SecurityContextPersistenceFilter가 제일먼저 실행되는 필터이다
         http.csrf().disable(); // 접근방식, 데이터의 위조,변조가 발생하는가?
 
