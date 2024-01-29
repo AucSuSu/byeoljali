@@ -2,12 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
   async (artistId) => {
-    const response = await axios.get(
-      `http://localhost:8080/artists/${artistId}/`,
-    );
+    const response = await axios.get(`${BASE_URL}/artists/${artistId}/`);
     return response.data;
   },
 );
@@ -17,7 +17,7 @@ export const addMember = createAsyncThunk(
   async (formData, { getState }) => {
     const token = getState().auth.token;
     const response = await axios.post(
-      'http://localhost:8080/artists/members/1',
+      `${BASE_URL}artists/members/1`,
       formData,
       {
         headers: {
@@ -32,11 +32,11 @@ export const addMember = createAsyncThunk(
 
 export const modifyMember = createAsyncThunk(
   'axios/modifyArtistInfo',
-  async (formData, { getState }) => {
+  async (payload, { getState }) => {
     const token = getState().auth.token;
     const response = await axios.put(
-      'http://localhost:8080/artists/members/12',
-      formData,
+      `${BASE_URL}artists/members/${payload.memberId}`,
+      payload.formData,
       {
         headers: {
           authorization: token,
