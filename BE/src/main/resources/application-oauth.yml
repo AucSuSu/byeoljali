@@ -8,7 +8,7 @@ spring:
             client-id: '218aa28a9e8fa4d947c106cb95b2ec1b'
 #            client-secret: 'Ih48q40vxhB3U37ThaAMCVcVkgvjH9k6'
             client-secret: 'J1m0S3gVIYlbmapbFaACyQSrwDD8fEXF'
-            redirect-uri: 'http://localhost:3000'
+            redirect-uri: 'https://i10e104.p.ssafy.io/'
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: kakao
