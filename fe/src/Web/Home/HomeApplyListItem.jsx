@@ -3,7 +3,11 @@ import ApplyFormModal from './HomeApplyFormModal';
 
 // Reducer 추가
 import { useDispatch } from 'react-redux';
-import { detailList, clearData } from '../Stores/homeDetailListReducer';
+import {
+  detailList,
+  clearData,
+  setFansignId,
+} from '../Stores/homeDetailListReducer';
 
 const ListItem = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +16,7 @@ const ListItem = ({ data }) => {
   // 모달 관리
   const openModal = () => {
     // dispatch를 사용하여 detailList 액션을 호출
+    dispatch(setFansignId(data.artistfansignId));
     dispatch(detailList(data.artistfansignId));
     setIsModalOpen(true);
   };
@@ -38,7 +43,11 @@ const ListItem = ({ data }) => {
       />
       <p>{data.title}</p>
 
-      <ApplyFormModal isModalOpen={isModalOpen} closeModal={closeModal} />
+      <ApplyFormModal
+        fansignId={data.artistfansignId}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

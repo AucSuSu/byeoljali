@@ -10,19 +10,27 @@ const ApplyFormModal = ({ isModalOpen, closeModal }) => {
   const data = useSelector((state) => state.homedetail.data);
   const dispatch = useDispatch(); // useDispatch 호출
 
+  if (data.fansignId != undefined) {
+    console.log('modal fansignId');
+    console.log(data.fansignId);
+  }
+
   const handleChange = (event) => {
     dispatch(setAlbumNum(event.target.value)); // 입력 값으로 상태 업데이트
   };
 
-  const handleSubmit = (fansignId) => {
+  const handleSubmit = () => {
     const formData = {
       memberId: data.memberId,
       boughtAlbum: data.albumNum,
       fanId: 2,
-      artistFansignId: fansignId, // 적절한 ID 값 필요
+      artistFansignId: data.fansignId, // 적절한 ID 값 필요
     };
 
-    dispatch(applyForm({ id: formData.fanId, data: formData }));
+    console.log('handleSubmit');
+    console.log(data);
+    console.log(data.fansignId);
+    dispatch(applyForm({ id: data.fansignId, data: formData }));
   };
 
   const customStyle = {
@@ -57,7 +65,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal }) => {
           value={data.albumNum}
           onChange={handleChange}
         ></input>
-        <button onClick={() => handleSubmit(data.fansignId)}>응모하기</button>
+        <button onClick={() => handleSubmit()}>응모하기</button>
         <button onClick={closeModal}>Close Modal</button>
       </div>
     </Modal>

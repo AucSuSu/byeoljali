@@ -18,9 +18,11 @@ export const detailList = createAsyncThunk('axios/detailList', async (data) => {
 export const applyForm = createAsyncThunk(
   'axios/applyForm',
   async (id, data) => {
+    console.log(id);
+
     try {
       const response = await axios.post(
-        'http://localhost:8080/mainpage/mainpage/' + id,
+        'http://localhost:8080/mainpage/' + id.id,
         data,
       );
 
@@ -36,6 +38,7 @@ const homeDetailListSlice = createSlice({
   initialState: {
     data: [],
     albumNum: 0,
+    fansignId: null,
     memberId: null,
     status: 'idle', // 'idle === 동작 전
     token: null,
@@ -46,10 +49,13 @@ const homeDetailListSlice = createSlice({
       state.data = []; // data를 빈 배열로 초기화
     },
     setAlbumNum: (state, num) => {
-      state.albumNum = num;
+      state.albumNum = num.payload;
     },
     setMemberId: (state, id) => {
-      state.memberId = id;
+      state.memberId = id.payload;
+    },
+    setFansignId: (state, id) => {
+      state.fansignId = id.payload;
     },
   },
   /// extraReducers(반고정) /  builder(유동) / addCase, pending, fulfiled, rejected 고정
@@ -70,6 +76,6 @@ const homeDetailListSlice = createSlice({
 });
 
 // 새로운 리듀서 액션 생성자를 내보냅니다.
-export const { clearData, setAlbumNum, setMemberId, setFormData } =
+export const { clearData, setAlbumNum, setMemberId, setFansignId } =
   homeDetailListSlice.actions;
 export default homeDetailListSlice.reducer;
