@@ -3,33 +3,23 @@ import ApplyFormModal from './HomeApplyFormModal';
 
 // Reducer 추가
 import { useDispatch } from 'react-redux';
-import { detailList } from '../Stores/homeListReducer';
+import { detailList, clearData } from '../Stores/homeDetailListReducer';
 
-const ListItem = ({ data, type }) => {
+const ListItem = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  //컨트롤러
-  const controller = () => {
-    console.log('컨트롤러 입장');
-
-    openModal;
-  };
-
-  //모달 관리
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  //redux 적용
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(detailList);
-    dispatch(detailList);
-  }, [dispatch]);
+  // 모달 관리
+  const openModal = () => {
+    // dispatch를 사용하여 detailList 액션을 호출
+    dispatch(detailList(data.artistfansignId));
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    dispatch(clearData()); // data를 빈 배열로 초기화하는 액션을 디스패치
+    setIsModalOpen(false);
+  };
 
   return (
     <div
@@ -38,16 +28,17 @@ const ListItem = ({ data, type }) => {
       <img
         src={data.posterImageUrl}
         alt={data.title}
-        style={{ width: '100px', borderRadius: '50%', cursor: 'pointer' }}
-        onClick={controller}
+        style={{
+          width: '150px',
+          height: '150px',
+          borderRadius: '50%',
+          cursor: 'pointer',
+        }}
+        onClick={() => openModal()} // onClick 핸들러를 수정
       />
       <p>{data.title}</p>
 
-      <ApplyFormModal
-        data={data}
-        isModalOpen={isModalOpen}
-        closeModal={closeModal}
-      />
+      <ApplyFormModal isModalOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 };

@@ -44,7 +44,7 @@ export default function LoginView() {
   const getData = async (code) => {
     try {
       // 백엔드로 인가 코드를 전송하여 데이터 요청
-      const res = await axios.get(`http://localhost:8080/oauth`, {
+      const res = await axios.get(`https://i10e104.p.ssafy.io/oauth`, {
         params: {
           code: code,
         },
@@ -72,9 +72,9 @@ export default function LoginView() {
     console.log(code);
   };
 
-  const Rest_api_key = '218aa28a9e8fa4d947c106cb95b2ec1b'; // REST API KEY
   const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Rest_api_key}&redirect_uri=${redirect_uri}`;
+  const REST_API_KEY = '218aa28a9e8fa4d947c106cb95b2ec1b';
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}`;
 
   // Kakao Test
 
