@@ -55,10 +55,8 @@ public class FanService {
     // 인증사진 등록하기
     // 프로필 페이지 정보 모두 가져오기 -> id로 가져오기
 
-    public FanMyPageResponseDto findById(Long id){
-        Fan entity = fanRepsitory.findById(id).
-                orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
-
+    public FanMyPageResponseDto findById(){
+        Fan entity = getFan();
         return new FanMyPageResponseDto(entity);
     }
 
