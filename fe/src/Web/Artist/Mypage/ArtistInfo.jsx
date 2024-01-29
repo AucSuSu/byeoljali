@@ -7,7 +7,8 @@ import { getArtistInfo } from '../../Stores/artistInfoReducer.js';
 import { artistData } from '../../data.js';
 export default function ArtistInfo() {
   const dispatch = useDispatch();
-
+  const url = process.env.REACT_APP_BASE_URL;
+  console.log('BASE_URL입니당 : ', url);
   useEffect(() => {
     dispatch(getArtistInfo(1)); // artistId
   }, []);
