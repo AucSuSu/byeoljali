@@ -5,7 +5,7 @@ export const loadApply = createAsyncThunk('axios/loadApply', async () => {
   try {
     const response = await axios.get('http://localhost:8080/applyPage/1/0');
 
-    return response.data;
+    return response.data.object;
   } catch (error) {
     console.error('내가 응모한 팬사인회 로드 실패: ', error);
   }
@@ -14,7 +14,7 @@ export const loadApply = createAsyncThunk('axios/loadApply', async () => {
 export const loadWin = createAsyncThunk('axios/loadWin', async () => {
   try {
     const response = await axios.get('http://localhost:8080/applyPage/1/1');
-    return response.data;
+    return response.data.object;
   } catch (error) {
     console.error('내가 당첨된 팬사인회 로드 실패: ', error);
   }
