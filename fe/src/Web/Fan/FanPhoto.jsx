@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FanModal from './FanModal';
+import FanModal from './FanPhotoModal';
 
 import { useDispatch } from 'react-redux';
 import { setTid } from '../Stores/kakaopayReducer';

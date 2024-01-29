@@ -9,6 +9,7 @@ import counterReducer from './counterReducer.js';
 import modalReducer from './modalReducer.js';
 import fanApplyReducer from './fanApplyListReducer.js';
 import joinFansignReducer from './joinFansignReducer.js';
+import fanInfoReducer from './fanInfoReducer.js';
 // 추가 리듀서
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   kakaopay: kakaopayReducer,
   fanapply: fanApplyReducer,
   joinFansign: joinFansignReducer,
+  faninfo: fanInfoReducer,
   // 추가 리듀서 추가
 });
 

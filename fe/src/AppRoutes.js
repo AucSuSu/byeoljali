@@ -24,14 +24,14 @@ export default function AppRoutes() {
         <Route path="/artistInfo" element={<ArtistInfoView />} />
         <Route path="/home" element={<HomeView />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/faninfo" element={<FanInfoView />} />
-        <Route path="/fanphoto" element={<FanPhoto />} />
-        <Route path="/fanphoto/payresult" element={<FanPhotoPayResult />} />
+        <Route path="/fan-profile" element={<FanInfoView />} />
+        <Route path="/fan-photo" element={<FanPhoto />} />
+        <Route path="/fan-photo/payresult" element={<FanPhotoPayResult />} />
         <Route path="/fansign" element={<ArtistFanSignView />} />
         <Route path="/imguploadtest" element={<ImgUploadModal />} />
         <Route path="/readyfansign" element={<ArtistReadyFansignView />} />
-        <Route path="/fan/apply" element={<FanApplyView />} />
-        <Route path="/fan/win" element={<FanWinView />} />
+        <Route path="/fan-apply" element={<FanApplyView />} />
+        <Route path="/fan-win" element={<FanWinView />} />
         <Route path="/artist" element={<Artist />} />
 
         {/* 라우트 여기에 추가하세용 */}

@@ -58,13 +58,13 @@ const Navbar = ({ isFan }) => {
         {isFan && (
           <>
             <NavbarItem>
-              <NavbarLink to="/fan-page">응모 내역</NavbarLink>
+              <NavbarLink to="/fan-apply">응모 내역</NavbarLink>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/fan-events">당첨 내역</NavbarLink>
+              <NavbarLink to="/fan-win">당첨 내역</NavbarLink>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/fan-events">내 앨범</NavbarLink>
+              <NavbarLink to="/fan-photo">내 앨범</NavbarLink>
             </NavbarItem>
             <NavbarItem>
               <NavbarLink to="/fan-profile">

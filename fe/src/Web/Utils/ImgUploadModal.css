@@ -1,3 +1,33 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  max-width: 500px; /* or your preferred width */
+  max-height: 90vh;
+  overflow-y: auto; /* Enable scroll if content is taller than modal */
+}
+
+#image-preview {
+  max-width: 100%; /* Make sure the image is not wider than the modal */
+  height: auto;
+  margin-bottom: 20px;
+}
+
 .upload-btn {
   background-color: #4caf50; /* Green background */
   color: white; /* White text */

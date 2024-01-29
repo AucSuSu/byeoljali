@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from '../Utils/NavBar';
-import FanListApply from '../Fan/FanListApply';
+import FanListApply from '../Fan/FanApply';
 
 function FanApplyView() {
   return (
