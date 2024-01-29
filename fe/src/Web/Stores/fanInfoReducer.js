@@ -5,11 +5,11 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const getUserData = createAsyncThunk(
   'axios/getUserData',
-  async (fanId, { getState }) => {
+  async ({ getState }) => {
     try {
       const token = getState().auth.token;
 
-      const response = await axios.get(`${BASE_URL}/${fanId}/`, {
+      const response = await axios.get(`${BASE_URL}/mypage/`, {
         headers: {
           Authorization: token,
         },
