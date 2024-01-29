@@ -19,12 +19,14 @@ public class FanController
 {
 
     private final FanService fanService;
+
     /**
      * 팬 마이페이지 조회 하기
      */
-    @GetMapping("/api/mypage/{fanId}")
-    public ResponseEntity<Message> mypage(@PathVariable("fanId") Long id){
-        FanMyPageResponseDto dto = fanService.findById(id);
+
+    @GetMapping("/api/mypage")
+    public ResponseEntity<Message> mypage(){
+        FanMyPageResponseDto dto = fanService.findById();
         Message message = new Message(HttpStatusEnum.OK, "성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
