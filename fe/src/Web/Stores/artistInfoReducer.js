@@ -17,7 +17,7 @@ export const addMember = createAsyncThunk(
   async (formData, { getState }) => {
     const token = getState().auth.token;
     const response = await axios.post(
-      `${BASE_URL}artists/members/1`,
+      `${BASE_URL}/artists/members/1`,
       formData,
       {
         headers: {
@@ -35,7 +35,7 @@ export const modifyMember = createAsyncThunk(
   async (payload, { getState }) => {
     const token = getState().auth.token;
     const response = await axios.put(
-      `${BASE_URL}artists/members/${payload.memberId}`,
+      `${BASE_URL}/artists/members/${payload.memberId}`,
       payload.formData,
       {
         headers: {

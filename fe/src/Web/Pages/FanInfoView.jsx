@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUserData } from '../Stores/fanInfoReducer';
 import { resetUpdateSuccess } from '../Stores/fanInfoReducer';
 
-import ImgUploadModal from '../Utils/ImgUploadModal';
+import ImgUploadModal from '../Fan/ImgUploadModal';
 import FanInfoModal from '../Fan/FanInfoModal';
 import NavBar from '../Utils/NavBar';
 
@@ -11,6 +11,7 @@ import './FanInfoView.css';
 
 function FanInfoView() {
   const userData = useSelector((state) => state.faninfo.data);
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   console.log(userData);
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ function FanInfoView() {
               <div className="profile-avatar-container">
                 <img
                   src={userData.profileImageUrl}
-                  alt="Profile Avatar"
+                  alt=""
                   className="profile-avatar"
                 />
               </div>
@@ -86,7 +87,7 @@ function FanInfoView() {
                 <button
                   className="profile-button"
                   onClick={() => setShowImgUploadModal(true)}
-                  posturl="http://localhost:8080//mypage/edit/certImage/7/"
+                  posturl={`${BASE_URL}/mypage/edit/certImage/7/`}
                 >
                   인증사진 등록하기
                 </button>

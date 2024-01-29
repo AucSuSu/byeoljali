@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setTid } from '../Stores/kakaopayReducer';
 
 function FanPhoto({ data }) {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,12 +32,15 @@ function FanPhoto({ data }) {
     formData.append('total_amount', '11000');
     formData.append('vat_amount', '1000');
     formData.append('tax_free_amount', '0');
-    formData.append(
-      'approval_url',
-      'http://localhost:3000/userphoto/payresult',
-    );
-    formData.append('fail_url', 'http://localhost:3000/userphoto');
-    formData.append('cancel_url', 'http://localhost:3000/userphoto');
+    formData.append('approval_url', `${BASE_URL}/userphoto/payresult`);
+    formData.append('fail_url', `${BASE_URL}/userphoto`);
+    formData.append('cancel_url', `${BASE_URL}/userphoto`);
+    // formData.append(
+    //   'approval_url',
+    //   'http://localhost:3000/userphoto/payresult',
+    // );
+    // formData.append('fail_url', 'http://localhost:3000/userphoto');
+    // formData.append('cancel_url', 'http://localhost:3000/userphoto');
 
     axios
       .post('https://kapi.kakao.com/v1/payment/ready', formData, {

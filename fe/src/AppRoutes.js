@@ -10,7 +10,7 @@ import FanInfoView from './Web/Pages/FanInfoView.jsx';
 import FanPhoto from './Web/Pages/FanPhotoView.jsx';
 import FanPhotoPayResult from './Web/Fan/FanPhotoPayResult.jsx';
 import ArtistFanSignView from './Web/Pages/ArtistReadyFansignView.jsx';
-import ImgUploadModal from './Web/Utils/ImgUploadModal.jsx';
+import ImgUploadModal from './Web/Fan/ImgUploadModal.jsx';
 import ArtistReadyFansignView from './Web/Pages/ArtistFanSignView.jsx';
 import FanApplyView from './Web/Pages/FanApplyView.jsx';
 import FanWinView from './Web/Pages/FanWinView.jsx';
