@@ -12,6 +12,8 @@ const ApplyFormModal = ({ isModalOpen, closeModal }) => {
     setNumber(event.target.value); // 입력 값으로 상태 업데이트
   };
 
+  const applyForm = () => {};
+
   if (isModalOpen) {
     console.log('모달 데이터');
     console.log(data);
