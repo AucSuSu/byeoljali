@@ -44,7 +44,7 @@ export default function LoginView() {
   const getData = async (code) => {
     try {
       // 백엔드로 인가 코드를 전송하여 데이터 요청
-      const res = await axios.get(`http://i10e104.p.ssafy.io/oauth`, {
+      const res = await axios.get(`http://i10e104.p.ssafy.io:8080/oauth`, {
         params: {
           code: code,
         },
