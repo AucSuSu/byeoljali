@@ -4,10 +4,11 @@ import { handleFansignInfo } from '../../Stores/modalReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFansignDetail } from '../../Stores/artistFansignReducer';
 import { detail } from '../../data.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function FansignModal() {
   const modalIsOpen = useState(true);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const closeModal = () => {
@@ -18,7 +19,8 @@ export default function FansignModal() {
   const detailData = detail.object;
 
   const participate = () => {
-    // 팬싸인 세션 이동 추가
+    navigate('/artist', { sessionId: '?', artistId: '?' });
+    closeModal();
     console.log('팬싸인 세션 이동 추가');
   };
 
@@ -78,7 +80,7 @@ export default function FansignModal() {
               현재상태 <p>{detailData.status}</p>
             </li>
           </ul>
-          {nowState === 'fansign' && (
+          {detailData.sessioncreated && (
             <button onClick={participate}>팬싸인 참가하기</button>
           )}
           <button onClick={closeModal}>Close Modal</button>

@@ -18,7 +18,11 @@ export default function Fansign() {
     <>
       <div>
         {fansignList.map((fansign) => (
-          <FansignList key={fansign.memberFansignId} data={fansign} />
+          <FansignList
+            key={fansign.memberFansignId}
+            data={fansign}
+            status={null}
+          />
         ))}
       </div>
     </>

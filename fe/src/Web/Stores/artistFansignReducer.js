@@ -13,10 +13,17 @@ export const getFanSignInfo = createAsyncThunk(
 
 export const createFansign = createAsyncThunk(
   'axios/createFansign',
-  async (payload) => {
-    const response = await axios.get(
-      `http://localhost:8080/artists/fansign/${payload.artistId}}`,
-      payload.data,
+  async (formData, { getState }) => {
+    const token = getState().auth.token;
+    const response = await axios.post(
+      'http://localhost:8080/artists/fansign/1', // {artistId}
+      formData,
+      {
+        headers: {
+          authorization: token,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
     return response.data;
   },

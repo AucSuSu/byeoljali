@@ -92,7 +92,7 @@ export default function LoginView() {
   return (
     <div className="content">
       <div>
-        <h1>별자리에 오신 것을 환영합니다.</h1>
+        <h1 className="text-red-700">별자리에 오신 것을 환영합니다.</h1>
         <p>로그인하여 당신의 스타와 만나보세요</p>
       </div>
 

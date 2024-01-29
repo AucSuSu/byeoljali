@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
 import { addMember } from '../../Stores/artistInfoReducer';
+import ImgUpload from './ImgUpload';
 
 export default function AddMemberModal() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [name, setName] = useState('');
-  const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [imgData, setImgData] = useState('');
 
   const dispatch = useDispatch();
 
@@ -19,15 +20,25 @@ export default function AddMemberModal() {
   };
 
   const payload = {
-    artistId: 1,
     name: name,
-    profileImageUrl: profileImageUrl,
+    image: imgData,
   };
 
   const add = (e) => {
     e.preventDefault();
-    dispatch(addMember(payload));
+
+    const formData = new FormData();
+    for (const key in payload) {
+      formData.append(key, payload[key]);
+    }
+
+    dispatch(addMember(formData));
     closeModal();
+  };
+
+  const uploadImg = (img) => {
+    setImgData(img);
+    console.log('이미지 데이터 : ', img);
   };
 
   const customStyle = {
@@ -53,15 +64,8 @@ export default function AddMemberModal() {
       >
         <div>
           <h2>맴버를 추가해주세요</h2>
+          <ImgUpload img={null} uploadImg={uploadImg} />
           <form onSubmit={add}>
-            <div>
-              <label>프로필 사진(바꿔야함) : </label>
-              <input
-                type="text"
-                value={profileImageUrl}
-                onChange={(e) => setProfileImageUrl(e.target.value)}
-              />
-            </div>
             <div>
               <label>이름 : </label>
               <input
