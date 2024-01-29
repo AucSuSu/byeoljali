@@ -73,7 +73,7 @@ export default function LoginView() {
   };
 
   const Rest_api_key = '218aa28a9e8fa4d947c106cb95b2ec1b'; // REST API KEY
-  const redirect_uri = 'http://localhost:3000'; // Redirect URI
+  const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Rest_api_key}&redirect_uri=${redirect_uri}`;
 
   // Kakao Test

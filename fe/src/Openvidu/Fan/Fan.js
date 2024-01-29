@@ -12,9 +12,9 @@ import UserModel from '../Fan/models/user-model';
 import ToolbarComponent from '../Fan/toolbar/ToolbarComponent';
 
 var localUser = new UserModel();
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
 const APPLICATION_SERVER_URL =
-  process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
-// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
+  process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
 
 class VideoRoomComponent extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class VideoRoomComponent extends Component {
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
-      mySessionId: sessionName,
+      mySessionId: this.props.sessionId,
       myUserName: userName,
       session: undefined,
       localUser: undefined,
@@ -132,7 +132,7 @@ class VideoRoomComponent extends Component {
 
   async connectToSession() {
     if (this.props.token !== undefined) {
-      console.log('token received: ', this.props.token);
+      console.log('토큰 받았음 : ', this.props.token);
       this.connect(this.props.token);
     } else {
       try {

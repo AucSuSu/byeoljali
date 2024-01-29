@@ -21,7 +21,6 @@ export default function MemberList({ data, status }) {
 
   useEffect(() => {
     let time = false;
-    console.log('상태 : ', status);
     if (status === 'READY_APPLYING') {
       time = data.startApplyTime;
       setTimeMessage('응모 시작까지 : ');
@@ -55,7 +54,7 @@ export default function MemberList({ data, status }) {
       (remainingTime % (1000 * 60 * 60)) / (1000 * 60),
     );
     const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-    console.log('일시분초 계산 : ', days, hour, minutes, seconds);
+
     setCountdown({
       days: days,
       hours: hour,
@@ -70,8 +69,6 @@ export default function MemberList({ data, status }) {
   const openModifyMember = () => {
     dispatch(handleFansignInfo(data.artistFansignId));
   };
-
-  console.log('시간 : ', countdown);
 
   // 스타일 참고
   const overlayStyle = {

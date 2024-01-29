@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getFansignDetail } from '../../Stores/artistFansignReducer';
 import { detail } from '../../data.js';
 import { useNavigate } from 'react-router-dom';
+import { joinFansign } from '../../Stores/joinFansignReducer.js';
 
 export default function FansignModal() {
-  const modalIsOpen = useState(true);
+  const modalIsOpen = true;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -17,11 +18,18 @@ export default function FansignModal() {
 
   // const detailData = useSelector((state) => state.artistFansign.detail);
   const detailData = detail.object;
-
-  const participate = () => {
-    navigate('/artist', { sessionId: '?', artistId: '?' });
+  const openvidu = useSelector((state) => state.joinFansign.fansignData);
+  const participate = async () => {
+    await dispatch(joinFansign(1));
+    console.log('오픈비두 데이터 : ', openvidu);
+    navigate('/test', {
+      state: {
+        watch: 1,
+        sessionId: openvidu.sessionId,
+        tokenId: openvidu.tokenId,
+      },
+    });
     closeModal();
-    console.log('팬싸인 세션 이동 추가');
   };
 
   const memberfansignId = 1;
