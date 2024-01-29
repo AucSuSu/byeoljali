@@ -18,13 +18,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final RedisService redisService;
     private final TokenService tokenService;
-    // private final RedisService redisService;
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, RedisService redisService, TokenService tokenService){
+        this.authenticationManager = authenticationManager;
+        super.setFilterProcessesUrl("/api/login");
+        this.redisService = redisService;
+        this.tokenService = tokenService;
+    }
 
     // /login 요청을 하면 로그인 시도를 위해서 아래 메소드가 실행된다. 로그인 성공시 return인 authentication이 세션에 저장됨.
     @Override
@@ -75,8 +80,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         redisService.setValuesWithTimeout("REFRESH_TOKEN_ARTIST_" + artistId, refreshToken, JwtProperties.ACCESS_EXPIRATION_TIME);
 
         // 응답 헤더에 두 개의 토큰 추가
-        response.addHeader("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
+        response.addHeader("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
         response.addHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
         response.addHeader(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + refreshToken);
+        response.addHeader("isArtist", "true");
     }
 }
