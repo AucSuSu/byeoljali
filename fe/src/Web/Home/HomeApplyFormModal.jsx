@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SelectList from './SelectMemberList';
 
+import { setAlbumNum, applyForm } from '../Stores/homeDetailListReducer';
+
 const ApplyFormModal = ({ isModalOpen, closeModal }) => {
   const data = useSelector((state) => state.homedetail.data);
-  const [number, setNumber] = useState(0); // 숫자 입력 상태
+  const dispatch = useDispatch(); // useDispatch 호출
 
   const handleChange = (event) => {
-    setNumber(event.target.value); // 입력 값으로 상태 업데이트
+    dispatch(setAlbumNum(event.target.value)); // 입력 값으로 상태 업데이트
   };
 
-  const applyForm = () => {};
+  const handleSubmit = (fansignId) => {
+    const formData = {
+      memberId: data.memberId,
+      boughtAlbum: data.albumNum,
+      fanId: 2,
+      artistFansignId: fansignId, // 적절한 ID 값 필요
+    };
 
-  if (isModalOpen) {
-    console.log('모달 데이터');
-    console.log(data);
-  }
+    dispatch(applyForm({ id: formData.fanId, data: formData }));
+  };
 
   const customStyle = {
     content: {
@@ -46,8 +52,12 @@ const ApplyFormModal = ({ isModalOpen, closeModal }) => {
         <h3>정보</h3>
         <p>{data?.object?.fansignInfo}</p> {/* 옵셔널 체이닝 사용 */}
         <h3>구매 앨범</h3>
-        <input type="number" value={number} onChange={handleChange}></input>
-        {/* <button onClick={applyForm}>응모하기</button> */}
+        <input
+          type="number"
+          value={data.albumNum}
+          onChange={handleChange}
+        ></input>
+        <button onClick={() => handleSubmit(data.fansignId)}>응모하기</button>
         <button onClick={closeModal}>Close Modal</button>
       </div>
     </Modal>
