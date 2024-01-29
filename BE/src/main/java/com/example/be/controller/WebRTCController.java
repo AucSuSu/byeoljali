@@ -4,6 +4,7 @@ import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
 import com.example.be.config.redis.RedisService;
 import com.example.be.dto.SessionEnterResponseDto;
+import com.example.be.session.commonSession.ChatService;
 import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ public class WebRTCController {
     // Redis 연결 서버
      private final RedisService redisService;
      private final OpenVidu openVidu;
+     private final ChatService chatService;
 
     @GetMapping("/fansign/{memberFansignId}")
     public ResponseEntity<String> makeByulZari(@PathVariable("memberFansignId") Long memberFansignId)
@@ -46,6 +48,9 @@ public class WebRTCController {
         redisService.setValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
         // db에 팬싸인회 - 세션 아이디 저장
         // return new ResponseEntity<>(fansignSession.getSessionId(), HttpStatus.OK); // 방 연결
+
+        // 아티스트 팬싸방 - 대기방을 연결하는 websocket
+        chatService.createRoom("memberFansignSession".concat(String.valueOf(memberFansignId)));
         return new ResponseEntity<>(redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))), HttpStatus.OK); // 방 연결
     }
 
@@ -60,6 +65,7 @@ public class WebRTCController {
 
         String watingRoomFansignSessionId =
                 redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)));
+        System.out.println(watingRoomFansignSessionId);
         Session waitingRoomSession = openVidu.getActiveSession(watingRoomFansignSessionId);
         if (waitingRoomSession == null) { // 방이 없는 경우
             log.info("*** " + watingRoomFansignSessionId + "번방이 없음 ***");
