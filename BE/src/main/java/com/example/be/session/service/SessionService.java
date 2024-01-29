@@ -81,9 +81,9 @@ public class SessionService {
              */
 
             redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId());
-            redisService.setValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
+            redisService.setValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))));
-            log.info("*** 개설 세션 아이디 ***" + redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId))));
+            log.info("*** 개설 세션 아이디 ***" + redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId))));
         }
 
 

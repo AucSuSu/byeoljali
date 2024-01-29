@@ -24,8 +24,8 @@ public class WebRTCController {
      private final RedisService redisService;
      private final OpenVidu openVidu;
 
-    @GetMapping("/fansign")
-    public ResponseEntity<String> makeByulZari()
+    @GetMapping("/fansign/{memberFansignId}")
+    public ResponseEntity<String> makeByulZari(@PathVariable("memberFansignId") Long memberFansignId)
             throws OpenViduJavaClientException, OpenViduHttpException {
 
         log.info("*** 팬싸방, 대기방 개설 메소드 호출됨 *** ");
@@ -34,18 +34,16 @@ public class WebRTCController {
          */
         Map<String, Object> param = new HashMap<>(); // 이거 어떻게 다르게 쓰는지 조사좀 ^^&.. 해야할 듯
         SessionProperties propertiesFansign = SessionProperties.fromJson(param).build();
-        //Session fansignSession = openvidu.createSession(propertiesFansign);
+        Session fansignSession = openVidu.createSession(propertiesFansign);
         SessionProperties propertiesWaitingRoom = SessionProperties.fromJson(param).build();
-        //Session waitingRoomSession = openvidu.createSession(propertiesWaitingRoom);
+        Session waitingRoomSession = openVidu.createSession(propertiesWaitingRoom);
         /**
          * 개설되면 memberFansignSession + memberFansignId key, sessionId를 value로 redis에 sessionId 저장
          * 개설되면 watingRoomFansignSession + memberFansignId key, sessionId를 value로 redis에 sessionId 저장
          * 1. 만료 시간은 어떻게 할까 ?
          */
-        Long memberFansignId = 1L; // 예시 데이터
-        //redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId());
-        //redisService.setValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
-        redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)),"fakeSessionId");
+        redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId());
+        redisService.setValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
         // db에 팬싸인회 - 세션 아이디 저장
         // return new ResponseEntity<>(fansignSession.getSessionId(), HttpStatus.OK); // 방 연결
         return new ResponseEntity<>(redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))), HttpStatus.OK); // 방 연결
@@ -61,7 +59,7 @@ public class WebRTCController {
         log.info("*** 대기방 입장 메서드 호출 ***");
 
         String watingRoomFansignSessionId =
-                redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)));
+                redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)));
         Session waitingRoomSession = openVidu.getActiveSession(watingRoomFansignSessionId);
         if (waitingRoomSession == null) { // 방이 없는 경우
             log.info("*** " + watingRoomFansignSessionId + "번방이 없음 ***");
@@ -78,7 +76,7 @@ public class WebRTCController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
-    // 대기방 세션아이디, 토큰 발급하기
+    // 팬싸방 세션아이디, 토큰 발급하기
     @GetMapping("/fan/fansigns/enterFansign/{memberFansignId}")
     public ResponseEntity<Message> enterByulZariEntering(@PathVariable("memberFansignId") Long memberFansignId
                                                       )
@@ -149,7 +147,7 @@ public class WebRTCController {
         String fanSessionId =
         redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId)));
         String watingRoomFansignSession =
-                redisService.getValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)));
+                redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)));
         Session fansignSession = openVidu.getActiveSession(fanSessionId);
         Session waitingRoomSession = openVidu.getActiveSession(watingRoomFansignSession);
 
@@ -164,7 +162,7 @@ public class WebRTCController {
         fansignSession.close();
         waitingRoomSession.close();
         redisService.deleteValues("memberFansignSession".concat(String.valueOf(memberFansignId)));
-        redisService.deleteValues("watingRoomFansignSession".concat(String.valueOf(memberFansignId)));
+        redisService.deleteValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)));
 
         log.info("*** 아티스트 :: 퇴장 완료 ***");
         return new ResponseEntity<>(HttpStatus.OK);

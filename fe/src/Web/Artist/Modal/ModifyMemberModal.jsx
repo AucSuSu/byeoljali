@@ -59,15 +59,10 @@ export default function ModifyMember({ data }) {
       >
         <div>
           <h2>{data.name}</h2>
-          {/* <img
-            src={data.profileImageUrl}
-            alt={data.name}
-            style={{ width: '400px', borderRadius: '10px' }}
-          /> */}
           <ImgUpload img={data.profileImageUrl} uploadImg={uploadImg} />
-
           <form onSubmit={modify}>
             <div>
+              <label>이름 : </label>
               <input
                 type="text"
                 value={name}

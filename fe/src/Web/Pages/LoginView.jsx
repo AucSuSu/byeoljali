@@ -73,7 +73,7 @@ export default function LoginView() {
   };
 
   const Rest_api_key = '218aa28a9e8fa4d947c106cb95b2ec1b'; // REST API KEY
-  const redirect_uri = 'http://localhost:3000'; // Redirect URI
+  const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Rest_api_key}&redirect_uri=${redirect_uri}`;
 
   // Kakao Test
@@ -92,7 +92,8 @@ export default function LoginView() {
   return (
     <div className="content">
       <div>
-        <h1>별자리에 오신 것을 환영합니다.</h1>
+        <h1 className="text-purple-700">별자리에 오신 것을 환영합니다.</h1>
+
         <p>로그인하여 당신의 스타와 만나보세요</p>
       </div>
 
