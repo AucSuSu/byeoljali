@@ -13,6 +13,8 @@ export default function LoginView() {
 
   const dispatch = useDispatch();
 
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const data = { email: email, password: password };
 
   const token = useSelector((state) => state.auth.token);
@@ -44,7 +46,7 @@ export default function LoginView() {
   const getData = async (code) => {
     try {
       // 백엔드로 인가 코드를 전송하여 데이터 요청
-      const res = await axios.get(`http://i10e104.p.ssafy.io:8080/oauth`, {
+      const res = await axios.get(`${BASE_URL}oauth`, {
         params: {
           code: code,
         },

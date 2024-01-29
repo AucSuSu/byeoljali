@@ -4,16 +4,15 @@ import AddMemberModal from '../Modal/AddMemberModal.jsx';
 import './ArtistInfo.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getArtistInfo } from '../../Stores/artistInfoReducer.js';
-import { artistData } from '../../data.js';
+// import { artistData } from '../../data.js'; // 삭제 예정
 export default function ArtistInfo() {
   const dispatch = useDispatch();
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
-  console.log('BASE_URL입니당 : ', BASE_URL);
+
   useEffect(() => {
-    dispatch(getArtistInfo(1)); // artistId
+    dispatch(getArtistInfo(1)); // artistId 삭제 예정
   }, []);
 
-  // const artistData = useSelector((state) => state.artistInfo.data.object);
+  const artistData = useSelector((state) => state.artistInfo.data.object);
 
   return (
     <>
