@@ -24,7 +24,7 @@ public class OAuthController {
     private final FanService fanService;
     private final TokenService tokenService;
     // 프론트 측에서 인가코드를 받아오는 메소드
-    @GetMapping("/oauth")
+    @GetMapping("/api/oauth")
     public ResponseEntity<String> getLogin(@RequestParam("code") String code){
 
         System.out.println(code);

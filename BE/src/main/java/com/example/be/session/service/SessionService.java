@@ -3,6 +3,7 @@ package com.example.be.session.service;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.scheduling.repository.SchedulingRepository;
+import com.example.be.session.commonSession.ChatService;
 import com.example.be.session.repository.SessionRepository;
 import com.example.be.config.redis.RedisService;
 import io.openvidu.java.client.*;
@@ -35,6 +36,7 @@ public class SessionService {
     private final OpenVidu openVidu;
     private final SessionRepository sessionRepository;
     private final SchedulingRepository schedulingRepository;
+    private final ChatService chatService;
 
 
     @Scheduled(cron = "00 00 00 * * ?") // 매일 00:00:00 에
@@ -82,6 +84,7 @@ public class SessionService {
 
             redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId());
             redisService.setValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
+            chatService.createRoom("memberFansignSession".concat(String.valueOf(memberFansignId)));
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))));
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId))));
         }
