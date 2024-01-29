@@ -52,11 +52,12 @@ public class ArtistService {
     // 아티스트 마이페이지
     // 아티스트 멤버 추가하기
 
-    public ArtistMypageResponseDto findById(Long id){
-        Artist entity = artistRepository.findById(id).
-                orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
+    public ArtistMypageResponseDto getMyPage(){
 
-        return new ArtistMypageResponseDto(entity);
+        Artist artist = getArtist();
+        Artist realArtist = artistRepository.findById(artist.getArtistId()).orElseThrow(() -> new IllegalArgumentException("해당 아티스트 정보가 없습니다."));
+
+        return new ArtistMypageResponseDto(realArtist);
     }
 
     public Long addMember(ArtistMemberAddRequestDto dto, MultipartFile image){

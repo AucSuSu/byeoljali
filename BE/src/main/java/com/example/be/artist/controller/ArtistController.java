@@ -28,10 +28,10 @@ public class ArtistController {
         return ResponseEntity.ok(responseDto);
     }
     // 아티스트 마이페이지 조회
-    @GetMapping("/{artistId}")
-    public ResponseEntity<Message> mypage(@PathVariable("artistId") Long id){
+    @GetMapping("/")
+    public ResponseEntity<Message> mypage(){
         log.info("*** 아티스트 마이페이지 조회 ***");
-        ArtistMypageResponseDto dto = artistService.findById(id);
+        ArtistMypageResponseDto dto = artistService.getMyPage();
         Message message = new Message(HttpStatusEnum.OK, "읽어오기 성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
