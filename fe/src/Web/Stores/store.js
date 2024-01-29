@@ -6,6 +6,7 @@ import kakaopayReducer from './kakaopayReducer.js';
 import counterReducer from './counterReducer.js';
 import modalReducer from './modalReducer.js';
 import fanApplyReducer from './fanApplyListReducer.js';
+import fanInfoReducer from './fanInfoReducer.js';
 // 추가 리듀서
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   counter: counterReducer,
   kakaopay: kakaopayReducer,
   fanapply: fanApplyReducer,
+  faninfo: fanInfoReducer,
   // 추가 리듀서 추가
 });
 

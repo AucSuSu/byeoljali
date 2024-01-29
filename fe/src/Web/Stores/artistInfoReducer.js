@@ -4,10 +4,8 @@ import { useSelector } from 'react-redux';
 
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
-  async (artistId) => {
-    const response = await axios.get(
-      `http://localhost:8080/artists/${artistId}/`,
-    );
+  async () => {
+    const response = await axios.get(`http://localhost:8080/artists/3/`);
     return response.data;
   },
 );

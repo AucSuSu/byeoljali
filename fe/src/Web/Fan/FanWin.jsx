@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadWin } from '../Stores/fanApplyListReducer';
 
-function FanListWin() {
+function FanWin() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.fanapply.data);
 
@@ -10,13 +10,13 @@ function FanListWin() {
     dispatch(loadWin());
   }, [dispatch]);
 
+  console.log(data);
+
   return (
     <div>
-      {data.map((item, index) => (
-        <div key={index}>{/* 구현예정 */}</div>
-      ))}
+      <h1>당첨 페이지</h1>
     </div>
   );
 }
 
-export default FanListWin;
+export default FanWin;

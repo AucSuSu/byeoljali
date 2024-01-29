@@ -1,5 +1,5 @@
 import React from 'react';
-import './FanModal.css'; // 모달을 위한 CSS 파일
+import './FanPhotoModal.css'; // 모달을 위한 CSS 파일
 
 function FanModal({ onClose, onPay, onDelete, data }) {
   return (
