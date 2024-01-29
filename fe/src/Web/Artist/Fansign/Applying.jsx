@@ -9,6 +9,7 @@ export default function Applying() {
   // const fansignList = useSelector((state) => state.artistInfo.data1.object);
   const fansignList = ApplyingData.object;
 
+  const status = 'APPLYING';
   const payload = { artistId: 1, status: 'APPLYING' };
   useEffect(() => {
     dispatch(getFanSignInfo(payload));
@@ -18,7 +19,11 @@ export default function Applying() {
     <>
       <div>
         {fansignList.map((fansign) => (
-          <FansignList key={fansign.memberFansignId} data={fansign} />
+          <FansignList
+            key={fansign.memberFansignId}
+            data={fansign}
+            status={status}
+          />
         ))}
       </div>
     </>

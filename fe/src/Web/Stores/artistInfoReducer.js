@@ -14,10 +14,17 @@ export const getArtistInfo = createAsyncThunk(
 
 export const addMember = createAsyncThunk(
   'axios/addMember',
-  async (payload) => {
+  async (formData, { getState }) => {
+    const token = getState().auth.token;
     const response = await axios.post(
-      `http://localhost:8080/artists/members`,
-      payload,
+      'http://localhost:8080/artists/members/1',
+      formData,
+      {
+        headers: {
+          authorization: token,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
     return response.data;
   },

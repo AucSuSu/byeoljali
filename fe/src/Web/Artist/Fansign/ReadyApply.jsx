@@ -4,13 +4,12 @@ import { getFanSignInfo } from '../../Stores/artistFansignReducer.js';
 import FansignList from './FansignList.jsx';
 import { ReadyApplyData } from '../../data.js';
 
-import ImgUpload from '../Modal/ImgUpload.jsx';
-
 export default function ReadyApply() {
   const dispatch = useDispatch();
   // const fansignList = useSelector((state) => state.artistInfo.data1.object);
   const fansignList = ReadyApplyData.object;
 
+  const status = 'READY_APPLYING';
   const payload = { artistId: 1, status: 'READY_APPLYING' };
   useEffect(() => {
     dispatch(getFanSignInfo('payload'));
@@ -18,10 +17,13 @@ export default function ReadyApply() {
 
   return (
     <>
-      <ImgUpload></ImgUpload>
       <div>
         {fansignList.map((fansign) => (
-          <FansignList key={fansign.memberFansignId} data={fansign} />
+          <FansignList
+            key={fansign.memberFansignId}
+            data={fansign}
+            status={status}
+          />
         ))}
       </div>
     </>

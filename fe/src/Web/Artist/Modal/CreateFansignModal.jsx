@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import { handleAddFansign } from '../../Stores/modalReducer';
 import { useDispatch } from 'react-redux';
 import { createFansign } from '../../Stores/artistFansignReducer';
+import ImgUpload from './ImgUpload';
+
 export default function CreateFansignModal({}) {
   const modalIsOpen = useState(true);
 
@@ -29,8 +31,19 @@ export default function CreateFansignModal({}) {
 
   const fansignCreate = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    for (const key in payload) {
+      formData.append(key, payload[key]);
+    }
+
     dispatch(createFansign(payload));
     console.log('팬싸인회 개설 요청');
+  };
+
+  const uploadImg = (img) => {
+    setPostImageUrl(img);
+    console.log('이미지 데이터 : ', img);
   };
 
   // 데이터 관리
@@ -63,6 +76,8 @@ export default function CreateFansignModal({}) {
       >
         <div>
           <h2>타이틀</h2>
+
+          <ImgUpload img={null} uploadImg={uploadImg} />
           <form onSubmit={fansignCreate}>
             <div>
               <label>타이틀 : </label>

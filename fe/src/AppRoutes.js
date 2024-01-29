@@ -4,6 +4,7 @@ import LoginView from './Web/Pages/LoginView.jsx';
 import ArtistInfoView from './Web/Pages/ArtistInfoView.jsx';
 import HomeView from './Web/Pages/HomeView.jsx';
 import Test from './Web/test.js';
+import Artist from './Openvidu/Artist/Artist.js';
 import CounterView from './Web/Pages/CounterView.jsx';
 import FanInfoView from './Web/Pages/FanInfoView.jsx';
 import FanPhoto from './Web/Pages/FanPhotoView.jsx';
@@ -29,6 +30,7 @@ export default function AppRoutes() {
         <Route path="/imguploadtest" element={<ImgUploadModal />} />
         <Route path="/readyfansign" element={<ArtistReadyFansignView />} />
         <Route path="/userapply" element={<FanSignView />} />
+        <Route path="/artist" element={<Artist />} />
 
         {/* 라우트 여기에 추가하세용 */}
       </Routes>
