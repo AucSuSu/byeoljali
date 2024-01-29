@@ -7,7 +7,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
   async (artistId) => {
-    const response = await axios.get(`${BASE_URL}/artists/${artistId}/`);
+    const response = await axios.get(`${BASE_URL}artists/${artistId}/`);
     return response.data;
   },
 );
@@ -35,7 +35,7 @@ export const modifyMember = createAsyncThunk(
   async (payload, { getState }) => {
     const token = getState().auth.token;
     const response = await axios.put(
-      `${BASE_URL}/artists/members/${payload.memberId}`,
+      `${BASE_URL}artists/members/${payload.memberId}`,
       payload.formData,
       {
         headers: {
