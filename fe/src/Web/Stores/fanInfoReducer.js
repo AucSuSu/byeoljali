@@ -1,13 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const getUserData = createAsyncThunk(
   'axios/getUserData',
-  async (fanId) => {
+  async (fanId, { getState }) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/mypage/${fanId}/`,
-      );
+      const token = getState().auth.token;
+
+      const response = await axios.get(`${BASE_URL}/${fanId}/`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       return response.data.object;
     } catch (error) {
       console.error('내 유저 정보 로드 실패: ', error);
@@ -22,7 +28,7 @@ export const editUserData = createAsyncThunk(
       const token = getState().auth.token;
 
       const response = await axios.put(
-        `http://localhost:8080/mypage/edit/profile`,
+        `${BASE_URL}/mypage/edit/profile`,
         data.formData,
         {
           headers: {
@@ -43,8 +49,7 @@ export const editUserData = createAsyncThunk(
 const fanInfoSlice = createSlice({
   name: 'fanInfo',
   initialState: {
-    data: {},
-    updateSuccess: false,
+    data: '',
   },
   reducers: {
     resetUpdateSuccess: (state) => {

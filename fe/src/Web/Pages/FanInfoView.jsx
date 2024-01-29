@@ -11,14 +11,12 @@ import './FanInfoView.css';
 
 function FanInfoView() {
   const userData = useSelector((state) => state.faninfo.data);
-  const updateSuccess = useSelector((state) => state.faninfo.updateSuccess);
+
   console.log(userData);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (updateSuccess) {
-      dispatch(getUserData(7));
-    }
+    dispatch(getUserData(7));
   }, [dispatch]);
 
   const [showEditModal, setShowEditModal] = useState(false);
@@ -36,7 +34,7 @@ function FanInfoView() {
         <div>
           <NavBar isFan={true} />
           <div className="profile-container">
-            {/* 유저정보수정모달 */}``
+            {/* 유저정보수정모달 */}
             {showEditModal && (
               <FanInfoModal
                 userData={userData}
