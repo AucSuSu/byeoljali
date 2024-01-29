@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/artists")
+@RequestMapping("/api/artists")
 @RequiredArgsConstructor
 @Slf4j
 public class ArtistController {

@@ -23,7 +23,7 @@ public class PhotoController {
     private final PhotoService photoService;
 
     // 인생네컷 결제 정보 변경
-    @PutMapping("/myalbum/{photoId}")
+    @PutMapping("/api/myalbum/{photoId}")
     public ResponseEntity<Message> changePayInfo(@PathVariable("photoId") Long photoId){
         log.info(" ** 인생네컷 결제 정보 변경(결제X -> 결제O) api입니다 ** ");
         Long id = photoService.payComplete(photoId);
@@ -32,7 +32,7 @@ public class PhotoController {
     }
 
     // 인생네컷 DB에 저장하기
-    @PostMapping("/myalbum")
+    @PostMapping("/api/myalbum")
     public ResponseEntity<Message> savePhotoDB(@RequestBody PhotoDBDto photoDBDto){
         log.info(" ** 인생네컷 DB 저장 api 입니다 ** ");
         Long id = photoService.downloadDBPhoto(photoDBDto);
@@ -41,7 +41,7 @@ public class PhotoController {
     }
 
     // 인생네컷 삭제하기
-    @DeleteMapping("/myalbum/{photoId}")
+    @DeleteMapping("/api/myalbum/{photoId}")
     public ResponseEntity<Message> deletePhoto(@PathVariable("photoId") Long photoId){
         log.info(" ** 인생네컷 삭제 api 입니다 ** ");
         Long id = photoService.deletePhoto(photoId);
@@ -50,7 +50,7 @@ public class PhotoController {
     }
 
     // 인생네컷 조회하기
-//    @GetMapping("/myalbum/{fanId}/{keyword}")
+//    @GetMapping("/api/myalbum/{fanId}/{keyword}")
 //    public ResponseEntity<Message> showPhoto(@PathVariable("fanId") Long fanId, @PathVariable("keyword") String keyword){
 //        log.info(" ** 인생네컷 페이지 조회 api 입니다 ** ");
 //        List<PhotoResponseDto> dto = photoService.showPhoto(fanId, keyword);
@@ -58,7 +58,7 @@ public class PhotoController {
 //        return new ResponseEntity<>(message, HttpStatus.OK);
 //    }
     // 인생네컷 전체 조회 api
-//    @GetMapping("/myalbum/{fanId}")
+//    @GetMapping("/api/myalbum/{fanId}")
 //    public ResponseEntity<Message> showPhoto(@PathVariable("fanId") Long fanId){
 //        log.info(" ** 인생네컷 페이지 조회 api 입니다 ** ");
 //        List<PhotoResponseDto> dto = photoService.showPhoto(fanId);
@@ -67,7 +67,7 @@ public class PhotoController {
 //    }
 
     // 인생네컷 조회 + 필터 + 검색기능 api
-    @GetMapping("/myalbum/{fanId}")
+    @GetMapping("/api/myalbum/{fanId}")
     public ResponseEntity<Message> showAllandFilteredPhoto(@PathVariable("fanId") Long fanId,
                                                            @RequestParam(name ="searchKeyword", required = false) String searchKeyword,
                                                            @RequestParam(name = "payOrNot", required = false) Boolean payOrNot){

@@ -25,7 +25,7 @@ public class ArtistFansignController {
 
     private final ArtistFansignService artistFansignService;
 
-    @PostMapping(value = "/artists/fansign", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/api/artists/fansign", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Message> addFansign(AddArtistFansignRequestDto requestDto) {
         log.info(" ** 팬싸인회 생성 요청 api 입니다.** ");
         Long aritstFansignId = artistFansignService.addFansign(requestDto);
@@ -33,7 +33,7 @@ public class ArtistFansignController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/mainpage/recent")
+    @GetMapping("/api/mainpage/recent")
     public ResponseEntity<Message> recentFansign() {
         log.info(" ** 최근 팬싸인회 리스트 api 입니다.** ");
         List<RecentFansignResponseDto> recentFansign = artistFansignService.getRecent3Fansign();
@@ -41,7 +41,7 @@ public class ArtistFansignController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/mainpage/{fanId}")
+    @GetMapping("/api/mainpage/{fanId}")
     public ResponseEntity<Message> allFansign(@PathVariable("fanId") Long fanId,
                                               @Param("searchKeyword") String searchKeyword,
                                               @Param("order") String order,
@@ -53,7 +53,7 @@ public class ArtistFansignController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/artists/apply/{artistId}")
+    @GetMapping("/api/artists/apply/{artistId}")
     public ResponseEntity<Message> ArtistsFansign(@PathVariable("artistId") Long artistId, @Param("status")FansignStatus status) {
         log.info(" ** 아티스트 마이페이지 팬싸인회 관리 api 입니다.** ");
         List<ArtistsMyFansignResponseDto> fansignList = artistFansignService.getArtistsFansign(artistId, status);

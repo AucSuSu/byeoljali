@@ -26,7 +26,7 @@ public class WebRTCController {
      private final OpenVidu openVidu;
      private final ChatService chatService;
 
-    @GetMapping("/fansign/{memberFansignId}")
+    @GetMapping("/api/fansign/{memberFansignId}")
     public ResponseEntity<String> makeByulZari(@PathVariable("memberFansignId") Long memberFansignId)
             throws OpenViduJavaClientException, OpenViduHttpException {
 
@@ -56,7 +56,7 @@ public class WebRTCController {
 
 
     // 대기방 세션아이디, 토큰 발급하기
-    @GetMapping("/fan/fansigns/enterwaiting/{memberFansignId}")
+    @GetMapping("/api/fan/fansigns/enterwaiting/{memberFansignId}")
     public ResponseEntity<Message> enterByulZariWaiting(@PathVariable("memberFansignId") Long memberFansignId
                                                       )
             throws OpenViduJavaClientException, OpenViduHttpException {
@@ -83,7 +83,7 @@ public class WebRTCController {
     }
 
     // 팬싸방 세션아이디, 토큰 발급하기
-    @GetMapping("/fan/fansigns/enterFansign/{memberFansignId}")
+    @GetMapping("/api/fan/fansigns/enterFansign/{memberFansignId}")
     public ResponseEntity<Message> enterByulZariEntering(@PathVariable("memberFansignId") Long memberFansignId
                                                       )
             throws OpenViduJavaClientException, OpenViduHttpException {
@@ -111,7 +111,7 @@ public class WebRTCController {
      * 팬 퇴장
      */
     // 나가기 시 저장되어있던 세션 아이디로 -> 퇴장
-    @PostMapping("/fan/fansigns/exit/{sessionId}")
+    @PostMapping("/api/fan/fansigns/exit/{sessionId}")
     public ResponseEntity<String> fanExitByulZari(@PathVariable("sessionId") String sessionId,
                                                   @RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
@@ -136,7 +136,7 @@ public class WebRTCController {
      */
     // 나가기 시 저장되어있던 세션 아이디로 -> 퇴장
 
-    @PostMapping("/memeber/fansigns/exit/{memberFansignId}")
+    @PostMapping("/api/memeber/fansigns/exit/{memberFansignId}")
     public ResponseEntity<String> memberExitByulZari(@PathVariable("memberFansignId") String memberFansignId,
                                                      @RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
