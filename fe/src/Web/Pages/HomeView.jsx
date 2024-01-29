@@ -16,9 +16,6 @@ const HomeView = () => {
   //redux 적용
   const dispatch = useDispatch();
 
-  console.log('.env 테스트');
-  console.log(process.env.REACT_APP_BASE_URL);
-
   useEffect(() => {
     dispatch(applyList());
     dispatch(recentList());

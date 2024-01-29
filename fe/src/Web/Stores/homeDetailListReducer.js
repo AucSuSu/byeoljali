@@ -15,6 +15,22 @@ export const detailList = createAsyncThunk('axios/detailList', async (data) => {
   }
 });
 
+export const applyForm = createAsyncThunk(
+  'axios/applyForm',
+  async (id, data) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/mainpage/mainpage/' + id,
+        data,
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error('팬 사인회 응모 실패: ', error);
+    }
+  },
+);
+
 const homeDetailListSlice = createSlice({
   name: 'detailList',
   initialState: {
@@ -54,5 +70,6 @@ const homeDetailListSlice = createSlice({
 });
 
 // 새로운 리듀서 액션 생성자를 내보냅니다.
-export const { clearData } = homeDetailListSlice.actions;
+export const { clearData, setAlbumNum, setMemberId, setFormData } =
+  homeDetailListSlice.actions;
 export default homeDetailListSlice.reducer;
