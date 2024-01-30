@@ -3,9 +3,15 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const loadApply = createAsyncThunk('axios/loadApply', async () => {
+
+export const loadApply = createAsyncThunk('axios/loadApply', async (arg, {getState}) => {
   try {
-    const response = await axios.get(`${BASE_URL}applyPage/1/0`);
+    const token = getState().auth.token;
+    const response = await axios.get(`${BASE_URL}applyPage/0`, {
+      headers: {
+        Authorization : token,
+      }
+    });
 
     return response.data.object;
   } catch (error) {
@@ -13,9 +19,14 @@ export const loadApply = createAsyncThunk('axios/loadApply', async () => {
   }
 });
 
-export const loadWin = createAsyncThunk('axios/loadWin', async () => {
+export const loadWin = createAsyncThunk('axios/loadWin', async (arg, {getState}) => {
   try {
-    const response = await axios.get(`${BASE_URL}applyPage/1/1`);
+    const token = getState().auth.token;
+    const response = await axios.get(`${BASE_URL}applyPage/1`, {
+      headers : {
+        Authorization : token,
+      }
+    });
     return response.data.object;
   } catch (error) {
     console.error('내가 당첨된 팬사인회 로드 실패: ', error);
