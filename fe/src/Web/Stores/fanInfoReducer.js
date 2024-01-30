@@ -51,11 +51,7 @@ const fanInfoSlice = createSlice({
   initialState: {
     data: '',
   },
-  reducers: {
-    resetUpdateSuccess: (state) => {
-      state.updateSuccess = false; // 상태 초기화 액션
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getUserData.pending, (state) => {
@@ -64,7 +60,6 @@ const fanInfoSlice = createSlice({
       .addCase(getUserData.fulfilled, (state, action) => {
         // 요청이 성공적으로 완료되었을 때의 상태 업데이트
         state.data = action.payload;
-        state.updateSuccess = true;
       })
       .addCase(getUserData.rejected, (state) => {
         // 요청이 실패했을 때의 상태 업데이트
@@ -72,7 +67,6 @@ const fanInfoSlice = createSlice({
       .addCase(editUserData.fulfilled, (state, action) => {
         // 데이터 업데이트 성공시 상태 업데이트
         state.data = { ...state.data, ...action.payload };
-        state.updateSuccess = true;
       })
       .addCase(editUserData.rejected, (state, action) => {
         // 데이터 업데이트 실패시 에러 상태 업데이트
@@ -81,5 +75,4 @@ const fanInfoSlice = createSlice({
   },
 });
 
-export const { resetUpdateSuccess } = fanInfoSlice.actions;
 export default fanInfoSlice.reducer;
