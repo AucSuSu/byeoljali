@@ -14,6 +14,7 @@ import ImgUploadModal from './Web/Fan/ImgUploadModal.jsx';
 import ArtistReadyFansignView from './Web/Pages/ArtistFanSignView.jsx';
 import FanApplyView from './Web/Pages/FanApplyView.jsx';
 import FanWinView from './Web/Pages/FanWinView.jsx';
+import Capture from './Web/Utils/Capture.jsx';
 
 export default function AppRoutes() {
   return (
@@ -33,6 +34,7 @@ export default function AppRoutes() {
         <Route path="/fan-apply" element={<FanApplyView />} />
         <Route path="/fan-win" element={<FanWinView />} />
         <Route path="/artist" element={<Artist />} />
+        <Route path="/capture" element={<Capture />} />
 
         {/* 라우트 여기에 추가하세용 */}
       </Routes>
