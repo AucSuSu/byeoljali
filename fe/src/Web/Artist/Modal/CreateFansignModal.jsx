@@ -6,8 +6,6 @@ import { createFansign } from '../../Stores/artistFansignReducer';
 import ImgUpload from './ImgUpload';
 
 export default function CreateFansignModal({}) {
-  const modalIsOpen = useState(true);
-
   const dispatch = useDispatch();
 
   const closeModal = () => {
@@ -33,12 +31,13 @@ export default function CreateFansignModal({}) {
 
   const fansignCreate = (e) => {
     e.preventDefault();
+    console.log('페이로드 : ', payload);
 
     const formData = new FormData();
     for (const key in payload) {
       formData.append(key, payload[key]);
     }
-
+    console.log('폼데이터 : ', formData);
     dispatch(createFansign(formData));
     console.log('팬싸인회 개설 요청');
   };
@@ -55,21 +54,19 @@ export default function CreateFansignModal({}) {
   const [endApplyTime, setEndApplyTime] = useState('');
   const [mode, setMode] = useState('RANDOM');
   const [startFansignTime, setStartFansignTime] = useState('');
-  const [memberIdList, setMemberIdList] = useState([5, 6]);
+  const [memberIdList, setMemberIdList] = useState([12, 13]);
   const [image, setImage] = useState('');
   //
 
   const payload = {
-    data: {
-      title: title,
-      information: information,
-      startApplyTime: startApplyTime,
-      endApplyTime: endApplyTime,
-      startFansignTime: startFansignTime,
-      mode: mode,
-      memberIdList: memberIdList,
-      image: image,
-    },
+    title: title,
+    information: information,
+    startApplyTime: `${startApplyTime} 12:00:00`,
+    endApplyTime: `${endApplyTime} 12:00:00`,
+    startFansignTime: `${startFansignTime} 12:00:00`,
+    mode: mode,
+    memberIdList: memberIdList,
+    image: image,
   };
 
   const customStyle = {
@@ -83,7 +80,7 @@ export default function CreateFansignModal({}) {
   return (
     <>
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={true}
         onRequestClose={closeModal}
         contentLabel="테스트입니다"
         style={customStyle}

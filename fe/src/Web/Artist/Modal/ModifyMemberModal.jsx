@@ -7,7 +7,7 @@ import ImgUpload from './ImgUpload';
 
 export default function ModifyMember({ data }) {
   const modalIsOpen = useState(true);
-  const [imgData, setImgData] = useState('');
+  const [imgData, setImgData] = useState(data.profileImageUrl);
   const [name, setName] = useState(data.name);
 
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function ModifyMember({ data }) {
     dispatch(handleModifyMember(null));
   };
 
-  const payload = { name: name, image: imgData };
+  const payload = { name: name, image: imgData, memgerId: data.memberId };
 
   const modify = (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function ModifyMember({ data }) {
     for (const key in payload) {
       formData.append(key, payload[key]);
     }
-
+    console.log('페이로드 : ', payload);
     dispatch(modifyMember({ formData: formData, memberId: data.memberId }));
     closeModal();
   };

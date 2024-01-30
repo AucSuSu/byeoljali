@@ -122,18 +122,6 @@ export default function MemberList({ data, status }) {
           D-{countdown.days === 0 ? 'DAY' : countdown.days}
         </div>
       </div>
-      {/* <img
-        src={data.posterImageUrl}
-        alt={data.title}
-        style={{
-          width: '100px',
-          height: '100px',
-          borderRadius: '50%',
-          objectFit: 'cover',
-          cursor: 'pointer',
-        }}
-        onClick={openModifyMember}
-      /> */}
       <p>{data.title}</p>
       <p>{data.memberName}</p>
       <p>
@@ -146,7 +134,7 @@ export default function MemberList({ data, status }) {
         )}
       </p>
       {fansignInfo.open && fansignInfo.key === data.artistFansignId && (
-        <FansignModal />
+        <FansignModal memberFansignId={data.memberFansignId} />
       )}
     </div>
   );

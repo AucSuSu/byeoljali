@@ -42,7 +42,6 @@ export const modifyMember = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       },
-      ls,
     );
     return response.data;
   },

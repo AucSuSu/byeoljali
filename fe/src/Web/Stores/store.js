@@ -11,6 +11,8 @@ import fanApplyReducer from './fanApplyListReducer.js';
 import joinFansignReducer from './joinFansignReducer.js';
 import fanInfoReducer from './fanInfoReducer.js';
 import fanPhotoReducer from './fanPhotoReducer.js';
+import artistFansignReducer from './artistFansignReducer.js';
+
 // 추가 리듀서
 
 // Persist 구성 정의
@@ -35,6 +37,7 @@ const rootReducer = combineReducers({
   joinFansign: joinFansignReducer,
   faninfo: fanInfoReducer,
   fanphoto: fanPhotoReducer,
+  artistFansign: artistFansignReducer,
   // 추가 리듀서 추가
 });
 
