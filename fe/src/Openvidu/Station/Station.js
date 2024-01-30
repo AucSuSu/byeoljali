@@ -1,9 +1,11 @@
 import { OpenVidu, Session } from 'openvidu-browser';
 
 import axios from 'axios';
-import React, { Component } from 'react';
-import './Station.css';
+import React, { Component, useRef } from 'react';
+import html2canvas from 'html2canvas';
+
 import UserVideoComponent from './comp/UserVideoComponent.js';
+import './Station.css';
 
 // const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
 const APPLICATION_SERVER_URL =
@@ -46,6 +48,7 @@ class App extends Component {
     this.handleMyScript = this.handleMyScript.bind(this); // 스크립트 작성 바인드
     this.handleMyPostit = this.handleMyPostit.bind(this); // 포스트잇 작성 바인드
     this.invite = this.invite.bind(this); // 자동 초대 바인드
+    this.mainVideoRef = React.createRef(); // 캡처
   }
 
   //실시간 마이크 볼륨 확인
@@ -462,6 +465,29 @@ class App extends Component {
     this.setState({ remainingTime: remainingUsers * 600 });
   }
 
+  //화면 캡처 메서드
+  captureMainVideo = () => {
+    html2canvas(this.mainVideoRef.current).then((canvas) => {
+      // Canvas를 Base64 인코딩된 문자열로 변환
+      const base64Image = canvas.toDataURL('unknown_person/png');
+
+      // axios를 사용하여 Base64 인코딩된 이미지 데이터를 POST 요청으로 전송
+      // 플라스크 서버 주소 추가할 것!!!!!!!!!!
+      axios
+        .post('YOUR_SERVER_ENDPOINT', {
+          image: base64Image,
+        })
+        .then((response) => {
+          // 요청 성공 시 처리
+          console.log('서버에 대기방 사진 전송 완료', response);
+        })
+        .catch((error) => {
+          // 요청 실패 시 처리
+          console.error('서버에 대기방 사진 전송 실패', error);
+        });
+    });
+  };
+
   render() {
     const mySessionId = this.state.mySessionId;
     const myUserName = this.state.myUserName;
@@ -571,12 +597,16 @@ class App extends Component {
               </div>
             </div>
 
+            {/* 비디오 출력 화면 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div id="main-video">
+              <div id="main-video" ref={this.mainVideoRef}>
                 <UserVideoComponent
                   streamManager={this.state.mainStreamManager}
                 />
               </div>
+
+              {/* 캡처 버튼 */}
+              <button onClick={this.captureMainVideo}>캡쳐하기</button>
 
               {/* 스크립트 & 포스트잇 */}
               <div id="script-postit">
