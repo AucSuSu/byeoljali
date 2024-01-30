@@ -45,10 +45,10 @@ public class ApplicantController {
     }
 
     // 응모 내역 페이지 조회하기 - 응모된 거 안된거
-    @GetMapping("/api/applyPage/{fanId}")
-    public ResponseEntity<Message> applyPage(@PathVariable("fanId") Long fanId){
+    @GetMapping("/api/applyPage")
+    public ResponseEntity<Message> applyPage(){
         log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
-        List<ApplyPageDto> dto = applicantService.findAllApplyPageById(fanId);
+        List<ApplyPageDto> dto = applicantService.findAllApplyPageById();
         Message message = new Message(HttpStatusEnum.OK, "응모 내역 페이지 전체 출력 성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

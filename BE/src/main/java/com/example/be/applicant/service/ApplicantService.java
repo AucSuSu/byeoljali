@@ -8,11 +8,15 @@ import com.example.be.artist.entity.Artist;
 import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
+import com.example.be.config.oauth.FanPrincipalDetails;
 import com.example.be.fan.entity.Fan;
 import com.example.be.fan.repository.FanRepository;
+import com.example.be.fan.service.FanService;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.memberfansign.repository.MemberFansignRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,9 +63,9 @@ public class ApplicantService {
     }
 
     // 응모페이지 전체 조회
-    public List<ApplyPageDto> findAllApplyPageById(Long fanId){
-
-        List<ApplyPageDto> result = applicantRepository.findAllApplyPageById(fanId);
+    public List<ApplyPageDto> findAllApplyPageById(){
+        Fan fan = getFan();
+        List<ApplyPageDto> result = applicantRepository.findAllApplyPageById(fan);
 
         return result;
     }
@@ -84,6 +88,12 @@ public class ApplicantService {
     public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId){
         return
                 applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId);
+    }
+
+    private Fan getFan(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        FanPrincipalDetails fanPrincipalDetails = (FanPrincipalDetails) authentication.getPrincipal();
+        return fanPrincipalDetails.getFan();
     }
 
 }

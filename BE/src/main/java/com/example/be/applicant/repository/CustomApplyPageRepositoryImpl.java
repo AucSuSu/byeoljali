@@ -4,6 +4,7 @@ import com.example.be.applicant.dto.ApplyPageDetailDto;
 import com.example.be.applicant.dto.ApplyPageDto;
 import com.example.be.applicant.dto.SeparatedApplyPageDto;
 import com.example.be.artistfansign.entity.FansignStatus;
+import com.example.be.fan.entity.Fan;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.JPAExpressions;
@@ -33,7 +34,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
     JPAQueryFactory queryFactory;
 
     @Override
-    public List<ApplyPageDto> findAllApplyPageById(Long fanId){
+    public List<ApplyPageDto> findAllApplyPageById(Fan fan){
 
         Date currentDate = new java.util.Date();
         queryFactory = new JPAQueryFactory(em);
@@ -68,9 +69,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                 .on(applicant.memberfansign.eq(memberFansign))
                 .leftJoin(winning)
                 .on(winning.applicant.eq(applicant))
-                .where(applicant.fan.eq(JPAExpressions.select(fan)
-                        .from(fan)
-                        .where(fan.fanId.eq(fanId)))) // 입력받은 fanId가 당첨자 fanId와 동일한 것만
+                .where(applicant.fan.eq(fan)) // 입력받은 fanId가 당첨자 fanId와 동일한 것만
                 .orderBy(orderByExpression.desc())
                 .fetch();
     }
