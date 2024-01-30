@@ -6,7 +6,7 @@ import axios from 'axios';
 export const detailList = createAsyncThunk('axios/detailList', async (data) => {
   try {
     const response = await axios.get(
-      'http://localhost:8080/mainpage/makeApplyForm/' + data,
+      process.env.REACT_APP_BASE_URL + 'mainpage/makeApplyForm/' + data,
     );
 
     return response.data;
@@ -17,14 +17,16 @@ export const detailList = createAsyncThunk('axios/detailList', async (data) => {
 
 export const applyForm = createAsyncThunk(
   'axios/applyForm',
-  async (id, data) => {
+  async ({ id, data }) => {
+    console.log(applyForm);
+    console.log(data);
     console.log(id);
-
     try {
       const response = await axios.post(
-        'http://localhost:8080/mainpage/' + id.id,
+        process.env.REACT_APP_BASE_URL + 'mainpage/' + id,
         data,
       );
+      console.log('팬 사인회 응모 성공');
 
       return response.data;
     } catch (error) {

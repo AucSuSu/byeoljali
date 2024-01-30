@@ -5,7 +5,8 @@ import axios from 'axios';
 export const applyList = createAsyncThunk('axios/applyList', async (data) => {
   try {
     const response = await axios.get(
-      'http://localhost:8080/mainpage/1?searchKeyword=&order=register&status=READY_APPLYING',
+      process.env.REACT_APP_BASE_URL +
+        'mainpage/1?searchKeyword=&order=register&status=READY_APPLYING',
       data,
     );
     console.log();

@@ -47,7 +47,7 @@ function ImgUploadModal({ onClose }) {
     formData.append('certificationImageUrl', imageFile);
 
     axios
-      .post(`${IMG_POST_URL}mypage/edit/certImage`, formData, {
+      .put(`${IMG_POST_URL}mypage/edit/certImage`, formData, {
         headers: {
           Authorization: token,
           'Content-Type': 'multipart/form-data',
