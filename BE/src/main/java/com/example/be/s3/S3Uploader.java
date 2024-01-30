@@ -6,9 +6,15 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
+import com.example.be.config.oauth.FanPrincipalDetails;
+import com.example.be.fan.entity.Fan;
+import com.example.be.fan.repository.FanRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,17 +38,26 @@ import java.util.Optional;
 public class S3Uploader {
 
     private final AmazonS3Client amazonS3Client;
+    private final FanRepository fanRepository;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public byte[] downloadFile(String fileName) throws FileNotFoundException {
+    public byte[] downloadFile() throws FileNotFoundException {
+
+        Fan fan = getFan();
+        Fan readFan = fanRepository.findById(fan.getFanId()).orElseThrow(() -> new IllegalArgumentException("회원이 없습니다"));
+        System.out.println(readFan.toString());
+        System.out.println();
+        String fileName = "fan/" +readFan.getEmail() + "/certificate/certImage.jpg";
         validateFileExists(fileName);
 
         S3Object object = amazonS3Client.getObject(bucket, fileName);
         S3ObjectInputStream objectContent = object.getObjectContent();
 
         try {
-            return IOUtils.toByteArray(objectContent);
+            byte[] byteArray = IOUtils.toByteArray(objectContent);
+            System.out.println(byteArray.toString());
+            return Base64.encodeBase64(byteArray);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -110,7 +125,7 @@ public class S3Uploader {
     }
 
     private String uploadCertImage(File uploadFile, String dirName, String name){
-        String fileName = dirName + "/" + name + "/certificate/" + uploadFile.getName();
+        String fileName = dirName + "/" + name + "/certificate/" + "certImage.jpg";
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
 
@@ -147,6 +162,12 @@ public class S3Uploader {
             return Optional.of(convertFile);
         }
         return Optional.empty();
+    }
+
+    private Fan getFan(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        FanPrincipalDetails fanPrincipalDetails = (FanPrincipalDetails) authentication.getPrincipal();
+        return fanPrincipalDetails.getFan();
     }
 
 }
