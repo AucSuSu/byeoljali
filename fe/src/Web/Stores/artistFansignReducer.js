@@ -3,20 +3,15 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-export const getFanSignInfo = createAsyncThunk(
-  'axios/getFanSignInfo',
+export const getFansignInfo = createAsyncThunk(
+  'axios/getFansignInfo',
   async (status, { getState }) => {
     try {
       const token = getState().auth.token;
       const response = await axios.get(
         `${BASE_URL}artists/apply?status=${status}`,
-        {
-          headers: {
-            authorization: token,
-          },
-        },
+        { headers: { authorization: token } },
       );
-      console.log('getFanSignInfo의 response : ', response);
       return response.data;
     } catch (error) {
       console.error('실패 : ', error);
@@ -52,7 +47,10 @@ export const getFansignDetail = createAsyncThunk(
   async (memberfansignId, { getState }) => {
     const token = getState().auth.token;
     const response = await axios.get(
-      `${BASE_URL}memberfansign/${memberfansignId}}`,
+      console.log(
+        'ID : ',
+        memberfansignId,
+      )`${BASE_URL}memberfansign/${memberfansignId}}`,
       {
         headers: {
           authorization: token,
@@ -66,18 +64,19 @@ export const getFansignDetail = createAsyncThunk(
 const artistFansignSlice = createSlice({
   name: 'artistFansign',
   initialState: {
-    data: [],
-    detail: [],
+    data: null,
+    detail: null,
     status: 'idle',
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       // getFanSignInfo
-      .addCase(getFanSignInfo.pending, (state) => {
+      .addCase(getFansignInfo.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(getFanSignInfo.fulfilled, (state, action) => {
+      .addCase(getFansignInfo.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.data = action.payload;
         console.log('데이터:', state.data);
@@ -89,8 +88,6 @@ const artistFansignSlice = createSlice({
       })
       .addCase(createFansign.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.data = action.payload;
-        console.log('데이터:', state.data);
       })
 
       // getFansignDetail
@@ -100,7 +97,7 @@ const artistFansignSlice = createSlice({
       .addCase(getFansignDetail.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.detail = action.payload;
-        console.log('데이터:', state.detail);
+        console.log('Detail 데이터:', state.detail);
       });
   },
 });
