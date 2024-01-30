@@ -21,7 +21,7 @@ spring:
   profiles:
     include: oauth
   openvidu:
-    url: https://byeoljali.shop/
+    url: https://i10e104.p.ssafy.io:8443
     secret: 'MY_SECRET'
 logging.level:
   org.hibernate.SQL: debug
