@@ -82,8 +82,8 @@ public class SessionService {
              * 개설되면 watingRoomFansignSession + memberFansignId key, sessionId를 value로 redis에 sessionId 저장
              */
 
-            redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId());
-            redisService.setValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
+            redisService.setValuesWithTimeout("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId(), 86400000);
+            redisService.setValuesWithTimeout("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId(), 86400000);
             chatService.createRoom("memberFansignSession".concat(String.valueOf(memberFansignId)));
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))));
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId))));

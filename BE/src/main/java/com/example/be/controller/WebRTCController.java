@@ -44,8 +44,8 @@ public class WebRTCController {
          * 개설되면 watingRoomFansignSession + memberFansignId key, sessionId를 value로 redis에 sessionId 저장
          * 1. 만료 시간은 어떻게 할까 ?
          */
-        redisService.setValues("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId());
-        redisService.setValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId());
+        redisService.setValuesWithTimeout("memberFansignSession".concat(String.valueOf(memberFansignId)), fansignSession.getSessionId(), 86400000);
+        redisService.setValuesWithTimeout("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)), waitingRoomSession.getSessionId(), 86400000);
         // db에 팬싸인회 - 세션 아이디 저장
         // return new ResponseEntity<>(fansignSession.getSessionId(), HttpStatus.OK); // 방 연결
 
