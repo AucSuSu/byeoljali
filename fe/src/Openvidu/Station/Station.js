@@ -271,7 +271,7 @@ class App extends Component {
         });
 
         // --- 4) Connect to the session with a valid user token ---
-
+        z;
         mySession
           .connect(this.state.token, { clientData: this.state.myUserName })
           .then(async () => {

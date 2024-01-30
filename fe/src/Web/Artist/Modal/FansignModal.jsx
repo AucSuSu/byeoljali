@@ -7,7 +7,8 @@ import { detail } from '../../data.js';
 import { useNavigate } from 'react-router-dom';
 import { joinFansign } from '../../Stores/joinFansignReducer.js';
 
-export default function FansignModal() {
+export default function FansignModal({ memberFansignId }) {
+  const openvidu = useSelector((state) => state.joinFansign.fansignData);
   const modalIsOpen = true;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ export default function FansignModal() {
 
   // const detailData = useSelector((state) => state.artistFansign.detail);
   const detailData = detail.object;
-  const openvidu = useSelector((state) => state.joinFansign.fansignData);
 
   const participate = async () => {
     await dispatch(joinFansign(1));
@@ -33,9 +33,8 @@ export default function FansignModal() {
     closeModal();
   };
 
-  const memberfansignId = 1;
   useEffect(() => {
-    dispatch(getFansignDetail(memberfansignId));
+    dispatch(getFansignDetail(memberFansignId));
   }, []);
 
   const customStyle = {

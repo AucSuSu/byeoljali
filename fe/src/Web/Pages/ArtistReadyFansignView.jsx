@@ -15,7 +15,6 @@ export default function ArtistFanSignView() {
 
   const openAddFansignModal = () => {
     dispatch(handleAddFansign());
-    console.log('팬싸 추가 : ', addFansign);
   };
 
   const handleToggle = () => {
