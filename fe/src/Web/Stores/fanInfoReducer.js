@@ -9,7 +9,7 @@ export const getUserData = createAsyncThunk(
     try {
       const token = getState().auth.token;
 
-      const response = await axios.get(`${BASE_URL}/mypage/`, {
+      const response = await axios.get(`${BASE_URL}mypage/`, {
         headers: {
           Authorization: token,
         },
@@ -28,7 +28,7 @@ export const editUserData = createAsyncThunk(
       const token = getState().auth.token;
 
       const response = await axios.put(
-        `${BASE_URL}/mypage/edit/profile`,
+        `${BASE_URL}mypage/edit/profile`,
         data.formData,
         {
           headers: {

@@ -87,7 +87,7 @@ function FanInfoView() {
                 <button
                   className="profile-button"
                   onClick={() => setShowImgUploadModal(true)}
-                  posturl={`${BASE_URL}/mypage/edit/certImage/7/`}
+                  posturl={`${BASE_URL}mypage/edit/certImage/7/`}
                 >
                   인증사진 등록하기
                 </button>
