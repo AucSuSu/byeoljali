@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -39,7 +40,7 @@ public class ArtistFansignService {
     private final S3Uploader s3Uploader;
 
     // 팬싸인회 개설하기
-    public Long addFansign(AddArtistFansignRequestDto dto){
+    public Long addFansign(AddArtistFansignRequestDto dto, MultipartFile image){
         // artist 조회
         Artist artist = getArtist();
         LocalDateTime startApplyTime = convertDateTime(dto.getStartApplyTime());
@@ -47,7 +48,7 @@ public class ArtistFansignService {
         LocalDateTime startFansignTime = convertDateTime(dto.getStartFansignTime());
 
         try {
-            String imageUrl = s3Uploader.uploadPoster(dto.getImage(), "fansignPoster", artist.getName(), startFansignTime);
+            String imageUrl = s3Uploader.uploadPoster(image, "fansignPoster", artist.getName(), startFansignTime);
             // artistFansign 개설
             ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
                     , endApplyTime, startFansignTime, FansignStatus.READY_APPLYING, dto.getMode(), artist);

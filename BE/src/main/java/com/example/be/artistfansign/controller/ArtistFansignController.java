@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class ArtistFansignController {
     private final ArtistFansignService artistFansignService;
 
     @PostMapping(value = "/api/artists/fansign", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Message> addFansign(AddArtistFansignRequestDto requestDto) {
+    public ResponseEntity<Message> addFansign(AddArtistFansignRequestDto requestDto, @RequestParam(value = "image") MultipartFile image) {
         log.info(" ** 팬싸인회 생성 요청 api 입니다.** ");
         log.info(" requestDto -> " + requestDto);
-        Long aritstFansignId = artistFansignService.addFansign(requestDto);
+        Long aritstFansignId = artistFansignService.addFansign(requestDto, image);
         Message message = new Message(HttpStatusEnum.OK, "개설 완료", aritstFansignId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
