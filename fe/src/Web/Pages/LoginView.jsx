@@ -7,6 +7,9 @@ import axios from 'axios';
 import './LoginView.css';
 
 export default function LoginView() {
+  const token = useSelector((state) => state.auth.token);
+  const isArtist = useSelector((state) => state.auth.isArtist);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,10 +20,15 @@ export default function LoginView() {
 
   const data = { email: email, password: password };
 
-  const token = useSelector((state) => state.auth.token);
   useEffect(() => {
     if (token) {
-      navigate('/artistInfo');
+      if (isArtist) {
+        console.log('아티스트 로그인');
+        navigate('/artistInfo');
+      } else {
+        console.log('팬 소셜 로그인');
+        navigate('/home');
+      }
     }
   }, [token]);
 
@@ -113,6 +121,7 @@ export default function LoginView() {
             <div>
               <label>email : </label>
               <input
+                className="text-purple-700"
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -122,6 +131,7 @@ export default function LoginView() {
             <div>
               <label> 비밀번호 : </label>
               <input
+                className="text-purple-700"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

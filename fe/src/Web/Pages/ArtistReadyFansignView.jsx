@@ -10,7 +10,6 @@ import Toggle from '../Utils/ToggleButton.jsx';
 export default function ArtistFanSignView() {
   const dispatch = useDispatch();
 
-  const fansignList = useSelector((state) => state.artistInfo.data1.object);
   const addFansign = useSelector((state) => state.modal.addFansign);
   const [isApplying, setIsApplying] = useState(false);
 
@@ -23,16 +22,16 @@ export default function ArtistFanSignView() {
     setIsApplying(!isApplying);
   };
 
-  console.log(fansignList);
   return (
     <>
       <Navbar />
       <div style={{ marginTop: '60px' }}>
         <div>
           <h1>팬싸 관리 - ({isApplying ? '응모 중' : '응모 전'})</h1>
-          <p onClick={handleToggle}>
-            <Toggle />
-          </p>
+          <div onClick={handleToggle}>
+            임시토글
+            {/* <Toggle /> */}
+          </div>
           <button onClick={openAddFansignModal}>add Fansign</button>
         </div>
 

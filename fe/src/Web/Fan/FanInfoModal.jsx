@@ -4,7 +4,7 @@ import { editUserData } from '../Stores/fanInfoReducer';
 import { getUserData } from '../Stores/fanInfoReducer';
 import './FanInfoModal.css';
 
-function FanInfoModal({ userData, onClose, onReset }) {
+function FanInfoModal({ userData, onClose }) {
   const dispatch = useDispatch();
   const [localUserData, setLocalUserData] = useState({
     nickname: userData.nickname,

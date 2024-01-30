@@ -19,6 +19,7 @@ export default function FansignModal() {
   // const detailData = useSelector((state) => state.artistFansign.detail);
   const detailData = detail.object;
   const openvidu = useSelector((state) => state.joinFansign.fansignData);
+
   const participate = async () => {
     await dispatch(joinFansign(1));
     console.log('오픈비두 데이터 : ', openvidu);
@@ -36,7 +37,6 @@ export default function FansignModal() {
   useEffect(() => {
     dispatch(getFansignDetail(memberfansignId));
   }, []);
-  const nowState = 'fansign';
 
   const customStyle = {
     content: {

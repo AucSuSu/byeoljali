@@ -1,5 +1,6 @@
 package com.example.be.photo.repository;
 
+import com.example.be.fan.entity.Fan;
 import com.example.be.photo.dto.PhotoResponseDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -33,7 +34,7 @@ public class CustomPhotoRepositoryImpl implements CustomPhotoRepository {
 
     // 인생네컷 페이지에서 모든 인생네컷 가져오기 / 필터된 값만 가져오기
     @Override
-    public List<PhotoResponseDto> findAllandFilteredPhoto(Long fanId, String keyword, Boolean payOrNot){
+    public List<PhotoResponseDto> findAllandFilteredPhoto(Fan fan, String keyword, Boolean payOrNot){
         queryFactory = new JPAQueryFactory(em);
 
         return queryFactory.select(
@@ -50,11 +51,7 @@ public class CustomPhotoRepositoryImpl implements CustomPhotoRepository {
                 .on(artistFansign.eq(photo.artistFansign))
                 .join(artist)
                 .on(artistFansign.artist.eq(artist))
-                .where(searchKeyword(keyword), checkPayOrNot(payOrNot), photo.fan.eq(
-                        JPAExpressions.select(fan)
-                                .from(fan)
-                                .where(fan.fanId.eq(fanId))
-                )) // 검색기능 - 아티스트 이름만
+                .where(searchKeyword(keyword), checkPayOrNot(payOrNot), photo.fan.eq(fan)) // 검색기능 - 아티스트 이름만
                 .orderBy(artistFansign.startFansignTime.asc()) // 최근 순서대로
                 .fetch();
     }

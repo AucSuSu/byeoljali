@@ -17,7 +17,7 @@ const authSlice = createSlice({
   initialState: {
     token: null,
     tokenRefresh: null,
-    data: [],
+    isArtist: null,
     status: 'idle', // 'idle === 동작 전
     error: null,
   },
@@ -27,20 +27,20 @@ const authSlice = createSlice({
       state.tokenRefresh = action.payload.tokenRefresh;
     },
   },
-  /// extraReducers(반고정) /  builder(유동) / addCase, pending, fulfiled, rejected 고정
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
-        state.status = 'loading'; // 로딩 중 => 로딩 스피너 등 표시(UX)
+        state.status = 'loading';
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.status = 'succeeded'; // 성공
+        state.status = 'succeeded';
         state.token = action.payload.authorization;
         state.tokenRefresh = action.payload['authorization-refresh'];
-        console.log(action.payload);
+        state.isArtist = action.payload.isartist;
+        console.log('로그인 데이터 : ', action.payload);
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.status = 'failed'; // 실패 => 에러 메세지 전달(UX)
+        state.status = 'failed';
         state.error = action.error.message;
       });
   },

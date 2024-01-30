@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const joinFansign = createAsyncThunk(
   'axios/joinFansign',
   async (memberFansignId) => {
@@ -47,11 +49,7 @@ export const joinStation = createAsyncThunk(
 const joinSlice = createSlice({
   name: 'join',
   initialState: {
-    fansignData: {
-      sessionId: 'ses_MkioXQw8I8',
-      tokenId:
-        'wss://byeoljali.shop?sessionId=ses_MkioXQw8I8&token=tok_NZJJ8jMo7mhJFWmR',
-    },
+    fansignData: {},
     testData: {},
     stationData: {},
     status: 'idle', // 'idle === 동작 전

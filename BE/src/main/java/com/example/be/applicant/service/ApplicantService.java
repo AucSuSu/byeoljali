@@ -8,11 +8,15 @@ import com.example.be.artist.entity.Artist;
 import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
+import com.example.be.config.oauth.FanPrincipalDetails;
 import com.example.be.fan.entity.Fan;
 import com.example.be.fan.repository.FanRepository;
+import com.example.be.fan.service.FanService;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.memberfansign.repository.MemberFansignRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,31 +63,39 @@ public class ApplicantService {
     }
 
     // 응모페이지 전체 조회
-    public List<ApplyPageDto> findAllApplyPageById(Long fanId){
-
-        List<ApplyPageDto> result = applicantRepository.findAllApplyPageById(fanId);
+    public List<ApplyPageDto> findAllApplyPageById(){
+        Fan fan = getFan();
+        List<ApplyPageDto> result = applicantRepository.findAllApplyPageById(fan);
 
         return result;
     }
 
-    public List<SeparatedApplyPageDto> findAllApplyPageById2(Long fanId, boolean isWon){
+    public List<SeparatedApplyPageDto> findAllApplyPageById2(boolean isWon){
 
         List<SeparatedApplyPageDto> result;
+        Fan fan = getFan();
         if (isWon == false){
             // 응모한 페이지만
-            result = applicantRepository.findApplyingPageById(fanId);
+            result = applicantRepository.findApplyingPageById(fan);
         }else{
             // 당첨만
-            result = applicantRepository.findWonPageById(fanId);
+            result = applicantRepository.findWonPageById(fan);
         }
 
         return result;
     }
 
     // 응모 페이지 상세 조회
-    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId){
+    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId){
+        Fan fan = getFan();
         return
-                applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId);
+                applicantRepository.findDetailFSBymemberFSId(memberFansignId,fan);
+    }
+
+    private Fan getFan(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        FanPrincipalDetails fanPrincipalDetails = (FanPrincipalDetails) authentication.getPrincipal();
+        return fanPrincipalDetails.getFan();
     }
 
 }

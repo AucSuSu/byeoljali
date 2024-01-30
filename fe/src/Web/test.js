@@ -24,7 +24,6 @@ export default function Test() {
   // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
   const switchToFan = async (data) => {
     await dispatch(joinFansignTest(1));
-
     setData(data);
     setFlag(2);
   };
@@ -56,8 +55,10 @@ export default function Test() {
         <Station
           wait={wait}
           onMeetingClick={switchToFan}
-          sessionId={sessionId}
-          token={tokenId}
+          // sessionId={sessionId}
+          // token={tokenId}
+          sessionId="ses_L6342A2vEN"
+          token="wss://byeoljali.shop?sessionId=ses_MYUiCNKIrm&token=tok_HJzNSV0zOd9mrE8q"
         />
       )}
     </div>

@@ -5,6 +5,7 @@ import com.example.be.artistfansign.entity.FansignMode;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class AddArtistFansignRequestDto {
     private String title;
     private String information;
@@ -22,8 +24,6 @@ public class AddArtistFansignRequestDto {
     private String endApplyTime;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private String startFansignTime;
-
     private FansignMode mode;
-    private MultipartFile image;
     private List<Long> memberIdList;
 }
