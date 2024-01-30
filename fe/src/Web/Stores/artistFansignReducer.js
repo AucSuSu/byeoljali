@@ -1,39 +1,63 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const getFanSignInfo = createAsyncThunk(
   'axios/getFanSignInfo',
-  async (payload) => {
-    const response = await axios.get(
-      `http://localhost:8080/artists/apply/${payload.artistId}?status=${payload.status}`,
-    );
-    return response.data;
+  async (status, { getState }) => {
+    try {
+      const token = getState().auth.token;
+      const response = await axios.get(
+        `${BASE_URL}artists/apply?status=${status}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        },
+      );
+      console.log('getFanSignInfo의 response : ', response);
+      return response.data;
+    } catch (error) {
+      console.error('실패 : ', error);
+    }
   },
 );
 
 export const createFansign = createAsyncThunk(
   'axios/createFansign',
   async (formData, { getState }) => {
-    const token = getState().auth.token;
-    const response = await axios.post(
-      'http://localhost:8080/artists/fansign/1', // {artistId}
-      formData,
-      {
-        headers: {
-          authorization: token,
-          'Content-Type': 'multipart/form-data',
+    try {
+      console.log('데이터 전송');
+      const token = getState().auth.token;
+      const response = await axios.post(
+        `${BASE_URL}artists/fansign`,
+        formData,
+        {
+          headers: {
+            authorization: token,
+            'Content-Type': 'multipart/form-data',
+          },
         },
-      },
-    );
-    return response.data;
+      );
+      return response.data;
+    } catch (error) {
+      console.error('실패 : ', error);
+    }
   },
 );
 
 export const getFansignDetail = createAsyncThunk(
   'axios/getFansignDetail',
-  async (memberfansignId) => {
+  async (memberfansignId, { getState }) => {
+    const token = getState().auth.token;
     const response = await axios.get(
-      `http://localhost:8080/memberfansign/${memberfansignId}}`,
+      `${BASE_URL}memberfansign/${memberfansignId}}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      },
     );
     return response.data;
   },
@@ -45,7 +69,6 @@ const artistFansignSlice = createSlice({
     data: [],
     detail: [],
     status: 'idle',
-    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -59,10 +82,7 @@ const artistFansignSlice = createSlice({
         state.data = action.payload;
         console.log('데이터:', state.data);
       })
-      .addCase(getFanSignInfo.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
+
       // createFansign
       .addCase(createFansign.pending, (state) => {
         state.status = 'loading';
@@ -72,22 +92,15 @@ const artistFansignSlice = createSlice({
         state.data = action.payload;
         console.log('데이터:', state.data);
       })
-      .addCase(createFansign.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
+
       // getFansignDetail
       .addCase(getFansignDetail.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(getFansignDetail.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.data = action.payload;
-        console.log('데이터:', state.data);
-      })
-      .addCase(getFansignDetail.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+        state.detail = action.payload;
+        console.log('데이터:', state.detail);
       });
   },
 });
