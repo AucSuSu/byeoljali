@@ -80,6 +80,7 @@ public class FanService {
             try {
                 String imageUrl = s3Uploader.uploadCertImage(certImage, "fan", fan.getEmail());
                 fan.updateCertificationImageUrl(imageUrl);
+                fanRepsitory.save(fan);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
