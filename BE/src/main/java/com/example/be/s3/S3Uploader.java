@@ -3,6 +3,9 @@ package com.example.be.s3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.util.IOUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -30,6 +34,24 @@ public class S3Uploader {
     private final AmazonS3Client amazonS3Client;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
+    public byte[] downloadFile(String fileName) throws FileNotFoundException {
+        validateFileExists(fileName);
+
+        S3Object object = amazonS3Client.getObject(bucket, fileName);
+        S3ObjectInputStream objectContent = object.getObjectContent();
+
+        try {
+            return IOUtils.toByteArray(objectContent);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void validateFileExists(String fileName) throws FileNotFoundException {
+        if(!amazonS3Client.doesObjectExist(bucket, fileName))
+            throw new FileNotFoundException();
+    }
 
     /**
      * 아티스트 프로필, 멤버 프로필
