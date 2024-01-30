@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+</head>
+<body>
+    <!-- <form action="http://localhost:8000/inpName", method="pos">
+        <p><input type="text" name="name"></p>
+        <p><input type="submit"></p>
+    </form> -->
+    <input type="file" accept="image/*" onchange="encodeImageFileAsURL(this)" />
+    <!-- <form> -->
+    <form action="http://localhost:8000/sendToFlask/fromFE", method="post">
+        <p><input type="text" id="image" name="image"></p>
+        <p><input type="submit"></p>
+    </form>
+
+    <script>
+    function encodeImageFileAsURL(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        console.log('RESULT', reader.result)
+        document.getElementById("image").value = reader.result;
+    }
+    reader.readAsDataURL(file);
+    }
+    </script>
+</body>
+</html>
