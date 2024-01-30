@@ -5,7 +5,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const getUserData = createAsyncThunk(
   'axios/getUserData',
-  async ({ getState }) => {
+  async (arg, { getState }) => {
     try {
       const token = getState().auth.token;
       console.log(token);
