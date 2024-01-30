@@ -24,8 +24,6 @@ public class AddArtistFansignRequestDto {
     private String endApplyTime;
 //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private String startFansignTime;
-
     private FansignMode mode;
-    private MultipartFile image;
     private List<Long> memberIdList;
 }
