@@ -28,10 +28,20 @@ public class ArtistFansignController {
     @PostMapping(value = "/api/artists/fansign", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Message> addFansign(AddArtistFansignRequestDto requestDto) {
         log.info(" ** 팬싸인회 생성 요청 api 입니다.** ");
+        log.info(" requestDto -> " + requestDto);
         Long aritstFansignId = artistFansignService.addFansign(requestDto);
         Message message = new Message(HttpStatusEnum.OK, "개설 완료", aritstFansignId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+//    @PostMapping(value = "/api/artists/fansign/test/{}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<Message> addFansign(AddArtistFansignRequestDto requestDto) {
+//        log.info(" ** 팬싸인회 생성 요청 api 입니다.** ");
+//        log.info("requestDto")
+//        Long aritstFansignId = artistFansignService.addFansign(requestDto);
+//        Message message = new Message(HttpStatusEnum.OK, "개설 완료", aritstFansignId);
+//        return new ResponseEntity<>(message, HttpStatus.OK);
+//    }
 
     @GetMapping("/api/mainpage/recent")
     public ResponseEntity<Message> recentFansign() {
