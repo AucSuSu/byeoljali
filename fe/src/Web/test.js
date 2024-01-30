@@ -55,8 +55,10 @@ export default function Test() {
         <Station
           wait={wait}
           onMeetingClick={switchToFan}
-          sessionId={sessionId}
-          token={tokenId}
+          // sessionId={sessionId}
+          // token={tokenId}
+          sessionId="ses_L6342A2vEN"
+          token="wss://byeoljali.shop?sessionId=ses_MYUiCNKIrm&token=tok_HJzNSV0zOd9mrE8q"
         />
       )}
     </div>
