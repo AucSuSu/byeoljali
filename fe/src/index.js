@@ -8,10 +8,5 @@ import Modal from 'react-modal';
 //모달이 열릴 때, App 컴포넌트의 루트 요소를 지정
 Modal.setAppElement('#root');
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

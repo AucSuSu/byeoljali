@@ -13,20 +13,22 @@ export default function CreateFansignModal({}) {
   const closeModal = () => {
     dispatch(handleAddFansign());
   };
+  const [time, setTime] = useState('');
 
-  const payload = {
-    // artistId: 1,
-    // data: {
-    //   title: title,
-    //   information: information,
-    //   startApplyTime: startApplyTime,
-    //   endApplyTime: endApplyTime,
-    //   startFansignTime: startFansignTime,
-    //   mode: mode,
-    //   postImageUrl: postImageUrl,
-    //   memberIdList: memberIdList,
-    //   image: image,
-    // },
+  const handleTimeChange = (e) => {
+    const inputTime = e.target.value;
+
+    // 시간을 분으로 변환
+    const totalMinutes = parseInt(inputTime.split(':')[0]) * 60;
+
+    // 분을 시간으로 다시 변환
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    // 시간 형식으로 조합
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+
+    setTime(formattedTime);
   };
 
   const fansignCreate = (e) => {
@@ -37,12 +39,12 @@ export default function CreateFansignModal({}) {
       formData.append(key, payload[key]);
     }
 
-    dispatch(createFansign(payload));
+    dispatch(createFansign(formData));
     console.log('팬싸인회 개설 요청');
   };
 
   const uploadImg = (img) => {
-    setPostImageUrl(img);
+    setImage(img);
     console.log('이미지 데이터 : ', img);
   };
 
@@ -51,12 +53,24 @@ export default function CreateFansignModal({}) {
   const [information, setInformation] = useState('');
   const [startApplyTime, setStartApplyTime] = useState('');
   const [endApplyTime, setEndApplyTime] = useState('');
-  const [mode, setMode] = useState('');
+  const [mode, setMode] = useState('RANDOM');
   const [startFansignTime, setStartFansignTime] = useState('');
-  const [memberIdList, setMemberIdList] = useState('');
+  const [memberIdList, setMemberIdList] = useState([5, 6]);
   const [image, setImage] = useState('');
-  const [postImageUrl, setPostImageUrl] = useState('');
   //
+
+  const payload = {
+    data: {
+      title: title,
+      information: information,
+      startApplyTime: startApplyTime,
+      endApplyTime: endApplyTime,
+      startFansignTime: startFansignTime,
+      mode: mode,
+      memberIdList: memberIdList,
+      image: image,
+    },
+  };
 
   const customStyle = {
     content: {
@@ -98,7 +112,7 @@ export default function CreateFansignModal({}) {
             <div>
               <label>응모시작 : </label>
               <input
-                type="text"
+                type="date"
                 value={startApplyTime}
                 onChange={(e) => setStartApplyTime(e.target.value)}
               />
@@ -106,7 +120,7 @@ export default function CreateFansignModal({}) {
             <div>
               <label>응모마감 : </label>
               <input
-                type="text"
+                type="date"
                 value={endApplyTime}
                 onChange={(e) => setEndApplyTime(e.target.value)}
               />
@@ -122,10 +136,11 @@ export default function CreateFansignModal({}) {
             <div>
               <label>팬싸인회 : </label>
               <input
-                type="text"
+                type="date"
                 value={startFansignTime}
                 onChange={(e) => setStartFansignTime(e.target.value)}
               />
+              <input type="time" value={time} onChange={handleTimeChange} />
             </div>
             <div>
               <label> 개설맴버 : </label>

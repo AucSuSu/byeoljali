@@ -1,13 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
-  async (artistId) => {
-    const response = await axios.get(`${BASE_URL}artists/${artistId}/`);
+  async (payload, { getState }) => {
+    const token = getState().auth.token;
+    const response = await axios.get(`${BASE_URL}artists/`, {
+      headers: { authorization: token },
+    });
+
     return response.data;
   },
 );
@@ -16,16 +19,12 @@ export const addMember = createAsyncThunk(
   'axios/addMember',
   async (formData, { getState }) => {
     const token = getState().auth.token;
-    const response = await axios.post(
-      `${BASE_URL}artists/members/1`,
-      formData,
-      {
-        headers: {
-          authorization: token,
-          'Content-Type': 'multipart/form-data',
-        },
+    const response = await axios.post(`${BASE_URL}artists/members`, formData, {
+      headers: {
+        authorization: token,
+        'Content-Type': 'multipart/form-data',
       },
-    );
+    });
     return response.data;
   },
 );
@@ -43,6 +42,7 @@ export const modifyMember = createAsyncThunk(
           'Content-Type': 'multipart/form-data',
         },
       },
+      ls,
     );
     return response.data;
   },
@@ -51,15 +51,8 @@ export const modifyMember = createAsyncThunk(
 const artistInfoSlice = createSlice({
   name: 'artistInfo',
   initialState: {
-    data1: [],
-    data: {
-      object: {
-        artistImageUrl: 'hi',
-        name: 'bye',
-        companyName: 'zz',
-        memberList: [],
-      },
-    },
+    artistData: null,
+    memberData: null,
     status: 'idle',
     error: null,
   },
@@ -72,8 +65,8 @@ const artistInfoSlice = createSlice({
       })
       .addCase(getArtistInfo.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.data = action.payload;
-        console.log('데이터:', state.data);
+        state.artistData = action.payload;
+        console.log('데이터:', state.artistData);
       })
       .addCase(getArtistInfo.rejected, (state, action) => {
         state.status = 'failed';
@@ -99,7 +92,7 @@ const artistInfoSlice = createSlice({
       .addCase(modifyMember.fulfilled, (state, action) => {
         state.status = 'succeeded';
         console.log('성공했어요', action.payload);
-        state.data = action.payload;
+        state.memberData = action.payload;
       })
       .addCase(modifyMember.rejected, (state, action) => {
         state.status = 'failed';

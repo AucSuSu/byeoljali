@@ -6,21 +6,20 @@ import Navbar from '../Utils/NavBar.jsx';
 import Toggle from '../Utils/ToggleButton.jsx';
 
 export default function ArtistFanSignView() {
-  const fansignList = useSelector((state) => state.artistInfo.data1.object);
   const [isFansign, setIsFansign] = useState(false);
 
   const handleToggle = () => {
     setIsFansign(!isFansign);
   };
 
-  console.log(fansignList);
   return (
     <>
       <Navbar />
       <h1>팬싸 관리 - ({isFansign ? '팬싸 중' : '팬싸 전'})</h1>
-      <p onClick={handleToggle}>
-        <Toggle />
-      </p>
+      <div onClick={handleToggle}>
+        임시 토글
+        {/* <Toggle /> */}
+      </div>
       {isFansign && <Fansign />}
       {!isFansign && <ReadyFansign />}
     </>

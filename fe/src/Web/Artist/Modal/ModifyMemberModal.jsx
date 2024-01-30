@@ -25,7 +25,7 @@ export default function ModifyMember({ data }) {
       formData.append(key, payload[key]);
     }
 
-    dispatch(modifyMember({ formData: formData, memberID: data.memberId }));
+    dispatch(modifyMember({ formData: formData, memberId: data.memberId }));
     closeModal();
   };
 
