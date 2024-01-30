@@ -42,7 +42,7 @@ function ImgUploadModal({ onClose, posturl }) {
     }
 
     const formData = new FormData();
-    formData.append('image', imageFile);
+    formData.append('certificationImageUrl', imageFile);
 
     axios
       .post(IMG_POST_URL, formData, {
