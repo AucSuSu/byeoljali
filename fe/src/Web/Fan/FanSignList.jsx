@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import FanSignModal from './FanSignModal';
 
-function FanSignList(data) {
+function FanSignList({ data }) {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  console.log('fansignlist');
 
   return (
     <div>
