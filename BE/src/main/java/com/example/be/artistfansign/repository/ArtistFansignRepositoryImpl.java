@@ -1,5 +1,6 @@
 package com.example.be.artistfansign.repository;
 
+import com.example.be.artist.entity.Artist;
 import com.example.be.artistfansign.dto.ArtistsMyFansignResponseDto;
 import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.dto.RecentFansignResponseDto;
@@ -130,7 +131,7 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
     // 아티스트 마이페이지에서 내가 개설한 팬싸인회 정보 모두 가져오기
     // STATUS의 default는 front에서 지정해서 보내줘야함
     @Override
-    public List<ArtistsMyFansignResponseDto> findArtistsMyFansign(Long artistId, FansignStatus status) {
+    public List<ArtistsMyFansignResponseDto> findArtistsMyFansign(Artist artist, FansignStatus status) {
 
         queryFactory = new JPAQueryFactory(em);
 
@@ -154,11 +155,8 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                 ).from(artistFansign)
                 .join(memberFansign)
                 .on(artistFansign.eq(memberFansign.artistFansign))
-                .on(artistFansign.artist.eq(
-                        JPAExpressions.select(artist)
-                                .from(artist)
-                                .where(artist.artistId.eq(artistId))
-                )).join(member)
+                .on(artistFansign.artist.eq(artist)
+                ).join(member)
                 .on(member.eq(memberFansign.member))
                 .where(artistFansign.status.eq(status))
                 .orderBy(Expressions.dateTimeTemplate(

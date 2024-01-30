@@ -53,10 +53,10 @@ public class ArtistFansignController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/api/artists/apply/{artistId}")
-    public ResponseEntity<Message> ArtistsFansign(@PathVariable("artistId") Long artistId, @Param("status")FansignStatus status) {
+    @GetMapping("/api/artists/apply")
+    public ResponseEntity<Message> ArtistsFansign(@Param("status")FansignStatus status) {
         log.info(" ** 아티스트 마이페이지 팬싸인회 관리 api 입니다.** ");
-        List<ArtistsMyFansignResponseDto> fansignList = artistFansignService.getArtistsFansign(artistId, status);
+        List<ArtistsMyFansignResponseDto> fansignList = artistFansignService.getArtistsFansign(status);
         Message message = new Message(HttpStatusEnum.OK, "아티스트 조회 팬싸인회", fansignList);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
