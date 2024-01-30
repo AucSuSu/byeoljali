@@ -17,15 +17,12 @@ export default function ArtistFanSignView() {
   return (
     <>
       <Navbar />
-      <div style={{ marginTop: '60px' }}>
-        <h1>팬싸 관리 - ({isFansign ? '팬싸 중' : '팬싸 전'})</h1>
-        <p onClick={handleToggle}>
-          <Toggle />
-        </p>
-
-        {isFansign && <Fansign />}
-        {!isFansign && <ReadyFansign />}
-      </div>
+      <h1>팬싸 관리 - ({isFansign ? '팬싸 중' : '팬싸 전'})</h1>
+      <p onClick={handleToggle}>
+        <Toggle />
+      </p>
+      {isFansign && <Fansign />}
+      {!isFansign && <ReadyFansign />}
     </>
   );
 }

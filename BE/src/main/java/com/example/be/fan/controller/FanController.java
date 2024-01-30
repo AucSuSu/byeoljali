@@ -19,24 +19,26 @@ public class FanController
 {
 
     private final FanService fanService;
+
     /**
      * 팬 마이페이지 조회 하기
      */
-    @GetMapping("/mypage/{fanId}")
-    public ResponseEntity<Message> mypage(@PathVariable("fanId") Long id){
-        FanMyPageResponseDto dto = fanService.findById(id);
+
+    @GetMapping("/api/mypage")
+    public ResponseEntity<Message> mypage(){
+        FanMyPageResponseDto dto = fanService.findById();
         Message message = new Message(HttpStatusEnum.OK, "성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PutMapping("/mypage/edit/profile")
+    @PutMapping("/api/mypage/edit/profile")
     public ResponseEntity<Message> update(FanMyPageUpdateRequestDto requestDto){
         Long fanId = fanService.update(requestDto);
         Message message = new Message(HttpStatusEnum.OK, "팬 상세 정보 수정 성공", fanId);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PutMapping("/mypage/edit/certImage")
+    @PutMapping("/api/mypage/edit/certImage")
     public ResponseEntity<Message> updateCertificationImage(@Param("image") MultipartFile certImage){
         int count = fanService.updateCertificationImageUrl(certImage);
         Message message = new Message(HttpStatusEnum.OK, "인증 사진 수정 성공", count);
@@ -44,7 +46,7 @@ public class FanController
     }
 
     // 블랙리스트 등록
-    @PostMapping("/blacklist/{id}")
+    @PostMapping("/api/blacklist/{id}")
     public ResponseEntity<Message> addBlacklist(@PathVariable("id") Long id){
         Long fanId = fanService.addBlacklist(id);
         Message message = new Message(HttpStatusEnum.OK, "블랙리스트 추가 완료", fanId);

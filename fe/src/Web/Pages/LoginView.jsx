@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../Stores/authReducer.js';
 import { setToken } from '../Stores/authReducer.js';
 import axios from 'axios';
@@ -13,7 +13,16 @@ export default function LoginView() {
 
   const dispatch = useDispatch();
 
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   const data = { email: email, password: password };
+
+  const token = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (token) {
+      navigate('/artistInfo');
+    }
+  }, [token]);
 
   // Kakao Test
 
@@ -37,7 +46,7 @@ export default function LoginView() {
   const getData = async (code) => {
     try {
       // 백엔드로 인가 코드를 전송하여 데이터 요청
-      const res = await axios.get(`http://localhost:8080/oauth`, {
+      const res = await axios.get(`${BASE_URL}oauth`, {
         params: {
           code: code,
         },
@@ -65,9 +74,9 @@ export default function LoginView() {
     console.log(code);
   };
 
-  const Rest_api_key = '218aa28a9e8fa4d947c106cb95b2ec1b'; // REST API KEY
-  const redirect_uri = 'http://localhost:3000'; // Redirect URI
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${Rest_api_key}&redirect_uri=${redirect_uri}`;
+  const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
+  const REST_API_KEY = '218aa28a9e8fa4d947c106cb95b2ec1b';
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}`;
 
   // Kakao Test
 
@@ -85,7 +94,8 @@ export default function LoginView() {
   return (
     <div className="content">
       <div>
-        <h1>별자리에 오신 것을 환영합니다.</h1>
+        <h1 className="text-purple-700">별자리에 오신 것을 환영합니다.</h1>
+
         <p>로그인하여 당신의 스타와 만나보세요</p>
       </div>
 

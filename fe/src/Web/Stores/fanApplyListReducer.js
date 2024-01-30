@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const loadApply = createAsyncThunk('axios/loadApply', async () => {
   try {
-    const response = await axios.get('http://localhost:5000/applyPage/1/0');
+    const response = await axios.get(`${BASE_URL}applyPage/1/0`);
 
-    return response.data;
+    return response.data.object;
   } catch (error) {
     console.error('내가 응모한 팬사인회 로드 실패: ', error);
   }
@@ -13,8 +15,8 @@ export const loadApply = createAsyncThunk('axios/loadApply', async () => {
 
 export const loadWin = createAsyncThunk('axios/loadWin', async () => {
   try {
-    const response = await axios.get('http://localhost:5000/applyPage/1/1');
-    return response.data;
+    const response = await axios.get(`${BASE_URL}applyPage/1/1`);
+    return response.data.object;
   } catch (error) {
     console.error('내가 당첨된 팬사인회 로드 실패: ', error);
   }
@@ -23,7 +25,7 @@ export const loadWin = createAsyncThunk('axios/loadWin', async () => {
 const fanApplyListSlice = createSlice({
   name: 'fanApplyList',
   initialState: {
-    data: [],
+    data: [{}],
   },
   reducers: {},
   extraReducers: (builder) => {

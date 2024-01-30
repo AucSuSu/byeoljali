@@ -20,7 +20,7 @@ public class ApplicantController {
     private final ApplicantService applicantService;
 
     // 응모 폼을 위해 프론트에 전달하기
-    @GetMapping("/mainpage/makeApplyForm/{artistfansign_id}")
+    @GetMapping("/api/mainpage/makeApplyForm/{artistfansign_id}")
     public ResponseEntity<Message> makeApplyForm(@PathVariable("artistfansign_id") Long artistfansign_id){
         log.info(" ** 응모 폼을 구성할 내용을 제공하는 api 입니다 ** ");
         ApplyFormResponseDto dto = applicantService.makeApplyForm(artistfansign_id);
@@ -29,7 +29,7 @@ public class ApplicantController {
     }
 
     // 응모 폼 제출
-    @PostMapping("/mainpage/{artistfansign_id}")
+    @PostMapping("/api/mainpage/{artistfansign_id}")
     public ResponseEntity<Message> submitApplyForm(@PathVariable("artistfansign_id") Long artistfansignId,
                                                    @RequestBody ApplyFormRequestDto requestDto){
         // 응모 폼을 제출하면
@@ -45,7 +45,7 @@ public class ApplicantController {
     }
 
     // 응모 내역 페이지 조회하기 - 응모된 거 안된거
-    @GetMapping("/applyPage/{fanId}")
+    @GetMapping("/api/applyPage/{fanId}")
     public ResponseEntity<Message> applyPage(@PathVariable("fanId") Long fanId){
         log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
         List<ApplyPageDto> dto = applicantService.findAllApplyPageById(fanId);
@@ -54,7 +54,7 @@ public class ApplicantController {
     }
 
     // 응모 내역 페이지 - 응모 중인 것만 !!!!
-    @GetMapping("/applyPage/{fanId}/{isWon}")
+    @GetMapping("/api/applyPage/{fanId}/{isWon}")
     public ResponseEntity<Message> onlyAppliedList(@PathVariable("fanId") Long fanId,
                                                    @PathVariable("isWon") boolean isWon){
         log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
@@ -67,7 +67,7 @@ public class ApplicantController {
 
 
     // 응모 상세 페이지 조회하기 - 팬싸인회 정보 보여주기
-    @GetMapping("/applyPage/detail/{fanId}/{memberfansignId}")
+    @GetMapping("/api/applyPage/detail/{fanId}/{memberfansignId}")
     public ResponseEntity<Message> applyDetail(@PathVariable("memberfansignId") Long memberfansignId,
                                                @PathVariable("fanId") Long fanId){
         log.info(" ** 응모 상세 페이지 조회 api 입니다 ** ");

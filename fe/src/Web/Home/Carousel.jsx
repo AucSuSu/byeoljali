@@ -8,9 +8,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const Carousel = () => {
-  const dataList = useSelector((state) => state.recentList.recentList);
-  console.log('캐러셀');
-  console.log(dataList);
+  const dataList = useSelector((state) => state.homerecent.data);
 
   const settings = {
     dots: true,

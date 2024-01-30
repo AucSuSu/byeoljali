@@ -1,11 +1,12 @@
 // HomeView.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 // Reducer 추가
-import { applyList, recentList } from '../Stores/homeListReducer';
+import { applyList } from '../Stores/homeApplyListReducer';
+import { recentList } from '../Stores/homeRecentReducer';
 
-import List from '../Utils/List';
+import List from '../Home/HomeApplyList';
 import Carousel from '../Home/Carousel';
 
 //Navbar
@@ -16,9 +17,9 @@ const HomeView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(applyList);
-    dispatch(recentList);
-  }, []);
+    dispatch(applyList());
+    dispatch(recentList());
+  }, [dispatch]);
 
   return (
     <div>
@@ -27,7 +28,7 @@ const HomeView = () => {
       {/* 캐러셀 */}
       <Carousel />
       <h1>응모 리스트</h1>
-      <List type="current" />
+      <List />
     </div>
   );
 };

@@ -1,0 +1,9 @@
+/* SelectMemberList.css */
+.member-item.selected img {
+  border: 3px solid blue; /* 선택된 이미지에 테두리 적용 */
+}
+
+.member-item.not-selected img {
+  opacity: 0.5; /* 선택되지 않은 이미지에 반투명 필터 적용 */
+  filter: grayscale(100%); /* 회색 필터 적용 */
+}

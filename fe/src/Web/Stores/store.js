@@ -1,11 +1,15 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import homeListReducer from './homeListReducer.js';
+import homeApplyListReducer from './homeApplyListReducer.js';
+import homeRecentReducer from './homeRecentReducer.js';
+import homeDetailListReducer from './homeDetailListReducer.js';
 import authReducer from './authReducer.js';
 import artistInfoReducer from './artistInfoReducer.js';
 import kakaopayReducer from './kakaopayReducer.js';
 import counterReducer from './counterReducer.js';
 import modalReducer from './modalReducer.js';
 import fanApplyReducer from './fanApplyListReducer.js';
+import joinFansignReducer from './joinFansignReducer.js';
+import fanInfoReducer from './fanInfoReducer.js';
 // 추가 리듀서
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -18,13 +22,17 @@ const persistConfig = {
 
 // 여러 리듀서를 결합
 const rootReducer = combineReducers({
-  home: homeListReducer,
+  homeapply: homeApplyListReducer,
+  homerecent: homeRecentReducer,
+  homedetail: homeDetailListReducer,
   auth: authReducer,
   modal: modalReducer,
   artistInfo: artistInfoReducer,
   counter: counterReducer,
   kakaopay: kakaopayReducer,
   fanapply: fanApplyReducer,
+  joinFansign: joinFansignReducer,
+  faninfo: fanInfoReducer,
   // 추가 리듀서 추가
 });
 

@@ -4,14 +4,16 @@ import LoginView from './Web/Pages/LoginView.jsx';
 import ArtistInfoView from './Web/Pages/ArtistInfoView.jsx';
 import HomeView from './Web/Pages/HomeView.jsx';
 import Test from './Web/test.js';
+import Artist from './Openvidu/Artist/Artist.js';
 import CounterView from './Web/Pages/CounterView.jsx';
 import FanInfoView from './Web/Pages/FanInfoView.jsx';
 import FanPhoto from './Web/Pages/FanPhotoView.jsx';
 import FanPhotoPayResult from './Web/Fan/FanPhotoPayResult.jsx';
 import ArtistFanSignView from './Web/Pages/ArtistReadyFansignView.jsx';
-import ImgUploadModal from './Web/Utils/ImgUploadModal.jsx';
+import ImgUploadModal from './Web/Fan/ImgUploadModal.jsx';
 import ArtistReadyFansignView from './Web/Pages/ArtistFanSignView.jsx';
-import FanSignView from './Web/Pages/FanSignView.jsx';
+import FanApplyView from './Web/Pages/FanApplyView.jsx';
+import FanWinView from './Web/Pages/FanWinView.jsx';
 
 export default function AppRoutes() {
   return (
@@ -22,13 +24,15 @@ export default function AppRoutes() {
         <Route path="/artistInfo" element={<ArtistInfoView />} />
         <Route path="/home" element={<HomeView />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/userinfo" element={<FanInfoView />} />
-        <Route path="/userphoto" element={<FanPhoto />} />
-        <Route path="/userphoto/payresult" element={<FanPhotoPayResult />} />
+        <Route path="/fan-profile" element={<FanInfoView />} />
+        <Route path="/fan-photo" element={<FanPhoto />} />
+        <Route path="/fan-photo/payresult" element={<FanPhotoPayResult />} />
         <Route path="/fansign" element={<ArtistFanSignView />} />
         <Route path="/imguploadtest" element={<ImgUploadModal />} />
         <Route path="/readyfansign" element={<ArtistReadyFansignView />} />
-        <Route path="/userapply" element={<FanSignView />} />
+        <Route path="/fan-apply" element={<FanApplyView />} />
+        <Route path="/fan-win" element={<FanWinView />} />
+        <Route path="/artist" element={<Artist />} />
 
         {/* 라우트 여기에 추가하세용 */}
       </Routes>

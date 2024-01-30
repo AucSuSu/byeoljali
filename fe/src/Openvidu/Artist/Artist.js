@@ -11,9 +11,9 @@ import UserModel from '../Artist/models/user-model';
 import ToolbarComponent from '../Artist/toolbar/ToolbarComponent';
 
 var localUser = new UserModel();
+// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
 const APPLICATION_SERVER_URL =
-  process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
-// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
+  process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
 
 class VideoRoomComponent extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class VideoRoomComponent extends Component {
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
-      mySessionId: sessionName,
+      mySessionId: this.props.sessionId,
       myUserName: userName,
       session: undefined,
       localUser: undefined,
@@ -138,9 +138,11 @@ class VideoRoomComponent extends Component {
 
   async connectToSession() {
     if (this.props.token !== undefined) {
-      console.log('token received: ', this.props.token);
+      console.log('토큰 받았음 : ', this.props.token);
       this.connect(this.props.token);
-    } else {
+    }
+    // 아래 부분 getToken 없애도 될듯? ##체크포인트
+    else {
       try {
         var token = await this.getToken();
         console.log(token);

@@ -1,22 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
   async (artistId) => {
-    const response = await axios.get(
-      `http://localhost:8080/artists/${artistId}/`,
-    );
+    const response = await axios.get(`${BASE_URL}artists/${artistId}/`);
     return response.data;
   },
 );
 
 export const addMember = createAsyncThunk(
   'axios/addMember',
-  async (payload) => {
+  async (formData, { getState }) => {
+    const token = getState().auth.token;
     const response = await axios.post(
-      `http://localhost:8080/artists/members`,
-      payload,
+      `${BASE_URL}artists/members/1`,
+      formData,
+      {
+        headers: {
+          authorization: token,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
     return response.data;
   },
@@ -24,9 +32,17 @@ export const addMember = createAsyncThunk(
 
 export const modifyMember = createAsyncThunk(
   'axios/modifyArtistInfo',
-  async (payload) => {
-    const response = await axios.get(
-      'http://localhost:8080/artists/apply/1?status=READY_APPLYING',
+  async (payload, { getState }) => {
+    const token = getState().auth.token;
+    const response = await axios.put(
+      `${BASE_URL}artists/members/${payload.memberId}`,
+      payload.formData,
+      {
+        headers: {
+          authorization: token,
+          'Content-Type': 'multipart/form-data',
+        },
+      },
     );
     return response.data;
   },
@@ -82,11 +98,13 @@ const artistInfoSlice = createSlice({
       })
       .addCase(modifyMember.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        console.log('성공했어요', action.payload);
         state.data = action.payload;
       })
       .addCase(modifyMember.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        console.log('실패했어요 ㅠㅠ', state.error);
       });
   },
 });

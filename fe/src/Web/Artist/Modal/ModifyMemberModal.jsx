@@ -3,20 +3,35 @@ import Modal from 'react-modal';
 import { handleModifyMember } from '../../Stores/modalReducer';
 import { modifyMember } from '../../Stores/artistInfoReducer';
 import { useDispatch } from 'react-redux';
+import ImgUpload from './ImgUpload';
 
 export default function ModifyMember({ data }) {
   const modalIsOpen = useState(true);
+  const [imgData, setImgData] = useState('');
+  const [name, setName] = useState(data.name);
 
   const dispatch = useDispatch();
   const closeModal = () => {
     dispatch(handleModifyMember(null));
   };
 
-  const payload = {};
+  const payload = { name: name, image: imgData };
+
   const modify = (e) => {
     e.preventDefault();
-    dispatch(modifyMember(payload));
+
+    const formData = new FormData();
+    for (const key in payload) {
+      formData.append(key, payload[key]);
+    }
+
+    dispatch(modifyMember({ formData: formData, memberID: data.memberId }));
     closeModal();
+  };
+
+  const uploadImg = (img) => {
+    setImgData(img);
+    console.log('이미지 데이터 : ', img);
   };
 
   const customStyle = {
@@ -41,13 +56,16 @@ export default function ModifyMember({ data }) {
       >
         <div>
           <h2>{data.name}</h2>
-          <img
-            src={data.profileImageUrl}
-            alt={data.name}
-            style={{ width: '400px', borderRadius: '10px' }}
-          />
-          <p>{data.name}</p>
+          <ImgUpload img={data.profileImageUrl} uploadImg={uploadImg} />
           <form onSubmit={modify}>
+            <div>
+              <label>이름 : </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
             <button type="submit">수정하기</button>
           </form>
           <button onClick={closeModal}>Close Modal</button>
