@@ -29,14 +29,14 @@ const fanPhotoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUserData.pending, (state) => {
+      .addCase(getUserPhoto.pending, (state) => {
         // 요청이 진행 중일 때의 상태 업데이트
       })
-      .addCase(getUserData.fulfilled, (state, action) => {
+      .addCase(getUserPhoto.fulfilled, (state, action) => {
         // 요청이 성공적으로 완료되었을 때의 상태 업데이트
         state.data = action.payload;
       })
-      .addCase(getUserData.rejected, (state) => {
+      .addCase(getUserPhoto.rejected, (state) => {
         // 요청이 실패했을 때의 상태 업데이트
       });
   },
