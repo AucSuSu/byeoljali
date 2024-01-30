@@ -8,7 +8,7 @@ export const getUserData = createAsyncThunk(
   async ({ getState }) => {
     try {
       const token = getState().auth.token;
-
+      console.log(token);
       const response = await axios.get(`${BASE_URL}mypage/`, {
         headers: {
           Authorization: token,
