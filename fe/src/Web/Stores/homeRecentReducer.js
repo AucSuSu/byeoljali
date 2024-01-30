@@ -5,7 +5,7 @@ import axios from 'axios';
 export const recentList = createAsyncThunk('axios/recentList', async (data) => {
   try {
     const response = await axios.get(
-      'http://localhost:8080/mainpage/recent',
+      process.env.REACT_APP_BASE_URL + 'mainpage/recent',
       data,
     );
 
