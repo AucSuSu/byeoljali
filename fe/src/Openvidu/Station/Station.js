@@ -469,7 +469,7 @@ class App extends Component {
   captureMainVideo = () => {
     html2canvas(this.mainVideoRef.current).then((canvas) => {
       // Canvas를 Base64 인코딩된 문자열로 변환
-      const base64Image = canvas.toDataURL('unknown_person/png');
+      const base64Image = canvas.toDataURL('unknown_person/jpg');
 
       // axios를 사용하여 Base64 인코딩된 이미지 데이터를 POST 요청으로 전송
       // 플라스크 서버 주소 추가할 것!!!!!!!!!!
