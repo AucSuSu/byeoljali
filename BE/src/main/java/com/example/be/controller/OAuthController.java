@@ -44,7 +44,7 @@ public class OAuthController {
 
     }
 
-    @GetMapping("/refreshToken")
+    @GetMapping("/api/refreshToken")
     public ResponseEntity<Message> getRefreshToken(HttpServletRequest request){
 
         String refreshToken = request.getHeader("authorization-refresh");
