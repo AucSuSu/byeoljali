@@ -1,14 +1,16 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import './ImgUploadModal.css';
+import { useSelector } from 'react-redux';
 
-function ImgUploadModal({ onClose, posturl }) {
+function ImgUploadModal({ onClose }) {
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState('');
   const fileInputRef = useRef(null);
 
-  // 이미지 업로드 관련 URL 설정
-  const IMG_POST_URL = posturl;
+  // 이미지 업로드 관련 URL, token 설정
+  const IMG_POST_URL = process.env.REACT_APP_BASE_URL;
+  const token = useSelector((state) => state.auth.token)
 
   console.log(IMG_POST_URL);
 
@@ -45,8 +47,9 @@ function ImgUploadModal({ onClose, posturl }) {
     formData.append('certificationImageUrl', imageFile);
 
     axios
-      .post(IMG_POST_URL, formData, {
+      .post(`${IMG_POST_URL}mypage/edit/certImage`, formData, {
         headers: {
+          Authorization: token,
           'Content-Type': 'multipart/form-data',
         },
       })
