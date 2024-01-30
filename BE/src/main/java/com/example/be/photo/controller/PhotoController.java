@@ -67,13 +67,12 @@ public class PhotoController {
 //    }
 
     // 인생네컷 조회 + 필터 + 검색기능 api
-    @GetMapping("/api/myalbum/{fanId}")
-    public ResponseEntity<Message> showAllandFilteredPhoto(@PathVariable("fanId") Long fanId,
-                                                           @RequestParam(name ="searchKeyword", required = false) String searchKeyword,
+    @GetMapping("/api/myalbum")
+    public ResponseEntity<Message> showAllandFilteredPhoto(@RequestParam(name ="searchKeyword", required = false) String searchKeyword,
                                                            @RequestParam(name = "payOrNot", required = false) Boolean payOrNot){
         log.info(" ** 인생네컷 페이지 조회 - 전체/필터/검색 api 입니다 ** ");
         boolean finalValue = (payOrNot != null) ? payOrNot : true;
-        List<PhotoResponseDto> list = photoService.showAllandFilteredPhoto(fanId, searchKeyword, payOrNot);
+        List<PhotoResponseDto> list = photoService.showAllandFilteredPhoto(searchKeyword, payOrNot);
         Message message = new Message(HttpStatusEnum.OK, "전체 인생네컷 사진 전체/필터/검색어 조회 성공", list);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

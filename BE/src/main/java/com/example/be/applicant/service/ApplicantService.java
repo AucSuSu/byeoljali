@@ -70,24 +70,26 @@ public class ApplicantService {
         return result;
     }
 
-    public List<SeparatedApplyPageDto> findAllApplyPageById2(Long fanId, boolean isWon){
+    public List<SeparatedApplyPageDto> findAllApplyPageById2(boolean isWon){
 
         List<SeparatedApplyPageDto> result;
+        Fan fan = getFan();
         if (isWon == false){
             // 응모한 페이지만
-            result = applicantRepository.findApplyingPageById(fanId);
+            result = applicantRepository.findApplyingPageById(fan);
         }else{
             // 당첨만
-            result = applicantRepository.findWonPageById(fanId);
+            result = applicantRepository.findWonPageById(fan);
         }
 
         return result;
     }
 
     // 응모 페이지 상세 조회
-    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId, Long fanId){
+    public ApplyPageDetailDto getDetailApplyFansign(Long memberFansignId){
+        Fan fan = getFan();
         return
-                applicantRepository.findDetailFSBymemberFSId(memberFansignId, fanId);
+                applicantRepository.findDetailFSBymemberFSId(memberFansignId,fan);
     }
 
     private Fan getFan(){

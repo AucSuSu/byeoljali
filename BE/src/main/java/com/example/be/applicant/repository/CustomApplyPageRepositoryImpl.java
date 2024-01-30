@@ -77,7 +77,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
 
     // 응모 중인 팬싸만 출력하는 페이지
     @Override
-    public List<SeparatedApplyPageDto> findApplyingPageById(Long fanId){
+    public List<SeparatedApplyPageDto> findApplyingPageById(Fan fan){
 
         Date currentDate = new java.util.Date();
         queryFactory = new JPAQueryFactory(em);
@@ -107,9 +107,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                 .on(memberFansign.member.eq(member)) // 해당 멤버가 같은 멤버 팬싸인에서
                 .join(applicant)
                 .on(applicant.memberfansign.eq(memberFansign))
-                .where(applicant.fan.eq(JPAExpressions.select(fan)
-                        .from(fan)
-                        .where(fan.fanId.eq(fanId))),
+                .where(applicant.fan.eq(fan),
                         artistFansign.status.eq(FansignStatus.APPLYING)) // 입력받은 fanId가 당첨자 fanId와 동일한 것만
                 .orderBy(orderByExpression.desc())
                 .fetch();
@@ -117,7 +115,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
 
     // 당첨된 팬싸만 보여주는 페이지
     @Override
-    public List<SeparatedApplyPageDto> findWonPageById(Long fanId){
+    public List<SeparatedApplyPageDto> findWonPageById(Fan fan){
 
         Date currentDate = new java.util.Date();
         queryFactory = new JPAQueryFactory(em);
@@ -148,9 +146,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                 .on(memberFansign.member.eq(member)) // 해당 멤버가 같은 멤버 팬싸인에서
                 .join(winning)
                 .on(winning.memberfansign.eq(memberFansign))
-                .where(winning.fan.eq(JPAExpressions.select(fan)
-                        .from(fan)
-                        .where(fan.fanId.eq(fanId))),
+                .where(winning.fan.eq(fan),
                         artistFansign.status.eq(FansignStatus.READY_FANSIGN)
                                 .or(artistFansign.status.eq(FansignStatus.FANSIGN))
                                 .or(artistFansign.status.eq(FansignStatus.SESSION_CONNECTED)))
@@ -159,7 +155,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
     }
 
     @Override
-    public ApplyPageDetailDto findDetailFSBymemberFSId(Long memberFansignId, Long fanId){
+    public ApplyPageDetailDto findDetailFSBymemberFSId(Long memberFansignId, Fan fan){
         queryFactory = new JPAQueryFactory(em);
 
         return queryFactory.select(
@@ -190,9 +186,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                 .on(applicant.memberfansign.eq(memberFansign))
                 .leftJoin(winning)
                 .on(winning.applicant.eq(applicant))
-                .where(applicant.fan.eq(JPAExpressions.select(fan)
-                                .from(fan)
-                                .where(fan.fanId.eq(fanId))),
+                .where(applicant.fan.eq(fan),
                         memberFansign.memberfansignId.eq(memberFansignId)) // 입력받은 fanId가 당첨자 fanId와 동일한 것만
                 .fetchOne();
 
