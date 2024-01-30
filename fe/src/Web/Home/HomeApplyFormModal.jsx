@@ -8,29 +8,24 @@ import { setAlbumNum, applyForm } from '../Stores/homeDetailListReducer';
 
 const ApplyFormModal = ({ isModalOpen, closeModal }) => {
   const data = useSelector((state) => state.homedetail.data);
+  const currAlbumNum = useSelector((state) => state.homedetail.albumNum);
+  const currFansignId = useSelector((state) => state.homedetail.fansignId);
+  const currMemberId = useSelector((state) => state.homedetail.memberId);
+
   const dispatch = useDispatch(); // useDispatch 호출
 
-  if (data.fansignId != undefined) {
-    console.log('modal fansignId');
-    console.log(data.fansignId);
-  }
-
   const handleChange = (event) => {
-    dispatch(setAlbumNum(event.target.value)); // 입력 값으로 상태 업데이트
+    dispatch(setAlbumNum(parseInt(event.target.value, 10))); // 숫자로 변환
   };
 
   const handleSubmit = () => {
     const formData = {
-      memberId: data.memberId,
-      boughtAlbum: data.albumNum,
+      memberId: currMemberId,
+      boughtAlbum: currAlbumNum,
       fanId: 2,
-      artistFansignId: data.fansignId, // 적절한 ID 값 필요
+      artistFansignId: currFansignId, // 적절한 ID 값 필요
     };
-
-    console.log('handleSubmit');
-    console.log(data);
-    console.log(data.fansignId);
-    dispatch(applyForm({ id: data.fansignId, data: formData }));
+    dispatch(applyForm({ id: currFansignId, data: formData }));
   };
 
   const customStyle = {
