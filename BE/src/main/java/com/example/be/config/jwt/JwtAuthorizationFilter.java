@@ -2,6 +2,7 @@ package com.example.be.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.be.artist.entity.Artist;
 import com.example.be.artist.repository.ArtistRepository;
@@ -53,42 +54,52 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request,response);
             return;
         }
-        // Bearer를 제외한 token값만 꺼내기
-        String token = jwtHeader.replace(JwtProperties.TOKEN_PREFIX, "");
+
+        try{
+            // Bearer를 제외한 token값만 꺼내기
+            String token = jwtHeader.replace(JwtProperties.TOKEN_PREFIX, "");
 //
 //        // 토큰 검증 (이게 인증이기 때문에 AuthenticationManager도 필요 없음)
 //        // 내가 SecurityContext에 직접접근해서 세션을 만들때 자동으로 UserDetailsService에 있는
 
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(JwtProperties.SECRET)).build().verify(token);
+            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(JwtProperties.SECRET)).build().verify(token);
 
-        // Artist ID 추출 (클레임이 없는 경우 null 처리)
-        String artistId = decodedJWT.getClaim("artistId").toString();
+            // Artist ID 추출 (클레임이 없는 경우 null 처리)
+            String artistId = decodedJWT.getClaim("artistId").toString();
 
-        // username이 있다는 말은 사용자가 정상적으로 인증이 됐다는 뜻!
-        if(!artistId.equals("Missing claim")){
-            Artist artist = artistRepository.findById(Long.parseLong(artistId)).orElse(null);
+            // username이 있다는 말은 사용자가 정상적으로 인증이 됐다는 뜻!
+            if(!artistId.equals("Missing claim")){
+                Artist artist = artistRepository.findById(Long.parseLong(artistId)).orElse(null);
 
-            PrincipalDetails principalDetails = new PrincipalDetails(artist);
-            // 사용자가 인증이 됐으니까 강제적으로 authentication 객체를 만들어줘도 되는거임 with principalDetails, null, authorities
-            Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
-
-            // 강제로 시큐리티의 세션에 authentication 객체를 저장
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        }else{
-            String fanId = decodedJWT.getClaim("fanId").toString();
-
-            if(!fanId.equals("Missing claim")){
-                Fan fan = fanRepository.findById(Long.parseLong(fanId)).orElse(null);
-
-                FanPrincipalDetails fanPrincipalDetails = new FanPrincipalDetails(fan);
+                PrincipalDetails principalDetails = new PrincipalDetails(artist);
                 // 사용자가 인증이 됐으니까 강제적으로 authentication 객체를 만들어줘도 되는거임 with principalDetails, null, authorities
-                Authentication authentication = new UsernamePasswordAuthenticationToken(fanPrincipalDetails, null, fanPrincipalDetails.getAuthorities());
+                Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
 
                 // 강제로 시큐리티의 세션에 authentication 객체를 저장
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            }else{
+                String fanId = decodedJWT.getClaim("fanId").toString();
+
+                if(!fanId.equals("Missing claim")){
+                    Fan fan = fanRepository.findById(Long.parseLong(fanId)).orElse(null);
+
+                    FanPrincipalDetails fanPrincipalDetails = new FanPrincipalDetails(fan);
+                    // 사용자가 인증이 됐으니까 강제적으로 authentication 객체를 만들어줘도 되는거임 with principalDetails, null, authorities
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(fanPrincipalDetails, null, fanPrincipalDetails.getAuthorities());
+
+                    // 강제로 시큐리티의 세션에 authentication 객체를 저장
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
+        } catch (TokenExpiredException e){ // 토큰 만료되면
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 코드 설정
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"error\": \"AccessToken expired\"}");
+            return; // 필터 체인 종료
         }
+
         // 다 했으니까 chain 타게하자.
         chain.doFilter(request, response);
 
