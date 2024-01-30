@@ -24,7 +24,6 @@ export default function Test() {
   // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
   const switchToFan = async (data) => {
     await dispatch(joinFansignTest(1));
-
     setData(data);
     setFlag(2);
   };
