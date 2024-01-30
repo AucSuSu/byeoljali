@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserData } from '../Stores/fanInfoReducer';
-import { resetUpdateSuccess } from '../Stores/fanInfoReducer';
 
 import ImgUploadModal from '../Fan/ImgUploadModal';
 import FanInfoModal from '../Fan/FanInfoModal';
@@ -24,11 +23,6 @@ function FanInfoView() {
 
   const [showImgUploadModal, setShowImgUploadModal] = useState(false);
 
-  // 사용자가 특정 버튼을 클릭했을 때 resetUpdateSuccess를 호출하는 함수
-  const handleResetUpdateSuccess = () => {
-    dispatch(resetUpdateSuccess());
-  };
-
   return (
     <>
       {userData && (
@@ -40,7 +34,6 @@ function FanInfoView() {
               <FanInfoModal
                 userData={userData}
                 onClose={() => setShowEditModal(false)}
-                onReset={handleResetUpdateSuccess}
               />
             )}
             {/* 인증사진 수정 모달 */}
