@@ -44,21 +44,21 @@ public class ApplicantController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    // 응모 내역 페이지 조회하기 - 응모된 거 안된거
-    @GetMapping("/api/applyPage/{fanId}")
-    public ResponseEntity<Message> applyPage(@PathVariable("fanId") Long fanId){
-        log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
-        List<ApplyPageDto> dto = applicantService.findAllApplyPageById(fanId);
-        Message message = new Message(HttpStatusEnum.OK, "응모 내역 페이지 전체 출력 성공", dto);
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
+    // 응모 내역 페이지 조회하기 - 응모된 거 안된거 - 안써서 지움
+//    @GetMapping("/api/applyPage")
+//    public ResponseEntity<Message> applyPage(){
+//        log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
+//        List<ApplyPageDto> dto = applicantService.findAllApplyPageById();
+//        Message message = new Message(HttpStatusEnum.OK, "응모 내역 페이지 전체 출력 성공", dto);
+//        return new ResponseEntity<>(message, HttpStatus.OK);
+//    }
 
     // 응모 내역 페이지 - 응모 중인 것만 !!!!
-    @GetMapping("/api/applyPage/{fanId}/{isWon}")
-    public ResponseEntity<Message> onlyAppliedList(@PathVariable("fanId") Long fanId,
+    @GetMapping("/api/applyPage/{isWon}")
+    public ResponseEntity<Message> onlyAppliedList(
                                                    @PathVariable("isWon") boolean isWon){
         log.info(" ** 응모 내역 팬 페이지 조회 api 입니다 ** ");
-        List<SeparatedApplyPageDto> dto = applicantService.findAllApplyPageById2(fanId, isWon);
+        List<SeparatedApplyPageDto> dto = applicantService.findAllApplyPageById2(isWon);
 
         String str = isWon?"당첨된 ":"응모 중인 ";
         Message message = new Message(HttpStatusEnum.OK, str+"팬싸 내역 페이지 출력 성공", dto);
@@ -67,11 +67,10 @@ public class ApplicantController {
 
 
     // 응모 상세 페이지 조회하기 - 팬싸인회 정보 보여주기
-    @GetMapping("/api/applyPage/detail/{fanId}/{memberfansignId}")
-    public ResponseEntity<Message> applyDetail(@PathVariable("memberfansignId") Long memberfansignId,
-                                               @PathVariable("fanId") Long fanId){
+    @GetMapping("/api/applyPage/detail/{memberfansignId}")
+    public ResponseEntity<Message> applyDetail(@PathVariable("memberfansignId") Long memberfansignId){
         log.info(" ** 응모 상세 페이지 조회 api 입니다 ** ");
-        ApplyPageDetailDto dto = applicantService.getDetailApplyFansign(memberfansignId, fanId);
+        ApplyPageDetailDto dto = applicantService.getDetailApplyFansign(memberfansignId);
         Message message = new Message(HttpStatusEnum.OK, "응모 팬싸 상세 조회 성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
