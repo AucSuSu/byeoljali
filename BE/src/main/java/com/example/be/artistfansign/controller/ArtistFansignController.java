@@ -54,7 +54,7 @@ public class ArtistFansignController {
     }
 
     @GetMapping("/api/artists/apply")
-    public ResponseEntity<Message> ArtistsFansign(@Param("status")FansignStatus status) {
+    public ResponseEntity<Message> ArtistsFansignList(@Param("status")FansignStatus status) {
         log.info(" ** 아티스트 마이페이지 팬싸인회 관리 api 입니다.** ");
         List<ArtistsMyFansignResponseDto> fansignList = artistFansignService.getArtistsFansign(status);
         Message message = new Message(HttpStatusEnum.OK, "아티스트 조회 팬싸인회", fansignList);
