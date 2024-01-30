@@ -86,9 +86,9 @@ public class ArtistFansignService {
     }
 
     // 아티스트가 내가 개설한 팬싸 목록 가져오기 (아티스트가 속한 멤버의 팬싸인회)
-    public List<ArtistsMyFansignResponseDto> getArtistsFansign(Long artistId, FansignStatus status){
+    public List<ArtistsMyFansignResponseDto> getArtistsFansign(FansignStatus status){
         List<ArtistsMyFansignResponseDto> list
-                = artistFansignRepository.findArtistsMyFansign(artistId, status);
+                = artistFansignRepository.findArtistsMyFansign(getArtist(), status);
         return list;
     }
 
