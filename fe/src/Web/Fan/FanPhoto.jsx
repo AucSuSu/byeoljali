@@ -71,7 +71,15 @@ function FanPhoto({ data }) {
     console.log('삭제 로직 처리');
     const deletePhotoId = data.photoId;
     console.log(deletePhotoId);
-    setIsModalOpen(false);
+    axios
+      .delete(`${PHOTO_URL}api/myalbum/${deletePhotoId}`)
+      .then((res) => {
+        console.log(res);
+        setIsModalOpen(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     // 삭제 처리 로직
   };
