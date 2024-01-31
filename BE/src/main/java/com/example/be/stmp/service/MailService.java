@@ -2,6 +2,7 @@ package com.example.be.stmp.service;
 
 import com.example.be.stmp.dto.MailDto;
 import com.example.be.winning.dto.WinningDto;
+import com.example.be.winning.dto.WinningInsertDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,14 +20,14 @@ public class MailService {
 
     private final JavaMailSender javaMailSender;
 
-    public void sendMail(List<WinningDto> list){
+    public void sendMail(List<WinningInsertDto> list){
 
         log.info(" *** 메일 전송 입니다 *** ");
-        for(WinningDto dto : list){
+        for(WinningInsertDto dto : list){
             // dto -> MailDto
-//            sendWinningMail(new MailDto(dto.getEmail(),
-//                    dto.getTitle(), dto.getStartFansignTime(), dto.getName(),
-//                    dto.getOrders()));
+            sendWinningMail(new MailDto(dto.getEmail(),
+                    dto.getTitle(), dto.getStartFansignTime(), dto.getName(),
+                    dto.getOrders()));
         }
     }
 

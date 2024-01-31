@@ -3,6 +3,7 @@ package com.example.be.scheduling.repository;
 import com.example.be.artistfansign.entity.FansignMode;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.winning.dto.WinningDto;
+import com.example.be.winning.dto.WinningInsertDto;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
@@ -39,14 +40,15 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
     // 이후 config 파일로 빼기
     private final int BATCH_SIZE = 10;
 
-    private int batchInsert(int batchSize, int batchCount, List<WinningDto> subItems){
-        jdbcTemplate.batchUpdate("INSERT INTO winning () values (?,?)",
+    private int batchInsert(int batchSize, int batchCount, List<WinningInsertDto> subItems){
+        jdbcTemplate.batchUpdate("INSERT INTO winning (orders, applicant_id, fan_id, memberfansign_id) values (?,?,?,?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        ps.setLong(1, subItems.get(i).getFanId());
-                        ps.setLong(2, subItems.get(i).getMemberfansignId());
-
+                        ps.setLong(1, subItems.get(i).getOrders());
+                        ps.setLong(2, subItems.get(i).getApplicantId());
+                        ps.setLong(3, subItems.get(i).getFanId());
+                        ps.setLong(4, subItems.get(i).getMemberfansignId());
                     }
 
                     @Override
@@ -128,7 +130,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
     }
 
     @Override
-    public int insertWinner(List<WinningDto> list) {
+    public int insertWinner(List<WinningInsertDto> list) {
         log.info(" *** repository : 당첨자 insert *** ");
        return batchInsert(BATCH_SIZE, 0, list);
     }
