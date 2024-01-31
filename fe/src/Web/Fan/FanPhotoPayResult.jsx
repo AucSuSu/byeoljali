@@ -44,7 +44,7 @@ function FanPhotoPayResult() {
         navigate('/userphoto');
       })
       .catch((error) => {
-        console.error('에러입니다1.');
+        console.error('에러입니다.');
         console.error(error);
       });
   };
