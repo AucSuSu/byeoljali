@@ -47,7 +47,7 @@ function ImgUploadModal({ onClose }) {
     }
 
     const formData = new FormData();
-    formData.append('certImage', imageFile);
+    formData.append('image', imageFile);
 
     axios
       .put(`${IMG_POST_URL}mypage/edit/certImage`, formData, {

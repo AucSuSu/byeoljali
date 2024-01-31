@@ -2,6 +2,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 //팬 사인회 응모를 위한 디테일한 정보
 export const detailList = createAsyncThunk('axios/detailList', async (data) => {
   try {
@@ -17,17 +19,24 @@ export const detailList = createAsyncThunk('axios/detailList', async (data) => {
 
 export const applyForm = createAsyncThunk(
   'axios/applyForm',
-  async ({ id, data }) => {
+  async ({ id, data }, { getState }) => {
     console.log(applyForm);
     console.log(data);
     console.log(id);
     try {
+      // const token = getState().auth.token
+      const token = getState().token.token;
       const response = await axios.post(
-        process.env.REACT_APP_BASE_URL + 'mainpage/' + id,
+        `${BASE_URL}mainpage/apply/${id}`,
         data,
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
       );
       console.log('팬 사인회 응모 성공');
-
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('팬 사인회 응모 실패: ', error);
