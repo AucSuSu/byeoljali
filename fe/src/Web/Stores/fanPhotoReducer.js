@@ -7,7 +7,9 @@ export const getUserPhoto = createAsyncThunk(
   'axios/getUserPhoto',
   async (arg, { getState }) => {
     try {
-      const token = getState().auth.token;
+      // const token = getState().auth.token;
+      const token = getState().token.token;
+
       console.log(token);
       const response = await axios.get(`${BASE_URL}myalbum/`, {
         headers: {

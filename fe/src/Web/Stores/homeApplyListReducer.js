@@ -6,7 +6,9 @@ export const applyList = createAsyncThunk(
   'axios/applyList',
   async (data, { getState }) => {
     try {
-      const token = getState().auth.token;
+      // const token = getState().auth.token;
+      const token = getState().token.token;
+
       const response = await axios.get(
         process.env.REACT_APP_BASE_URL +
           'mainpage?searchKeyword=&order=register&status=READY_APPLYING',
