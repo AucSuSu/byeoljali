@@ -26,7 +26,8 @@ export const loadWin = createAsyncThunk(
   'axios/loadWin',
   async (arg, { getState }) => {
     try {
-      const token = getState().auth.token;
+      // const token = getState().auth.token;
+      const token = getState().token.token;
       const response = await axios.get(`${BASE_URL}applyPage/1`, {
         headers: {
           Authorization: token,

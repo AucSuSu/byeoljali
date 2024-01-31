@@ -20,7 +20,9 @@ function FanSignList({ data }) {
       <div>startFansignTime: {data.startFansignTime}</div>
       <div>fansignStatus: {data.fansignStatus}</div>
 
-      {isModalVisible && <FanSignModal data={data} />}
+      {isModalVisible && (
+        <FanSignModal data={data} onClose={() => setModalVisible(false)} />
+      )}
     </div>
   );
 }

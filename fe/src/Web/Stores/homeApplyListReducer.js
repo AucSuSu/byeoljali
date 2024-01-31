@@ -2,24 +2,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
 export const applyList = createAsyncThunk(
   'axios/applyList',
-  async (data, { getState }) => {
+  async (arg, { getState }) => {
     try {
       // const token = getState().auth.token;
       const token = getState().token.token;
 
       const response = await axios.get(
-        process.env.REACT_APP_BASE_URL +
-          'mainpage?searchKeyword=&order=register&status=READY_APPLYING',
-        data,
+        `${BASE_URL}mainpage?searchKeyword=&order=register&status=READY_APPLYING`,
         {
           headers: {
             Authorization: token,
           },
         },
       );
-      console.log();
+
       console.log(response.data);
 
       return response.data;

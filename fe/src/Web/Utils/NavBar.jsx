@@ -80,7 +80,7 @@ const Navbar = ({ isFan }) => {
       <h2>Logo</h2>
       <NavbarList>
         <NavbarItem>
-          <NavbarLink to="/">홈</NavbarLink>
+          <NavbarLink to="/home">홈</NavbarLink>
         </NavbarItem>
         {isFan ? (
           // Fan일 경우
