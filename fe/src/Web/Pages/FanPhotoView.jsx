@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getUserPhoto } from '../Stores/fanPhotoReducer';
 
+import NavBar from '../Utils/NavBar';
+
 function FanPhotoView() {
   // axios.get으로 유저의 인생네컷을 모두 받았다고 가정\
   const photoData = useSelector((state) => state.fanphoto.data);
@@ -18,7 +20,7 @@ function FanPhotoView() {
     // photoData is an array, safe to use .map()
     return (
       <div>
-        <h1>인생네컷</h1>
+        <NavBar isFan={true} />
         {photoData.map((data, index) => (
           <FanPhoto key={index} data={data} />
         ))}
