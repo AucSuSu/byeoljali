@@ -52,6 +52,7 @@ public class TokenService {
             System.out.println("레디스 리프레시 토큰  : " + redisToken);
 
             if (refreshToken.equals(redisToken)){
+                System.out.println("레디스 == 기존");
                 return generateAccessToken(Long.parseLong(id), "ROLE_" + role);
             }
         } catch (JWTVerificationException e) {
