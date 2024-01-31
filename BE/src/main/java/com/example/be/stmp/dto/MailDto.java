@@ -11,4 +11,12 @@ public class MailDto {
     LocalDateTime startFansignTime; // 팬싸 시작 시간
     String membername;
     int orders;
+
+    public MailDto(String recieverMail, String artistFansignName, LocalDateTime startFansignTime, String membername, int orders) {
+        this.recieverMail = recieverMail;
+        this.artistFansignName = artistFansignName;
+        this.startFansignTime = startFansignTime;
+        this.membername = membername;
+        this.orders = orders;
+    }
 }

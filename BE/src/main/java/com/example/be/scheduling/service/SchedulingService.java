@@ -2,8 +2,8 @@ package com.example.be.scheduling.service;
 
 import com.example.be.memberfansign.dto.MemberFansignInfoDto;
 import com.example.be.scheduling.repository.SchedulingRepository;
-import com.example.be.session.repository.SessionRepository;
-import com.example.be.winning.dto.WinningInsertDto;
+import com.example.be.stmp.service.MailService;
+import com.example.be.winning.dto.WinningDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,6 +23,8 @@ public class SchedulingService {
 
     // Redis 연결 서버
     private final SchedulingRepository schedulingRepository;
+    // mailService
+    private final MailService mailService;
 
     @Scheduled(cron = "00 00 00 * * ?") // 매일 00:00:00 에 응모 시작 상태로 변경하기
     public void startApplyingStatusCheck() {
@@ -40,7 +42,7 @@ public class SchedulingService {
 
     }
 
-    @Scheduled(cron = "59 59 23 * * ?") // 매일 23:59:59 에 응모 마감 닫기
+    @Scheduled(cron = "30 52 15 * * ?") // 매일 23:59:59 에 응모 마감 닫기
     public void endApplyingStatusCheck() {
 
         /**
@@ -51,7 +53,7 @@ public class SchedulingService {
          */
 
         // 현재 당첨자를 뽑아야 하는 모든 팬싸인회의 당첨자들 목록
-        List<WinningInsertDto> insertWinnersList = new ArrayList<>();
+        List<WinningDto> insertWinnersList = new ArrayList<>();
 
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -62,20 +64,21 @@ public class SchedulingService {
         schedulingRepository.getMemberFansignList(formattedDate);
 
         // 현재 당첨자를 뽑아야 하는 멤버 팬싸인회 하나에 해당하는 당첨자들 목록
-        List<WinningInsertDto> winnerListForOneMemberFansign = new ArrayList<>();
+        List<WinningDto> winnerListForOneMemberFansign = new ArrayList<>();
 
         for(MemberFansignInfoDto dto : list){
 
             winnerListForOneMemberFansign =
             schedulingRepository.getWinningInsertDto(dto.getMemberfansignId(), dto.getMode());
 
-            for(WinningInsertDto winner : winnerListForOneMemberFansign) {
+            for(WinningDto winner : winnerListForOneMemberFansign) {
                 insertWinnersList.add(winner);
             }
         }
 
         int batchCount =
         schedulingRepository.insertWinner(insertWinnersList);
+        mailService.sendMail(insertWinnersList);
 
         log.info("*** insert 완료 batchCount -> " + batchCount);
 
