@@ -93,6 +93,7 @@ public class WebRTCController {
         String FansignSessionId =
                 redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId)));
         Session FansignSession = openVidu.getActiveSession(FansignSessionId);
+
         if (FansignSession == null) { // 방이 없는 경우
             log.info("*** " + FansignSessionId + " 방이 없음 ***");
             Message msg = new Message(HttpStatusEnum.NOT_FOUND, "sessionId 찾기 실패", new SessionEnterResponseDto(null, null));
@@ -101,6 +102,7 @@ public class WebRTCController {
 
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = FansignSession.createConnection(properties);
+
         log.info("*** 팬싸인회 입장 완료***");
 
         Message msg = new Message(HttpStatusEnum.OK, "팬싸인회 입장 허가", new SessionEnterResponseDto(FansignSessionId, connection.getToken()));

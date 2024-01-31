@@ -4,6 +4,7 @@ import com.example.be.memberfansign.dto.MemberFansignInfoDto;
 import com.example.be.scheduling.repository.SchedulingRepository;
 import com.example.be.stmp.service.MailService;
 import com.example.be.winning.dto.WinningDto;
+import com.example.be.winning.dto.WinningInsertDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -53,7 +54,7 @@ public class SchedulingService {
          */
 
         // 현재 당첨자를 뽑아야 하는 모든 팬싸인회의 당첨자들 목록
-        List<WinningDto> insertWinnersList = new ArrayList<>();
+        List<WinningInsertDto> insertWinnersList = new ArrayList<>();
 
         LocalDateTime date = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -71,16 +72,22 @@ public class SchedulingService {
             winnerListForOneMemberFansign =
             schedulingRepository.getWinningInsertDto(dto.getMemberfansignId(), dto.getMode());
 
-            for(WinningDto winner : winnerListForOneMemberFansign) {
-                insertWinnersList.add(winner);
+            for(int i = 0; i < winnerListForOneMemberFansign.size(); i++){
+                WinningDto winningDto = winnerListForOneMemberFansign.get(i);
+                WinningInsertDto winningInsertDto = new WinningInsertDto();
+                insertWinnersList.add(winningInsertDto.makeDto(winningDto, i+1));
             }
+
         }
 
+        // insert
         int batchCount =
         schedulingRepository.insertWinner(insertWinnersList);
-        mailService.sendMail(insertWinnersList);
+
 
         log.info("*** insert 완료 batchCount -> " + batchCount);
+
+        mailService.sendMail(insertWinnersList);
 
         // 응모 마감으로 상태 바꿔주기
         schedulingRepository.updateStatusToEndApply(formattedDate);
