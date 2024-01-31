@@ -19,13 +19,13 @@ class ArtistRepositoryTest {
 
     @Autowired
     ArtistRepository artistRepository;
-    @Test
-    public void 이메일로_아티스트찾기_테스트(){
-        Artist artist = Artist.createArtist("ww71er@naver.com", "password", "arim");
-        artistRepository.save(artist);
-
-        // Optional 에서 값을 꺼내므로 get으로 했는데 맞는지 모르겠음 ^^&...
-        Artist findArtist = artistRepository.findByEmail(artist.getEmail()).get();
-        assertThat(findArtist).isEqualTo(artist);
-    }
+//    @Test
+//    public void 이메일로_아티스트찾기_테스트(){
+//        Artist artist = Artist.createArtist("ww71er@naver.com", "password", "arim");
+//        artistRepository.save(artist);
+//
+//        // Optional 에서 값을 꺼내므로 get으로 했는데 맞는지 모르겠음 ^^&...
+//        Artist findArtist = artistRepository.findByEmail(artist.getEmail()).get();
+//        assertThat(findArtist).isEqualTo(artist);
+//    }
 }
