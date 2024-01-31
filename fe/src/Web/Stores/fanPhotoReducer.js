@@ -35,6 +35,7 @@ const fanPhotoSlice = createSlice({
       .addCase(getUserPhoto.fulfilled, (state, action) => {
         // 요청이 성공적으로 완료되었을 때의 상태 업데이트
         state.data = action.payload;
+        console.log('getUserPhoto 성공:', action.payload);
       })
       .addCase(getUserPhoto.rejected, (state) => {
         // 요청이 실패했을 때의 상태 업데이트

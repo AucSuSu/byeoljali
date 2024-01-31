@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setTid } from '../Stores/kakaopayReducer';
 
 function FanPhoto({ data }) {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const PHOTO_URL = 'https://i10e104.p.ssafy.io/';
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,9 +32,9 @@ function FanPhoto({ data }) {
     formData.append('total_amount', '11000');
     formData.append('vat_amount', '1000');
     formData.append('tax_free_amount', '0');
-    formData.append('approval_url', `${BASE_URL}userphoto/payresult`);
-    formData.append('fail_url', `${BASE_URL}userphoto`);
-    formData.append('cancel_url', `${BASE_URL}userphoto`);
+    formData.append('approval_url', `${PHOTO_URL}fan-photo/payresult/`);
+    formData.append('fail_url', `${PHOTO_URL}fan-photo/`);
+    formData.append('cancel_url', `${PHOTO_URL}fan-photo/`);
     // formData.append(
     //   'approval_url',
     //   'http://localhost:3000/userphoto/payresult',
