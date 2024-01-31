@@ -1,7 +1,7 @@
 package com.example.be.artist.dto;
 
 import com.example.be.artist.entity.Artist;
-import com.example.be.member.Member;
+import com.example.be.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

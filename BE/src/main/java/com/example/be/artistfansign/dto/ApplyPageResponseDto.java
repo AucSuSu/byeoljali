@@ -2,7 +2,7 @@ package com.example.be.artistfansign.dto;
 
 
 import com.example.be.artistfansign.entity.FansignStatus;
-import com.example.be.member.Member;
+import com.example.be.member.entity.Member;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package com.example.be.memberfansign.entity;
 import com.example.be.applicant.entity.Applicant;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.common.BaseEntity;
-import com.example.be.member.Member;
+import com.example.be.member.entity.Member;
 import com.example.be.photo.entity.Photo;
 import com.example.be.winning.entity.Winning;
 import lombok.AccessLevel;

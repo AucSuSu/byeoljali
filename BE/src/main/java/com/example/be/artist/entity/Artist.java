@@ -1,7 +1,7 @@
 package com.example.be.artist.entity;
 
 import com.example.be.common.BaseEntity;
-import com.example.be.member.Member;
+import com.example.be.member.entity.Member;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AccessLevel;
 import lombok.Getter;
