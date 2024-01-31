@@ -18,7 +18,6 @@ import java.util.List;
 
 @Component // 등록
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class SchedulingService {
 
@@ -28,6 +27,7 @@ public class SchedulingService {
     private final MailService mailService;
 
     @Scheduled(cron = "00 00 00 * * ?") // 매일 00:00:00 에 응모 시작 상태로 변경하기
+    @Transactional
     public void startApplyingStatusCheck() {
 
         /**
@@ -44,6 +44,7 @@ public class SchedulingService {
     }
 
     @Scheduled(cron = "30 52 15 * * ?") // 매일 23:59:59 에 응모 마감 닫기
+   //여기서 transactional을 빼주면.. 에반데 ㅜㅜ
     public void endApplyingStatusCheck() {
 
         /**
@@ -60,9 +61,10 @@ public class SchedulingService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = date.format(formatter);
 
-        // 현재 당첨자를 뽑아야 하는 모든 팬싸인회의 당첨자들 목록
+        // 현재 당첨자를 뽑아야 하는 모든 맴버 팬싸인회
         List<MemberFansignInfoDto> list =
         schedulingRepository.getMemberFansignList(formattedDate);
+        System.out.println("MemberFansignInfoDto: " + list);
 
         // 현재 당첨자를 뽑아야 하는 멤버 팬싸인회 하나에 해당하는 당첨자들 목록
         List<WinningDto> winnerListForOneMemberFansign = new ArrayList<>();
@@ -71,6 +73,8 @@ public class SchedulingService {
 
             winnerListForOneMemberFansign =
             schedulingRepository.getWinningInsertDto(dto.getMemberfansignId(), dto.getMode());
+
+            System.out.println("winnerListForOneMemberFansign : "+winnerListForOneMemberFansign);
 
             for(int i = 0; i < winnerListForOneMemberFansign.size(); i++){
                 WinningDto winningDto = winnerListForOneMemberFansign.get(i);
@@ -84,9 +88,8 @@ public class SchedulingService {
         int batchCount =
         schedulingRepository.insertWinner(insertWinnersList);
 
-
         log.info("*** insert 완료 batchCount -> " + batchCount);
-
+        System.out.println(insertWinnersList);
         mailService.sendMail(insertWinnersList);
 
         // 응모 마감으로 상태 바꿔주기
@@ -94,6 +97,7 @@ public class SchedulingService {
     }
 
     @Scheduled(cron = "00 00 * * * ?") // 매일 매시간 00분 00초
+    @Transactional
     public void startFansign() {
 
         /**
