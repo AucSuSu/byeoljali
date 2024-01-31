@@ -1,16 +1,14 @@
 package com.example.be.scheduling.repository;
 
-import com.example.be.artistfansign.dto.RecentFansignResponseDto;
-import com.example.be.artistfansign.entity.ArtistFansign;
+import com.example.be.artistfansign.entity.FansignMode;
 import com.example.be.artistfansign.entity.FansignStatus;
-import com.example.be.winning.dto.WinningInsertDto;
-import com.example.be.winning.entity.Winning;
+import com.example.be.winning.dto.WinningDto;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,15 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.be.applicant.entity.QApplicant.applicant;
 import static com.example.be.artistfansign.entity.QArtistFansign.artistFansign;
+import static com.example.be.fan.entity.QFan.fan;
+import static com.example.be.member.entity.QMember.member;
 import static com.example.be.memberfansign.entity.QMemberFansign.memberFansign;
-import static com.example.be.winning.entity.QWinning.winning;
 
 @Repository
 @RequiredArgsConstructor
@@ -43,12 +39,14 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
     // 이후 config 파일로 빼기
     private final int BATCH_SIZE = 10;
 
-    private int batchInsert(int batchSize, int batchCount, List<WinningInsertDto> subItems){
+    private int batchInsert(int batchSize, int batchCount, List<WinningDto> subItems){
         jdbcTemplate.batchUpdate("INSERT INTO winning () values (?,?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        // ps.setString(1, subItems.get().getWinningId());
+                        ps.setLong(1, subItems.get(i).getFanId());
+                        ps.setLong(2, subItems.get(i).getMemberfansignId());
+
                     }
 
                     @Override
@@ -124,14 +122,56 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 .set(artistFansign.status, FansignStatus.SESSION_CONNECTED)
                 .where(artistFansign.artistfansignId.eq(artistFansignId))
                 .execute();
+
         em.flush();
         em.clear();
     }
 
     @Override
-    public int insertWinner(List<WinningInsertDto> list) {
+    public int insertWinner(List<WinningDto> list) {
         log.info(" *** repository : 당첨자 insert *** ");
        return batchInsert(BATCH_SIZE, 0, list);
+    }
+
+    @Override
+    public List<WinningDto> getWinningInsertDto(Long memberFansignId, FansignMode orderCondition) {
+
+        OrderSpecifier orderByExpression;
+
+        // 파라미터 값에 따라 정렬 기준을 선택
+        if (orderCondition.equals(FansignMode.DESC)) {
+            orderByExpression = applicant.boughtAlbum.desc();
+
+        } else {
+            orderByExpression = makeRandom();
+        }
+
+
+        return jpaQueryFactory
+                .select(Projections.constructor(
+                        WinningDto.class,
+                        artistFansign.title,
+                        fan.email,
+                        memberFansign.memberfansignId,
+                        artistFansign.startFansignTime,
+                        member.name,
+                        fan.fanId,
+                        applicant.applicantId
+                ))
+                .from(applicant)
+                .join(applicant.memberfansign, memberFansign)
+                .join(memberFansign.artistFansign, artistFansign)
+                .join(applicant.fan, fan)
+                .join(memberFansign.member, member)
+                .where(memberFansign.memberfansignId.eq(memberFansignId))
+                .orderBy(orderByExpression)
+                .limit(100)
+                .fetch();
+
+    }
+
+    public static OrderSpecifier<Double> makeRandom() { // Mysql RAND 함수를 지원하지 않아서 만든 함수
+        return Expressions.numberTemplate(Double.class, "function('rand')").asc();
     }
 
 }

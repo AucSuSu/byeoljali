@@ -50,8 +50,7 @@ public class ApplicantService {
         Long memberFSId = applicantRepository.findMemberFSIdByMemberIdandArtistFSId(artistFSId, memberId);
 
         // id 값으로 객체 찾기
-        Fan fan = fanRepository.findById(requestDto.getFanId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
+        Fan fan = getFan();
         ArtistFansign artistFansign = artistFansignRepository.findById(artistFSId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 팬싸인 정보가 없습니다."));
         MemberFansign memberFansign = memberFansignRepository.findById(memberFSId)
