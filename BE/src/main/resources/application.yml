@@ -23,6 +23,19 @@ spring:
   openvidu:
     url: https://i10e104.p.ssafy.io:8443
     secret: 'MY_SECRET'
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: byeoljali
+    password: gjqm omzh vrwf keav
+    properties:
+      debug: true
+      stmp:
+        connectiontimeout: 5000
+        starttls:
+          enable: true
+        ssl:
+          enable: false
 logging.level:
   org.hibernate.SQL: debug
 
