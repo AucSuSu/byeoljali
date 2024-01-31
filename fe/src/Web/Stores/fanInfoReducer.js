@@ -7,7 +7,9 @@ export const getUserData = createAsyncThunk(
   'axios/getUserData',
   async (arg, { getState }) => {
     try {
-      const token = getState().auth.token;
+      // const token = getState().auth.token;
+      const token = getState().token.token;
+
       console.log(token);
       const response = await axios.get(`${BASE_URL}mypage/`, {
         headers: {
@@ -25,7 +27,8 @@ export const editUserData = createAsyncThunk(
   'axios/editUserData',
   async (data, { getState, rejectWithValue }) => {
     try {
-      const token = getState().auth.token;
+      // const token = getState().auth.token;
+      const token = getState().token.token;
 
       const response = await axios.put(
         `${BASE_URL}mypage/edit/profile`,

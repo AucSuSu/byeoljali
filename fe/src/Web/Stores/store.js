@@ -12,6 +12,7 @@ import joinFansignReducer from './joinFansignReducer.js';
 import fanInfoReducer from './fanInfoReducer.js';
 import fanPhotoReducer from './fanPhotoReducer.js';
 import artistFansignReducer from './artistFansignReducer.js';
+import tokenReducer from './tokenReducer.js';
 
 // 추가 리듀서
 
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   faninfo: fanInfoReducer,
   fanphoto: fanPhotoReducer,
   artistFansign: artistFansignReducer,
+  token: tokenReducer,
   // 추가 리듀서 추가
 });
 
