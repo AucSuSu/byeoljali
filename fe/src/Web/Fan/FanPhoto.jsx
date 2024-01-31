@@ -36,7 +36,9 @@ function FanPhoto({ data }) {
     formData.append('fail_url', `${PHOTO_URL}fan-photo/`);
     formData.append('cancel_url', `${PHOTO_URL}fan-photo/`);
 
-    console.log(formData);
+    for (const [key, value] of formData) {
+      console.log(`${key}: ${value}`);
+    }
     // formData.append(
     //   'approval_url',
     //   'http://localhost:3000/userphoto/payresult',
