@@ -10,7 +10,7 @@ import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
 import com.example.be.config.auth.PrincipalDetails;
-import com.example.be.member.Member;
+import com.example.be.member.entity.Member;
 import com.example.be.member.repository.MemberRepository;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.memberfansign.repository.MemberFansignRepository;
@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

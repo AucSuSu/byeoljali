@@ -1,10 +1,8 @@
 package com.example.be.memberfansign.dto;
 
-import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
-import com.example.be.member.Member;
 import lombok.Data;
-import javax.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Data
