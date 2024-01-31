@@ -57,12 +57,12 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                         )
                 )
                 .from(artistFansign)
-                .where(artistFansign.posterImageUrl.isNotEmpty())
+                .where(artistFansign.posterImageUrl.isNotNull(), artistFansign.createdDate.isNotNull())
                 .orderBy(Expressions.dateTimeTemplate(
                         java.sql.Timestamp.class,
-                        "function('DATEDIFF', {0}, {1})",
+                        "function('timestampdiff', second, {0}, {1})",
                         artistFansign.createdDate,
-                        currentDate).desc())
+                        currentDate).asc())
                 .limit(3)
                 .fetch();
     }

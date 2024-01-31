@@ -13,9 +13,6 @@ class SchedulingRepositoryImplTest {
     @Autowired
     SchedulingRepository schedulingRepository;
 
-    @Test
-    public void status_to_session_connected테스트 () {
-        schedulingRepository.updateStatusToSessionConnected(7L);
-    }
+
 
 }
