@@ -13,6 +13,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 //     return response.data;
 //   },
 // );
+
 export const getArtistInfo = createAsyncThunk(
   'axios/getArtistInfo',
   async (payload, { getState }) => {
@@ -65,7 +66,12 @@ const artistInfoSlice = createSlice({
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    getInfo(status, action) {
+      status.artistData = action.payload;
+      console.log('아티스트 데이터 : ', status.artistData);
+    },
+  },
   extraReducers: (builder) => {
     builder
       // getArtistInfo
@@ -113,3 +119,4 @@ const artistInfoSlice = createSlice({
 });
 
 export default artistInfoSlice.reducer;
+export const { getInfo } = artistInfoSlice.actions;
