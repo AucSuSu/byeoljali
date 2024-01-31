@@ -45,19 +45,20 @@ export const createFansign = createAsyncThunk(
 export const getFansignDetail = createAsyncThunk(
   'axios/getFansignDetail',
   async (memberfansignId, { getState }) => {
-    const token = getState().auth.token;
-    const response = await axios.get(
-      console.log(
-        'ID : ',
-        memberfansignId,
-      )`${BASE_URL}memberfansign/${memberfansignId}}`,
-      {
-        headers: {
-          authorization: token,
+    try {
+      const token = getState().auth.token;
+      const response = await axios.get(
+        `${BASE_URL}memberfansign/${memberfansignId}`,
+        {
+          headers: {
+            authorization: token,
+          },
         },
-      },
-    );
-    return response.data;
+      );
+      return response.data;
+    } catch (error) {
+      console.error('실패 : ', error);
+    }
   },
 );
 

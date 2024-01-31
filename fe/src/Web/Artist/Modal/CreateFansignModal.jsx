@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { handleAddFansign } from '../../Stores/modalReducer';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { createFansign } from '../../Stores/artistFansignReducer';
 import ImgUpload from './ImgUpload';
 
 export default function CreateFansignModal({}) {
+  const artistData = useSelector((state) => state.artistInfo.artistData);
+  const members = artistData.object.memberList
+    .map((e) => [e.name, e.memberId])
+    .reduce((acc, [name, memberId]) => {
+      acc[name] = memberId;
+      return acc;
+    }, {});
+  console.log('맴버 : ', members);
   const dispatch = useDispatch();
 
   const closeModal = () => {
