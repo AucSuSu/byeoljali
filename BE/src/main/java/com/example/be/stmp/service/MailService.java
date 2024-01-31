@@ -18,20 +18,20 @@ public class MailService {
 
     private final JavaMailSender javaMailSender;
 
-    public void sendWinningMail(MailDto mailInfo){
-
-        MimeMessage mimeMailMessage = javaMailSender.createMimeMessage();
-        String title = "[당첨]" + mailInfo.getArtistFansignName();
-
-        try {
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, false, "UTF-8");
-            mimeMessageHelper.setText(mailInfo.getRecieverMail());
-            mimeMessageHelper.setSubject(mailInfo.getArtistFansignName()); // 제목
-            mimeMessageHelper.setText(); // 본문 내용
-            javaMailSender.send(mimeMailMessage);
-        }catch (MessagingException e){
-            log.info("message 전송 fail");
-
-        }
-    }
+//    public void sendWinningMail(MailDto mailInfo){
+//
+//        MimeMessage mimeMailMessage = javaMailSender.createMimeMessage();
+//        String title = "[당첨]" + mailInfo.getArtistFansignName();
+//
+//        try {
+//            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, false, "UTF-8");
+//            mimeMessageHelper.setText(mailInfo.getRecieverMail());
+//            mimeMessageHelper.setSubject(mailInfo.getArtistFansignName()); // 제목
+//            mimeMessageHelper.setText(); // 본문 내용
+//            javaMailSender.send(mimeMailMessage);
+//        }catch (MessagingException e){
+//            log.info("message 전송 fail");
+//
+//        }
+//    }
 }
