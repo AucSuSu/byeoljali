@@ -2,21 +2,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const applyList = createAsyncThunk('axios/applyList', async (data) => {
-  try {
-    const response = await axios.get(
-      process.env.REACT_APP_BASE_URL +
-        'mainpage/1?searchKeyword=&order=register&status=READY_APPLYING',
-      data,
-    );
-    console.log();
-    console.log(response.data);
+export const applyList = createAsyncThunk(
+  'axios/applyList',
+  async (data, { getState }) => {
+    try {
+      const token = getState().auth.token;
+      const response = await axios.get(
+        process.env.REACT_APP_BASE_URL +
+          'mainpage?searchKeyword=&order=register&status=READY_APPLYING',
+        data,
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+      );
+      console.log();
+      console.log(response.data);
 
-    return response.data;
-  } catch (error) {
-    console.error('팬 사인회 정보 로드 실패: ', error);
-  }
-});
+      return response.data;
+    } catch (error) {
+      console.error('팬 사인회 정보 로드 실패: ', error);
+    }
+  },
+);
 
 const homeApplyListSlice = createSlice({
   name: 'applyList',
