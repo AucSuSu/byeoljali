@@ -3,13 +3,18 @@ import { OpenVidu, Session } from 'openvidu-browser';
 import axios from 'axios';
 import React, { Component, useRef } from 'react';
 import html2canvas from 'html2canvas';
-
 import UserVideoComponent from './comp/UserVideoComponent.js';
 import './Station.css';
+import { selectToken } from '../../Web/Stores/authReducer.js';
+import { connect } from 'react-redux';
 
 // const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
 const APPLICATION_SERVER_URL =
   process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
+
+const mapStateToProps = (state) => ({
+  authToken: selectToken(state),
+});
 
 class App extends Component {
   constructor(props) {
@@ -271,7 +276,7 @@ class App extends Component {
         });
 
         // --- 4) Connect to the session with a valid user token ---
-        z;
+
         mySession
           .connect(this.state.token, { clientData: this.state.myUserName })
           .then(async () => {
@@ -470,7 +475,7 @@ class App extends Component {
     html2canvas(this.mainVideoRef.current).then((canvas) => {
       // Canvas를 Base64 인코딩된 문자열로 변환
       const base64Image = canvas.toDataURL('unknown_person/jpg');
-
+      console.log('테스트 : ', this.props.authToken);
       // axios를 사용하여 Base64 인코딩된 이미지 데이터를 POST 요청으로 전송
       // 플라스크 서버 주소 추가할 것!!!!!!!!!!
       axios
@@ -695,4 +700,4 @@ class App extends Component {
   };
 }
 
-export default App;
+export default connect(mapStateToProps)(App);
