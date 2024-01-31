@@ -2,6 +2,7 @@ package com.example.be.scheduling.repository;
 
 import com.example.be.artistfansign.entity.FansignMode;
 import com.example.be.artistfansign.entity.FansignStatus;
+import com.example.be.memberfansign.dto.MemberFansignInfoDto;
 import com.example.be.winning.dto.WinningDto;
 import com.example.be.winning.dto.WinningInsertDto;
 import com.querydsl.core.types.OrderSpecifier;
@@ -45,6 +46,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        System.out.println("inserting : " + subItems.get(i));
                         ps.setLong(1, subItems.get(i).getOrders());
                         ps.setLong(2, subItems.get(i).getApplicantId());
                         ps.setLong(3, subItems.get(i).getFanId());
@@ -170,6 +172,37 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 .limit(100)
                 .fetch();
 
+    }
+
+    @Override
+    public List<MemberFansignInfoDto> getMemberFansignList(String current_date) {
+
+        em.flush();
+        em.clear();
+
+        log.info(" *** getMemberFansignList *** " + current_date);
+
+        List<MemberFansignInfoDto> list =
+        jpaQueryFactory
+                .select(Projections.constructor(
+                        MemberFansignInfoDto.class,
+                        memberFansign.memberfansignId,
+                        artistFansign.artistfansignId,
+                        artistFansign.mode,
+                        artistFansign.status
+                ))
+                .from(memberFansign)
+                .join(memberFansign.artistFansign, artistFansign)
+                .where(Expressions.
+                        dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
+                                artistFansign.endApplyTime,
+                                "%Y-%m-%d").eq(current_date),
+                        artistFansign.status.eq(FansignStatus.APPLYING)
+                )
+                .fetch();
+
+        System.out.println(list);
+        return list;
     }
 
     public static OrderSpecifier<Double> makeRandom() { // Mysql RAND 함수를 지원하지 않아서 만든 함수

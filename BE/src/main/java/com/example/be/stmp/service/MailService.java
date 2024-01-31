@@ -23,8 +23,10 @@ public class MailService {
     public void sendMail(List<WinningInsertDto> list){
 
         log.info(" *** 메일 전송 입니다 *** ");
+
         for(WinningInsertDto dto : list){
             // dto -> MailDto
+            System.out.println(dto);
             sendWinningMail(new MailDto(dto.getEmail(),
                     dto.getTitle(), dto.getStartFansignTime(), dto.getName(),
                     dto.getOrders()));
@@ -42,7 +44,7 @@ public class MailService {
 
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, false, "UTF-8");
-            mimeMessageHelper.setText(mailInfo.getRecieverMail());
+            mimeMessageHelper.setTo(mailInfo.getRecieverMail());
             mimeMessageHelper.setSubject(title); // 제목
             mimeMessageHelper.setText(content); // 본문 내용
             javaMailSender.send(mimeMailMessage);

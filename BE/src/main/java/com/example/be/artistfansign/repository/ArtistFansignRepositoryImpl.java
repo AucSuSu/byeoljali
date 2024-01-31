@@ -111,13 +111,9 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                                         artistFansign.status,
                                         artist.name
                                 )
-                        ).from(artistFansign)
-                        .leftJoin(applicant)
-                        .on(artistFansign.eq(applicant.artistFansign))
-                        .on(applicant.fan.eq(
-                                fan
-                        )).join(artist)
-                        .on(artistFansign.artist.eq(artist))
+                        ).from(applicant)
+                        .rightJoin(applicant.artistFansign, artistFansign)
+                        .on(applicant.fan.eq(fan)).join(artistFansign.artist, artist)
                         .where(searchKeyword(keyword), artistFansign.status.eq(status))
                         .orderBy(orderByExpression.asc())
                         .fetch();
