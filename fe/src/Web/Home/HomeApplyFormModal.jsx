@@ -22,7 +22,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal }) => {
     const formData = {
       memberId: currMemberId,
       boughtAlbum: currAlbumNum,
-      fanId: 2,
+      // fanId: 2,
       artistFansignId: currFansignId, // 적절한 ID 값 필요
     };
     dispatch(applyForm({ id: currFansignId, data: formData }));
