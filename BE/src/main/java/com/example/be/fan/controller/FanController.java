@@ -39,7 +39,8 @@ public class FanController
     }
 
     @PutMapping("/api/mypage/edit/certImage")
-    public ResponseEntity<Message> updateCertificationImage(@Param("image") MultipartFile certImage){
+    public ResponseEntity<Message> updateCertificationImage(@RequestParam("image") MultipartFile certImage){
+        System.out.println(certImage);
         int count = fanService.updateCertificationImageUrl(certImage);
         Message message = new Message(HttpStatusEnum.OK, "인증 사진 수정 성공", count);
         return new ResponseEntity<>(message, HttpStatus.OK);

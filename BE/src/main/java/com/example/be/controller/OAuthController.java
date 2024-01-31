@@ -50,7 +50,7 @@ public class OAuthController {
         String refreshToken = request.getHeader("authorization-refresh");
         String accessToken = tokenService.verifyRefreshToken(refreshToken);
 
-        Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰 발급 완료", refreshToken);
+        Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰 발급 완료","nothing");
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
         headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
