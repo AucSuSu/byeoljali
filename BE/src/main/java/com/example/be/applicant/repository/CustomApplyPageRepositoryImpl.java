@@ -21,7 +21,7 @@ import static com.example.be.artistfansign.entity.QArtistFansign.artistFansign;
 import static com.example.be.fan.entity.QFan.fan;
 
 // 여기 물어보기
-import static com.example.be.member.QMember.member;
+import static com.example.be.member.entity.QMember.member;
 import static com.example.be.winning.entity.QWinning.winning;
 import static com.example.be.memberfansign.entity.QMemberFansign.memberFansign;
 
