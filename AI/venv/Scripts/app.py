@@ -34,11 +34,12 @@ def upload_file():
         try:
             print("FE에서 FLASK로 헤더와 이미지 전송")
             # fanId 값을 http 헤더에서 추출
-            fanId = request.headers.get('authorization')
-            print("header: " +fanId)
+            token = request.headers.get('authorization')
+            print("header: " +token)
 
             #웹에서 base64로 인코딩된 이미지 정보 가져오기
-            _, one_data = request.form['image'].split(',')
+            one_data = request.files['image'].read()
+            # _, one_data = request.files['image'].split(',')
 
             print("Success to get incoding image from user") # debugging
             print('incoding image:', one_data[:10]) # base64 코드 앞쪽 10자리만 확인
@@ -49,11 +50,18 @@ def upload_file():
 
             #byte형태의 이미지 데이터를 이미지로 변환: Pillow(PIL) 라이브러리를 사용해 이미지 오픈
             print("Success to get image data") # debugging
-            photo = Image.open(io.BytesIO(imgdata))
+            photo = Image.open(io.BytesIO(one_data))
             if photo is not None :
                 print("photo 잘 저장했습니다")
 
             photo.save("unknown_person.jpg") # 이미지화된 이미지를 check_image_file.jpg로 저장한다
+
+            try:
+                photo.convert("RGB").save("unknown_person.jpg") # 이미지화된 이미지를 unknown_person.jpg로 저장한다
+                print("Image saved successfully.")
+            except Exception as e:
+                print("Error saving image:", str(e))
+
 
             print("===============================================")
             print("BE에 헤더 전송 후 이미지 받아오기")
@@ -62,7 +70,7 @@ def upload_file():
 
             # # headers
             # headers = {
-            #     'Authorization': fanId
+            #     'Authorization': token
             # }
 
             # # param
