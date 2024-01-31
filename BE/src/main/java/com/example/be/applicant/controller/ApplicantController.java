@@ -29,7 +29,7 @@ public class ApplicantController {
     }
 
     // 응모 폼 제출
-    @PostMapping("/api/mainpage/{artistfansign_id}")
+    @PostMapping("/api/mainpage/apply/{artistfansign_id}")
     public ResponseEntity<Message> submitApplyForm(@PathVariable("artistfansign_id") Long artistfansignId,
                                                    @RequestBody ApplyFormRequestDto requestDto){
         // 응모 폼을 제출하면
