@@ -10,6 +10,8 @@ import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
 import com.example.be.config.auth.PrincipalDetails;
+import com.example.be.config.oauth.FanPrincipalDetails;
+import com.example.be.fan.entity.Fan;
 import com.example.be.member.entity.Member;
 import com.example.be.member.repository.MemberRepository;
 import com.example.be.memberfansign.entity.MemberFansign;
@@ -78,9 +80,10 @@ public class ArtistFansignService {
     }
 
     // 팬싸인회 리스트 가져오기
-    public List<FansignResponseDto> getFansign(Long fanId, String keyword, String orderCondition, FansignStatus status){
+    public List<FansignResponseDto> getFansign(String keyword, String orderCondition, FansignStatus status){
+        Fan fan = getFan();
         List<FansignResponseDto> list =
-                artistFansignRepository.findArtistFansignAndApplyInfo(fanId, keyword, orderCondition, status);
+                artistFansignRepository.findArtistFansignAndApplyInfo(fan, keyword, orderCondition, status);
 
         return list;
     }
@@ -101,5 +104,11 @@ public class ArtistFansignService {
     private LocalDateTime convertDateTime(String dateString){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(dateString, formatter);
+    }
+
+    private Fan getFan(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        FanPrincipalDetails fanPrincipalDetails = (FanPrincipalDetails) authentication.getPrincipal();
+        return fanPrincipalDetails.getFan();
     }
 }

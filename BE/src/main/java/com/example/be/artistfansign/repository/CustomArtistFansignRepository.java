@@ -7,11 +7,12 @@ import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.dto.RecentFansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
+import com.example.be.fan.entity.Fan;
 
 import java.util.List;
 
 public interface CustomArtistFansignRepository {
     List<RecentFansignResponseDto> findTop3ByOrderByCreatedDateDesc();
-    List<FansignResponseDto> findArtistFansignAndApplyInfo(Long fanId, String keyword, String orderCondition, FansignStatus status);
+    List<FansignResponseDto> findArtistFansignAndApplyInfo(Fan fan, String keyword, String orderCondition, FansignStatus status);
     List<ArtistsMyFansignResponseDto> findArtistsMyFansign(Artist artist, FansignStatus status);
 }
