@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
 import { logout } from '../Stores/authReducer';
+import { useDispatch } from 'react-redux';
 
 const NavbarContainer = styled.nav`
   background-color: #888;
@@ -66,6 +67,11 @@ const DropdownItem = styled.div`
 `;
 
 const Navbar = ({ isFan }) => {
+  const dispatch = useDispatch();
+
+  const setLogout = () => {
+    dispatch(logout());
+  };
   const profileImageUrl =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpqYJDnLH7XxH1vrI3VCvNq6E5JipsPi5WrqrlMrWqsA&s';
 
@@ -94,7 +100,7 @@ const Navbar = ({ isFan }) => {
                 <DropdownItem>
                   <NavbarLink to="/fan-profile">프로필 보기</NavbarLink>
                 </DropdownItem>
-                <DropdownItem onClick={logout}>로그아웃</DropdownItem>
+                <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
               </DropdownContent>
             </Dropdown>
           </>
@@ -113,7 +119,7 @@ const Navbar = ({ isFan }) => {
                 <DropdownItem>
                   <NavbarLink to="/artistInfo">프로필 보기</NavbarLink>
                 </DropdownItem>
-                <DropdownItem onClick={logout}>로그아웃</DropdownItem>
+                <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
               </DropdownContent>
             </Dropdown>
           </>
