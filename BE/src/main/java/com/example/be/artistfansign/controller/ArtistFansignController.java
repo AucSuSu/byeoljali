@@ -52,14 +52,14 @@ public class ArtistFansignController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/api/mainpage/{fanId}")
-    public ResponseEntity<Message> allFansign(@PathVariable("fanId") Long fanId,
+    @GetMapping("/api/mainpage")
+    public ResponseEntity<Message> allFansign(
                                               @Param("searchKeyword") String searchKeyword,
                                               @Param("order") String order,
                                               @Param("status")FansignStatus status) {
         // 내가 응모했는지에 대한 정보가 필요함
         log.info(" ** 팬싸인회 리스트 api 입니다.** ");
-        List<FansignResponseDto> fansignList = artistFansignService.getFansign(fanId, searchKeyword, order, status);
+        List<FansignResponseDto> fansignList = artistFansignService.getFansign(searchKeyword, order, status);
         Message message = new Message(HttpStatusEnum.OK, "팬싸인회", fansignList);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

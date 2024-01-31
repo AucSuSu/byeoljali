@@ -2,7 +2,6 @@ package com.example.be.applicant.dto;
 
 import com.example.be.artist.dto.ArtistMypageResponseMemberDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
-import com.example.be.member.Member;
 import com.example.be.memberfansign.entity.MemberFansign;
 import lombok.Data;
 
