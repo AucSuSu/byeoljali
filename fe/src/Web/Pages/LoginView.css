@@ -47,14 +47,3 @@ input {
   padding: 5px;
   margin-bottom: 10px;
 }
-
-.star {
-  position: relative;
-  width: 8px;
-  height: 8px;
-  left: 1137px;
-  top: 485px;
-  background-color: #ffffff;
-  filter: blur(5px);
-  animation: blink 1s steps(5) infinite;
-}

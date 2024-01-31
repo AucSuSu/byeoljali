@@ -5,11 +5,18 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const joinFansign = createAsyncThunk(
   'axios/joinFansign',
-  async (memberFansignId) => {
+  async (memberFansignId, { getState }) => {
     try {
+      const token = getState().auth.token;
       const response = await axios.get(
-        `http://localhost:8080/fan/fansigns/enterFansign/${memberFansignId}`,
+        `${BASE_URL}fan/fansigns/enterFansign/${memberFansignId}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        },
       );
+
       return response.data;
     } catch (error) {
       throw error; // 실패 시 에러를 던져서 rejected 상태로 전달
@@ -69,8 +76,8 @@ const joinSlice = createSlice({
       })
       .addCase(joinFansign.fulfilled, (state, action) => {
         state.status = 'succeeded'; // 성공
-        state.fansignData = action.payload.object;
-        console.log('성공 : ', action.payload.object);
+        state.fansignData = action.payload;
+        console.log('성공 : ', action.payload);
       })
       .addCase(joinFansign.rejected, (state, action) => {
         state.status = 'failed'; // 실패 => 에러 메세지 전달(UX)
