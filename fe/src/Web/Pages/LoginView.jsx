@@ -37,12 +37,6 @@ export default function LoginView() {
   const [code, setCode] = useState(null);
 
   useEffect(() => {
-    // 별
-    for (let i = 0; i < 15; i++) {
-      const newStar = new star();
-      newStar.set();
-    }
-
     // 페이지 로딩 시 인가 코드 추출
     const extractedCode = new URL(window.location.href).searchParams.get(
       'code',
@@ -108,7 +102,6 @@ export default function LoginView() {
   return (
     <div className="content">
       <div>
-        <div class="star"></div>
         <h1 className="text-purple-700">별자리에 오신 것을 환영합니다.</h1>
 
         <p>로그인하여 당신의 스타와 만나보세요</p>
