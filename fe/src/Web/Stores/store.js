@@ -17,11 +17,16 @@ import tokenReducer from './tokenReducer.js';
 // 추가 리듀서
 
 // Persist 구성 정의
-import storage from 'redux-persist/lib/storage';
+
+//local storage 사용
+// import storage from 'redux-persist/lib/storage';
+
+//session storage 사용
+import sessionStorage from 'redux-persist/lib/storage/session';
 import { persistReducer, persistStore } from 'redux-persist';
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: sessionStorage,
 };
 
 // 여러 리듀서를 결합
