@@ -7,7 +7,8 @@ export const loadApply = createAsyncThunk(
   'axios/loadApply',
   async (arg, { getState }) => {
     try {
-      const token = getState().auth.token;
+      // const token = getState().auth.token;
+      const token = getState().token.token;
       const response = await axios.get(`${BASE_URL}applyPage/0`, {
         headers: {
           Authorization: token,
