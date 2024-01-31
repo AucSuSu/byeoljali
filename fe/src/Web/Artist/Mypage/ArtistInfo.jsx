@@ -16,13 +16,12 @@ export default function ArtistInfo() {
   }, []);
 
   const getRefresh = () => {
-    console.log('토큰 : ', refreshToken);
-    const response = axios.get(`https://i10e104.p.ssafy.io/api/refreshToken`, {
+    const response = axios.get('http://localhost:8080/api/refreshToken', {
       headers: {
-        'authorization-refreshToken': refreshToken,
+        'authorization-refresh': refreshToken,
       },
     });
-    console.log('리스폰 : ', response);
+    console.log('리스폰 : ', response.headers.authorization);
     return response;
   };
   return (
