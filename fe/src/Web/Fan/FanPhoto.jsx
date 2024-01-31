@@ -28,8 +28,8 @@ function FanPhoto({ data }) {
     formData.append('partner_order_id', 'partner_order_id');
     formData.append('partner_user_id', 'partner_user_id');
     formData.append('item_name', '인생네컷');
-    formData.append('item_code', data.photoId.toString()),
-      formData.append('quantity', 1);
+    formData.append('item_code', data.photoId.toString());
+    formData.append('quantity', 1);
     formData.append('total_amount', 11000);
     formData.append('vat_amount', 1000);
     formData.append('tax_free_amount', 10000);
@@ -69,7 +69,10 @@ function FanPhoto({ data }) {
 
   const handleDelete = () => {
     console.log('삭제 로직 처리');
+    const deletePhotoId = data.photoId;
+    console.log(deletePhotoId);
     setIsModalOpen(false);
+
     // 삭제 처리 로직
   };
 

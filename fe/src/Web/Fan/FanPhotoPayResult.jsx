@@ -41,7 +41,17 @@ function FanPhotoPayResult() {
         console.log(response.data.amount); // 가격 확인
         console.log(response.data.amount.total); // 가격 확인
         console.log(response.data.quantity); // 수량 확인
-        navigate('/userphoto');
+        // axios
+        const payPhotoId = Number(response.data.item_code);
+        axios
+          .put(`https://i10e104.p.ssafy.io/api/myalbum/${payPhotoId}`)
+          .then((res) => {
+            console.log(res);
+            navigate('/fan-photo');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((error) => {
         console.error('에러입니다.');
