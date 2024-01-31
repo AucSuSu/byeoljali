@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import static com.example.be.artist.entity.QArtist.artist;
 import static com.example.be.artistfansign.entity.QArtistFansign.artistFansign;
-import static com.example.be.member.QMember.member;
+import static com.example.be.member.entity.QMember.member;
 import static com.example.be.memberfansign.entity.QMemberFansign.memberFansign;
 
 @Component

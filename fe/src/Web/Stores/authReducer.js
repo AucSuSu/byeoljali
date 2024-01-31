@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
@@ -26,6 +27,12 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.tokenRefresh = action.payload.tokenRefresh;
     },
+    logout(state) {
+      state.token = null;
+      state.tokenRefresh = null;
+      state.isArtist = null;
+      console.log('로그아웃 했어용');
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,5 +54,6 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { logout } = authSlice.actions;
 export const selectToken = (state) => state.auth.token;
 export const { setToken } = authSlice.actions;

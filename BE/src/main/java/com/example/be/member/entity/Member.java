@@ -1,4 +1,4 @@
-package com.example.be.member;
+package com.example.be.member.entity;
 
 
 import com.example.be.artist.entity.Artist;

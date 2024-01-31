@@ -43,6 +43,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
+        // refreshToken으로 수행하는데 AccessToken 재발급하는 요청이면 해당필터 안타게하자.
+        String path = request.getRequestURI();
+        if( "/api/refreshToken".equals(path)){
+            chain.doFilter(request,response);
+            return;
+        }
+
         // Authentication에 남았는지 검증로직.
 //        Authentication authenticationBefore = SecurityContextHolder.getContext().getAuthentication();
 //        log.info("Before processing request: Authentication is {}", authenticationBefore);

@@ -6,6 +6,7 @@ import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.dto.RecentFansignResponseDto;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
+import com.example.be.fan.entity.Fan;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -28,7 +29,7 @@ import static com.example.be.applicant.entity.QApplicant.applicant;
 import static com.example.be.artist.entity.QArtist.artist;
 import static com.example.be.artistfansign.entity.QArtistFansign.artistFansign;
 import static com.example.be.fan.entity.QFan.fan;
-import static com.example.be.member.QMember.member;
+import static com.example.be.member.entity.QMember.member;
 import static com.example.be.memberfansign.entity.QMemberFansign.memberFansign;
 
 
@@ -57,19 +58,19 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                         )
                 )
                 .from(artistFansign)
-                .where(artistFansign.posterImageUrl.isNotEmpty())
+                .where(artistFansign.posterImageUrl.isNotNull(), artistFansign.createdDate.isNotNull())
                 .orderBy(Expressions.dateTimeTemplate(
                         java.sql.Timestamp.class,
-                        "function('DATEDIFF', {0}, {1})",
+                        "function('timestampdiff', second, {0}, {1})",
                         artistFansign.createdDate,
-                        currentDate).desc())
+                        currentDate).asc())
                 .limit(3)
                 .fetch();
     }
 
     // 팬 메인페이지에서 팬싸인회 전부 가져오기 (키워드, 정렬순)
     @Override
-    public List<FansignResponseDto> findArtistFansignAndApplyInfo(Long fanId,  String keyword, String orderCondition, FansignStatus status) {
+    public List<FansignResponseDto> findArtistFansignAndApplyInfo(Fan fan, String keyword, String orderCondition, FansignStatus status) {
 
         // 정렬 필터링
         Date currentDate = new java.util.Date();
@@ -85,15 +86,15 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
         if ("approaching".equals(orderCondition)) {
             orderByExpression = Expressions.dateTimeTemplate(
                     java.sql.Timestamp.class,
-                    "function('DATEDIFF', {0}, {1})",
-                    artistFansign.endApplyTime,
-                    currentDate);
+                    "function('timestampdiff', second, {0}, {1})",
+                    currentDate,
+                    artistFansign.endApplyTime
+                    );
         } else if ("register".equals(orderCondition)) {
             orderByExpression = Expressions.dateTimeTemplate(
                     java.sql.Timestamp.class,
-                    "function('DATEDIFF', {0}, {1})",
-                    currentDate,artistFansign.createdDate
-                    );
+                    "function('timestampdiff', second, {0}, {1})",
+                    artistFansign.createdDate,currentDate);
         }
 
         log.info(orderCondition);
@@ -114,9 +115,7 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                         .leftJoin(applicant)
                         .on(artistFansign.eq(applicant.artistFansign))
                         .on(applicant.fan.eq(
-                                JPAExpressions.select(fan)
-                                        .from(fan)
-                                        .where(fan.fanId.eq(fanId))
+                                fan
                         )).join(artist)
                         .on(artistFansign.artist.eq(artist))
                         .where(searchKeyword(keyword), artistFansign.status.eq(status))
@@ -161,7 +160,7 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                 .where(artistFansign.status.eq(status))
                 .orderBy(Expressions.dateTimeTemplate(
                         java.sql.Timestamp.class,
-                        "function('DATEDIFF', {0}, {1})",
+                        "function('timestampdiff', second, {0}, {1})",
                         artistFansign.startFansignTime,
                         currentDate).asc())
                 .fetch();
