@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { handleAddFansign } from '../../Stores/modalReducer';
 import { useSelector, useDispatch } from 'react-redux';
-import { createFansign } from '../../Stores/artistFansignReducer';
 import ImgUpload from './ImgUpload';
+import useAxios from '../../axios.js'
 
 export default function CreateFansignModal({}) {
   const artistData = useSelector((state) => state.artistInfo.artistData);
+  const customAxios = useAxios()
   const [members, setMembers] = useState({ 없음: null });
 
   useEffect(() => {
@@ -22,6 +23,17 @@ export default function CreateFansignModal({}) {
     }
   }, [artistData]);
 
+  const joinFansign = async (formData) => {
+    const response = await customAxios.post(`artists/fansign`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    },).then((res) => {
+      console.log(res.data)
+      return res.data;
+    });
+  }
+
   const dispatch = useDispatch();
 
   const closeModal = () => {
@@ -35,7 +47,7 @@ export default function CreateFansignModal({}) {
     for (const key in payload) {
       formData.append(key, payload[key]);
     }
-    dispatch(createFansign(formData));
+    joinFansign(formData);
     console.log('팬싸인회 개설 요청');
     closeModal();
   };
@@ -64,7 +76,6 @@ export default function CreateFansignModal({}) {
     } else {
       setSelectedMembers([...selectedMembers, key]);
     }
-    console.log(memberIdList);
   };
 
   // 데이터 관리
@@ -100,9 +111,6 @@ export default function CreateFansignModal({}) {
     },
   };
 
-  const test = () => {
-    console.log('시간 : ', payload.startFansignTime);
-  };
 
   return (
     <>
@@ -113,7 +121,7 @@ export default function CreateFansignModal({}) {
         style={customStyle}
       >
         <div>
-          <h2 onClick={test}>타이틀</h2>
+          <h2>타이틀</h2>
 
           <ImgUpload img={null} uploadImg={uploadImg} />
           <form onSubmit={fansignCreate}>

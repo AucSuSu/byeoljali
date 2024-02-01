@@ -4,15 +4,22 @@ import Fan from '../Openvidu/Fan/Fan.js';
 import Artist from '../Openvidu/Artist/Artist.js';
 import Socket from '../Openvidu/Socket.js';
 import { useLocation } from 'react-router-dom';
-import { joinFansignTest } from './Stores/joinFansignReducer.js';
-import { useDispatch, useSelector } from 'react-redux';
+import useAxios from '../Web/axios.js'
 
 export default function Test() {
+  const customAxios = useAxios()
+
+  const joinFansign = async () => {
+    const response = await customAxios.get(`fan/fansigns/enterFansign/${memberFansignId}`).then((res) => {
+      return res.data;
+    });
+    return response
+  }
+
   const location = useLocation();
   const { watch, sessionId, tokenId, memberFansignId } = location.state || {};
-  const fanData = useSelector((state) => state.joinFansign.testData);
+  const [fanData, setFanData] = useState(null)
 
-  const dispatch = useDispatch();
   const [flag, setFlag] = useState(watch);
   const [data, setData] = useState(null);
   const [wait, setWait] = useState(undefined);
@@ -24,7 +31,8 @@ export default function Test() {
 
   // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
   const switchToFan = async (data) => {
-    await dispatch(joinFansignTest(1));
+    const openviduData = await joinFansign();
+    setFanData(openviduData)
     setData(data);
     setFlag(2);
   };
@@ -48,8 +56,8 @@ export default function Test() {
           <Fan
             fanData={data}
             goBackStation={switchToStation}
-            sessionId={fanData.sessionId}
-            token={fanData.tokenId}
+            sessionId={fanData.object.sessionId}
+            token={fanData.object.tokenId}
           />
         )}
         {flag === 3 && (

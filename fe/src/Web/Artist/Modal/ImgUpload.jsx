@@ -21,10 +21,13 @@ export default function ImgUpload({ img, uploadImg }) {
 
   useEffect(() => {
     if (img) {
-      setImageSrc(img);
+      setImageSrc(img)
+      // setImageFile(img)
       console.log('img data : ', img);
     }
   }, [img]);
+
+  
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

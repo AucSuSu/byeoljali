@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useDispatch } from 'react-redux';
-import { addMember } from '../../Stores/artistInfoReducer';
 import ImgUpload from './ImgUpload';
+import { addMember } from '../../Stores/artistInfoReducer';
+import useAxios from '../../axios.js';
 
 export default function AddMemberModal() {
+
+  const customAxios = useAxios();
+  const dispatch = useDispatch();
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [imgData, setImgData] = useState('');
-
-  const dispatch = useDispatch();
+  
+  const addArtist = async (formData) => {
+    const response = await customAxios.post(`artists/members`, formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+      console.log('데이터 : ', res)
+      return res.data;
+    });
+    dispatch(addMember(response))
+  };
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -24,6 +35,7 @@ export default function AddMemberModal() {
     image: imgData,
   };
 
+
   const add = (e) => {
     e.preventDefault();
 
@@ -32,7 +44,7 @@ export default function AddMemberModal() {
       formData.append(key, payload[key]);
     }
 
-    dispatch(addMember(formData));
+    addArtist(formData)
     closeModal();
   };
 
