@@ -5,6 +5,7 @@ import { loginUser } from '../Stores/authReducer.js';
 import { setToken } from '../Stores/authReducer.js';
 import axios from 'axios';
 import './LoginView.css';
+import { isArtist } from '../Stores/authReducer.js'
 
 export default function LoginView() {
   const token = useSelector((state) => state.auth.token);

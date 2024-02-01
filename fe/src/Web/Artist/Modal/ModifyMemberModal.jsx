@@ -1,21 +1,33 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { handleModifyMember } from '../../Stores/modalReducer';
-import { modifyMember } from '../../Stores/artistInfoReducer';
+import { modifyMebmer } from '../../Stores/artistInfoReducer';
 import { useDispatch } from 'react-redux';
 import ImgUpload from './ImgUpload';
+import useAxios from '../../axios';
+
 
 export default function ModifyMember({ data }) {
-  const modalIsOpen = useState(true);
+  const customAxios = useAxios()
+
+  const memberModify = async (formData) => {
+    const response = await customAxios.put(`artists/members/${data.memberId}`, formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
+      console.log('데이터 : ', res)
+      return res.data;
+    });
+    dispatch(modifyMebmer(response));
+  };
+  
   const [imgData, setImgData] = useState(data.profileImageUrl);
   const [name, setName] = useState(data.name);
 
   const dispatch = useDispatch();
+
   const closeModal = () => {
     dispatch(handleModifyMember(null));
   };
 
-  const payload = { name: name, image: imgData, memgerId: data.memberId };
+  const payload = { name: name, image: imgData, memberId: data.memberId };
 
   const modify = (e) => {
     e.preventDefault();
@@ -25,7 +37,7 @@ export default function ModifyMember({ data }) {
       formData.append(key, payload[key]);
     }
     console.log('페이로드 : ', payload);
-    dispatch(modifyMember({ formData: formData, memberId: data.memberId }));
+    memberModify(formData)
     closeModal();
   };
 
@@ -49,7 +61,7 @@ export default function ModifyMember({ data }) {
   return (
     <>
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={true}
         onRequestClose={closeModal}
         contentLabel={data.name}
         style={customStyle}

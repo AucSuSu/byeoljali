@@ -2,39 +2,57 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { handleFansignInfo } from '../../Stores/modalReducer';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFansignDetail } from '../../Stores/artistFansignReducer';
+import { fansignDetail } from '../../Stores/artistFansignReducer';
 import { useNavigate } from 'react-router-dom';
-import { joinFansign } from '../../Stores/joinFansignReducer.js';
+import useAxios from '../../axios.js';
 
 export default function FansignModal({ memberFansignId }) {
-  const openvidu = useSelector((state) => state.joinFansign.fansignData);
+  const detailData = useSelector((state) => state.artistFansign.detail);
+  
+  const customAxios = useAxios()
   const modalIsOpen = true;
+
+  const getFansignDetail = async () => {
+    const response = await customAxios.get(`memberfansign/${memberFansignId}`).then((res) => {
+      return res.data;
+    });
+    console.log('응답 : ', response)
+    dispatch(fansignDetail(response));
+  };
+
+  const joinFansign = async () => {
+    const response = await customAxios.get(`fan/fansigns/enterFansign/${memberFansignId}`).then((res) => {
+      return res.data;
+    });
+    return response
+  }
+
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getFansignDetail();
+  }, []);
 
   const closeModal = () => {
     dispatch(handleFansignInfo(null));
   };
 
-  const detailData = useSelector((state) => state.artistFansign.detail);
 
   const participate = async () => {
-    await dispatch(joinFansign(detailData.object.memberFansignId));
-    console.log('오픈비두 : ', openvidu);
+    const openviduData = await joinFansign()
     navigate('/test', {
       state: {
         watch: 1,
-        sessionId: openvidu.object.sessionId,
-        tokenId: openvidu.object.tokenId,
-        memberFansignId: detailData.object.memberFansignId,
+        sessionId: openviduData.object.sessionId,
+        tokenId: openviduData.object.tokenId,
+        memberFansignId: memberFansignId
       },
     });
     closeModal();
   };
 
-  useEffect(() => {
-    dispatch(getFansignDetail(memberFansignId));
-  }, []);
 
   const customStyle = {
     content: {
