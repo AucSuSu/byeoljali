@@ -11,7 +11,7 @@ COPY . /app
 COPY requirements.txt /app/
 
 # requirements.txt에 명시된 필요한 패키지들을 설치
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Flask 애플리케이션 실행을 위한 환경변수 설정
 ENV FLASK_APP=app.py
