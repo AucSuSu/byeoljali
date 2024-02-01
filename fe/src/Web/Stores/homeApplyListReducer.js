@@ -64,11 +64,11 @@ const homeApplyListSlice = createSlice({
   },
   reducers: {
     beforeApplyList(state, action) {
-      state.data = action.payload.data;
+      state.data = action.payload;
       console.log('응모전 데이터 :', state.data);
     },
     afterApplyList(state, action) {
-      state.data = action.payload.data;
+      state.data = action.payload;
       console.log('응모중 데이터 : ', state.data);
     },
   },
