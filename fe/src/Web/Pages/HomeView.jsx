@@ -2,12 +2,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
+import useAxios from '../axios';
 // Reducer 추가
 import {
   beforeApplyList,
   afterApplyList,
 } from '../Stores/homeApplyListReducer';
-import { recentList } from '../Stores/homeRecentReducer';
+// import { recentList } from '../Stores/homeRecentReducer';
 
 import List from '../Home/HomeApplyList';
 import Carousel from '../Home/Carousel';
@@ -16,22 +17,40 @@ import Carousel from '../Home/Carousel';
 import Navbar from '../Utils/NavBar';
 
 const HomeView = () => {
+  const customAxios = useAxios();
   //redux 적용
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(afterApplyList());
-    dispatch(recentList());
-  }, [dispatch]);
+    loadAfterData();
+  }, []);
+
+  const loadAfterData = async () => {
+    const data = await customAxios
+      .get('mainpage?searchKeyword=&order=register&status=APPLYING')
+      .then((res) => {
+        return res.data;
+      });
+    dispatch(afterApplyList(data));
+  };
+
+  const loadBeforeData = async () => {
+    const data = await customAxios
+      .get('mainpage?searchKeyword=&order=register&status=READY_APPLYING')
+      .then((res) => {
+        return res.data;
+      });
+    dispatch(beforeApplyList(data));
+  };
 
   return (
     <div>
       <Navbar isFan={true}></Navbar>
       {/* 캐러셀 */}
       <Carousel />
-      <button onClick={() => dispatch(beforeApplyList())}>응모전</button>
+      <button onClick={() => loadBeforeData}>응모전</button>
       <br />
-      <button onClick={() => dispatch(afterApplyList())}>응모중</button>
+      <button onClick={() => loadAfterData}>응모중</button>
       <h1>응모 리스트</h1>
       <List />
     </div>
