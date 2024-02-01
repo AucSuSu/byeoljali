@@ -29,7 +29,7 @@ const HomeView = () => {
     const data = await customAxios
       .get('mainpage?searchKeyword=&order=register&status=APPLYING')
       .then((res) => {
-        return res.data.object;
+        return res.data;
       });
     console.log('응모중', data);
     dispatch(afterApplyList(data));
@@ -39,7 +39,7 @@ const HomeView = () => {
     const data = await customAxios
       .get('mainpage?searchKeyword=&order=register&status=READY_APPLYING')
       .then((res) => {
-        return res.data.object;
+        return res.data;
       });
     console.log('응모전', data);
     dispatch(beforeApplyList(data));
