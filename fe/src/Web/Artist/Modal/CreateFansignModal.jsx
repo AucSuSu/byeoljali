@@ -19,23 +19,6 @@ export default function CreateFansignModal({}) {
   const closeModal = () => {
     dispatch(handleAddFansign());
   };
-  const [time, setTime] = useState('');
-
-  const handleTimeChange = (e) => {
-    const inputTime = e.target.value;
-
-    // 시간을 분으로 변환
-    const totalMinutes = parseInt(inputTime.split(':')[0]) * 60;
-
-    // 분을 시간으로 다시 변환
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-
-    // 시간 형식으로 조합
-    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-
-    setTime(formattedTime);
-  };
 
   const fansignCreate = (e) => {
     e.preventDefault();
@@ -55,15 +38,41 @@ export default function CreateFansignModal({}) {
     console.log('이미지 데이터 : ', img);
   };
 
+  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [selectedMode, setSeletcedMode] = useState(null);
+
+  const handleModeCheck = (mode) => {
+    if (mode === 'random') {
+      setMode({ random: true, line: false });
+    } else {
+      setMode({ random: false, line: true });
+    }
+    setSeletcedMode(mode);
+  };
+
+  const handleMemberCheck = (key) => {
+    if (selectedMembers.includes(key)) {
+      setSelectedMembers(
+        selectedMembers.filter((selectedMember) => selectedMember !== key),
+      );
+    } else {
+      setSelectedMembers([...selectedMembers, key]);
+    }
+    console.log(memberIdList);
+  };
+
   // 데이터 관리
   const [title, setTitle] = useState('');
   const [information, setInformation] = useState('');
-  const [startApplyTime, setStartApplyTime] = useState('');
+  const [startApplyTime, setStartApplyTime] = useState(
+    new Date().toISOString().split('T')[0],
+  );
   const [endApplyTime, setEndApplyTime] = useState('');
-  const [mode, setMode] = useState('RANDOM');
-  const [startFansignTime, setStartFansignTime] = useState('');
-  const [memberIdList, setMemberIdList] = useState([12, 13]);
+  const [mode, setMode] = useState({ random: false, line: false });
+  const [startFansignDate, setStartFansignDate] = useState('');
+  const [startFansignHour, setStartFansignHour] = useState('');
   const [image, setImage] = useState('');
+  const memberIdList = selectedMembers.map((key) => members[key]);
   //
 
   const payload = {
@@ -71,8 +80,8 @@ export default function CreateFansignModal({}) {
     information: information,
     startApplyTime: `${startApplyTime} 12:00:00`,
     endApplyTime: `${endApplyTime} 12:00:00`,
-    startFansignTime: `${startFansignTime} 12:00:00`,
-    mode: mode,
+    startFansignTime: `${startFansignDate} ${startFansignHour}:00:00`,
+    mode: selectedMode,
     memberIdList: memberIdList,
     image: image,
   };
@@ -85,6 +94,10 @@ export default function CreateFansignModal({}) {
     },
   };
 
+  const test = () => {
+    console.log('시간 : ', payload.startFansignTime);
+  };
+
   return (
     <>
       <Modal
@@ -94,7 +107,7 @@ export default function CreateFansignModal({}) {
         style={customStyle}
       >
         <div>
-          <h2>타이틀</h2>
+          <h2 onClick={test}>타이틀</h2>
 
           <ImgUpload img={null} uploadImg={uploadImg} />
           <form onSubmit={fansignCreate}>
@@ -118,6 +131,7 @@ export default function CreateFansignModal({}) {
               <label>응모시작 : </label>
               <input
                 type="date"
+                min={startApplyTime}
                 value={startApplyTime}
                 onChange={(e) => setStartApplyTime(e.target.value)}
               />
@@ -126,34 +140,63 @@ export default function CreateFansignModal({}) {
               <label>응모마감 : </label>
               <input
                 type="date"
+                min={startApplyTime}
                 value={endApplyTime}
                 onChange={(e) => setEndApplyTime(e.target.value)}
               />
             </div>
             <div>
               <label>응모방식 : </label>
+              <label htmlFor="modeRandom">Random</label>
               <input
-                type="text"
-                value={mode}
-                onChange={(e) => setMode(e.target.value)}
+                type="checkbox"
+                id="modeRandom"
+                checked={mode.random}
+                onChange={() => {
+                  handleModeCheck('random');
+                }}
+              />
+              <label htmlFor="modeLine">Line</label>
+              <input
+                type="checkbox"
+                id="modeLine"
+                checked={mode.line}
+                onChange={() => {
+                  handleModeCheck('line');
+                }}
               />
             </div>
             <div>
               <label>팬싸인회 : </label>
               <input
                 type="date"
-                value={startFansignTime}
-                onChange={(e) => setStartFansignTime(e.target.value)}
+                min={endApplyTime}
+                value={startFansignDate}
+                onChange={(e) => setStartFansignDate(e.target.value)}
               />
-              <input type="time" value={time} onChange={handleTimeChange} />
+              <select
+                value={startFansignHour}
+                onChange={(e) => setStartFansignHour(e.target.value)}
+              >
+                {[...Array(24).keys()].map((hour) => (
+                  <option key={hour} value={String(hour).padStart(2, '0')}>
+                    {String(hour).padStart(2, '0')}:00
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
-              <label> 개설맴버 : </label>
-              <input
-                type="text"
-                value={memberIdList}
-                onChange={(e) => setMemberIdList(e.target.value)}
-              />
+              {Object.keys(members).map((member) => (
+                <div key={member}>
+                  <label>{member}</label>
+                  <input
+                    type="checkbox"
+                    id={member}
+                    checked={selectedMembers.includes(member)}
+                    onChange={() => handleMemberCheck(member)}
+                  />
+                </div>
+              ))}
             </div>
             <button type="submit">팬싸인 개설하기</button>
           </form>
