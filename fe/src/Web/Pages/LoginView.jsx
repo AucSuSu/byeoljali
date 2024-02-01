@@ -74,24 +74,12 @@ export default function LoginView() {
     }
   };
 
-  const handleData = () => {
-    getData(code);
-  };
-
-  const handleCode = () => {
-    console.log(code);
-  };
-
   const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
   const REST_API_KEY = '218aa28a9e8fa4d947c106cb95b2ec1b';
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}`;
 
-  // Kakao Test
-
   const handleFanLogin = () => {
-    console.log('카톡 로그인 클릭');
     window.location.href = kakaoURL;
-    // navigate('/');
   };
 
   const handleArtistLogin = (e) => {
@@ -99,47 +87,81 @@ export default function LoginView() {
     dispatch(loginUser(data));
   };
 
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const viewArtistLogin = () => {
+    setShowLoginForm(!showLoginForm);
+  };
   return (
-    <div className="content">
-      <div>
-        <h1 className="text-purple-700">별자리에 오신 것을 환영합니다.</h1>
-
-        <p>로그인하여 당신의 스타와 만나보세요</p>
+    <div className="content flex flex-col items-center">
+      <img
+        src="/susu.jpg"
+        alt="로고"
+        className="my-4 rounded-full h-25 w-25 object-cover"
+      />
+      <div className="mb-4">
+        <h1 className="text-3xl font-bold">별자리</h1>
       </div>
 
-      <div className="login-section">
-        <div>
-          <h3>Fan 로그인</h3>
-          <img src="/kakao.png" alt="Hi" onClick={handleFanLogin} />
-          <button onClick={handleData}>데이터 수동 전송</button>
-          <button onClick={handleCode}>코드 확인하기</button>
+      <div className="login-section w-full h-1/2 border p-4 rounded-md bg-gray-200 flex flex-col justify-between">
+        <div className="mb-4 flex-grow flex flex-col items-center justify-center">
+          <div className="h-full p-2 mx-auto max-w-md">
+            좋은 소식이에요! 이제 웹페이지를 통해 미미무 마미무 우미무미무에
+            참여할 수 있어요! - 이하 생략 - 소중한 아이돌과의 기억에 남을 만남을
+            놓치지 마세요!
+          </div>
         </div>
 
-        <div>
-          <h3> 아티스트 로그인</h3>
-          <form onSubmit={handleArtistLogin}>
-            <div>
-              <label>email : </label>
-              <input
-                className="text-purple-700"
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+        <div className="mb-4 item flex items-center justify-center">
+          <div
+            className="cursor-pointer bg-yellow-300 text-black py-2 px-4 rounded-md w-1/2"
+            onClick={handleFanLogin}
+          >
+            카카오톡 로그인
+          </div>
+        </div>
 
-            <div>
-              <label> 비밀번호 : </label>
-              <input
-                className="text-purple-700"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+        <div className="mb-4 flex flex-col items-center justify-center">
+          <p
+            className="cursor-pointer bg-slate-400 text-white py-2 px-4 rounded-md w-1/2"
+            onClick={viewArtistLogin}
+          >
+            {showLoginForm ? '접기' : '기업 로그인'}
+          </p>
 
-            <button type="submit">로그인</button>
-          </form>
+          {showLoginForm && (
+            <form onSubmit={handleArtistLogin} className="md-2">
+              <div className="mx-auto">
+                <div className="flex">
+                  <label className="text-purple-700">이메일:</label>
+                  <input
+                    className="w-full border p-2"
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="mx-auto">
+                <div className="flex">
+                  <label className="text-purple-700">비밀번호:</label>
+                  <input
+                    className="w-full border p-2"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="bg-purple-700 text-white py-2 px-4 rounded-md"
+              >
+                로그인
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </div>
