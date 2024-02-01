@@ -30,7 +30,7 @@ const HomeView = () => {
     const data = await customAxios
       .get('mainpage?searchKeyword=&order=register&status=APPLYING')
       .then((res) => {
-        return res.data;
+        return res.data.object;
       });
     dispatch(afterApplyList(data));
   };
@@ -39,7 +39,7 @@ const HomeView = () => {
     const data = await customAxios
       .get('mainpage?searchKeyword=&order=register&status=READY_APPLYING')
       .then((res) => {
-        return res.data;
+        return res.data.object;
       });
     dispatch(beforeApplyList(data));
   };
