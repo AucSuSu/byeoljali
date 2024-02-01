@@ -23,9 +23,11 @@ export default function useAxios() {
   });
   axiosInstance.interceptors.response.use(
     (response) => {
+      console.log(response);
       return response;
     },
     async (error) => {
+      console.log(error);
       const originalRequest = error.config;
 
       // 토큰 만료에 대한 에러 코드를 확인 (401, 등)하고 refreshToken으로 새 토큰을 받아오기

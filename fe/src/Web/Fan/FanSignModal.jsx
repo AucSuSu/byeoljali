@@ -7,8 +7,13 @@ import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
 
 function FanSignModal({ data, onClose }) {
+<<<<<<< HEAD
+  // console.log(data);
+
+=======
   console.log(data);
   const stationData = useSelector((state) => state.join.stationData); // 대기방 참여 정보
+>>>>>>> 9e111e6bcfafd51d349f102cf395a678943f60b9
   //const token = useSelector((state) => state.auth.token)
   const token = useSelector((state) => state.token.token);
 
@@ -18,7 +23,6 @@ function FanSignModal({ data, onClose }) {
   const [fanSignDetail, setFanSignDetail] = useState('');
 
   console.log(fanSignDetail);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,7 +34,6 @@ function FanSignModal({ data, onClose }) {
             },
           },
         );
-        console.log(res.data);
         setFanSignDetail(res.data.object);
       } catch (err) {
         console.error(err);
@@ -74,17 +77,32 @@ function FanSignModal({ data, onClose }) {
 
   return (
     <div>
-      <div className="modal-background" onClick={handleCloseModal}>
-        <div className="modal-content" onClick={handleModalContentClick}>
-          <h1>하이</h1>
-          <div>{fanSignId}번 싸인회 상세보기</div>
-          {/* 팬싸방 참여 버튼 */}
-          {true && <button onClick={joinStation}>팬싸인 참여하기 </button>}
-          {/* 여기에 추가적인 모달 컨텐츠 */}
-          <button onClick={() => onClose()}>닫기</button>{' '}
-          {/* 모달을 닫는 버튼 */}
+      {fanSignDetail.isWon ? (
+        <div className="modal-background" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={handleModalContentClick}>
+            <h1>당첨된 애들 모달</h1>
+            <div>{fanSignId}번 싸인회 상세보기</div>
+            {/* 여기에 추가적인 모달 컨텐츠 */}
+            <div>
+              {fanSignDetail.status === 'SESSION_CONNECTED' ? (
+                <button>입장하기</button>
+              ) : null}
+            </div>
+            <button onClick={() => onClose()}>닫기</button>
+            {/* 모달을 닫는 버튼 */}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="modal-background" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={handleModalContentClick}>
+            <h1>응모한 애들 모달</h1>
+            <div>{fanSignId}번 싸인회 상세보기</div>
+            {/* 여기에 추가적인 모달 컨텐츠 */}
+            <button onClick={() => onClose()}>닫기</button>
+            {/* 모달을 닫는 버튼 */}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
