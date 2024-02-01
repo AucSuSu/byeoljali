@@ -1,6 +1,6 @@
 Flask
 cmake
-dlib-19.22.99-cp39-cp39-win_amd64.whl
+dlib
 face_recognition
 matplotlib
 numpy
