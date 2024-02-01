@@ -152,4 +152,4 @@ def getDistance(): ## 거리를 가져오는 함수
 
 
 if __name__ == "__main__":
-    run_simple('0.0.0.0', 8000, app)
+    run_simple('0.0.0.0', 5000, app)
