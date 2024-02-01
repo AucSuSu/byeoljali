@@ -5,7 +5,8 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
   try {
-    const response = await axios.post(`${BASE_URL}login`, data);
+    // const response = await axios.post(`${BASE_URL}login`, data);
+    const response = await axios.post(`http://localhost:8080/api/login`, data);
 
     return response.headers;
   } catch (error) {
