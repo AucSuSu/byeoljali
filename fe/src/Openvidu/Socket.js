@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import SockJs from 'sockjs-client';
 
-export default function Socket({ memberFansignId }) {
+export default function Socket({}) {
   const [socket, setSocket] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
 
   useEffect(() => {
+    const [memberFansignId, setMemberFansignId] = useState('');
     // WebSocket 서버에 연결
     const newSocket = new SockJs('https://i10e104.p.ssafy.io/api/socket');
 
@@ -95,6 +96,12 @@ export default function Socket({ memberFansignId }) {
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
       />
+      <input
+        type="text"
+        value={memberFansignId}
+        onChange={(e) => setMemberFansignId(e.target.value)}
+      />
+      <p> test : {memberFansignId}</p>
       <button onClick={sendMessage}>전송</button>
       <button onClick={enterMessage}>입장</button>
     </div>
