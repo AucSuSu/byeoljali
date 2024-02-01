@@ -65,7 +65,7 @@ def upload_file():
             print("===============================================")
             print("BE에 헤더 전송 후 이미지 받아오기")
 
-            url = 'http://localhost:8080/image' ## spring url으로 수정하기
+            url = 'http://i10e104.p.ssafy.io:8080/image' ## spring url으로 수정하기
 
             # headers
             headers = {
