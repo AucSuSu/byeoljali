@@ -7,13 +7,9 @@ import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
 
 function FanSignModal({ data, onClose }) {
-<<<<<<< HEAD
   // console.log(data);
 
-=======
-  console.log(data);
   const stationData = useSelector((state) => state.join.stationData); // 대기방 참여 정보
->>>>>>> 9e111e6bcfafd51d349f102cf395a678943f60b9
   //const token = useSelector((state) => state.auth.token)
   const token = useSelector((state) => state.token.token);
 
