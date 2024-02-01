@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const List = (type) => {
   // useSelector를 사용하여 applyList 상태 전체를 가져옴
   const applyList = useSelector((state) => state.homeapply.data);
-
+  console.log(applyList);
   // applyList.data 배열을 사용하여 리스트 아이템 렌더링
   return (
     <div>
