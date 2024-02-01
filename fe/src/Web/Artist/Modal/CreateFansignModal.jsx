@@ -30,27 +30,25 @@ export default function CreateFansignModal({}) {
 
   const fansignCreate = (e) => {
     e.preventDefault();
-    console.log('페이로드 : ', payload);
-
+    console.log('가공전 데이터 : ', payload);
     const formData = new FormData();
     for (const key in payload) {
       formData.append(key, payload[key]);
     }
-    console.log('폼데이터 : ', formData);
     dispatch(createFansign(formData));
     console.log('팬싸인회 개설 요청');
+    closeModal();
   };
 
   const uploadImg = (img) => {
     setImage(img);
-    console.log('이미지 데이터 : ', img);
   };
 
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [selectedMode, setSeletcedMode] = useState(null);
 
   const handleModeCheck = (mode) => {
-    if (mode === 'random') {
+    if (mode === 'RANDOM') {
       setMode({ random: true, line: false });
     } else {
       setMode({ random: false, line: true });
@@ -161,7 +159,7 @@ export default function CreateFansignModal({}) {
                 id="modeRandom"
                 checked={mode.random}
                 onChange={() => {
-                  handleModeCheck('random');
+                  handleModeCheck('RANDOM');
                 }}
               />
               <label htmlFor="modeLine">Line</label>
@@ -170,7 +168,7 @@ export default function CreateFansignModal({}) {
                 id="modeLine"
                 checked={mode.line}
                 onChange={() => {
-                  handleModeCheck('line');
+                  handleModeCheck('DESC');
                 }}
               />
             </div>
