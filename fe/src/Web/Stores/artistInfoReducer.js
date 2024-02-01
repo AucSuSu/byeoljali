@@ -1,29 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import useAxios from '../axios.js';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-
-// export const getArtistInfo = createAsyncThunk(
-//   'axios/getArtistInfo',
-//   async (payload) => {
-//     console.log('axios 요청 실행');
-//     const axiosInstance = useAxios();
-//     const response = await axiosInstance.get('artists');
-//     return response.data;
-//   },
-// );
-export const getArtistInfo = createAsyncThunk(
-  'axios/getArtistInfo',
-  async (payload, { getState }) => {
-    const token = getState().auth.token;
-    const response = await axios.get(`${BASE_URL}artists/`, {
-      headers: { authorization: token },
-    });
-
-    return response.data;
-  },
-);
 
 export const addMember = createAsyncThunk(
   'axios/addMember',
@@ -65,23 +43,14 @@ const artistInfoSlice = createSlice({
     status: 'idle',
     error: null,
   },
-  reducers: {},
+  reducers: {
+    getInfo(status, action) {
+      status.artistData = action.payload;
+      console.log('아티스트 데이터 : ', status.artistData);
+    },
+  },
   extraReducers: (builder) => {
     builder
-      // getArtistInfo
-      .addCase(getArtistInfo.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(getArtistInfo.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.artistData = action.payload;
-        console.log('데이터:', state.artistData);
-      })
-      .addCase(getArtistInfo.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-        console.log('에러 : ', state.error);
-      })
       // addMember
       .addCase(addMember.pending, (state) => {
         state.status = 'loading';
@@ -113,3 +82,4 @@ const artistInfoSlice = createSlice({
 });
 
 export default artistInfoSlice.reducer;
+export const { getInfo } = artistInfoSlice.actions;

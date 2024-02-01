@@ -1,0 +1,8 @@
+Flask
+cmake
+dlib
+face_recognition
+matplotlib
+numpy
+Pillow
+requests_toolbelt
