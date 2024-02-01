@@ -1,52 +1,60 @@
-// Carousel.jsx
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Slider from 'react-slick';
-
-import { useSelector } from 'react-redux';
+import ReactPlayer from 'react-player/youtube';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const Carousel = () => {
-  const dataList = useSelector((state) => state.homerecent.data);
+  const sliderRef = useRef();
+  const playerRef = useRef([]); // 각 비디오 플레이어에 대한 참조를 저장
+  const [playingIndex, setPlayingIndex] = useState(0); // 현재 재생 중인 비디오의 인덱스를 추적
+  const videoUrls = [
+    'https://www.youtube.com/watch?v=JleoAppaxi0', // 영상 URL 1
+    'https://www.youtube.com/watch?v=pSUydWEqKwE', // 영상 URL 2
+    'https://www.youtube.com/watch?v=2OvyA2__Eas', // 영상 URL 3
+  ];
 
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true, // 자동으로 슬라이드 전환 활성화
-    autoplaySpeed: 2000, // 자동 전환 간격 (ms)
+    adaptiveHeight: true,
   };
 
-  const carouselStyle = {
-    width: '20%', // 원하는 너비 설정
-    margin: '0 auto', // 중앙 정렬을 위한 margin 설정
+  const handleVideoEnd = (index) => {
+    const nextIndex = (index + 1) % videoUrls.length;
+    sliderRef.current.slickGoTo(nextIndex);
+    setPlayingIndex(nextIndex); // 다음 비디오의 인덱스로 상태 업데이트
   };
 
   return (
-    <div style={carouselStyle}>
-      <Slider {...settings}>
-        <img
-          src="https://pbs.twimg.com/media/FZuGhtZaMAEMLdh.jpg"
-          alt="치이카와"
-        />
-        <img
-          src="https://i1.sndcdn.com/artworks-HHzS3NMQpYq35RNY-io4p8w-t500x500.jpg"
-          alt="하치와레"
-        />
-        <img
-          src="https://i.namu.wiki/i/PvFwgusdC6VV7bVkH2cEk4z05lDzIeREeRX0OY9axRt3fPQXL7ydVzDAFe_9gZx6kOhmQW2jjqAaxBlQO2opQg.webp"
-          alt="우사기"
-        />
-        {/* {dataList.map((item, index) => (
-          <div key={index}>
-            <img src={item.posterImageUrl} alt={`Carousel ${index + 1}`} />
-          </div>
-        ))} */}
-      </Slider>
-    </div>
+    <Slider ref={sliderRef} {...settings}>
+      {videoUrls.map((url, index) => (
+        <div
+          key={index}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '700px',
+          }}
+        >
+          <ReactPlayer
+            ref={(player) => (playerRef.current[index] = player)}
+            url={url}
+            playing={index === playingIndex}
+            muted={true}
+            controls={true}
+            onEnded={() => handleVideoEnd(index)}
+            width="80%"
+            height="500px"
+            style={{ margin: 'auto' }} // ReactPlayer에 직접 스타일을 적용
+          />
+        </div>
+      ))}
+    </Slider>
   );
 };
 
