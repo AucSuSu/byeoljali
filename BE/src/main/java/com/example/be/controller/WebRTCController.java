@@ -39,6 +39,7 @@ public class WebRTCController {
         Session fansignSession = openVidu.createSession(propertiesFansign);
         SessionProperties propertiesWaitingRoom = SessionProperties.fromJson(param).build();
         Session waitingRoomSession = openVidu.createSession(propertiesWaitingRoom);
+
         /**
          * 개설되면 memberFansignSession + memberFansignId key, sessionId를 value로 redis에 sessionId 저장
          * 개설되면 watingRoomFansignSession + memberFansignId key, sessionId를 value로 redis에 sessionId 저장
@@ -52,6 +53,7 @@ public class WebRTCController {
         // 아티스트 팬싸방 - 대기방을 연결하는 websocket
         chatService.createRoom("memberFansignSession".concat(String.valueOf(memberFansignId)));
         return new ResponseEntity<>(redisService.getValues("memberFansignSession".concat(String.valueOf(memberFansignId))), HttpStatus.OK); // 방 연결
+
     }
 
 

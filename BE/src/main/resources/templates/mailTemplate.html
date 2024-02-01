@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/mail.css"/>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-
+<div class="container" style=" display: flex; align-items:center; justify-content: center;">
+    <div>
+        <div class="title" style="margin: 20px; font-size: large;">
+            <span th:text="${fansignTitle}" style="text-align : center;"></span>
+            <span > 당첨을 축하드립니다. </span>
+        </div>
+        <div class="memberInfo " style="text-align : center; margin: 10px;">
+            <span >멤버 이름 | </span>
+            <span th:text="${memberName}"></span>
+        </div>
+        <div class="orderInfo " style="text-align : center; margin: 10px;">
+            <span >진행 순서 | </span>
+            <span th:text="${orders}">5번째 / 100</span>
+        </div>
+        <div class="startTimeInfo " style="text-align : center; margin: 10px;">
+            <span >진행 날짜 및 시간 | </span>
+            <span th:text="${fansignStartTime}">2024-02-01 11:00</span>
+        </div>
+    </div>
+</div>
 </body>
 </html>
