@@ -16,7 +16,7 @@ public class MailController {
 
     @GetMapping("/send/stmp")
     public String sendMail(){
-        mailService.sendWinningMail(new MailDto("ww71er@naver.com", "arimFansign", LocalDateTime.now(), "arim", 1));
+        mailService.sendWinningMail(new MailDto("ice_98@naver.com", "아이유 팬싸인회", LocalDateTime.now(), "아이유", 1));
         return "good";
     }
 }
