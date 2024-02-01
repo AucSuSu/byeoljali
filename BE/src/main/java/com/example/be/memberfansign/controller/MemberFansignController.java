@@ -27,7 +27,7 @@ public class MemberFansignController {
     private final MemberFansignRepository memberFansignRepository;
 
     @GetMapping("/api/memberfansign/{memberfansignId}")
-    public ResponseEntity<Message> addFansign(@PathVariable("memberfansignId") Long memberfansignId) {
+    public ResponseEntity<Message> getFansignDetail(@PathVariable("memberfansignId") Long memberfansignId) {
         log.info(" ** 멤버팬싸인회 상세보기 요청 api 입니다.** ");
         MemberFansignResponseDto memberFansignResponseDto = memberFansignRepository.getMemberfansignDetail(memberfansignId);
         if(memberFansignResponseDto == null) {

@@ -58,6 +58,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                         return subItems.size();
                     }
                 });
+
         subItems.clear();
         batchCount++;
         return batchCount;

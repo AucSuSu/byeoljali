@@ -20,16 +20,16 @@ export default function FansignModal({ memberFansignId }) {
 
   const participate = async () => {
     await dispatch(joinFansign(detailData.object.memberFansignId));
-    console.log('오픈비두 데이터 : ', openvidu);
-
-    // navigate('/test', {
-    //   state: {
-    //     watch: 1,
-    //     sessionId: openvidu.sessionId,
-    //     tokenId: openvidu.tokenId,
-    //   },
-    // });
-    // closeModal();
+    console.log('오픈비두 : ', openvidu);
+    navigate('/test', {
+      state: {
+        watch: 1,
+        sessionId: openvidu.object.sessionId,
+        tokenId: openvidu.object.tokenId,
+        memberFansignId: detailData.object.memberFansignId,
+      },
+    });
+    closeModal();
   };
 
   useEffect(() => {

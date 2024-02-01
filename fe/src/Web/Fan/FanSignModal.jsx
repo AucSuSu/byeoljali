@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { getFansign } from '../Stores/joinFansignReducer';
 import axios from 'axios';
 import './FanSignModal.css';
+import useAxios from '../axios';
+import { useNavigate } from 'react-router-dom';
 
 function FanSignModal({ data, onClose }) {
+<<<<<<< HEAD
   // console.log(data);
 
+=======
+  console.log(data);
+  const stationData = useSelector((state) => state.join.stationData); // 대기방 참여 정보
+>>>>>>> 9e111e6bcfafd51d349f102cf395a678943f60b9
   //const token = useSelector((state) => state.auth.token)
   const token = useSelector((state) => state.token.token);
 
@@ -44,6 +51,28 @@ function FanSignModal({ data, onClose }) {
   // 모달 컨텐츠 영역의 이벤트가 바깥으로 전파되지 않도록 합니다.
   const handleModalContentClick = (e) => {
     e.stopPropagation();
+  };
+
+  // 대기방 참가 로직
+  const navigate = useNavigate;
+  const dispatch = useDispatch();
+
+  const customAxios = useAxios();
+  const joinStation = async () => {
+    const response = await customAxios.get(
+      `fan/fansigns/enterwaiting/${fanSignId}`,
+    );
+    dispatch(getFansign(response));
+
+    // navigate('/test', {
+    //   state: {
+    //     watch: 3,
+    //     sessionId: stationData.sessionId,
+    //     tokenId: stationData.tokenId,
+    //     memberFansignId: fanSignId,
+    //   },
+    // });
+    // closeModal();
   };
 
   return (
