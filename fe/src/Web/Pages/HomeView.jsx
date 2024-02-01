@@ -32,6 +32,7 @@ const HomeView = () => {
       .then((res) => {
         return res.data.object;
       });
+    console.log('응모중', data);
     dispatch(afterApplyList(data));
   };
 
@@ -41,6 +42,7 @@ const HomeView = () => {
       .then((res) => {
         return res.data.object;
       });
+    console.log('응모전', data);
     dispatch(beforeApplyList(data));
   };
 
