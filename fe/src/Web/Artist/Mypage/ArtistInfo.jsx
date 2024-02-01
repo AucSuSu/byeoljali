@@ -5,6 +5,7 @@ import './ArtistInfo.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInfo } from '../../Stores/artistInfoReducer.js';
 import useAxios from '../../axios.js';
+import Socket from '../../../Openvidu/Socket.js';
 
 export default function ArtistInfo() {
   const artistData = useSelector((state) => state.artistInfo.artistData);
@@ -25,6 +26,7 @@ export default function ArtistInfo() {
   return (
     <>
       <button onClick={test}> refresh test</button>
+      <Socket />
       {artistData && (
         <div>
           <h1 className="text-blue-500">ArtistInfo</h1>

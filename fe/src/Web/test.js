@@ -42,26 +42,27 @@ export default function Test() {
         <button onClick={fanPage}>팬</button>
         <button onClick={stationPage}>스테이션</button>
       </div>
-
-      {flag === 1 && <Artist sessionId={sessionId} token={tokenId} />}
-      {flag === 2 && (
-        <Fan
-          fanData={data}
-          goBackStation={switchToStation}
-          sessionId={fanData.sessionId}
-          token={fanData.tokenId}
-        />
-      )}
-      {flag === 3 && (
-        <Station
-          wait={wait}
-          onMeetingClick={switchToFan}
-          sessionId={sessionId}
-          token={tokenId}
-          // sessionId="ses_L6342A2vEN"
-          // token="wss://byeoljali.shop?sessionId=ses_MYUiCNKIrm&token=tok_HJzNSV0zOd9mrE8q"
-        />
-      )}
+      <div className=" h-1/2 w-1/2">
+        {flag === 1 && <Artist sessionId={sessionId} token={tokenId} />}
+        {flag === 2 && (
+          <Fan
+            fanData={data}
+            goBackStation={switchToStation}
+            sessionId={fanData.sessionId}
+            token={fanData.tokenId}
+          />
+        )}
+        {flag === 3 && (
+          <Station
+            wait={wait}
+            onMeetingClick={switchToFan}
+            sessionId={sessionId}
+            token={tokenId}
+            // sessionId="ses_L6342A2vEN"
+            // token="wss://byeoljali.shop?sessionId=ses_MYUiCNKIrm&token=tok_HJzNSV0zOd9mrE8q"
+          />
+        )}
+      </div>
       <Socket memberFansignId={memberFansignId} />
     </div>
   );
