@@ -13,15 +13,15 @@ export default function ArtistInfo() {
   const artistData = useSelector((state) => state.artistInfo.artistData);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getArtistInfo());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getArtistInfo());
+  // }, []);
 
   const customAxios = useAxios();
 
   const test = () => {
     const response = customAxios.get(`artists/`);
-    dispatch(getInfo(response.data));
+    dispatch(getInfo(response));
   };
 
   // const test = () => {
@@ -30,7 +30,7 @@ export default function ArtistInfo() {
   //       'authorization-refresh': refreshToken,
   //     },
   //   });
-  //   console.log('리스폰 : ', response);
+  //   console.log('리스폰 : ', response.Object);
 
   //   return response;
   // };
@@ -41,7 +41,7 @@ export default function ArtistInfo() {
       {artistData && (
         <div>
           <h1 className="text-blue-500">ArtistInfo</h1>
-          <div className="artist">
+          {/* <div className="artist">
             <img
               className="artistImg"
               src={artistData.object.artistImageUrl}
@@ -66,7 +66,7 @@ export default function ArtistInfo() {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </>

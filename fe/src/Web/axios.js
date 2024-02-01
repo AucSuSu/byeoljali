@@ -31,12 +31,7 @@ export default function useAxios() {
     },
     async (error) => {
       const originalRequest = error.config;
-      console.log(
-        '원본요청 : ',
-        originalRequest,
-        '토큰 : ',
-        tokens.refreshToken,
-      );
+      console.log('원본요청 : ', originalRequest);
 
       // 토큰 만료에 대한 에러 코드를 확인 (401, 등)하고 refreshToken으로 새 토큰을 받아오기
       if (error.response.status === 401 && !originalRequest._retry) {
@@ -61,7 +56,10 @@ export default function useAxios() {
               tokenRefresh: tokens.refreshToken,
             }),
           );
-          setTokens({ accessToken: 1, refreshToken: 1 });
+          setTokens({
+            accessToken: newAccessToken,
+            refreshToken: tokens.refreshToken,
+          });
 
           // 실패한 요청의 헤더를 새 토큰으로 업데이트하고, 요청을 다시 실행합니다.
           console.log(
