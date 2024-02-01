@@ -1,0 +1,12 @@
+    .container {
+        font-family: 'neon';
+        margin: 0 auto;
+        background-image: url("/img/mailBackground.jpg");
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+
+    @font-face {
+        font-family: 'neon';
+        src: url('../font/DungGeunMo.ttf') format('truetype');
+    }
