@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { getFansign } from '../Stores/joinFansignReducer';
 import axios from 'axios';
 import './FanSignModal.css';
+import useAxios from '../axios';
+import { useNavigate } from 'react-router-dom';
 
 function FanSignModal({ data, onClose }) {
   console.log(data);
-
+  const stationData = useSelector((state) => state.join.stationData); // 대기방 참여 정보
   //const token = useSelector((state) => state.auth.token)
   const token = useSelector((state) => state.token.token);
 
@@ -48,12 +50,36 @@ function FanSignModal({ data, onClose }) {
     e.stopPropagation();
   };
 
+  // 대기방 참가 로직
+  const navigate = useNavigate;
+  const dispatch = useDispatch();
+
+  const customAxios = useAxios();
+  const joinStation = async () => {
+    const response = await customAxios.get(
+      `fan/fansigns/enterwaiting/${fanSignId}`,
+    );
+    dispatch(getFansign(response));
+
+    // navigate('/test', {
+    //   state: {
+    //     watch: 3,
+    //     sessionId: stationData.sessionId,
+    //     tokenId: stationData.tokenId,
+    //     memberFansignId: fanSignId,
+    //   },
+    // });
+    // closeModal();
+  };
+
   return (
     <div>
       <div className="modal-background" onClick={handleCloseModal}>
         <div className="modal-content" onClick={handleModalContentClick}>
           <h1>하이</h1>
           <div>{fanSignId}번 싸인회 상세보기</div>
+          {/* 팬싸방 참여 버튼 */}
+          {true && <button onClick={joinStation}>팬싸인 참여하기 </button>}
           {/* 여기에 추가적인 모달 컨텐츠 */}
           <button onClick={() => onClose()}>닫기</button>{' '}
           {/* 모달을 닫는 버튼 */}

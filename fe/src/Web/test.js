@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import Station from '../Openvidu/Station/Station.js';
 import Fan from '../Openvidu/Fan/Fan.js';
 import Artist from '../Openvidu/Artist/Artist.js';
+import Socket from '../Openvidu/Socket.js';
 import { useLocation } from 'react-router-dom';
 import { joinFansignTest } from './Stores/joinFansignReducer.js';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Test() {
   const location = useLocation();
-  const { watch, sessionId, tokenId } = location.state || {};
+  const { watch, sessionId, tokenId, memberFansignId } = location.state || {};
   const fanData = useSelector((state) => state.joinFansign.testData);
 
   const dispatch = useDispatch();
@@ -55,12 +56,13 @@ export default function Test() {
         <Station
           wait={wait}
           onMeetingClick={switchToFan}
-          // sessionId={sessionId}
-          // token={tokenId}
-          sessionId="ses_L6342A2vEN"
-          token="wss://byeoljali.shop?sessionId=ses_MYUiCNKIrm&token=tok_HJzNSV0zOd9mrE8q"
+          sessionId={sessionId}
+          token={tokenId}
+          // sessionId="ses_L6342A2vEN"
+          // token="wss://byeoljali.shop?sessionId=ses_MYUiCNKIrm&token=tok_HJzNSV0zOd9mrE8q"
         />
       )}
+      <Socket memberFansignId={memberFansignId} />
     </div>
   );
 }

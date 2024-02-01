@@ -67,6 +67,9 @@ const joinSlice = createSlice({
       state.token = action.payload.token;
       state.tokenRefresh = action.payload.tokenRefresh;
     },
+    getFansign(state, action) {
+      state.stationData = action.payload;
+    },
   },
   /// extraReducers(반고정) /  builder(유동) / addCase, pending, fulfiled, rejected 고정
   extraReducers: (builder) => {
@@ -103,3 +106,4 @@ const joinSlice = createSlice({
 });
 
 export default joinSlice.reducer;
+export const { getFansign } = joinSlice.actions;
