@@ -10,6 +10,19 @@ COPY . /app
 # 필요한 패키지 설치를 위한 requirements.txt 파일을 컨테이너에 복사
 COPY requirements.txt /app/
 
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    cmake \
+    libopenblas-dev \
+    liblapack-dev \
+    libx11-dev \
+    libgtk-3-dev \
+    python3-dev \
+    python3-pip \
+    python3-numpy \
+    && rm -rf /var/lib/apt/lists/*
+
 # requirements.txt에 명시된 필요한 패키지들을 설치
 RUN pip install -r requirements.txt
 
