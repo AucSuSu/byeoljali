@@ -48,9 +48,9 @@ const HomeView = () => {
       <Navbar isFan={true}></Navbar>
       {/* 캐러셀 */}
       <Carousel />
-      <button onClick={() => loadBeforeData}>응모전</button>
+      <button onClick={loadBeforeData}>응모전</button>
       <br />
-      <button onClick={() => loadAfterData}>응모중</button>
+      <button onClick={loadAfterData}>응모중</button>
       <h1>응모 리스트</h1>
       <List />
     </div>
