@@ -65,9 +65,11 @@ const homeApplyListSlice = createSlice({
   reducers: {
     beforeApplyList(state, action) {
       state.data = action.payload.data;
+      console.log('응모전 데이터 :', state.data);
     },
     afterApplyList(state, action) {
       state.data = action.payload.data;
+      console.log('응모중 데이터 : ', state.data);
     },
   },
   /// extraReducers(반고정) /  builder(유동) / addCase, pending, fulfiled, rejected 고정

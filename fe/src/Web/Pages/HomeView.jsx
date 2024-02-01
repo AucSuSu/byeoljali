@@ -1,6 +1,6 @@
 // HomeView.jsx
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAxios from '../axios';
 // Reducer 추가
@@ -17,6 +17,7 @@ import Carousel from '../Home/Carousel';
 import Navbar from '../Utils/NavBar';
 
 const HomeView = () => {
+  const reRenderData = useSelector((state) => state.homeapply.data);
   const customAxios = useAxios();
   //redux 적용
   const dispatch = useDispatch();
