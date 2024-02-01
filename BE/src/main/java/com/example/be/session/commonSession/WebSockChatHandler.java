@@ -38,13 +38,15 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
             sessions.add(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");
-            //TALK일 경우 msg가 있을 거고, ENTER일 경우 메세지 없으니까 message set
+            log.info("*** 입장 확인 완료 *** ");
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+            log.info("*** 입장 확인 메세지 전송*** ");
         }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
             sessions.remove(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장했습니다..");
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
         }else {
+            log.info("*** 메시지 왔음 *** " + message);
             sendToEachSocket(sessions,message ); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
         }
     }
