@@ -17,7 +17,6 @@ import Carousel from '../Home/Carousel';
 import Navbar from '../Utils/NavBar';
 
 const HomeView = () => {
-  const reRenderData = useSelector((state) => state.homeapply.data);
   const customAxios = useAxios();
   //redux 적용
   const dispatch = useDispatch();
