@@ -8,13 +8,16 @@ function FanSignList({ data }) {
     setModalVisible(!isModalVisible);
   };
 
-  console.log('fansignlist');
-
   return (
     <div>
-      <h1>반복리스트</h1>
+      <img
+        onClick={toggleModal}
+        src={data.posterImageUrl}
+        alt="Poster Image"
+        width="200"
+        height="200"
+      />
       <div>memberfansignId: {data.memberfansignId}</div>
-      <div onClick={toggleModal}>posterImageUrl: {data.posterImageUrl}</div>
       <div>artistFansignTitle: {data.artistFansignTitle}</div>
       <div>memberName: {data.memberName}</div>
       <div>startFansignTime: {data.startFansignTime}</div>

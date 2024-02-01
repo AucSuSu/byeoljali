@@ -25,7 +25,6 @@ const ListItem = ({ data }) => {
     dispatch(clearData()); // data를 빈 배열로 초기화하는 액션을 디스패치
     setIsModalOpen(false);
   };
-
   return (
     <div
       style={{ textAlign: 'center', margin: '10px', display: 'inline-block' }}
@@ -47,6 +46,7 @@ const ListItem = ({ data }) => {
         fansignId={data.artistfansignId}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        propData={data}
       />
     </div>
   );
