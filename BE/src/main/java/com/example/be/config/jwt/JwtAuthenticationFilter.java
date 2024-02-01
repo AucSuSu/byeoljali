@@ -77,7 +77,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String refreshToken = tokenService.generateRefreshToken(artistId, "ROLE_ARTIST");
 
         // 레디스에 refresh-token 저장
-        redisService.setValuesWithTimeout("REFRESH_TOKEN_ARTIST_" + artistId, refreshToken, JwtProperties.ACCESS_EXPIRATION_TIME);
+        redisService.setValuesWithTimeout("REFRESH_TOKEN_ARTIST_" + artistId, refreshToken, 1000*60*60*24);
 
         // 응답 헤더에 두 개의 토큰 추가
         response.addHeader("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음

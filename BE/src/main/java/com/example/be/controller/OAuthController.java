@@ -48,7 +48,9 @@ public class OAuthController {
     public ResponseEntity<Message> getRefreshToken(HttpServletRequest request){
 
         String refreshToken = request.getHeader("authorization-refresh");
+        System.out.println("리프레시 토큰 발급받은거 : " + refreshToken);
         String accessToken = tokenService.verifyRefreshToken(refreshToken);
+
 
         Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰 발급 완료","nothing");
         HttpHeaders headers = new HttpHeaders();
