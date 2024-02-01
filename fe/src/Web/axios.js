@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from './Stores/authReducer';
 
-// const API_URL = 'https://i10e104.p.ssafy.io/api/';
-const API_URL = 'http://localhost:8080/api/';
+const API_URL = 'https://i10e104.p.ssafy.io/api/';
+// const API_URL = 'http://localhost:8080/api/';
 
 export default function useAxios() {
   const accessToken = useSelector((state) => state.auth.token);
@@ -14,10 +14,6 @@ export default function useAxios() {
     accessToken: accessToken,
     refreshToken: refreshToken,
   });
-
-  // useEffect(() => {
-  //   setTokens({ accessToken, refreshToken });
-  // }, []);
 
   const dispatch = useDispatch();
 
@@ -31,14 +27,12 @@ export default function useAxios() {
     },
     async (error) => {
       const originalRequest = error.config;
-      console.log('원본요청 : ', originalRequest);
 
       // 토큰 만료에 대한 에러 코드를 확인 (401, 등)하고 refreshToken으로 새 토큰을 받아오기
       if (error.response.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
 
         try {
-          console.log('리프레쉬 두가자~~~');
           // refreshToken으로 새로운 accessToken을 받아오는 API 요청을 구현해야 합니다.
           const response = await axios.get(`${API_URL}refreshToken`, {
             headers: {
@@ -46,9 +40,8 @@ export default function useAxios() {
             },
           });
 
-          console.log('리프레쉬토큰 응답 : ', response);
           // 리프레시 토큰을 사용하여 새 액세스 토큰을 받아옵니다.
-          const newAccessToken = response.data.accessToken;
+          const newAccessToken = response.headers.authorization;
 
           dispatch(
             setToken({
@@ -62,15 +55,13 @@ export default function useAxios() {
           });
 
           // 실패한 요청의 헤더를 새 토큰으로 업데이트하고, 요청을 다시 실행합니다.
-          console.log(
-            '이전 헤더 : ',
-            originalRequest.headers.authorization,
-            '새 헤더 : ',
-            tokens.token,
-          );
-          originalRequest.headers.authorization = tokens.token;
-          console.log('바뀐 요청 : ', originalRequest);
-          return axiosInstance(originalRequest);
+          const newRequest = Object.assign({}, originalRequest, {
+            headers: Object.assign({}, originalRequest.headers, {
+              authorization: newAccessToken,
+            }),
+          });
+
+          return axiosInstance(newRequest);
         } catch (error) {
           console.error('Error refreshing token:', error);
           throw error;
