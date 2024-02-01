@@ -9,13 +9,13 @@ import axios from 'axios';
 import useAxios from '../../axios.js';
 
 export default function ArtistInfo() {
-  const refreshToken = useSelector((state) => state.auth.tokenRefresh);
+  // const refreshToken = useSelector((state) => state.auth.tokenRefresh);
   const artistData = useSelector((state) => state.artistInfo.artistData);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getArtistInfo());
-  // }, []);
+  useEffect(() => {
+    dispatch(getArtistInfo());
+  }, []);
 
   const customAxios = useAxios();
 
@@ -41,7 +41,7 @@ export default function ArtistInfo() {
       {artistData && (
         <div>
           <h1 className="text-blue-500">ArtistInfo</h1>
-          {/* <div className="artist">
+          <div className="artist">
             <img
               className="artistImg"
               src={artistData.object.artistImageUrl}
@@ -66,7 +66,7 @@ export default function ArtistInfo() {
                 ))}
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       )}
     </>
