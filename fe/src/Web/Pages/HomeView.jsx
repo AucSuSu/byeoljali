@@ -3,7 +3,10 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 // Reducer 추가
-import { applyList } from '../Stores/homeApplyListReducer';
+import {
+  beforeApplyList,
+  afterApplyList,
+} from '../Stores/homeApplyListReducer';
 import { recentList } from '../Stores/homeRecentReducer';
 
 import List from '../Home/HomeApplyList';
@@ -17,16 +20,18 @@ const HomeView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(applyList());
+    dispatch(afterApplyList());
     dispatch(recentList());
   }, [dispatch]);
 
   return (
     <div>
       <Navbar isFan={true}></Navbar>
-      <h1>홈</h1>
       {/* 캐러셀 */}
       <Carousel />
+      <button onClick={() => dispatch(beforeApplyList())}>응모전</button>
+      <br />
+      <button onClick={() => dispatch(afterApplyList())}>응모중</button>
       <h1>응모 리스트</h1>
       <List />
     </div>
