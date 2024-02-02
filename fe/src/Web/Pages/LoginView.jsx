@@ -96,6 +96,7 @@ export default function LoginView() {
 
   //
   const kakaoLogout = () => {
+    console.log('토큰 : ', token);
     axios
       .post('https://kapi.kakao.com/v1/user/logout', {
         headers: {
