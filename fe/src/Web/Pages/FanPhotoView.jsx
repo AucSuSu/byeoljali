@@ -96,9 +96,9 @@ function FanPhotoView() {
           </div>
           <div className="pay-status-toggle">
             <select value={payStatus} onChange={handlePayStatusChange}>
-              <option value="all">모두 보기</option>
-              <option value="paid">결제 완료</option>
-              <option value="unpaid">결제 전</option>
+              <option value="">모두 보기</option>
+              <option value="Y">결제 완료</option>
+              <option value="N">결제 전</option>
             </select>
           </div>
         </div>
