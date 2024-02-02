@@ -98,12 +98,9 @@ export default function LoginView() {
   const kakaoLogout = () => {
     console.log('토큰 : ', token);
     axios
-      .post('https://kapi.kakao.com/v1/user/logout', {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: token,
-        },
-      })
+      .get(
+        `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${redirect_uri}`,
+      )
       .then(() => {
         console.log('로그아웃 성공이래요~');
         // window.location.href = '/';
