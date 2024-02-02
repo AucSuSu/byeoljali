@@ -4,6 +4,7 @@ import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
 import com.example.be.photo.dto.PhotoDBDto;
 import com.example.be.photo.dto.PhotoResponseDto;
+import com.example.be.photo.entity.PayOrNot;
 import com.example.be.photo.entity.Photo;
 import com.example.be.photo.service.PhotoService;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -69,9 +70,9 @@ public class PhotoController {
     // 인생네컷 조회 + 필터 + 검색기능 api
     @GetMapping("/api/myalbum")
     public ResponseEntity<Message> showAllandFilteredPhoto(@RequestParam(name ="searchKeyword", required = false) String searchKeyword,
-                                                           @RequestParam(name = "payOrNot", required = false) Boolean payOrNot){
+                                                           @RequestParam(name = "payOrNot", required = false) PayOrNot payOrNot){
         log.info(" ** 인생네컷 페이지 조회 - 전체/필터/검색 api 입니다 ** ");
-        boolean finalValue = (payOrNot != null) ? payOrNot : true;
+        // boolean finalValue = (payOrNot != null) ? payOrNot : true;
         List<PhotoResponseDto> list = photoService.showAllandFilteredPhoto(searchKeyword, payOrNot);
         Message message = new Message(HttpStatusEnum.OK, "전체 인생네컷 사진 전체/필터/검색어 조회 성공", list);
         return new ResponseEntity<>(message, HttpStatus.OK);

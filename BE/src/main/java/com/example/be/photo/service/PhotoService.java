@@ -9,6 +9,7 @@ import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.memberfansign.repository.MemberFansignRepository;
 import com.example.be.photo.dto.PhotoDBDto;
 import com.example.be.photo.dto.PhotoResponseDto;
+import com.example.be.photo.entity.PayOrNot;
 import com.example.be.photo.entity.Photo;
 import com.example.be.photo.repository.PhotoRepository;
 import com.example.be.s3.S3Uploader;
@@ -39,7 +40,7 @@ public class PhotoService {
 //    }
 
     // 전체, 검색어(아티스트 명), 필터(결제완료/미결제) 조회
-    public List<PhotoResponseDto> showAllandFilteredPhoto(String keyword, Boolean payOrNot){
+    public List<PhotoResponseDto> showAllandFilteredPhoto(String keyword, PayOrNot payOrNot){
         Fan fan = getFan();
         return photoRepository.findAllandFilteredPhoto(fan,keyword,payOrNot);
     }
@@ -75,7 +76,7 @@ public class PhotoService {
 
         try {
             String life4CutUrl = s3Uploader.uploadLife4Cut(photoDBDto.getPhoto(), "fan", fan.getEmail(), photoDBDto.getMemberFansignId().toString());
-            Photo photo = new Photo(fan, memberFansign, life4CutUrl, false, artistFansign);
+            Photo photo = new Photo(fan, memberFansign, life4CutUrl, PayOrNot.N, artistFansign);
             photoRepository.save(photo);
             return photo.getPhotoId();
         } catch (IOException e) {
