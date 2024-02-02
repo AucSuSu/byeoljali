@@ -22,7 +22,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   };
 
   const applyForm = async ({ id, data }) => {
-    const data = await customAxios
+    const resData = await customAxios
       .post(`mainpage/apply/${id}`, data)
       .then((res) => {
         console.log('form 제출 완료', res.data);
@@ -36,7 +36,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
       // fanId: 2,
       artistFansignId: currFansignId, // 적절한 ID 값 필요
     };
-    dispatch(applyForm({ id: currFansignId, data: formData }));
+    applyForm({ id: currFansignId, data: formData });
   };
 
   const customStyle = {
