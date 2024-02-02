@@ -13,10 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class SchedulingController {
 
     private final SchedulingService schedulingService;
+    // 팬싸인회 당첨 강제롤 일단 시키기
     @GetMapping("/api/test/schedule")
     public String schedulTest(){
         schedulingService.endApplyingStatusCheck();
         return "good";
+    }
+
+    // 일단 강제로 팬싸인회 상태 바꿀수 있게 하기
+    @GetMapping("/api/startApplying")
+    public void startApplying(){
+        schedulingService.startApplyingStatusCheck();
     }
 
 }

@@ -24,7 +24,7 @@ app = Flask(__name__)
 
 
 ## FE 에서 캡쳐된 사진? 받아오기 (./unknown_person.jpg에 저장하기)
-@app.route('/checksame', methods = ['POST'])
+@app.route('/flask/checksame', methods = ['POST'])
 def upload_file():
     if request.method == 'POST': # POST로 들어온 요청만
 
@@ -119,7 +119,7 @@ def upload_file():
             return jsonify({"success": False, "message": str(e)})
 
 # 영수증 인증 받기 
-@app.route('/api/checkReceipt', methods = ['POST'])
+@app.route('/flask/checkreceipt', methods = ['POST'])
 def upload_receipt():
     if request.method == 'POST': # POST로 들어온 요청만
             result_count = 0; 
@@ -245,7 +245,7 @@ def getDistance(): ## 거리를 가져오는 함수
 
 
 
-@app.route('/makelife4cut', methods= ['POST'])
+@app.route('flask/makelife4cut', methods= ['POST'])
 def makelife4cut():
     if request.method == 'POST': # POST로 들어온 요청만
 

@@ -1,9 +1,6 @@
 package com.example.be.artistfansign.controller;
 
-import com.example.be.artistfansign.dto.AddArtistFansignRequestDto;
-import com.example.be.artistfansign.dto.ArtistsMyFansignResponseDto;
-import com.example.be.artistfansign.dto.FansignResponseDto;
-import com.example.be.artistfansign.dto.RecentFansignResponseDto;
+import com.example.be.artistfansign.dto.*;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.artistfansign.service.ArtistFansignService;
 import com.example.be.common.HttpStatusEnum;
@@ -69,6 +66,14 @@ public class ArtistFansignController {
         log.info(" ** 아티스트 마이페이지 팬싸인회 관리 api 입니다.** ");
         List<ArtistsMyFansignResponseDto> fansignList = artistFansignService.getArtistsFansign(status);
         Message message = new Message(HttpStatusEnum.OK, "아티스트 조회 팬싸인회", fansignList);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/artists/fansignCount")
+    public ResponseEntity<Message> getMemberFansignCount(){
+        log.info(" *** 아티스트 마이페이지 팬싸인회 개수 가져오기 api 입니다. *** ");
+        FansignGroupByStatusCountResponseDto result = artistFansignService.getFansignCount();
+        Message message = new Message(HttpStatusEnum.OK, "아티스트 조회 맴버 팬싸인회 개수", result);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }
