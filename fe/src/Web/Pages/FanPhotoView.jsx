@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import FanPhoto from '../Fan/FanPhoto';
 import { useSelector, useDispatch } from 'react-redux';
