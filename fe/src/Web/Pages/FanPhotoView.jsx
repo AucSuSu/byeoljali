@@ -19,6 +19,7 @@ function FanPhotoView() {
 
   const getUserPhotoData = async () => {
     const data = await customAxios.get('myalbum/').then((res) => {
+      console.log('내 인생네컷 조회 성공', res.data);
       return res.data.object;
     });
     dispatch(getUserPhoto(data));
