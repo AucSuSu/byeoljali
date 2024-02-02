@@ -1,7 +1,6 @@
 package com.example.be.stmp.service;
 
 import com.example.be.stmp.dto.MailDto;
-import com.example.be.winning.dto.WinningDto;
 import com.example.be.winning.dto.WinningInsertDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
