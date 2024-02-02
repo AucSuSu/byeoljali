@@ -29,7 +29,7 @@ public class TokenService {
         redisService.setValuesWithTimeout("REFRESH_TOKEN_FAN_" + fanId.toString(), refreshToken,
                 JwtProperties.ACCESS_EXPIRATION_TIME);
 
-        return new JwtToken(accessToken, refreshToken);
+        return new JwtToken(accessToken, refreshToken, true);
 
     }
 

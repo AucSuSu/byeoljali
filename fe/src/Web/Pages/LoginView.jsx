@@ -51,7 +51,7 @@ export default function LoginView() {
     }
 
     console.log('코드 : ', code);
-  }, [code]);
+  }, []);
 
   const getData = async (code) => {
     try {
