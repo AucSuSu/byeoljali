@@ -53,7 +53,6 @@ function ImgUploadModal({ onClose }) {
     customAxios
       .put(`mypage/edit/certImage`, formData, {
         headers: {
-          Authorization: token,
           'Content-Type': 'multipart/form-data',
         },
       })
