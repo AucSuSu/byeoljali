@@ -3,6 +3,7 @@ package com.example.be.stmp.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 public class MailDto {
@@ -18,5 +19,11 @@ public class MailDto {
         this.startFansignTime = startFansignTime;
         this.membername = membername;
         this.orders = orders;
+    }
+
+    // LocalDateTime을 이쁘게 변환
+    public String getStartTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 '['E']' HH:mm");
+        return this.startFansignTime.format(formatter);
     }
 }
