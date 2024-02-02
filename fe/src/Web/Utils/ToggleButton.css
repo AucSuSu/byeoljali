@@ -1,0 +1,35 @@
+/* ToggleButton.css */
+.toggle-container {
+  width: 120px; /* 너비 조정 */
+  height: 45px;
+  background-color: transparent; /*내부 투명하게*/
+  border: 3px solid #ff6d79; /* 테두리 색상 및 두께 설정 */
+  border-radius: 25px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 글자를 양쪽 끝으로 정렬 */
+}
+
+.slider {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 70px; /* 슬라이더 너비 조정 */
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: all 1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+}
+
+.toggled {
+  left: auto;
+  right: 0px;
+  color: #fff;
+  background-color: #ff6d79; /* '응모 중' 상태일 때의 색상 */
+}

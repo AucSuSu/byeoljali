@@ -469,14 +469,23 @@ class App extends Component {
   //화면 캡처 메서드
   captureMainVideo = () => {
     html2canvas(this.mainVideoRef.current).then((canvas) => {
+      // FormData 인스턴스 생성
+      const formData = new FormData();
       // Canvas를 Base64 인코딩된 문자열로 변환
       const base64Image = canvas.toDataURL('unknown_person/jpg');
-      console.log('테스트 : ', this.props.authToken);
+
+      // 'image' 필드에 파일 데이터 추가 (예제에서는 base64 인코딩된 이미지를 Blob으로 변환하여 추가)
+      // Blob 변환 과정이 필요한 경우에만 아래의 'base64ToBlob' 함수 구현 참고
+      const blob = base64ToBlob(base64Image);
+      formData.append('image', blob, 'unknown_person.jpg'); // 두 번째 인자는 파일 데이터, 세 번째 인자는 파일명
+
       // axios를 사용하여 Base64 인코딩된 이미지 데이터를 POST 요청으로 전송
       // 플라스크 서버 주소 추가할 것!!!!!!!!!!
       axios
-        .post('YOUR_SERVER_ENDPOINT', {
-          image: base64Image,
+        .post('YOUR_SERVER_ENDPOINT', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
         })
         .then((response) => {
           // 요청 성공 시 처리

@@ -3,11 +3,11 @@ import Modal from 'react-modal';
 import { handleAddFansign } from '../../Stores/modalReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import ImgUpload from './ImgUpload';
-import useAxios from '../../axios.js'
+import useAxios from '../../axios.js';
 
 export default function CreateFansignModal({}) {
   const artistData = useSelector((state) => state.artistInfo.artistData);
-  const customAxios = useAxios()
+  const customAxios = useAxios();
   const [members, setMembers] = useState({ 없음: null });
 
   useEffect(() => {
@@ -24,15 +24,17 @@ export default function CreateFansignModal({}) {
   }, [artistData]);
 
   const joinFansign = async (formData) => {
-    const response = await customAxios.post(`artists/fansign`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      }
-    },).then((res) => {
-      console.log(res.data)
-      return res.data;
-    });
-  }
+    const response = await customAxios
+      .post(`artists/fansign`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        return res.data;
+      });
+  };
 
   const dispatch = useDispatch();
 
@@ -111,7 +113,6 @@ export default function CreateFansignModal({}) {
     },
   };
 
-
   return (
     <>
       <Modal
@@ -120,29 +121,32 @@ export default function CreateFansignModal({}) {
         contentLabel="테스트입니다"
         style={customStyle}
       >
-        <div>
-          <h2>타이틀</h2>
+        <div className="font-milk font-bold ml-6 mt-6">
+          <h2 className="text-25 bolder mb-6">응모 폼 개설</h2>
 
           <ImgUpload img={null} uploadImg={uploadImg} />
+
           <form onSubmit={fansignCreate}>
-            <div>
-              <label>타이틀 : </label>
+            <div className="mt-6 flex items-center ">
+              <label className="w-32">타이틀</label>
               <input
                 type="text"
                 value={title}
+                className="border-b border-gray-300 focus:border-hot-pink outline-none w-100"
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div>
-              <label>공지사항 : </label>
+            <div className="mt-2 flex items-center">
+              <label className="w-32">공지사항 </label>
               <input
                 type="text"
                 value={information}
+                className="border-b border-gray-300 focus:border-hot-pink outline-none w-100"
                 onChange={(e) => setInformation(e.target.value)}
               />
             </div>
-            <div>
-              <label>응모시작 : </label>
+            <div className="mt-2 flex items-center">
+              <label className="w-32">응모시작 </label>
               <input
                 type="date"
                 min={startApplyTime}
@@ -150,8 +154,8 @@ export default function CreateFansignModal({}) {
                 onChange={(e) => setStartApplyTime(e.target.value)}
               />
             </div>
-            <div>
-              <label>응모마감 : </label>
+            <div className="mt-2 flex items-center">
+              <label className="w-32">응모마감 </label>
               <input
                 type="date"
                 min={startApplyTime}
@@ -159,29 +163,33 @@ export default function CreateFansignModal({}) {
                 onChange={(e) => setEndApplyTime(e.target.value)}
               />
             </div>
-            <div>
-              <label>응모방식 : </label>
+            <div className="mt-2 flex items-center">
+              <label className="w-32">응모방식 </label>
               <label htmlFor="modeRandom">Random</label>
               <input
                 type="checkbox"
                 id="modeRandom"
+                className="ml-1"
                 checked={mode.random}
                 onChange={() => {
                   handleModeCheck('RANDOM');
                 }}
               />
-              <label htmlFor="modeLine">Line</label>
+              <label className="ml-4" htmlFor="modeLine">
+                Line
+              </label>
               <input
                 type="checkbox"
                 id="modeLine"
+                className="ml-1"
                 checked={mode.line}
                 onChange={() => {
                   handleModeCheck('DESC');
                 }}
               />
             </div>
-            <div>
-              <label>팬싸인회 : </label>
+            <div className="mt-2 mb-8 flex items-center">
+              <label className="w-32">팬싸인회 </label>
               <input
                 type="date"
                 min={endApplyTime}
@@ -199,22 +207,36 @@ export default function CreateFansignModal({}) {
                 ))}
               </select>
             </div>
-            <div>
+
+            <p className="text-18 text-center bolder">개설 멤버</p>
+            <div className="bg-pink px-4 py-4 rounded-xl bolder grid grid-cols-4 gap-4 mt-2 mb-8">
               {Object.keys(members).map((member) => (
                 <div key={member}>
-                  <label>{member}</label>
                   <input
                     type="checkbox"
                     id={member}
                     checked={selectedMembers.includes(member)}
                     onChange={() => handleMemberCheck(member)}
                   />
+                  <label className="ml-2">{member}</label>
                 </div>
               ))}
             </div>
-            <button type="submit">팬싸인 개설하기</button>
+            <div className="flex justify-center mt-4">
+              <button
+                type="submit"
+                className="bg-pink text-black px-4 py-3 rounded-xl"
+              >
+                개설
+              </button>
+              <button
+                className="bg-light-gray text-black px-4 py-3 rounded-xl ml-5"
+                onClick={closeModal}
+              >
+                닫기
+              </button>
+            </div>
           </form>
-          <button onClick={closeModal}>Close Modal</button>
         </div>
       </Modal>
     </>
