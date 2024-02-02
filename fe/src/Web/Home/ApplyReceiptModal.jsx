@@ -44,7 +44,7 @@ function ApplyReceiptModal({ onClose, title }) {
     formData.append('fansignTitle', title);
 
     customAxios
-      .post(`checkReceipt`, formData, {
+      .post(`flask/checkreceipt`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
