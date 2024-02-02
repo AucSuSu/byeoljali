@@ -1,24 +1,16 @@
 package com.example.be.stmp.service;
 
 import com.example.be.stmp.dto.MailDto;
-import com.example.be.winning.dto.WinningDto;
 import com.example.be.winning.dto.WinningInsertDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static org.springframework.security.core.context.SecurityContextHolder.setContext;
 
 @Service
 @Slf4j
@@ -26,8 +18,6 @@ import static org.springframework.security.core.context.SecurityContextHolder.se
 public class MailService {
 
     private final JavaMailSender javaMailSender;
-    @Autowired
-    private TemplateEngine htmlTemplateEngine;
 
     public void sendMail(List<WinningInsertDto> list){
 
@@ -46,31 +36,27 @@ public class MailService {
 
         log.info(" *** 메일 전송 to *** " + mailInfo.getArtistFansignName() + " -> " + mailInfo.getRecieverMail());
         MimeMessage mimeMailMessage = javaMailSender.createMimeMessage();
+        String title = "[별자리] " + mailInfo.getArtistFansignName() + " 응모 결과 안내";
+//        String imagePath = // 여기 사용할 이미지 url 넣기
+        String content = "<html><body>"
+                + "<p>안녕하세요.</p>"
+                + "<p> <strong>스타와 팬이 만나는 영상 팬싸인회 플랫폼 별자리</strong>입니다.</p>"
+                + "<p>고객님께서 응모하신 <strong>[" + mailInfo.getArtistFansignName() + "]</strong>의 멤버 : <strong>[" + mailInfo.getMembername() + "]</strong> 응모에 관심을 가져주셔서 진심으로 감사드립니다.</p>"
+                + "<p>추첨 결과 <span style='font-size: 18px; color: #1a8cff;'><strong>당첨</strong></span> 되었다는 사실을 안내드립니다.</p>"
+                + "<h2>일정 안내</h2>"
+                + "<p>일시: <strong>" + mailInfo.getStartTime() + "</strong></p>"
+                + "<p>자세한 사항은 저희 별자리 플랫폼 웹페이지에 접속하여 확인해 주시기 바랍니다.</p>"
+                + "<p>저희 별자리 플랫폼을 이용해 주셔서 감사드립니다 :)</p>"
+//                + "<img src='" + imagePath + "' alt='Image Description' style='width: 100%; max-width: 600px; height: auto;'>"
+                + "</body></html>";
 
-        // test tmplate
-        String title = "[당첨] : " + mailInfo.getArtistFansignName() + " 당첨 안내";
-        String content = "[당첨] : " + mailInfo.getArtistFansignName() + " 당첨 안내" + "\n" +
-                "당첨 축하드립니다." + "\n" +
-                "일시 : " + mailInfo.getStartFansignTime();
-
-        // template
-        Context context = new Context();
-
-        Map<String, Object> messageContent = new HashMap<>();
-        messageContent.put("fansignTitle", mailInfo.getArtistFansignName());
-        messageContent.put("fansignStartTime", mailInfo.getStartFansignTime());
-        messageContent.put("orders", mailInfo.getOrders());
-        messageContent.put("memberName", mailInfo.getMembername());
-
-        context.setVariables(messageContent);
-        String templateMail = htmlTemplateEngine.process("mailTemplate.html", context);
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, false, "UTF-8");
             mimeMessageHelper.setTo(mailInfo.getRecieverMail());
             mimeMessageHelper.setSubject(title); // 제목
-            mimeMessageHelper.setText(templateMail, true); // 본문 내용
+            mimeMessageHelper.setText(content, true); // 본문 내용
             javaMailSender.send(mimeMailMessage);
-        } catch (MessagingException e){
+        }catch (MessagingException e){
             log.info("message 전송 fail");
         }
     }
