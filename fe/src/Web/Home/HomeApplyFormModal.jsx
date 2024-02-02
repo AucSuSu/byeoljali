@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { useSelector, useDispatch } from 'react-redux';
+import useAxios from '../axios';
 
 import SelectList from './SelectMemberList';
 
-import { setAlbumNum, applyForm } from '../Stores/homeDetailListReducer';
+import { setAlbumNum } from '../Stores/homeDetailListReducer';
 
 const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
+  const customAxios = useAxios();
   console.log(propData);
   const data = useSelector((state) => state.homedetail.data);
   const currAlbumNum = useSelector((state) => state.homedetail.albumNum);
@@ -17,6 +19,14 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
 
   const handleChange = (event) => {
     dispatch(setAlbumNum(parseInt(event.target.value, 10))); // 숫자로 변환
+  };
+
+  const applyForm = async ({ id, data }) => {
+    const data = await customAxios
+      .post(`mainpage/apply/${id}`, data)
+      .then((res) => {
+        console.log('form 제출 완료', res.data);
+      });
   };
 
   const handleSubmit = () => {
