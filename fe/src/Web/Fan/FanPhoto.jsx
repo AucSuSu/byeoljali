@@ -94,7 +94,7 @@ function FanPhoto({ data }) {
       />
       <p>팬싸인회 제목: {data.artistFansignTitle}</p>
       <p>시작 시간: {data.startFansignTime}</p>
-      <p>결제 여부: {data.pay === true ? '결제함' : '결제안함'}</p>
+      <p>결제 여부: {data.pay === 'Y' ? '결제함' : '결제안함'}</p>
       {isModalOpen && (
         <FanModal
           onClose={handleCloseModal}
