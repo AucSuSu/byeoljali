@@ -4,9 +4,9 @@ package com.example.be.config.jwt;
 
 import com.example.be.artist.entity.Artist;
 import com.example.be.config.auth.PrincipalDetails;
+import com.example.be.config.jwt.service.TokenService;
 import com.example.be.config.redis.RedisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
