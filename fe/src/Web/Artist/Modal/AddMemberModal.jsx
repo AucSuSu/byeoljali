@@ -6,20 +6,23 @@ import { addMember } from '../../Stores/artistInfoReducer';
 import useAxios from '../../axios.js';
 
 export default function AddMemberModal() {
-
   const customAxios = useAxios();
   const dispatch = useDispatch();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [name, setName] = useState('');
   const [imgData, setImgData] = useState('');
-  
+
   const addArtist = async (formData) => {
-    const response = await customAxios.post(`artists/members`, formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((res) => {
-      console.log('데이터 : ', res)
-      return res.data;
-    });
-    dispatch(addMember(response))
+    const response = await customAxios
+      .post(`artists/members`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then((res) => {
+        console.log('데이터 : ', res);
+        return res.data;
+      });
+    dispatch(addMember(response));
   };
 
   const openModal = () => {
@@ -35,7 +38,6 @@ export default function AddMemberModal() {
     image: imgData,
   };
 
-
   const add = (e) => {
     e.preventDefault();
 
@@ -44,25 +46,13 @@ export default function AddMemberModal() {
       formData.append(key, payload[key]);
     }
 
-    addArtist(formData)
+    addArtist(formData);
     closeModal();
   };
 
   const uploadImg = (img) => {
     setImgData(img);
     console.log('이미지 데이터 : ', img);
-  };
-
-  const customStyle = {
-    content: {
-      width: '500px',
-      height: '500px',
-      margin: 'auto',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
   };
 
   return (
@@ -75,7 +65,7 @@ export default function AddMemberModal() {
         style={customStyle}
       >
         <div>
-          <h2>맴버를 추가해주세요</h2>
+          <h2 className="text-25">맴버를 추가해주세요</h2>
           <ImgUpload img={null} uploadImg={uploadImg} />
           <form onSubmit={add}>
             <div>
