@@ -11,6 +11,7 @@ import com.example.be.photo.dto.PhotoDBDto;
 import com.example.be.photo.dto.PhotoResponseDto;
 import com.example.be.photo.entity.Photo;
 import com.example.be.photo.repository.PhotoRepository;
+import com.example.be.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -27,7 +29,7 @@ import java.util.List;
 public class PhotoService {
 
     private final PhotoRepository photoRepository;
-    private final FanRepository fanRepository;
+    private final S3Uploader s3Uploader;
     private final ArtistFansignRepository artistFansignRepository;
     private final MemberFansignRepository memberFansignRepository;
 
@@ -62,20 +64,26 @@ public class PhotoService {
     // 인생네컷 다운로드
     public Long downloadDBPhoto(PhotoDBDto photoDBDto){
 
-        Long fanId = photoDBDto.getFanId();
-        Long memberfansignId = photoDBDto.getMemberfansignId();
+        Long memberFansignId = photoDBDto.getMemberFansignId();
         Long artistFansignId = photoDBDto.getArtistFansignId();
 
-        Fan fan = fanRepository.findById(fanId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원 정보가 없습니다."));
+        Fan fan = getFan();
         ArtistFansign artistFansign = artistFansignRepository.findById(artistFansignId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 팬싸인회 정보가 없습니다."));
-        MemberFansign memberFansign = memberFansignRepository.findById(memberfansignId)
+        MemberFansign memberFansign = memberFansignRepository.findById(memberFansignId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 멤버의 팬싸인회 정보가 없습니다."));
 
-        Photo photo = new Photo(fan, memberFansign, photoDBDto.getPhotoUrl(), false, artistFansign);
-        photoRepository.save(photo);
-        return photo.getPhotoId();
+        try {
+            String life4CutUrl = s3Uploader.uploadLife4Cut(photoDBDto.getPhoto(), "fan", fan.getEmail(), photoDBDto.getMemberFansignId().toString());
+            Photo photo = new Photo(fan, memberFansign, life4CutUrl, false, artistFansign);
+            photoRepository.save(photo);
+            return photo.getPhotoId();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
     }
     private Fan getFan(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

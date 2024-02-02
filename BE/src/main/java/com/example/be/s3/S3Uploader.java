@@ -85,6 +85,23 @@ public class S3Uploader {
     }
 
     /**
+     * 팬의 인생네컷
+     */
+    public String uploadLife4Cut(MultipartFile multipartFile, String dirName, String name, String memberFansignId) throws IOException{
+        File uploadFile = convert(multipartFile).orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File 전환 실패"));
+        return uploadLife4Cut(uploadFile, dirName, name, memberFansignId);
+    }
+
+    private String uploadLife4Cut(File uploadFile, String dirName, String name, String memberFansignId){
+        String fileName = dirName + "/" + name + "/life4cut/" + memberFansignId + "/" + "life4cut.jpg";
+        String uploadImageUrl = putS3(uploadFile, fileName);
+        removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
+
+        return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
+    }
+
+
+    /**
      * 팬싸인회 포스터
      */
     public String uploadPoster(MultipartFile multipartFile, String dirName, String name, LocalDateTime localDateTime) throws IOException{
