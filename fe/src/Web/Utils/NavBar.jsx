@@ -68,11 +68,11 @@ const DropdownItem = styled.div`
 
 const Navbar = ({ isFan }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const setLogout = () => {
     dispatch(logout());
-    navigate('/')
+    navigate('/');
   };
 
   const profileImageUrl =
@@ -111,10 +111,10 @@ const Navbar = ({ isFan }) => {
           // Artist일 경우
           <>
             <NavbarItem>
-              <NavbarLink to="/readyfansign">응모 관리</NavbarLink>
+              <NavbarLink to="/fansign">응모 관리</NavbarLink>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/fansign">팬싸 관리</NavbarLink>
+              <NavbarLink to="/readyfansign">팬싸 관리</NavbarLink>
             </NavbarItem>
             <Dropdown>
               <ProfileImage imageUrl={profileImageUrl} />
