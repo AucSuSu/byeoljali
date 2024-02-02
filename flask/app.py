@@ -1,35 +1,26 @@
 from flask import Flask, render_template, request, jsonify
-# from werkzeug.utils import secure_filename
-# from keras.preprocessing import image
-# from keras import utils
-# from keras.models import load_model
 import face_recognition as fr
 import matplotlib.pyplot as plt
 import numpy as np
 import base64
 import io
+from io import BytesIO
 import os
 import requests
 import uuid
 import time
 import json
 # from flask_cors import CORS
-from PIL import Image
-from requests_toolbelt import MultipartEncoder
+from PIL import Image, ImageOps
 from werkzeug.serving import run_simple
 
 api_url = 'https://igq83o9rcc.apigw.ntruss.com/custom/v1/28107/eab1aa4e0a50a7fbaf9304aaaac1ba04a63c2600bbbd373b1334daa2120c0d76/document/receipt'
 secret_key = 'c3lXZlpEbkFmZU5yYW1sbnZteEdzS0lLTU1yZm9BQ3U='
 image_file = './data1.jpg' # server로 받은 영수증 이미지 
 fansign_title = ""
-result_count = 0; 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # tensorflow의 로깅레벨 설정: error만 보이도록
 app = Flask(__name__)
 # CORS(app) # 웹 애플리케이션이 다른 도메인에서 호스팅된 API에 접근할 때 필요
-
-@app.route("/")
-def hello_world():
-    return render_template('html_sample.html')
 
 
 ## FE 에서 캡쳐된 사진? 받아오기 (./unknown_person.jpg에 저장하기)
@@ -79,9 +70,6 @@ def upload_file():
             headers = {
                 'Authorization': token
             }
-
-            # param
-            data = {}
 
             # 외부 API로부터 데이터 수신할 때
             # : 지정된 url로 post 요청을 보냄
@@ -134,7 +122,7 @@ def upload_file():
 @app.route('/api/checkReceipt', methods = ['POST'])
 def upload_receipt():
     if request.method == 'POST': # POST로 들어온 요청만
-            
+            result_count = 0; 
             #이미지 가져오기 
             image_file = request.files['image'].read()
             fansign_title = request.form.get("fansignTitle")
@@ -177,7 +165,7 @@ def upload_receipt():
             if receipt_data is None:
                 # 'images' 키가 존재할 때의 처리를 여기에 작성합니다.
                 response_data = {'boughtAlbum': 0, 'msg' : "NOT_AVAILABLE"}
-                return jsonify("이미지 존재하지 않습니다."), 900
+                return jsonify(response_data), 900
 
 
             # subResults 추출
@@ -190,6 +178,16 @@ def upload_receipt():
 
             data_list = []
 
+            if sub_results is None or len(sub_results) == 0 :
+                 # 'images' 키가 존재할 때의 처리를 여기에 작성합니다.
+                response_data = {'boughtAlbum': 0, 'msg' : "NOT_AVAILABLE"}
+                return jsonify(response_data), 900
+            
+            if sub_results[0]['items'] is None or len(sub_results[0]['items']) == 0 :
+                 # 'images' 키가 존재할 때의 처리를 여기에 작성합니다.
+                response_data = {'boughtAlbum': 0, 'msg' : "NOT_AVAILABLE"}
+                return jsonify(response_data), 900
+            
             # 아이템들을 data_list에 추가
             for item in sub_results[0]['items']:
                 data_list.append({
@@ -246,5 +244,154 @@ def getDistance(): ## 거리를 가져오는 함수
 
 
 
+
+@app.route('/makelife4cut', methods= ['POST'])
+def makelife4cut():
+    if request.method == 'POST': # POST로 들어온 요청만
+
+        try:
+            print("FE에서 FLASK로 헤더/이미지 4개/아티스트 팬싸인회id/멤버 팬싸인회 id 전송")
+            # fanId 값을 http 헤더에서 추출
+            token = request.headers.get('authorization')
+            print("token: " +token)
+
+            memberFansignId = request.form.get('memberFansignId')
+            artistFansignId = request.form.get('artistFansignId')
+
+            print(memberFansignId)
+            print(artistFansignId)
+
+            #웹에서 base64로 인코딩된 이미지 정보 가져오기
+            file_list = []
+
+            for i in range(1,5):
+                image_key = 'image{}'.format(i)
+
+                if image_key in request.files: # image_key로 프론트에서 request로 받아와야 함!!
+                    image_data = request.files[image_key].read()
+                    
+                    print("Success to get incoding image from user") # debugging
+                    print('incoding image:', image_data[:10]) # base64 코드 앞쪽 10자리만 확인
+
+                    ### 이미지 데이터 처리 코드
+                    imgdata = base64.b64decode(image_data) # 디코딩하여 byte 형태로 변환
+                    print("Success to decode base64 code") # debugging
+
+                    #byte형태의 이미지 데이터를 이미지로 변환: Pillow(PIL) 라이브러리를 사용해 이미지 오픈
+                    print("Success to get image data") # debugging
+                    photo = Image.open(io.BytesIO(image_data))
+                    if photo is not None :
+                        print("photo 잘 저장했습니다")
+
+                    file_list.append(photo) # 4개의 이미지 데이터가 저장된다!
+
+            x_min, y_min, y_size = calculateSize(file_list)
+
+            # 사진 크기 조절 - 사진 크기를 맞춰준다
+            file_list, y_size, x_min, y_min = resizeToMin(file_list, x_min, y_min, y_size) # return 받은 값을 이용해서 리사이즈
+
+            # 조절한 사진들에 경계선 추가
+            print("조절한 사진들에 경계선 추가")
+            file_list, x_min, y_min, y_size = add_border(file_list, x_min, y_min, y_size)
+
+            # 이미지 4개 붙이기
+            print("이미지 4개 붙이기")
+            life4cut = imageMerge(file_list, y_size, x_min, y_min)
+
+            print("===============================================")
+            print("BE로 헤더와 이미지 전송")
+
+            print(type(life4cut))
+
+            # PIL.Image.Image 객체를 바이트 데이터로 변환
+            buffered = BytesIO()
+            life4cut.save(buffered, format="JPEG")  # 이미지 포맷에 따라 format을 조정
+            life4cut_bytes = buffered.getvalue()
+
+            files = [('photo', ('life4cut.jpg', life4cut_bytes, 'image/jpeg'))]
+
+            # Prepare data to send to the Spring application
+            headers = {'Authorization': token}
+            data = {
+                'artistFansignId' : artistFansignId,
+                'memberFansignId' : memberFansignId
+            }
+
+            # Send a POST request to the Spring application
+            url = 'http://localhost:8080/api/myalbum'
+            response = requests.request("POST", url, headers=headers, files=files, data=data)
+
+
+            # Handle the response from the Spring application
+            spring_response = response.json()
+            return jsonify({"spring_response": spring_response})
+
+
+        except Exception as e:
+            print("exception in!")
+            return jsonify({"success": False, "message": str(e)})
+
+## 사진의 크기를 맞추는 함수
+def calculateSize(file_list):
+    size_x = [] # 사진들의 가로 길이 저장
+    size_y = [] # 사진들의 세로 길이 저장
+
+    for idx in range(len(file_list)):
+        size_x.append(file_list[idx].size[0])
+        size_y.append(file_list[idx].size[1])
+
+    x_min = min(size_x)
+    y_min = min(size_y)
+    total_y_size = y_min * len(file_list)
+    
+    print("x_min : ", x_min)
+    print("y_min : ", y_min)
+    print("총길이 : ", total_y_size)
+
+    return x_min, y_min, total_y_size
+
+## 가장 작은 크기에 맞춰서 사진들의 크기 맞춰주기
+def resizeToMin(file_list, x_min, y_min, y_size):
+    for idx in range(len(file_list)):
+        file_list[idx] = file_list[idx].resize((x_min, y_min))
+        print(file_list[idx].size)
+
+    return file_list, y_size, x_min, y_min
+
+## 이미지 합치기
+def imageMerge(file_list, y_size, x_min, y_min):
+    
+    # 이미지를 올려줄 도화지
+    new_image = Image.new("RGB", (x_min, y_size), (256,256,256))
+    print("가로 길이: ", x_min)
+    print("세로 길이: ", y_size)
+    print("사진 파일 개수: ", len(file_list))
+
+
+    for idx in range(len(file_list)):
+        # 시작점 가로, 시작점 세로, 이미지 가로 크기, 이미지 세로 크기
+        area = (0, idx * y_min, x_min, (idx + 1) * y_min)
+        new_image.paste(file_list[idx], area)
+
+    # new_image.show()
+    new_image.save('./life4cut.jpg', "JPEG")
+    return new_image
+
+
+def add_border(file_list,x_min, y_min, y_size):
+
+    for idx in range(len(file_list)):
+        # image = Image.open(file_list[idx])
+
+        # 테두리 추가
+        file_list[idx] = ImageOps.expand(file_list[idx], border=20, fill=(256,256,256))
+        # file_list[idx].show()
+
+    x_min += 40
+    y_min += 40
+    y_size = y_min*4
+    
+    return file_list, x_min, y_min, y_size
+
 if __name__ == "__main__":
-    run_simple('0.0.0.0', 5000, app)
+    run_simple('0.0.0.0', 8000, app)
