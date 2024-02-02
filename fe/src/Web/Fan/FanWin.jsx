@@ -15,7 +15,7 @@ function FanWin() {
   }, []);
 
   const loadWinData = async () => {
-    const data = customAxios.get('applyPage/1').then((res) => {
+    const data = await customAxios.get('applyPage/1').then((res) => {
       return res.data.object;
     });
     dispatch(loadWin(data));
