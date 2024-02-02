@@ -97,12 +97,8 @@ class App extends Component {
           const average =
             dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
           // console.log('>>>>>>볼륨: ' + average);
-
-          // average 값으로 UI 업데이트 (예: CSS를 사용하여 높이 조절)
-          // 수정된 부분: volumeMeter가 null이 아닌 경우에만 스타일 조작
-          if (volumeMeter) {
-            volumeMeter.style.height = `${average}px`;
-          }
+          const volumeBar = document.getElementById('volume-bar');
+          volumeBar.style.width = average + '%'; // 볼륨 수치에 따라 너비 변경
         };
 
         setInterval(updateVolume, 100);
@@ -608,6 +604,11 @@ class App extends Component {
                 <UserVideoComponent
                   streamManager={this.state.mainStreamManager}
                 />
+              </div>
+              {/* 볼륨 바 컨테이너 */}
+              <div id="volume-container" class="volume-container">
+                {/* 실제 볼륨 바 */}
+                <div id="volume-bar" class="volume-bar"></div>
               </div>
 
               {/* 캡처 버튼 */}
