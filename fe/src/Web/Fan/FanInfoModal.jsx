@@ -43,17 +43,15 @@ function FanInfoModal({ userData, onClose }) {
   };
 
   const editUserInfoData = async (data) => {
-    await customAxios.put(
-      'mypage/edit/profile',
-      data.formData,
-      {
+    await customAxios
+      .put('mypage/edit/profile', data.formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      }.then((res) => {
+      })
+      .then((res) => {
         return res.data;
-      }),
-    );
+      });
   };
 
   const handleSubmit = () => {
