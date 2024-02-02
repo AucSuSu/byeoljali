@@ -1,6 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import homeApplyListReducer from './homeApplyListReducer.js';
-import homeRecentReducer from './homeRecentReducer.js';
 import homeDetailListReducer from './homeDetailListReducer.js';
 import authReducer from './authReducer.js';
 import artistInfoReducer from './artistInfoReducer.js';
@@ -32,7 +31,6 @@ const persistConfig = {
 // 여러 리듀서를 결합
 const rootReducer = combineReducers({
   homeapply: homeApplyListReducer,
-  homerecent: homeRecentReducer,
   homedetail: homeDetailListReducer,
   auth: authReducer,
   modal: modalReducer,
