@@ -9,8 +9,8 @@ export default function Socket({ memberFansignId }) {
 
   useEffect(() => {
     // WebSocket 서버에 연결
-    const newSocket = new SockJs('https://i10e104.p.ssafy.io:8080/socket');
-    console.log(` 들어왔어용 : memberFansignSession${memberFansignId}`);
+    const newSocket = new SockJs('https://i10e104.p.ssafy.io/socket');
+    console.log(` roomId에용 : memberFansignSession${memberFansignId}`);
 
     // 메시지 수신 처리
     // 누가 여기 세션으로 보내면 자동으로 실행되는 핸들러
@@ -23,11 +23,11 @@ export default function Socket({ memberFansignId }) {
     };
 
     newSocket.onopen = () => {
-      console.log('들어왔어요~ : WebSocket connection opened');
+      console.log('OPEN 들어왔어요~ : WebSocket connection opened');
     };
 
     newSocket.onclose = (event) => {
-      console.log('나갔어요... : WebSocket connection closed:', event);
+      console.log(' CLOSE 나갔어요... : WebSocket connection closed:', event);
     };
 
     setSocket(newSocket);
