@@ -81,13 +81,19 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
             {/* 정보 */}
             <h3>정보</h3>
             <p>{data?.object?.fansignInfo}</p>
-            <h3>구매 앨범</h3>
-            <input
-              type="number"
-              value={data.albumNum}
-              onChange={handleChange}
-            ></input>
-            <button onClick={() => handleSubmit()}>응모하기</button>
+            <div>
+              {propData.status === 'APPLYING' ? (
+                <div>
+                  <h3>구매 앨범</h3>
+                  <input
+                    type="number"
+                    value={data.albumNum}
+                    onChange={handleChange}
+                  ></input>
+                  <button onClick={() => handleSubmit()}>응모하기</button>
+                </div>
+              ) : null}
+            </div>
             <button onClick={closeModal}>Close Modal</button>
           </div>
         </Modal>
