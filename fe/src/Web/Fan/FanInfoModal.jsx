@@ -60,7 +60,7 @@ function FanInfoModal({ userData, onClose }) {
       formData.append(key, localUserData[key]);
     });
     if (profileImage) {
-      formData.append('image', profileImage);
+      formData.append('profileImage', profileImage);
     }
     console.log(formData);
     editUserInfoData(formData); // 서버에 데이터 전송
