@@ -89,7 +89,7 @@ public class SessionService {
             log.info("*** 개설 세션 아이디 ***" + redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId))));
         }
 
-
+        // session_connected 상태로 변경해줌
         for(Long artistFansignId : artistSet){
             schedulingRepository.updateStatusToSessionConnected(artistFansignId);
         }
