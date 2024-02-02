@@ -5,10 +5,11 @@ export default function Socket({ memberFansignId }) {
   const [socket, setSocket] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  // const [memberFansignId, setMemberFansignId] = useState('');
 
   useEffect(() => {
     // WebSocket 서버에 연결
-    const newSocket = new SockJs('http://i10e104.p.ssafy.io:8080/socket');
+    const newSocket = new SockJs('https://i10e104.p.ssafy.io:8080/socket');
     console.log(` 들어왔어용 : memberFansignSession${memberFansignId}`);
 
     // 메시지 수신 처리
@@ -96,6 +97,12 @@ export default function Socket({ memberFansignId }) {
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
       />
+      {/* <input
+        className="border mx-auto text-blue-500"
+        type="text"
+        value={memberFansignId}
+        onChange={(e) => setMemberFansignId(e.target.value)}
+      /> */}
       <button className="border-1" onClick={sendMessage}>
         전송
       </button>
