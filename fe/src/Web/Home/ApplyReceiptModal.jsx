@@ -44,7 +44,7 @@ function ApplyReceiptModal({ onClose, title }) {
     formData.append('fansignTitle', title);
 
     customAxios
-      .put(`mypage/edit/certImage`, formData, {
+      .put(`checkReceipt`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
