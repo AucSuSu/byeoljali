@@ -50,7 +50,7 @@ function FanInfoModal({ userData, onClose }) {
         },
       })
       .then((res) => {
-        return res.data;
+        console.log('user정보 수정 완료', res.data);
       });
   };
 
