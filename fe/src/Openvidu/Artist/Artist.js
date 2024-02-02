@@ -143,26 +143,7 @@ class VideoRoomComponent extends Component {
     }
     // 아래 부분 getToken 없애도 될듯? ##체크포인트
     else {
-      try {
-        var token = await this.getToken();
-        console.log(token);
-        this.connect(token);
-      } catch (error) {
-        console.error(
-          'There was an error getting the token:',
-          error.code,
-          error.message,
-        );
-        if (this.props.error) {
-          this.props.error({
-            error: error.error,
-            messgae: error.message,
-            code: error.code,
-            status: error.status,
-          });
-        }
-        alert('There was an error getting the token:', error.message);
-      }
+      console.log('초비상!!! 토큰없다!!!!!!');
     }
   }
 
@@ -732,33 +713,6 @@ class VideoRoomComponent extends Component {
         </div>
       </div>
     );
-  }
-
-  async getToken() {
-    const sessionId = await this.createSession(this.state.mySessionId);
-    return await this.createToken(sessionId);
-  }
-
-  async createSession(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + 'api/sessions',
-      { customSessionId: sessionId },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
-    return response.data; // The sessionId
-  }
-
-  async createToken(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections',
-      {},
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
-    return response.data; // The token
   }
 }
 export default VideoRoomComponent;
