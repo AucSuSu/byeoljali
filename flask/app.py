@@ -167,7 +167,18 @@ def upload_receipt():
             # 문자열을 JSON으로 파싱
             parsed_data = json.loads(response.text.encode('utf8'))
             print(parsed_data)
+
+            # 여기서 잡아라 ....
+            # -> images가 없는 경우 여기서 바로 response 500 error 
+             
             receipt_data = parsed_data.get("images")
+
+            # 'images' 키가 존재하는지 여부를 확인하고 처리합니다.
+            if receipt_data is None:
+                # 'images' 키가 존재할 때의 처리를 여기에 작성합니다.
+                response_data = {'boughtAlbum': 0, 'msg' : "NOT_AVAILABLE"}
+                return jsonify("이미지 존재하지 않습니다."), 900
+
 
             # subResults 추출
             sub_results = []
@@ -203,7 +214,7 @@ def upload_receipt():
 
             print(result_count)
              # HTTP 응답 생성
-            response_data = {'boughtAlbum': result_count}
+            response_data = {'boughtAlbum': result_count, "msg" : "OK"}
             return jsonify(response_data), 200
 
 
