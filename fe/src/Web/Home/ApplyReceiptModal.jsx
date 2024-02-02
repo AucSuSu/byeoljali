@@ -3,19 +3,11 @@ import './ApplyReceiptModal.css';
 import useAxios from '../axios';
 import { useSelector } from 'react-redux';
 
-function ApplyReceiptModal({ onClose }) {
+function ApplyReceiptModal({ onClose, title }) {
   const customAxios = useAxios();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState('');
   const fileInputRef = useRef(null);
-
-  // 이미지 업로드 관련 URL, token 설정
-  // const IMG_POST_URL = process.env.REACT_APP_BASE_URL;
-  // const token = useSelector((state) => state.auth.token)
-  // const token = useSelector((state) => state.token.token);
-  // console.log(token);
-
-  // console.log(IMG_POST_URL);
 
   useEffect(() => {
     if (imageFile) {
@@ -49,6 +41,7 @@ function ApplyReceiptModal({ onClose }) {
 
     const formData = new FormData();
     formData.append('image', imageFile);
+    formData.append('fansignTitle', title);
 
     customAxios
       .put(`mypage/edit/certImage`, formData, {

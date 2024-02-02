@@ -96,7 +96,10 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   <button onClick={openReceiptModal}>영수증 등록하기</button>
                   <input value={data.albumNum}></input>
                   {isReceiptModalOpen && (
-                    <ApplyReceiptModal onClose={() => closeReceiptModal} />
+                    <ApplyReceiptModal
+                      onClose={() => closeReceiptModal}
+                      title={propData.title}
+                    />
                   )}
                   <button onClick={() => handleSubmit()}>응모하기</button>
                 </div>
