@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { editUserData } from '../Stores/fanInfoReducer';
-import { getUserData } from '../Stores/fanInfoReducer';
+
 import './FanInfoModal.css';
+import useAxios from '../axios';
 
 function FanInfoModal({ userData, onClose }) {
+  const customAxios = useAxios();
   const dispatch = useDispatch();
   const [localUserData, setLocalUserData] = useState({
     nickname: userData.nickname,
@@ -41,6 +42,18 @@ function FanInfoModal({ userData, onClose }) {
     e.stopPropagation(); // 모달 내부 클릭시 이벤트 버블링 방지
   };
 
+  const editUserInfoData = async (data) => {
+    await customAxios
+      .put('mypage/edit/profile', data.formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        return res.data;
+      });
+  };
+
   const handleSubmit = () => {
     const formData = new FormData();
     Object.keys(localUserData).forEach((key) => {
@@ -50,7 +63,7 @@ function FanInfoModal({ userData, onClose }) {
       formData.append('profileImage', profileImage);
     }
     console.log(formData);
-    dispatch(editUserData({ formData })); // 서버에 데이터 전송
+    editUserInfoData(formData); // 서버에 데이터 전송
     onClose(); // 모달 닫기
   };
 

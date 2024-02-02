@@ -2,16 +2,24 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadWin } from '../Stores/fanApplyListReducer';
 import FanSignList from '../Fan/FanSignList';
+import useAxios from '../axios';
 
 function FanWin() {
+  const customAxios = useAxios();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.fanapply.data);
+  console.log(data);
 
   useEffect(() => {
-    dispatch(loadWin());
-  }, [dispatch]);
+    loadWinData();
+  }, []);
 
-  console.log(data);
+  const loadWinData = async () => {
+    const data = await customAxios.get('applyPage/1').then((res) => {
+      return res.data.object;
+    });
+    dispatch(loadWin(data));
+  };
 
   return (
     <div>

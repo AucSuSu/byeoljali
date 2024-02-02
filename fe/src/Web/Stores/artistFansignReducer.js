@@ -9,16 +9,16 @@ const artistFansignSlice = createSlice({
     error: null,
   },
   reducers: {
-    getFansignInfo(state, action){
-      state.data = action.payload
-      console.log('데이터:', state.data)
+    getFansignInfo(state, action) {
+      state.data = action.payload;
+      console.log('데이터:', state.data);
     },
-    fansignDetail(state, action){
-      state.detail = action.payload
-      console.log('데이터 : ', state.detail)
-    }
-  }
+    fansignDetail(state, action) {
+      state.detail = action.payload;
+      console.log('데이터 : ', state.detail);
+    },
+  },
 });
 
 export default artistFansignSlice.reducer;
-export const { getFansignInfo, fansignDetail } = artistFansignSlice.actions
+export const { getFansignInfo, fansignDetail } = artistFansignSlice.actions;
