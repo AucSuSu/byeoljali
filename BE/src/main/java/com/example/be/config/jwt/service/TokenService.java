@@ -1,11 +1,14 @@
-package com.example.be.config.jwt;
+package com.example.be.config.jwt.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.be.config.jwt.JwtProperties;
+import com.example.be.config.jwt.JwtToken;
 import com.example.be.config.redis.RedisService;
+import com.example.be.fan.entity.Fan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,19 @@ import java.util.Date;
 public class TokenService {
 
     private final RedisService redisService;
+
+    // 로그인할 fan 정보로 JWT Token 만들기
+    public JwtToken createToken(Fan fan){
+        // HMAC 방식으로 암호화 된 토큰
+        Long fanId = fan.getFanId();
+        String accessToken = generateAccessToken(fanId, "ROLE_FAN");
+        String refreshToken = generateRefreshToken(fanId, "ROLE_FAN");
+        redisService.setValuesWithTimeout("REFRESH_TOKEN_FAN_" + fanId.toString(), refreshToken,
+                JwtProperties.ACCESS_EXPIRATION_TIME);
+
+        return new JwtToken(accessToken, refreshToken);
+
+    }
 
     // refresh 토큰 검증
     public String verifyRefreshToken(String token) {

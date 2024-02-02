@@ -10,11 +10,19 @@ import base64
 import io
 import os
 import requests
+import uuid
+import time
+import json
 # from flask_cors import CORS
 from PIL import Image
 from requests_toolbelt import MultipartEncoder
 from werkzeug.serving import run_simple
 
+api_url = 'https://igq83o9rcc.apigw.ntruss.com/custom/v1/28107/eab1aa4e0a50a7fbaf9304aaaac1ba04a63c2600bbbd373b1334daa2120c0d76/document/receipt'
+secret_key = 'c3lXZlpEbkFmZU5yYW1sbnZteEdzS0lLTU1yZm9BQ3U='
+image_file = './data1.jpg' # server로 받은 영수증 이미지 
+fansign_title = ""
+result_count = 0; 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # tensorflow의 로깅레벨 설정: error만 보이도록
 app = Flask(__name__)
 # CORS(app) # 웹 애플리케이션이 다른 도메인에서 호스팅된 API에 접근할 때 필요
@@ -121,7 +129,83 @@ def upload_file():
             
             print("exception in!")
             return jsonify({"success": False, "message": str(e)})
-        
+
+# 영수증 인증 받기 
+@app.route('/api/checkReceipt', methods = ['POST'])
+def upload_receipt():
+    if request.method == 'POST': # POST로 들어온 요청만
+            
+            #이미지 가져오기 
+            image_file = request.files['image'].read()
+            fansign_title = request.form.get("fansignTitle")
+            print(type(image_file))
+
+            request_json = {
+                'images': [
+                    {
+                        'format': 'jpg',
+                        'name': 'demo'
+                    }
+                ],
+                'requestId': str(uuid.uuid4()),
+                'version': 'V2',
+                'timestamp': int(round(time.time() * 1000)),
+                'lang' :'ko'
+            }
+
+            payload = {'message': json.dumps(request_json).encode('UTF-8')}
+            files = [
+            ('file', image_file)
+            ]
+            headers = {
+            'X-OCR-SECRET': secret_key
+            }
+
+            response = requests.request("POST", api_url, headers=headers, data = payload, files = files)
+
+
+            # 문자열을 JSON으로 파싱
+            parsed_data = json.loads(response.text.encode('utf8'))
+            print(parsed_data)
+            receipt_data = parsed_data.get("images")
+
+            # subResults 추출
+            sub_results = []
+            for receipt in receipt_data:
+                result = receipt.get("receipt", {}).get("result", {})
+                sub_results.extend(result.get("subResults", []))
+
+            #print(sub_results)
+
+            data_list = []
+
+            # 아이템들을 data_list에 추가
+            for item in sub_results[0]['items']:
+                data_list.append({
+                    'name' : item.get('name', {}).get('formatted', {}).get('value', 'N/A'),
+                    'code': item.get('code', {}).get('text', 'N/A'),
+                    'count': item.get('count', {}).get('formatted', {}).get('value', 'N/A'),
+                    'price': item.get('price', {}).get('price', {}).get('formatted', {}).get('value', 'N/A'),
+                    'unit_price': item.get('price', {}).get('unitPrice', {}).get('formatted', {}).get('value', 'N/A'),
+
+                })
+
+            # 데이터 리스트 출력 -> 항목 리스트 
+            for data in data_list:
+                # 받아온 팬싸인회 이름과 구매항목 앨범 이름 대조 
+                # 같은게 있다면 개수를 return 해줌 -> 없으면 0 
+                if data['name'] in fansign_title or fansign_title in data['name'] :
+                    print(data['name'])
+                    print(data['count'])
+                    result_count = data['count']
+                print(data)
+
+
+            print(result_count)
+             # HTTP 응답 생성
+            response_data = {'boughtAlbum': result_count}
+            return jsonify(response_data), 200
+
 
         
 def getDistance(): ## 거리를 가져오는 함수
