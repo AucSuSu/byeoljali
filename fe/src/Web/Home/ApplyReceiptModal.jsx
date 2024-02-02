@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import './ApplyReceiptModal.css';
-import useAxios from '../axios';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 function ApplyReceiptModal({ onClose, title }) {
@@ -43,7 +43,7 @@ function ApplyReceiptModal({ onClose, title }) {
     formData.append('image', imageFile);
     formData.append('fansignTitle', title);
 
-    customAxios
+    axios
       .post(`flask/checkreceipt`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
