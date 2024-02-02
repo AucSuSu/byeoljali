@@ -21,7 +21,7 @@ function FanInfoView() {
   }, []);
 
   const getUserInfoData = async () => {
-    const data = customAxios.get('mypage/').then((res) => {
+    const data = await customAxios.get('mypage/').then((res) => {
       return res.data.object;
     });
     dispatch(getUserInfo(data));

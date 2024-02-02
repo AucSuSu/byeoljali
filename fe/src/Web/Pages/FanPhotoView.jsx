@@ -18,7 +18,7 @@ function FanPhotoView() {
   }, []);
 
   const getUserPhotoData = async () => {
-    const data = customAxios.get('myalbum/').then((res) => {
+    const data = await customAxios.get('myalbum/').then((res) => {
       return res.data.object;
     });
     dispatch(getUserPhoto(data));
