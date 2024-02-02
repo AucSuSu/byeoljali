@@ -5,6 +5,8 @@ import useAxios from '../axios';
 
 import SelectList from './SelectMemberList';
 
+import ApplyReceiptModal from './ApplyReceiptModal';
+
 import { setAlbumNum } from '../Stores/homeDetailListReducer';
 
 const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
@@ -16,10 +18,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const currMemberId = useSelector((state) => state.homedetail.memberId);
 
   const dispatch = useDispatch(); // useDispatch 호출
-
-  const handleChange = (event) => {
-    dispatch(setAlbumNum(parseInt(event.target.value, 10))); // 숫자로 변환
-  };
 
   const applyForm = async ({ id, data }) => {
     const resData = await customAxios
@@ -33,7 +31,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     const formData = {
       memberId: currMemberId,
       boughtAlbum: currAlbumNum,
-      // fanId: 2,
       artistFansignId: currFansignId, // 적절한 ID 값 필요
     };
     applyForm({ id: currFansignId, data: formData });
@@ -45,6 +42,18 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
       height: '500px',
       margin: 'auto',
     },
+  };
+
+  //이중 모달창 관리
+  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
+  // 영수증 등록 모달 열기 핸들러
+  const openReceiptModal = () => {
+    setIsReceiptModalOpen(true);
+  };
+
+  // 영수증 등록 모달 닫기 핸들러
+  const closeReceiptModal = () => {
+    setIsReceiptModalOpen(false);
   };
 
   return (
@@ -63,7 +72,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           </div>
         </Modal>
       ) : (
-        // Render this content when isApplyed is false
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeModal}
@@ -85,11 +93,11 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
               {propData.status === 'APPLYING' ? (
                 <div>
                   <h3>구매 앨범</h3>
-                  <input
-                    type="number"
-                    value={data.albumNum}
-                    onChange={handleChange}
-                  ></input>
+                  <button onClick={openReceiptModal}>영수증 등록하기</button>
+                  <input value={data.albumNum}></input>
+                  {isReceiptModalOpen && (
+                    <ApplyReceiptModal onClose={() => closeReceiptModal} />
+                  )}
                   <button onClick={() => handleSubmit()}>응모하기</button>
                 </div>
               ) : null}
