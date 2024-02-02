@@ -2,10 +2,7 @@ package com.example.be.artistfansign.service;
 
 import com.example.be.artist.entity.Artist;
 import com.example.be.artist.repository.ArtistRepository;
-import com.example.be.artistfansign.dto.AddArtistFansignRequestDto;
-import com.example.be.artistfansign.dto.ArtistsMyFansignResponseDto;
-import com.example.be.artistfansign.dto.FansignResponseDto;
-import com.example.be.artistfansign.dto.RecentFansignResponseDto;
+import com.example.be.artistfansign.dto.*;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
@@ -27,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -93,6 +90,38 @@ public class ArtistFansignService {
         List<ArtistsMyFansignResponseDto> list
                 = artistFansignRepository.findArtistsMyFansign(getArtist(), status);
         return list;
+    }
+
+    // 아티스트 내가 개설한 멤버팬싸인회 상태별로 개수 가져오기
+    public FansignGroupByStatusCountResponseDto getFansignCount(){
+        Artist artist = getArtist();
+        FansignGroupByStatusCountResponseDto result = new FansignGroupByStatusCountResponseDto();
+        List<FansignGroupByStatusCountDto> list = artistFansignRepository.getCountGroupByStatus(artist);
+
+        for(FansignGroupByStatusCountDto dto : list){
+            switch (dto.getStatus()) {
+                case READY_APPLYING:
+                    result.addREADY_COUNT(dto.getMemberFansignCount());
+                    break;
+                case APPLYING:
+                    result.addAPPLYING_COUNT(dto.getMemberFansignCount());
+                    break;
+                case READY_FANSIGN:
+                    result.addFANSIGN_COUNT(dto.getMemberFansignCount());
+                    break;
+                case SESSION_CONNECTED:
+                    result.addFANSIGN_COUNT(dto.getMemberFansignCount());
+                    break;
+                case FANSIGN:
+                    result.addFANSIGN_COUNT(dto.getMemberFansignCount());
+                    break;
+                case FINISH:
+                    result.addFINISH_COUNT(dto.getMemberFansignCount());
+                    break;
+            }
+        }
+
+        return result;
     }
 
     private Artist getArtist(){

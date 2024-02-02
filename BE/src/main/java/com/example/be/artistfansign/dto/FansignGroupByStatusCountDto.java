@@ -1,15 +1,20 @@
 package com.example.be.artistfansign.dto;
 
+import com.example.be.artistfansign.entity.FansignStatus;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class FansignGroupByStatusCountResponseDto {
+@NoArgsConstructor
+public class FansignGroupByStatusCountDto {
 
-    int memberFansignCount;
-    int status;
+    private Long memberFansignCount;
+    private FansignStatus status;
 
-    public FansignGroupByStatusCountResponseDto(int count, int status) {
+    public FansignGroupByStatusCountDto(Long count, FansignStatus status) {
         this.memberFansignCount = count;
         this.status = status;
     }
+
+
 }

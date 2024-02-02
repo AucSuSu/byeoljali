@@ -2,9 +2,9 @@ package com.example.be.artistfansign.repository;
 
 import com.example.be.artist.entity.Artist;
 import com.example.be.artistfansign.dto.ArtistsMyFansignResponseDto;
+import com.example.be.artistfansign.dto.FansignGroupByStatusCountDto;
 import com.example.be.artistfansign.dto.FansignResponseDto;
 import com.example.be.artistfansign.dto.RecentFansignResponseDto;
-import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.fan.entity.Fan;
 import com.querydsl.core.types.Projections;
@@ -12,7 +12,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
 import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,14 +20,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PrePersist;
 import java.util.Date;
 import java.util.List;
 
 import static com.example.be.applicant.entity.QApplicant.applicant;
 import static com.example.be.artist.entity.QArtist.artist;
 import static com.example.be.artistfansign.entity.QArtistFansign.artistFansign;
-import static com.example.be.fan.entity.QFan.fan;
 import static com.example.be.member.entity.QMember.member;
 import static com.example.be.memberfansign.entity.QMemberFansign.memberFansign;
 
@@ -162,7 +159,21 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                 .fetch();
     }
 
+    @Override
+    public List<FansignGroupByStatusCountDto> getCountGroupByStatus(Artist artist) {
 
+        queryFactory = new JPAQueryFactory(em);
 
+        return queryFactory.select(
+                Projections.constructor(
+                        FansignGroupByStatusCountDto.class,
+                        memberFansign.count(),
+                        artistFansign.status
+                )).from(memberFansign)
+                .join(memberFansign.artistFansign, artistFansign)
+                .where(artistFansign.artist.eq(artist))
+                .groupBy(artistFansign.status)
+                .fetch();
 
+    }
 }
