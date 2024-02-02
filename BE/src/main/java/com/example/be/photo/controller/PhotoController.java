@@ -33,7 +33,7 @@ public class PhotoController {
 
     // 인생네컷 DB에 저장하기
     @PostMapping("/api/myalbum")
-    public ResponseEntity<Message> savePhotoDB(@RequestBody PhotoDBDto photoDBDto){
+    public ResponseEntity<Message> savePhotoDB(PhotoDBDto photoDBDto){
         log.info(" ** 인생네컷 DB 저장 api 입니다 ** ");
         Long id = photoService.downloadDBPhoto(photoDBDto);
         Message message = new Message(HttpStatusEnum.OK, "인생네컷 사진 DB저장 성공", id);

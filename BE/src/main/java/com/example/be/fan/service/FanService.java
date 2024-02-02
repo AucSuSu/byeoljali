@@ -109,6 +109,7 @@ public class FanService {
 
         // 카카오 에서 발급받은 Token으로 카카오 회원 정보 가져오기
         KakaoProfile profile = findProfile(token);
+        System.out.println(profile);
         Optional<Fan> fan = fanRepsitory.findByEmail(profile.getKakao_account().getEmail());
 
         Fan realFan = fan.orElseGet(() -> {
