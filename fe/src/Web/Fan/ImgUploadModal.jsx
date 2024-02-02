@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import axios from 'axios';
 import './ImgUploadModal.css';
+import useAxios from '../axios';
 import { useSelector } from 'react-redux';
 
 function ImgUploadModal({ onClose }) {
+  const customAxios = useAxios();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState('');
   const fileInputRef = useRef(null);
@@ -49,8 +50,8 @@ function ImgUploadModal({ onClose }) {
     const formData = new FormData();
     formData.append('image', imageFile);
 
-    axios
-      .put(`${IMG_POST_URL}mypage/edit/certImage`, formData, {
+    customAxios
+      .put(`mypage/edit/certImage`, formData, {
         headers: {
           Authorization: token,
           'Content-Type': 'multipart/form-data',
