@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import Fansign from '../Artist/Fansign/Fansign.jsx';
 import ReadyFansign from '../Artist/Fansign/ReadyFansign.jsx';
 import Navbar from '../Utils/NavBar.jsx';
+import { isArtist } from '../Stores/authReducer.js'
 import Toggle from '../Utils/ToggleButton.jsx';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function ArtistFanSignView() {
-  const [isFansign, setIsFansign] = useState(false);
+  
+  useEffect(()=>{
+    if (isArtist === null){
+      alert('로그인해주세요~')
+      navigate('/')
+    } else if(!isArtist){
+      alert('Fan은 이용 불가능해요~')
+      navigate('/home')
+    }
+  })
+  
+  const navigate = useNavigate()
 
+  const [isFansign, setIsFansign] = useState(false);
+  
   const handleToggle = () => {
     setIsFansign(!isFansign);
   };
+  
 
   return (
     <>

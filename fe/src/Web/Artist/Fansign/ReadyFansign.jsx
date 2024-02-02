@@ -2,12 +2,19 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFansignInfo } from '../../Stores/artistFansignReducer.js';
 import FansignList from './FansignList.jsx';
-// import { ReadyFansignData } from '../../data.js';
+import useAxios from '../../axios.js'
 
 export default function ReadyFansign() {
   const fansignList = useSelector((state) => state.artistFansign.data);
+  const customAxios = useAxios()
+  const getFansign = async () => {
+    const response = await customAxios.get(`artists/apply?status=${status}`).then((res) => {
+      return res.data;
+    });
+    dispatch(getFansignInfo(response));
+  }
+
   const dispatch = useDispatch();
-  // const fansignList = ReadyFansignData.object;
 
   const status = 'READY_FANSIGN';
 
@@ -17,7 +24,7 @@ export default function ReadyFansign() {
 
   return (
     <>
-      {fansignList && (
+      {fansignList.object && (
         <div>
           {fansignList.object.map((fansign) => (
             <FansignList

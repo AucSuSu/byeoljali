@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
 import { logout } from '../Stores/authReducer';
@@ -68,10 +68,13 @@ const DropdownItem = styled.div`
 
 const Navbar = ({ isFan }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const setLogout = () => {
     dispatch(logout());
+    navigate('/')
   };
+
   const profileImageUrl =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpqYJDnLH7XxH1vrI3VCvNq6E5JipsPi5WrqrlMrWqsA&s';
 
