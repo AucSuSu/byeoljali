@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserData } from '../Stores/fanInfoReducer';
+import { getUserInfo } from '../Stores/fanInfoReducer';
+import useAxios from '../axios';
 
 import ImgUploadModal from '../Fan/ImgUploadModal';
 import FanInfoModal from '../Fan/FanInfoModal';
@@ -9,15 +10,22 @@ import NavBar from '../Utils/NavBar';
 import './FanInfoView.css';
 
 function FanInfoView() {
+  const customAxios = useAxios();
   const userData = useSelector((state) => state.faninfo.data);
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
 
   console.log(userData);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserData(7));
-  }, [dispatch]);
+    getUserInfoData();
+  }, []);
+
+  const getUserInfoData = async () => {
+    const data = customAxios.get('mypage/').then((res) => {
+      return res.data.object;
+    });
+    dispatch(getUserInfo(data));
+  };
 
   const [showEditModal, setShowEditModal] = useState(false);
 
