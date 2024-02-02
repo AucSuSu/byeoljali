@@ -68,11 +68,11 @@ const DropdownItem = styled.div`
 
 const Navbar = ({ isFan }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const setLogout = () => {
     dispatch(logout());
-    navigate('/')
+    navigate('/');
   };
 
   const profileImageUrl =

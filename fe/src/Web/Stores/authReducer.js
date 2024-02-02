@@ -13,6 +13,15 @@ export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
   }
 });
 
+export const logout = createAsyncThunk('axios/logout', async () => {
+  try {
+    const response = await axios.post(`${BASE_URL}kakaoLogout`);
+    return response;
+  } catch (error) {
+    throw error; // 실패 시 에러를 던져서 rejected 상태로 전달
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -27,12 +36,12 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.tokenRefresh = action.payload.tokenRefresh;
     },
-    logout(state) {
-      state.token = null;
-      state.tokenRefresh = null;
-      state.isArtist = null;
-      console.log('로그아웃 했어용');
-    },
+    // logout(state) {
+    //   state.token = null;
+    //   state.tokenRefresh = null;
+    //   state.isArtist = null;
+    //   console.log('로그아웃 했어용');
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -49,11 +58,22 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+
+      // 로그아웃 테스트
+      .addCase(logout.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        console.log('로그아웃 API 전송');
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+        console.log('에러 : ', state.error);
       });
   },
 });
 
 export default authSlice.reducer;
-export const { logout, setToken } = authSlice.actions;
+export const { setToken } = authSlice.actions;
 export const selectToken = (state) => state.auth.token;
-export const isArtist = (state) => state.auth.isArtist
+export const isArtist = (state) => state.auth.isArtist;
