@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 function ApplyReceiptModal({ onClose, title }) {
-  const customAxios = useAxios();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState('');
   const fileInputRef = useRef(null);
