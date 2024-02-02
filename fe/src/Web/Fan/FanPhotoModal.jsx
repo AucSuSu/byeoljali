@@ -4,7 +4,7 @@ import './FanPhotoModal.css'; // 모달을 위한 CSS 파일
 function FanModal({ onClose, onPay, onDelete, data }) {
   return (
     <div>
-      {data.pay === false ? (
+      {data.pay === 'Y' ? (
         <div className="modal-overlay">
           <div className="modal-content">
             <button className="close-button" onClick={onClose}>
