@@ -31,14 +31,15 @@ public class Photo extends BaseEntity {
 
     private String photoUrl;
 
-    private boolean pay; // 결제 여부
+    @Enumerated(EnumType.STRING)
+    private PayOrNot pay;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="artistfansign_id")
     private ArtistFansign artistFansign;
 
     // fanId 없는 생성자
-    public Photo(Fan fan, MemberFansign memberFansign, String photoUrl, boolean pay, ArtistFansign artistFansign) {
+    public Photo(Fan fan, MemberFansign memberFansign, String photoUrl, PayOrNot pay, ArtistFansign artistFansign) {
         this.fan = fan;
         this.memberfansign = memberFansign;
         this.photoUrl = photoUrl;
@@ -46,7 +47,7 @@ public class Photo extends BaseEntity {
         this.artistFansign = artistFansign;
     }
 
-    public Photo(Long photoId, Fan fan, MemberFansign memberfansign, String photoUrl, boolean pay, ArtistFansign artistFansign) {
+    public Photo(Long photoId, Fan fan, MemberFansign memberfansign, String photoUrl, PayOrNot pay, ArtistFansign artistFansign) {
         this.photoId = photoId;
         this.fan = fan;
         this.memberfansign = memberfansign;
@@ -57,6 +58,6 @@ public class Photo extends BaseEntity {
 
     // pay(결제 정보) 변경 update
     public void payComplete(){
-        this.pay = true;
+        this.pay = PayOrNot.Y;
     }
 }
