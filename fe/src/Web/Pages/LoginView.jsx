@@ -82,7 +82,7 @@ export default function LoginView() {
 
   const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
   const REST_API_KEY = '218aa28a9e8fa4d947c106cb95b2ec1b';
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}&prompt=login`;
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}&prompt=login&scope=account_email,birthday`;
   const handleFanLogin = () => {
     window.location.href = kakaoURL;
   };
