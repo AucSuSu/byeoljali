@@ -5,7 +5,8 @@ import { loginUser } from '../Stores/authReducer.js';
 import { setToken } from '../Stores/authReducer.js';
 import axios from 'axios';
 import './LoginView.css';
-import { isArtist } from '../Stores/authReducer.js'
+import { isArtist } from '../Stores/authReducer.js';
+import { logout } from '../Stores/authReducer.js';
 
 export default function LoginView() {
   const token = useSelector((state) => state.auth.token);
@@ -21,17 +22,17 @@ export default function LoginView() {
 
   const data = { email: email, password: password };
 
-  useEffect(() => {
-    if (token) {
-      if (isArtist) {
-        console.log('아티스트 로그인');
-        navigate('/artistInfo');
-      } else {
-        console.log('팬 소셜 로그인');
-        navigate('/home');
-      }
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     if (isArtist) {
+  //       console.log('아티스트 로그인');
+  //       navigate('/artistInfo');
+  //     } else {
+  //       console.log('팬 소셜 로그인');
+  //       navigate('/home');
+  //     }
+  //   }
+  // }, [token]);
 
   // Kakao Test
 
@@ -92,6 +93,31 @@ export default function LoginView() {
   const viewArtistLogin = () => {
     setShowLoginForm(!showLoginForm);
   };
+
+  //
+  const kakaoLogout = () => {
+    axios
+      .post('https://kapi.kakao.com/v1/user/logout', {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: token,
+        },
+      })
+      .then(() => {
+        console.log('로그아웃 성공이래요~');
+        // window.location.href = '/';
+        // dispatch(logout());
+      })
+      .catch((e) => {
+        console.log('에러 ㅠㅠ : ', e);
+        // 이미 만료된 토큰일 경우
+        if (e.response.data.code === -401) {
+          // window.location.href = '/';
+          console.log('이미 만료된 토큰입니당~');
+        }
+      });
+  };
+
   return (
     <div className="content flex flex-col items-center">
       <img
@@ -101,6 +127,7 @@ export default function LoginView() {
       />
       <div className="mb-4">
         <h1 className="text-3xl font-bold">별자리</h1>
+        <button onClick={kakaoLogout}>테스트 로그아웃</button>
       </div>
 
       <div className="login-section w-full h-1/2 border p-4 rounded-md bg-gray-200 flex flex-col justify-between">
