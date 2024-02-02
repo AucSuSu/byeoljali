@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.volume-container {
+    width: 100%; /* 컨테이너의 너비 */
+    background-color: #eee; /* 볼륨바 배경색 */
+    height: 20px; /* 컨테이너의 높이 */
+}
+
+.volume-bar {
+    height: 100%; /* 볼륨바 높이 */
+    background-color: #4CAF50; /* 볼륨바 색상 */
+    width: 0%; /* 초기 볼륨바 너비 */
+}
+  
 
 .stream-container {
     padding: 0;
