@@ -43,9 +43,8 @@ function FanInfoModal({ userData, onClose }) {
   };
 
   const editUserInfoData = async (data) => {
-    console.log(data);
     await customAxios
-      .put('mypage/edit/profile', data, {
+      .put('mypage/edit/profile', data.formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -61,7 +60,7 @@ function FanInfoModal({ userData, onClose }) {
       formData.append(key, localUserData[key]);
     });
     if (profileImage) {
-      formData.append('profileImage', profileImage);
+      formData.append('image', profileImage);
     }
     console.log(formData);
     editUserInfoData(formData); // 서버에 데이터 전송
