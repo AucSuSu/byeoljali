@@ -33,17 +33,21 @@ public class OAuthController {
         System.out.println(code);
         // 넘어온 인가 코드를 통해 카카오 유저 정보를 얻기위한 access_token 발급
         OauthToken oauthToken = oAuthService.getAccessToken(code);
+        System.out.println("카카오 액세스 토큰 : " + oauthToken.getAccess_token());
 
         // 발급받은 accessToken 으로 카카오 회원 정보 DB 저장
         JwtToken jwtToken = oAuthService.saveFanAndGetToken(oauthToken.getAccess_token());
-
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
-        headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
-        headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
-        headers.add("isArtist", "false");
-        return ResponseEntity.ok().headers(headers).body("success");
-
+        headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist, need-logout"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
+        if(jwtToken == null){
+            headers.add("no-email", "true");
+            return ResponseEntity.ok().headers(headers).body("이메일을 선택하지 않았습니다.");
+        }else{
+            headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
+            headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
+            headers.add("isArtist", "false");
+            return ResponseEntity.ok().headers(headers).body("success");
+        }
     }
 
     @GetMapping("/api/refreshToken")
@@ -52,8 +56,6 @@ public class OAuthController {
         String refreshToken = request.getHeader("authorization-refresh");
         System.out.println("리프레시 토큰 발급받은거 : " + refreshToken);
         String accessToken = tokenService.verifyRefreshToken(refreshToken);
-
-
         Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰 발급 완료","nothing");
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
@@ -61,6 +63,11 @@ public class OAuthController {
 
         return ResponseEntity.ok().headers(headers).body(message);
     }
+
+//    @PostMapping("/api/kakaoLogout")
+//    public ResponseEntity<Message> kakaoLogout(){
+//        oAuthService
+//    }
 
 //    @PostMapping("/api/re-agreement")
 //    public ResponseEntity<Message> reAgreement(HttpServletRequest request){

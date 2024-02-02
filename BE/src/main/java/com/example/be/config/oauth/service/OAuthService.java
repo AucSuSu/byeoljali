@@ -37,6 +37,8 @@ public class OAuthService {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String redirectUri;
 
+    private String logoutRedirectUri;
+
     /**
      * OAuth 관련
      */
@@ -46,9 +48,13 @@ public class OAuthService {
 
         // 카카오 에서 발급받은 Token으로 카카오 회원 정보 가져오기
         KakaoProfile profile = findProfile(token);
+
+        // 이메일이 없으면 null 리턴
+        if (profile.getKakao_account().getEmail() == null){
+            return null;
+        }
         System.out.println(profile);
         Optional<Fan> fan = fanRepository.findByEmail(profile.getKakao_account().getEmail());
-
         Fan realFan = fan.orElseGet(() -> {
             Fan newFan = new Fan(profile.getKakao_account().getEmail(),
                     profile.getKakao_account().getProfile().getProfile_image_url(),
@@ -60,6 +66,30 @@ public class OAuthService {
         return tokenService.createToken(realFan);
 
     }
+
+    private void logout(){
+
+        RestTemplate restTemplate = new RestTemplate();
+
+
+        HttpHeaders headers = new HttpHeaders();
+
+        String kakaoLogoutUrl = "https://kauth.kakao.com/oauth/logout"
+                + "?client_id=" + kakaoClientId
+                + "&logout_redirect_uri=" + logoutRedirectUri;
+
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
+
+        ResponseEntity<String> kakaoProfileResponse = restTemplate.exchange(
+                kakaoLogoutUrl,
+                HttpMethod.GET,
+                kakaoProfileRequest,
+                String.class
+        );
+
+
+    }
+
 
     private KakaoProfile findProfile(String token) {
 
