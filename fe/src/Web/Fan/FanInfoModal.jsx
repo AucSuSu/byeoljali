@@ -42,7 +42,7 @@ function FanInfoModal({ userData, onClose }) {
     e.stopPropagation(); // 모달 내부 클릭시 이벤트 버블링 방지
   };
 
-  const editUserInfoData = async () => {
+  const editUserInfoData = async (data) => {
     await customAxios.put(
       'mypage/edit/profile',
       data.formData,
