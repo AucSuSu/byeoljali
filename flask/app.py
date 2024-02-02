@@ -177,7 +177,7 @@ def upload_receipt():
             if receipt_data is None:
                 # 'images' 키가 존재할 때의 처리를 여기에 작성합니다.
                 response_data = {'boughtAlbum': 0, 'msg' : "NOT_AVAILABLE"}
-                return jsonify("이미지 존재하지 않습니다."), 900
+                return jsonify(response_data), 900
 
 
             # subResults 추출
@@ -190,6 +190,16 @@ def upload_receipt():
 
             data_list = []
 
+            if sub_results is None or len(sub_results) == 0 :
+                 # 'images' 키가 존재할 때의 처리를 여기에 작성합니다.
+                response_data = {'boughtAlbum': 0, 'msg' : "NOT_AVAILABLE"}
+                return jsonify(response_data), 900
+            
+            if sub_results[0]['items'] is None or len(sub_results[0]['items']) == 0 :
+                 # 'images' 키가 존재할 때의 처리를 여기에 작성합니다.
+                response_data = {'boughtAlbum': 0, 'msg' : "NOT_AVAILABLE"}
+                return jsonify(response_data), 900
+            
             # 아이템들을 data_list에 추가
             for item in sub_results[0]['items']:
                 data_list.append({
