@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'TAEBAEKmilkyway';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/TAEBAEKmilkyway.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.bolder {
+  -webkit-text-stroke: 1px black; /* 테두리 두께와 색상 */
+}
+
+.bolder-w {
+  -webkit-text-stroke: 1px white; /* 테두리 두께와 색상 */
+}
+
+.bolder-p {
+  -webkit-text-stroke: 1px #ff6d79; /* 테두리 두께와 색상 */
+}
+
+input,
+progress {
+  accent-color: #ff6d79;
+}
+
 html {
   height: 100%;
 }

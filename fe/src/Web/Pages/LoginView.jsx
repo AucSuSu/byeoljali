@@ -51,7 +51,7 @@ export default function LoginView() {
     }
 
     console.log('코드 : ', code);
-  }, []);
+  }, [code]);
 
   const getData = async (code) => {
     try {
@@ -61,13 +61,19 @@ export default function LoginView() {
           code: code,
         },
       });
-      console.log('로그인 성공', res); // 받은 데이터 출력
-      dispatch(
-        setToken({
-          token: res.headers['authorization'],
-          tokenRefresh: res.headers['authorization-refresh'],
-        }),
-      );
+      console.log('서버 전송 성공 : ', res); // 받은 데이터 출력
+      if (res.headers['no-email']) {
+        alert('이메일 필수입력이에요 ^^');
+        setCode(null);
+        handleFanLogin();
+      } else {
+        dispatch(
+          setToken({
+            token: res.headers['authorization'],
+            tokenRefresh: res.headers['authorization-refresh'],
+          }),
+        );
+      }
     } catch (error) {
       console.error('백엔드 전송 실패', error);
       console.log(code);
@@ -76,8 +82,7 @@ export default function LoginView() {
 
   const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
   const REST_API_KEY = '218aa28a9e8fa4d947c106cb95b2ec1b';
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}`;
-
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}&prompt=login`;
   const handleFanLogin = () => {
     window.location.href = kakaoURL;
   };

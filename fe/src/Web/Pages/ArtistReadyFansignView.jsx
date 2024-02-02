@@ -7,24 +7,25 @@ import CreateFansignModal from '../Artist/Modal/CreateFansignModal.jsx';
 import Navbar from '../Utils/NavBar.jsx';
 import Toggle from '../Utils/ToggleButton.jsx';
 import { useNavigate } from 'react-router-dom';
-import { isArtist } from '../Stores/authReducer.js'
+import { isArtist } from '../Stores/authReducer.js';
+import { PlusIcon } from '@heroicons/react/24/solid'; // Heroicons v2에서의 경로
 
 export default function ArtistFanSignView() {
-  useEffect(()=>{
-    if (isArtist === null){
-      alert('로그인해주세요~')
-      navigate('/')
-    } else if(!isArtist){
-      alert('Fan은 이용 불가능해요~')
-      navigate('/home')
+  useEffect(() => {
+    if (isArtist === null) {
+      alert('로그인해주세요~');
+      navigate('/');
+    } else if (!isArtist) {
+      alert('Fan은 이용 불가능해요~');
+      navigate('/home');
     }
-  })
-  
-  const navigate = useNavigate()
+  });
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const addFansign = useSelector((state) => state.modal.addFansign);
-  const [isApplying, setIsApplying] = useState(false);
+  const [isApplying, setIsApplying] = useState(true);
 
   const openAddFansignModal = () => {
     dispatch(handleAddFansign());
@@ -35,22 +36,27 @@ export default function ArtistFanSignView() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
       <Navbar />
-      <div style={{ marginTop: '60px' }}>
-        <div>
-          <h1>팬싸 관리 - ({isApplying ? '응모 중' : '응모 전'})</h1>
-          <div onClick={handleToggle}>
-            임시토글
-            {/* <Toggle /> */}
+      <div className="mt-12 ml-24 mr-14 font-milk font-bold ">
+        <div className="flex items-center justify-between pb-12 mb-6">
+          {' '}
+          <div className="flex items-center space-x-4">
+            <h1 className="text-3xl bolder">응모 팬 사인회 관리</h1>
+            <button
+              className="flex items-center justify-center p-2 rounded-full border-2 border-gray-300 bg-transparent"
+              onClick={openAddFansignModal}
+            >
+              <PlusIcon className="h-5 w-5" /> {/* 아이콘 크기 조정 */}
+            </button>
           </div>
-          <button onClick={openAddFansignModal}>add Fansign</button>
+          <Toggle isApplying={isApplying} toggleApply={handleToggle} />
         </div>
 
         {addFansign && <CreateFansignModal />}
         {isApplying && <Applying />}
         {!isApplying && <ReadyApply />}
       </div>
-    </>
+    </div>
   );
 }
