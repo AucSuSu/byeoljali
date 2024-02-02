@@ -245,7 +245,7 @@ def getDistance(): ## 거리를 가져오는 함수
 
 
 
-@app.route('flask/makelife4cut', methods= ['POST'])
+@app.route('/flask/makelife4cut', methods= ['POST'])
 def makelife4cut():
     if request.method == 'POST': # POST로 들어온 요청만
 
