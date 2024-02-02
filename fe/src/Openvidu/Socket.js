@@ -9,7 +9,7 @@ export default function Socket({ memberFansignId }) {
 
   useEffect(() => {
     // WebSocket 서버에 연결
-    const newSocket = new SockJs('https://i10e104.p.ssafy.io/socket');
+    const newSocket = new SockJs('https://i10e104.p.ssafy.io:8080/socket');
     console.log(` roomId에용 : memberFansignSession${memberFansignId}`);
 
     // 메시지 수신 처리
