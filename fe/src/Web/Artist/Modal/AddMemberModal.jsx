@@ -62,7 +62,6 @@ export default function AddMemberModal() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="맴버를 추가해주세요"
-        style={customStyle}
       >
         <div>
           <h2 className="text-25">맴버를 추가해주세요</h2>
