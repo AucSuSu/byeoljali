@@ -24,7 +24,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(sessionHandler, "/socket")
-                .setAllowedOrigins("https://i10e104.p.ssafy.io:3000")
+                .setAllowedOrigins("https://i10e104.p.ssafy.io")
                 .withSockJS();
     }
 
