@@ -63,8 +63,12 @@ public class FanService {
     public Long update(FanMyPageUpdateRequestDto dto){
         Fan fan = getFan();
         try {
-            String imageUrl = s3Uploader.uploadProfile(dto.getProfileImage(), "fan", fan.getEmail());
-            fan.update(dto.getName(), dto.getNickname(), imageUrl);
+            String imageUrl ;
+            if(dto.getProfileImage() == null) {
+                imageUrl = null;
+            }else
+                imageUrl = s3Uploader.uploadProfile(dto.getProfileImage(), "fan", fan.getEmail());
+            fan.update(dto.getName(), dto.getNickname(), fan.getProfileImageUrl());
             fanRepsitory.save(fan);
         } catch (IOException e) {
             throw new RuntimeException(e);
