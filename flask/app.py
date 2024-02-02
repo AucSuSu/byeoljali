@@ -22,7 +22,6 @@ api_url = 'https://igq83o9rcc.apigw.ntruss.com/custom/v1/28107/eab1aa4e0a50a7fba
 secret_key = 'c3lXZlpEbkFmZU5yYW1sbnZteEdzS0lLTU1yZm9BQ3U='
 image_file = './data1.jpg' # server로 받은 영수증 이미지 
 fansign_title = ""
-result_count = 0; 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # tensorflow의 로깅레벨 설정: error만 보이도록
 app = Flask(__name__)
 # CORS(app) # 웹 애플리케이션이 다른 도메인에서 호스팅된 API에 접근할 때 필요
@@ -134,7 +133,7 @@ def upload_file():
 @app.route('/api/checkReceipt', methods = ['POST'])
 def upload_receipt():
     if request.method == 'POST': # POST로 들어온 요청만
-            
+            result_count = 0; 
             #이미지 가져오기 
             image_file = request.files['image'].read()
             fansign_title = request.form.get("fansignTitle")
