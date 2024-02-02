@@ -6,6 +6,8 @@ import { getInfo } from '../../Stores/artistInfoReducer.js';
 import useAxios from '../../axios.js';
 import Socket from '../../../Openvidu/Socket.js';
 
+import ArtistImgModal from '../Modal/ArtistImgModal.jsx';
+
 export default function ArtistInfo() {
   const artistData = useSelector((state) => state.artistInfo.artistData);
   const customAxios = useAxios();
@@ -22,6 +24,18 @@ export default function ArtistInfo() {
     getArtistInfo();
   }, []);
 
+  // 모달 표시 상태를 관리하는 useState 추가
+  const [showArtistImgModal, setShowArtistImgModal] = useState(false);
+
+  // 이미지 클릭시 모달을 보여주는 함수
+  const handleImageClick = () => {
+    setShowArtistImgModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowArtistImgModal(false);
+  };
+
   // testCode
   const [socketOpen, setSocketOpen] = useState(false);
   const [portNumber, setPortNumber] = useState(1);
@@ -29,6 +43,7 @@ export default function ArtistInfo() {
     e.preventDefault();
     setSocketOpen(!socketOpen);
   };
+
   return (
     <div className="h-screen flex flex-col">
       <div>
@@ -49,6 +64,7 @@ export default function ArtistInfo() {
                 className="w-full h-full object-cover rounded-lg hover:border-4 hover:border-blue-500 transition duration-300"
                 src={artistData.object.artistImageUrl}
                 alt="Artist"
+                onClick={handleImageClick}
               />
             </div>
 
@@ -103,6 +119,13 @@ export default function ArtistInfo() {
           )}
         </div>
       </div>
+      {/* 아티스트 이미지 수정 모달 띄웠다 껐다 하려고 */}
+      {showArtistImgModal && (
+        <ArtistImgModal
+          artistImageUrl={artistData.object.artistImageUrl}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }
