@@ -28,7 +28,7 @@ class VideoRoomComponent extends Component {
       session: undefined,
       localUser: undefined,
       subscribers: [],
-      chatDisplay: 'none',
+      chatDisplay: 'block',
       currentVideoDevice: undefined,
       postit: undefined, // postit 저장
       count: 0, // 참여인원 수
@@ -40,12 +40,11 @@ class VideoRoomComponent extends Component {
     this.leaveSession = this.leaveSession.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
     this.updateLayout = this.updateLayout.bind(this);
-    this.nicknameChanged = this.nicknameChanged.bind(this);
+
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
 
     this.closeDialogExtension = this.closeDialogExtension.bind(this);
     this.toggleChat = this.toggleChat.bind(this);
-    this.checkNotification = this.checkNotification.bind(this);
     this.checkSize = this.checkSize.bind(this);
     this.addCount = this.addCount.bind(this);
     this.removeCount = this.removeCount.bind(this);
@@ -177,7 +176,6 @@ class VideoRoomComponent extends Component {
     localUser.setNickname(this.state.myUserName);
     localUser.setConnectionId(this.state.session.connection.connectionId);
     localUser.setStreamManager(publisher);
-    this.subscribeToUserChanged();
     this.subscribeToStreamDestroyed();
 
     this.setState(
@@ -234,15 +232,6 @@ class VideoRoomComponent extends Component {
     }
   }
 
-  nicknameChanged(nickname) {
-    let localUser = this.state.localUser;
-    localUser.setNickname(nickname);
-    this.setState({ localUser: localUser });
-    this.sendSignalUserChanged({
-      nickname: this.state.localUser.getNickname(),
-    });
-  }
-
   deleteSubscriber(stream) {
     const remoteUsers = this.state.subscribers;
     const userStream = remoteUsers.filter(
@@ -290,30 +279,6 @@ class VideoRoomComponent extends Component {
       }, 20);
       event.preventDefault();
       this.updateLayout();
-    });
-  }
-
-  subscribeToUserChanged() {
-    this.state.session.on('signal:userChanged', (event) => {
-      let remoteUsers = this.state.subscribers;
-      remoteUsers.forEach((user) => {
-        if (user.getConnectionId() === event.from.connectionId) {
-          const data = JSON.parse(event.data);
-          console.log('EVENTO REMOTE: ', event.data);
-          if (data.isAudioActive !== undefined) {
-            user.setAudioActive(data.isAudioActive);
-          }
-          if (data.isVideoActive !== undefined) {
-            user.setVideoActive(data.isVideoActive);
-          }
-          if (data.nickname !== undefined) {
-            user.setNickname(data.nickname);
-          }
-        }
-      });
-      this.setState({
-        subscribers: remoteUsers,
-      });
     });
   }
 
@@ -381,11 +346,6 @@ class VideoRoomComponent extends Component {
     this.updateLayout();
   }
 
-  checkNotification(event) {
-    this.setState({
-      messageReceived: this.state.chatDisplay === 'none',
-    });
-  }
   checkSize() {
     if (
       document.getElementById('layout').offsetWidth <= 700 &&
@@ -459,20 +419,6 @@ class VideoRoomComponent extends Component {
     }
   }
 
-  // // 임시 팬 자동 호출 ** 로직 고민해야 함 **
-  // invite(){
-  //     const mySession = this.state.session;
-  //     if (mySession) {
-  //         mySession.signal({
-  //             data: JSON.stringify({type: 'intive', userWait: this.state.waitingNumber}),
-  //         }).then(() => {
-  //             console.log('timeintiveOut 전송 성공', this.state.waitingNumber);
-  //         }).catch(error => {
-  //             console.error('intive 전송 실패', error);
-  //         });
-  //     }
-  // }
-
   render() {
     const mySessionId = this.state.mySessionId;
     const localUser = this.state.localUser;
@@ -502,7 +448,6 @@ class VideoRoomComponent extends Component {
                   postit={this.state.postit}
                   isFan={false}
                   user={localUser}
-                  handleNickname={this.nicknameChanged}
                 />
               </div>
             )}
@@ -537,10 +482,8 @@ class VideoRoomComponent extends Component {
                 style={chatDisplay}
               >
                 <ChatComponent
-                  user={localUser}
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
-                  messageReceived={this.checkNotification}
                 />
               </div>
             )}
