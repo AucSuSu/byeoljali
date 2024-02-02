@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import SockJs from 'sockjs-client';
 
-export default function Socket({}) {
+export default function Socket({ memberFansignId }) {
   const [socket, setSocket] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  const [memberFansignId, setMemberFansignId] = useState('');
 
   useEffect(() => {
     // WebSocket 서버에 연결
-    const newSocket = new SockJs('https://i10e104.p.ssafy.io/api/socket');
+    const newSocket = new SockJs('http://i10e104.p.ssafy.io:8080/socket');
+    console.log(` 들어왔어용 : memberFansignSession${memberFansignId}`);
 
     // 메시지 수신 처리
     // 누가 여기 세션으로 보내면 자동으로 실행되는 핸들러
@@ -22,11 +22,11 @@ export default function Socket({}) {
     };
 
     newSocket.onopen = () => {
-      console.log('WebSocket connection opened');
+      console.log('들어왔어요~ : WebSocket connection opened');
     };
 
     newSocket.onclose = (event) => {
-      console.log('WebSocket connection closed:', event);
+      console.log('나갔어요... : WebSocket connection closed:', event);
     };
 
     setSocket(newSocket);
@@ -96,15 +96,12 @@ export default function Socket({}) {
         value={inputMessage}
         onChange={(e) => setInputMessage(e.target.value)}
       />
-      <input
-        className="border mx-auto text-blue-500"
-        type="text"
-        value={memberFansignId}
-        onChange={(e) => setMemberFansignId(e.target.value)}
-      />
-      <p className="border mx-auto text-blue-500"> test : {memberFansignId}</p>
-      <button onClick={sendMessage}>전송</button>
-      <button onClick={enterMessage}>입장</button>
+      <button className="border-1" onClick={sendMessage}>
+        전송
+      </button>
+      <button className="border-1" onClick={enterMessage}>
+        입장
+      </button>
     </div>
   );
 }

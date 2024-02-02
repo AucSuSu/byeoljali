@@ -1,30 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFansignInfo } from '../../Stores/artistFansignReducer.js';
 import FansignList from './FansignList.jsx';
-import useAxios from '../../axios.js'
+import useAxios from '../../axios.js';
 
 export default function Applying() {
   const fansignList = useSelector((state) => state.artistFansign.data);
-  const customAxios = useAxios()
+
+  const customAxios = useAxios();
   const getFansign = async () => {
-    const response = await customAxios.get(`artists/apply?status=${status}`).then((res) => {
-      return res.data;
-    });
+    const response = await customAxios
+      .get(`artists/apply?status=${status}`)
+      .then((res) => {
+        return res.data;
+      });
     dispatch(getFansignInfo(response));
-  }
+  };
 
   const dispatch = useDispatch();
 
   const status = 'APPLYING';
 
   useEffect(() => {
-    getFansign()
+    getFansign();
   }, []);
 
   return (
     <>
-      {fansignList.object && (
+      {fansignList && (
         <div>
           {fansignList.object.map((fansign) => (
             <FansignList
