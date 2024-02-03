@@ -8,25 +8,27 @@ import useAxios from '../../axios.js';
 
 export default function FansignModal({ memberFansignId }) {
   const detailData = useSelector((state) => state.artistFansign.detail);
-  
-  const customAxios = useAxios()
+
+  const customAxios = useAxios();
   const modalIsOpen = true;
 
   const getFansignDetail = async () => {
-    const response = await customAxios.get(`memberfansign/${memberFansignId}`).then((res) => {
-      return res.data;
-    });
-    console.log('응답 : ', response)
+    const response = await customAxios
+      .get(`memberfansign/${memberFansignId}`)
+      .then((res) => {
+        return res.data;
+      });
     dispatch(fansignDetail(response));
   };
 
   const joinFansign = async () => {
-    const response = await customAxios.get(`fan/fansigns/enterFansign/${memberFansignId}`).then((res) => {
-      return res.data;
-    });
-    return response
-  }
-
+    const response = await customAxios
+      .get(`fan/fansigns/enterFansign/${memberFansignId}`)
+      .then((res) => {
+        return res.data;
+      });
+    return response;
+  };
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,20 +41,23 @@ export default function FansignModal({ memberFansignId }) {
     dispatch(handleFansignInfo(null));
   };
 
-
   const participate = async () => {
-    const openviduData = await joinFansign()
+    const openviduData = await joinFansign();
     navigate('/test', {
       state: {
-        watch: 1,
-        sessionId: openviduData.object.sessionId,
-        tokenId: openviduData.object.tokenId,
-        memberFansignId: memberFansignId
+        propsData: {
+          watch: 1,
+          sessionId: openviduData.object.sessionId,
+          tokenId: openviduData.object.tokenId,
+          memberFansignId: memberFansignId,
+          title: detailData.object.title,
+          member: detailData.object.memberName,
+          artistFansignId: detailData.object.artistFansignId,
+        },
       },
     });
     closeModal();
   };
-
 
   const customStyle = {
     content: {

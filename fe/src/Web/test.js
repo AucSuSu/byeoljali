@@ -4,35 +4,33 @@ import Fan from '../Openvidu/Fan/Fan.js';
 import Artist from '../Openvidu/Artist/Artist.js';
 import Socket from '../Openvidu/Socket.js';
 import { useLocation } from 'react-router-dom';
-import useAxios from '../Web/axios.js'
+import useAxios from '../Web/axios.js';
 
 export default function Test() {
-  const customAxios = useAxios()
+  const customAxios = useAxios();
 
   const joinFansign = async () => {
-    const response = await customAxios.get(`fan/fansigns/enterFansign/${memberFansignId}`).then((res) => {
-      return res.data;
-    });
-    return response
-  }
+    const response = await customAxios
+      .get(`fan/fansigns/enterFansign/${memberFansignId}`)
+      .then((res) => {
+        return res.data;
+      });
+    return response;
+  };
 
   const location = useLocation();
-  const { watch, sessionId, tokenId, memberFansignId } = location.state || {};
-  const [fanData, setFanData] = useState(null)
+  const { propsData } = location.state || {};
+  console.log('프롭데이터 : ', propsData);
+  const [fanData, setFanData] = useState(null);
 
-  const [flag, setFlag] = useState(watch);
+  const [flag, setFlag] = useState(propsData.watch);
   const [data, setData] = useState(null);
   const [wait, setWait] = useState(undefined);
-
-  const artistPage = () => setFlag(1);
-  const fanPage = () => setFlag(2);
-  const stationPage = () => setFlag(3);
-  console.log(watch, sessionId, tokenId);
 
   // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
   const switchToFan = async (data) => {
     const openviduData = await joinFansign();
-    setFanData(openviduData)
+    setFanData(openviduData);
     setData(data);
     setFlag(2);
   };
@@ -45,33 +43,25 @@ export default function Test() {
 
   return (
     <div>
-      <div>
-        <button onClick={artistPage}>아티스트</button>
-        <button onClick={fanPage}>팬</button>
-        <button onClick={stationPage}>스테이션</button>
-      </div>
-      <div className=" h-1/2 w-1/2">
-        {flag === 1 && <Artist sessionId={sessionId} token={tokenId} />}
-        {flag === 2 && (
-          <Fan
-            fanData={data}
-            goBackStation={switchToStation}
-            sessionId={fanData.object.sessionId}
-            token={fanData.object.tokenId}
-          />
-        )}
-        {flag === 3 && (
-          <Station
-            wait={wait}
-            onMeetingClick={switchToFan}
-            sessionId={sessionId}
-            token={tokenId}
-            // sessionId="ses_L6342A2vEN"
-            // token="wss://byeoljali.shop?sessionId=ses_MYUiCNKIrm&token=tok_HJzNSV0zOd9mrE8q"
-          />
-        )}
-      </div>
-      <Socket memberFansignId={memberFansignId} />
+      <Socket memberFansignId={propsData.memberFansignId} />
+
+      {flag === 1 && <Artist propsData={propsData} />}
+      {flag === 2 && (
+        <Fan
+          fanData={data}
+          goBackStation={switchToStation}
+          sessionId={fanData.object.sessionId}
+          token={fanData.object.tokenId}
+        />
+      )}
+      {flag === 3 && (
+        <Station
+          wait={wait}
+          onMeetingClick={switchToFan}
+          sessionId={propsData.sessionId}
+          token={propsData.tokenId}
+        />
+      )}
     </div>
   );
 }
