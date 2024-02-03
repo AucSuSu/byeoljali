@@ -8,25 +8,28 @@ import useAxios from '../../axios.js';
 
 export default function FansignModal({ memberFansignId }) {
   const detailData = useSelector((state) => state.artistFansign.detail);
-  
-  const customAxios = useAxios()
+
+  const customAxios = useAxios();
   const modalIsOpen = true;
 
   const getFansignDetail = async () => {
-    const response = await customAxios.get(`memberfansign/${memberFansignId}`).then((res) => {
-      return res.data;
-    });
-    console.log('응답 : ', response)
+    const response = await customAxios
+      .get(`memberfansign/${memberFansignId}`)
+      .then((res) => {
+        return res.data;
+      });
+    console.log('응답 : ', response);
     dispatch(fansignDetail(response));
   };
 
   const joinFansign = async () => {
-    const response = await customAxios.get(`fan/fansigns/enterFansign/${memberFansignId}`).then((res) => {
-      return res.data;
-    });
-    return response
-  }
-
+    const response = await customAxios
+      .get(`fan/fansigns/enterFansign/${memberFansignId}`)
+      .then((res) => {
+        return res.data;
+      });
+    return response;
+  };
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,20 +42,18 @@ export default function FansignModal({ memberFansignId }) {
     dispatch(handleFansignInfo(null));
   };
 
-
   const participate = async () => {
-    const openviduData = await joinFansign()
+    const openviduData = await joinFansign();
     navigate('/test', {
       state: {
         watch: 1,
         sessionId: openviduData.object.sessionId,
         tokenId: openviduData.object.tokenId,
-        memberFansignId: memberFansignId
+        memberFansignId: memberFansignId,
       },
     });
     closeModal();
   };
-
 
   const customStyle = {
     content: {
@@ -71,42 +72,66 @@ export default function FansignModal({ memberFansignId }) {
         style={customStyle}
       >
         {detailData && (
-          <div>
-            <h2>팬싸인회 정보보기</h2>
-            <img
-              src={detailData.object.posterImageUrl}
-              alt="문구 넣기"
-              style={{
-                width: '100px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-              }}
-            />
-            <ul>
-              <li>
-                타이틀 <p>{detailData.object.title}</p>
-              </li>
-              <li>
-                공지사항 <p>{detailData.object.information}</p>
-              </li>
-              <li>
-                응모시작 <p>{detailData.object.startApplyTime}</p>
-              </li>
-              <li>
-                응모마감 <p>{detailData.object.endApplyTime}</p>
-              </li>
-              <li>
-                팬싸인회 <p>{detailData.object.startFansignTime}</p>
-              </li>
-              <li>
-                개설맴버 <p>{detailData.object.memberName}</p>
-              </li>
-              <li>
-                현재상태 <p>{detailData.object.status}</p>
-              </li>
-            </ul>
-            {true && <button onClick={participate}>팬싸인 참가하기</button>}
-            <button onClick={closeModal}>Close Modal</button>
+          <div className="font-milk font-bold ml-6 mt-6">
+            <h2 className="bolder text-25 flex justify-center mr-6 bg-pink bg-opacity-50 rounded-xl">
+              [ {detailData.object.title} ]
+            </h2>
+            <div class="flex justify-center items-center">
+              <img
+                src={detailData.object.posterImageUrl}
+                alt="커버 이미지"
+                className="mt-6 rounded-xl w-48 h-48"
+              />
+            </div>
+            <div className="mt-6 flex flex-col items-center">
+              <p className="bolder">공지</p>
+              <p className="mt-2 border-t border-b border-gray-200 py-4">
+                {detailData.object.information}
+              </p>
+            </div>
+            <div className="flex items-center space-x-2 mt-6">
+              <p className="bolder">응모 일정</p>
+              <p>|</p>
+              <p>
+                {detailData.object.startApplyTime.substring(5, 10)} ~{' '}
+                {detailData.object.endApplyTime.substring(5, 10)}
+              </p>
+            </div>
+            <div className="flex items-center space-x-2 mt-2">
+              <p className="bolder">사인회 일정</p>
+              <p>|</p>
+              <p>
+                {detailData.object.startFansignTime.substring(5, 10)} /{' '}
+                {detailData.object.startFansignTime.substring(11, 16)}
+              </p>
+            </div>
+            <div className="flex items-center space-x-2 mt-2">
+              <p className="bolder">개설 멤버</p>
+              <p>|</p>
+              <p>{detailData.object.memberName}</p>
+            </div>
+            <div className="flex items-center space-x-2 mt-2">
+              <p className="bolder">현재 상태</p>
+              <p>|</p>
+              {detailData.object.status == 'READY_APPLYING' && <p>응모 예정</p>}
+              {detailData.object.status == 'APPLYING' && <p>응모 중</p>}
+            </div>
+            <div className="flex justify-center mt-4">
+              {true && (
+                <button
+                  className="bg-pink text-black px-4 py-3 rounded-xl"
+                  onClick={participate}
+                >
+                  팬싸인 참가하기
+                </button>
+              )}
+              <button
+                className="bg-light-gray text-black px-4 py-3 rounded-xl ml-5"
+                onClick={closeModal}
+              >
+                Close Modal
+              </button>
+            </div>
           </div>
         )}
       </Modal>
