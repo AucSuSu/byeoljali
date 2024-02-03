@@ -66,8 +66,8 @@ export default function MemberList({ data, status }) {
   const dispatch = useDispatch();
   const fansignInfo = useSelector((state) => state.modal.fansignInfo);
 
-  const openModifyMember = () => {
-    dispatch(handleFansignInfo(data.artistFansignId));
+  const openDetail = () => {
+    dispatch(handleFansignInfo(data.memberFansignId));
   };
 
   // 이미지 위에 놓일 컨텐츠 스타일
@@ -91,7 +91,7 @@ export default function MemberList({ data, status }) {
           flex items-center justify-center text-white p-4
           hover:bg-hot-pink hover:bg-opacity-50
           "
-          onClick={openModifyMember}
+          onClick={openDetail}
         >
           <p className="text-18">
             {timeMessage}
@@ -107,7 +107,7 @@ export default function MemberList({ data, status }) {
       </div>
       <p className="text-18 bolder mt-3">[ {data.title} ]</p>
       <p className="text-18 bold">{data.memberName}</p>
-      {fansignInfo.open && fansignInfo.key === data.artistFansignId && (
+      {fansignInfo === data.memberFansignId && (
         <FansignModal memberFansignId={data.memberFansignId} />
       )}
     </div>

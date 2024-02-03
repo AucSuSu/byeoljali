@@ -18,7 +18,6 @@ export default function FansignModal({ memberFansignId }) {
       .then((res) => {
         return res.data;
       });
-    console.log('응답 : ', response);
     dispatch(fansignDetail(response));
   };
 
@@ -46,10 +45,15 @@ export default function FansignModal({ memberFansignId }) {
     const openviduData = await joinFansign();
     navigate('/test', {
       state: {
-        watch: 1,
-        sessionId: openviduData.object.sessionId,
-        tokenId: openviduData.object.tokenId,
-        memberFansignId: memberFansignId,
+        propsData: {
+          watch: 1,
+          sessionId: openviduData.object.sessionId,
+          tokenId: openviduData.object.tokenId,
+          memberFansignId: memberFansignId,
+          title: detailData.object.title,
+          member: detailData.object.memberName,
+          artistFansignId: detailData.object.artistFansignId,
+        },
       },
     });
     closeModal();

@@ -39,6 +39,7 @@ export default function ArtistInfo() {
   // testCode
   const [socketOpen, setSocketOpen] = useState(false);
   const [portNumber, setPortNumber] = useState(1);
+  const [name, setName] = useState('susu');
   const testSocket = (e) => {
     e.preventDefault();
     setSocketOpen(!socketOpen);
@@ -47,15 +48,23 @@ export default function ArtistInfo() {
   return (
     <div className="h-screen flex flex-col">
       <div>
+        <label>번호</label>
         <input
           className="border-4"
           type="text"
           value={portNumber}
           onChange={(e) => setPortNumber(e.target.value)}
         />
+        <label>이름</label>
+        <input
+          className="border-4"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
         <button onClick={testSocket}>소켓 테스트</button>
       </div>
-      {socketOpen && <Socket memberFansignId={portNumber} />}
+      {socketOpen && <Socket memberFansignId={portNumber} name={name} />}
       <div className="p-8 ml-20 mr-20 overflow-y-auto flex-grow-0">
         {artistData && (
           <div className="mb-8 flex items-center">

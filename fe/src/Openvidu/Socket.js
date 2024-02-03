@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SockJs from 'sockjs-client';
 
-export default function Socket({ memberFansignId }) {
+export default function Socket({ memberFansignId, name }) {
   const [socket, setSocket] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -23,6 +23,7 @@ export default function Socket({ memberFansignId }) {
     };
 
     newSocket.onopen = () => {
+      enterMessage();
       console.log('OPEN 들어왔어요~ : WebSocket connection opened');
     };
 
@@ -31,7 +32,6 @@ export default function Socket({ memberFansignId }) {
     };
 
     setSocket(newSocket);
-    enterMessage();
     // 컴포넌트 언마운트 시 소켓 연결 해제
     return () => {
       newSocket.close();
@@ -44,7 +44,7 @@ export default function Socket({ memberFansignId }) {
       const myMessage = {
         type: 'TALK',
         roomId: `memberFansignSession${memberFansignId}`,
-        sender: 'chee',
+        sender: `Send${name}`,
         // 필요하다면 사용하는 식별자
         msg: inputMessage,
         // 메세지
@@ -54,6 +54,8 @@ export default function Socket({ memberFansignId }) {
       socket.send(JSON.stringify(myMessage));
       console.log('전송');
       setInputMessage(''); // 입력 필드 초기화
+    } else {
+      console.log('아직 소켓이 없어용');
     }
   };
 
@@ -65,9 +67,9 @@ export default function Socket({ memberFansignId }) {
       const myMessage = {
         type: 'ENTER',
         roomId: `memberFansignSession${memberFansignId}`,
-        sender: 'chee',
+        sender: `Enter${name}`,
         // 필요하다면 사용하는 식별자
-        msg: inputMessage,
+        msg: 'Enter 완료',
         // 메세지
       };
 
@@ -75,6 +77,8 @@ export default function Socket({ memberFansignId }) {
       socket.send(JSON.stringify(myMessage));
       console.log('입장');
       setInputMessage(''); // 입력 필드 초기화
+    } else {
+      console.log('아직 소켓이 없어용');
     }
   };
 
