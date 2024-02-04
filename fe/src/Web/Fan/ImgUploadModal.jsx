@@ -71,18 +71,17 @@ function ImgUploadModal({ onClose, userData }) {
       onClick={onClose}
     >
       <div
-        className="w-148 h-120 bg-[url('/public/bg.png')] p-6 shadow-lg flex flex-col items-center"
+        className="w-148 h-130 bg-[url('/public/bg.png')] p-6 shadow-lg flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <h1 className="self-start text-4xl font-bold mb-6">
+        <div className="self-start text-4xl font-bold mb-6">
           인증사진 등록
           <div className="mt-1 border-b-2"></div>
-        </h1>
+        </div>
 
         <div>
           <div className="relative mb-4">
             <img
-              id="image-preview"
               src={imageSrc}
               alt="Preview"
               className="w-72 h-80 rounded-lg object-cover"
