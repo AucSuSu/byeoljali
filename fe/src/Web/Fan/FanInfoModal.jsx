@@ -86,7 +86,7 @@ function FanInfoModal({ userData, onClose }) {
             <img
               src={previewUrl || 'path_to_default_image'}
               alt="Profile"
-              className="w-72 h-60 rounded-lg object-cover"
+              className="w-72 h-60 rounded-lg object-fill"
             />
 
             <button

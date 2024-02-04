@@ -85,16 +85,44 @@ function FanPhoto({ data }) {
   };
 
   return (
-    <div>
-      <img
-        src={data.photoUrl}
-        alt={`사진 ${data.photoId}`}
-        onClick={handleImageClick}
-        style={{ cursor: 'pointer' }}
-      />
-      <p>팬싸인회 제목: {data.artistFansignTitle}</p>
-      <p>시작 시간: {data.startFansignTime}</p>
-      <p>결제 여부: {data.pay === 'Y' ? '결제함' : '결제안함'}</p>
+    <div className="text-center font-milk ml-20 mb-10 inline-block relative">
+      <div className="relative w-[250px] h-[250px] ">
+        <img
+          src={data.photoUrl}
+          alt={`사진 ${data.photoId}`}
+          onClick={handleImageClick}
+          className="w-full h-full"
+        />
+        <div>
+          {data.pay === 'N' ? (
+            <div
+              className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-85
+                        flex items-center justify-center text-white p-4
+                        hover:bg-black hover:bg-opacity-90
+                        "
+            >
+              <button onClick={handleImageClick}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-48 h-48"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
+                  />
+                </svg>
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </div>
+      <p className="text-18 bolder mt-3">[ {data.artistFansignTitle} ]</p>
+
       {isModalOpen && (
         <FanModal
           onClose={handleCloseModal}
