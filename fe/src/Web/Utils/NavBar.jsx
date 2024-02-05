@@ -50,7 +50,6 @@ const DropdownContent = styled.div`
   z-index: 1;
   top: 100%;
   right: 0;
-  margin-top: 10px;
 
   ${Dropdown}:hover & {
     display: flex;
