@@ -2,8 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-
-
 const homeApplyListSlice = createSlice({
   name: 'applyList',
   initialState: {
@@ -22,7 +20,6 @@ const homeApplyListSlice = createSlice({
       console.log('응모중 데이터 : ', state.data);
     },
   },
-  
 });
 
 export const { beforeApplyList, afterApplyList } = homeApplyListSlice.actions;

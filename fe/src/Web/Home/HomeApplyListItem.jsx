@@ -29,17 +29,14 @@ const ListItem = ({ data }) => {
     <div
       style={{ textAlign: 'center', margin: '10px', display: 'inline-block' }}
     >
-      <img
-        src={data.posterImageUrl}
-        alt={data.title}
-        style={{
-          width: '150px',
-          height: '150px',
-          borderRadius: '50%',
-          cursor: 'pointer',
-        }}
-        onClick={() => openModal()} // onClick 핸들러를 수정
-      />
+      <div className="w-230 h-230 cursor-pointer">
+        <img
+          src={data.posterImageUrl}
+          alt={data.title}
+          className="w-full h-full"
+          onClick={() => openModal()} // onClick 핸들러를 수정
+        />
+      </div>
       <p>{data.title}</p>
 
       <ApplyFormModal
