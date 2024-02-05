@@ -69,7 +69,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
     public void updateStatusToEndApply(String date) {
 
         log.info(" *** repository : 응모마감으로 status 변경 *** ");
-
+        long count =
         jpaQueryFactory
                 .update(artistFansign)
                 .set(artistFansign.status, FansignStatus.READY_FANSIGN)
@@ -78,6 +78,8 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                                         artistFansign.endApplyTime,
                                         "%Y-%m-%d").eq(date),
                         artistFansign.status.eq(FansignStatus.APPLYING)).execute();
+
+        log.info(" 변경된 레코드 개수 : " + count);
         em.flush();
         em.clear();
     }
@@ -110,7 +112,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 .where(Expressions.
                                 dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
                                         artistFansign.startFansignTime,
-                                        "%Y-%m-%d HH").eq(date),
+                                        "%Y-%m-%d %H").eq(date),
                         artistFansign.status.eq(FansignStatus.SESSION_CONNECTED))
                 .execute();
         em.flush();
