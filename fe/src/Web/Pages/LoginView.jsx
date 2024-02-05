@@ -112,7 +112,7 @@ export default function LoginView() {
   // };
 
   return (
-    <div className="content flex flex-col items-center">
+    <div className="content flex flex-col items-center font-milk font-bold">
       <img
         src="/susu.jpg"
         alt="로고"
@@ -150,34 +150,33 @@ export default function LoginView() {
           </p>
 
           {showLoginForm && (
-            <form onSubmit={handleArtistLogin} className="md-2">
-              <div className="mx-auto">
-                <div className="flex">
-                  <label className="text-purple-700">이메일:</label>
+            <form onSubmit={handleArtistLogin} className="md-2 mt-3">
+                <div className="flex items-center">
+                  <label className="md:w-1/3" >이메일 </label>
                   <input
-                    className="w-full border p-2"
+                    className="md:w-2/3
+                    bg-slate-200  rounded-md m-2"
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-              </div>
 
-              <div className="mx-auto">
-                <div className="flex">
-                  <label className="text-purple-700">비밀번호:</label>
+                <div className="flex items-center">
+                  <label className="md:w-1/3">비밀번호 </label>
                   <input
-                    className="w-full border p-2"
+                    className="md:w-2/3
+                    bg-slate-200  rounded-md m-2"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-              </div>
 
               <button
                 type="submit"
-                className="bg-purple-700 text-white py-2 px-4 rounded-md"
+                className="mt-1 bg-pink p-3 rounded-md text-sm"
+
               >
                 로그인
               </button>
