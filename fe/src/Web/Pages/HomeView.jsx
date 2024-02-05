@@ -37,27 +37,7 @@ const HomeView = () => {
     }
   };
 
-  const loadAfterData = async () => {
-    const data = await customAxios
-      .get('mainpage?searchKeyword=&order=register&status=APPLYING')
-      .then((res) => {
-        return res.data;
-      });
-    console.log('응모중', data);
-    dispatch(afterApplyList(data));
-  };
-
-  const loadBeforeData = async () => {
-    const data = await customAxios
-      .get('mainpage?searchKeyword=&order=register&status=READY_APPLYING')
-      .then((res) => {
-        return res.data;
-      });
-    console.log('응모전', data);
-    dispatch(beforeApplyList(data));
-  };
-
-  const getUserSearchResult = async (keyword) => {
+  const loadAfterData = async (keyword) => {
     const data = await customAxios
       .get(
         'mainpage?searchKeyword=' + keyword + '&order=register&status=APPLYING',
@@ -65,16 +45,26 @@ const HomeView = () => {
       .then((res) => {
         return res.data;
       });
-    console.log('응모전', data);
-    dispatch(getUserSearchResult(data));
+    console.log('응모중', data);
+    dispatch(afterApplyList(data));
   };
 
-  const handleSearchChange = (e) => {
-    setSearchKeyword(e.target.value);
+  const loadBeforeData = async (keyword) => {
+    const data = await customAxios
+      .get(
+        'mainpage?searchKeyword=' +
+          keyword +
+          '&order=register&status=READY_APPLYING',
+      )
+      .then((res) => {
+        return res.data;
+      });
+    console.log('응모전', data);
+    dispatch(beforeApplyList(data));
   };
 
   const handleSearchSubmit = () => {
-    getUserSearchResult(searchKeyword);
+    setSearchKeyword(e.target.value);
   };
 
   return (
