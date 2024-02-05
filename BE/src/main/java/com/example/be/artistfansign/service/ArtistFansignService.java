@@ -75,7 +75,6 @@ public class ArtistFansignService {
                 // 멤버 조회
                 Member member = memberRepository.findById(memberId).
                         orElseThrow(() -> new IllegalArgumentException("해당 멤버가 없습니다."));
-
                 MemberFansign memberFansign = new MemberFansign(artistFansign, member);
                 memberFansignRepository.save(memberFansign);
             }
