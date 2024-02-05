@@ -91,6 +91,7 @@ function FanPhoto({ data }) {
           src={data.photoUrl}
           alt={`사진 ${data.photoId}`}
           onClick={handleImageClick}
+          onContextMenu={(e) => e.preventDefault()}
           className="w-full h-full"
         />
         <div>
