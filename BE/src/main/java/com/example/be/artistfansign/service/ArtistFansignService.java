@@ -48,6 +48,19 @@ public class ArtistFansignService {
         try {
             String imageUrl = s3Uploader.uploadPoster(image, "fansignPoster", artist.getName(), startFansignTime);
             // artistFansign 개설
+
+            // 응모 시작일이 오늘과 동일하다면 상태는 응모 중 상태로
+
+            // 현재 날짜
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String nowFormattedDate = now.format(formatter);
+
+            // 들어온 입력 데이터 날짜
+            System.out.println( "입력 날짜 string : " + dto.getStartApplyTime());
+            String dtoFormattedDate = dto.getStartApplyTime();
+            formatter.parse(dtoFormattedDate);
+
             ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
                     , endApplyTime, startFansignTime, FansignStatus.READY_APPLYING, dto.getMode(), artist);
             artistFansignRepository.save(artistFansign);
