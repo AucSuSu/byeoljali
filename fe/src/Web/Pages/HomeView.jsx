@@ -61,8 +61,20 @@ const HomeView = () => {
       <Navbar isFan={true}></Navbar>
       {/* 캐러셀 */}
       <Carousel />
-      <div className="flex items-center justify-between pb-12 mb-6">
-        <h1 className="bolder">응모 리스트</h1>
+      <div className="flex items-center justify-between mt-4 pb-12 mb-6">
+        <input
+          type="text"
+          placeholder="검색 키워드를 입력하세요"
+          className="input border border-pink border-2 bg-transparent rounded w-24 py-2 px-3"
+          value={searchKeyword}
+          onChange={handleSearchChange}
+        />
+        <button
+          className="w-40 btn font-bold py-2 px-4 rounded border bg-white mr-12"
+          onClick={handleSearchSubmit}
+        >
+          검색
+        </button>
         <ToggleButton
           type={false}
           isApplying={isApplying}

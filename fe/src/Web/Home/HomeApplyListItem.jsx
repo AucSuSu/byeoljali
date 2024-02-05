@@ -32,7 +32,7 @@ const ListItem = ({ data }) => {
       <img
         src={data.posterImageUrl}
         alt={data.title}
-        className="w-230 h-230 cursor-pointer"
+        style={{ width: '230px', height: '230px', cursor: 'pointer' }}
         onClick={() => openModal()} // onClick 핸들러를 수정
       />
       <p>{data.title}</p>
