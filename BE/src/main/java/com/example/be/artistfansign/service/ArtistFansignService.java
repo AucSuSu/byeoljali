@@ -58,8 +58,6 @@ public class ArtistFansignService {
 
             // 들어온 입력 데이터 날짜
             System.out.println( "입력 날짜 string : " + dto.getStartApplyTime());
-            String dtoFormattedDate = dto.getStartApplyTime();
-            formatter.parse(dtoFormattedDate);
 
             ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
                     , endApplyTime, startFansignTime, FansignStatus.READY_APPLYING, dto.getMode(), artist);
