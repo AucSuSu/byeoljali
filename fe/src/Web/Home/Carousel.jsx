@@ -10,9 +10,9 @@ const Carousel = () => {
   const playerRef = useRef([]); // 각 비디오 플레이어에 대한 참조를 저장
   const [playingIndex, setPlayingIndex] = useState(0); // 현재 재생 중인 비디오의 인덱스를 추적
   const videoUrls = [
-    'https://www.youtube.com/watch?v=JleoAppaxi0', // 영상 URL 1
-    'https://www.youtube.com/watch?v=pSUydWEqKwE', // 영상 URL 2
-    'https://www.youtube.com/watch?v=2OvyA2__Eas', // 영상 URL 3
+    'https://www.youtube.com/watch?v=bANn_L22zE8', // 영상 URL 1
+    'https://www.youtube.com/watch?v=d-QmstniDC8', // 영상 URL 2
+    'https://www.youtube.com/watch?v=uz5rO3j9LpA', // 영상 URL 3
   ];
 
   const settings = {

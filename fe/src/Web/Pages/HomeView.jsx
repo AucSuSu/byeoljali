@@ -16,26 +16,6 @@ import ToggleButton from '../Utils/ToggleButton';
 //Navbar
 import Navbar from '../Utils/NavBar';
 
-const loadAfterData = async () => {
-  const data = await customAxios
-    .get('mainpage?searchKeyword=&order=register&status=APPLYING')
-    .then((res) => {
-      return res.data;
-    });
-  console.log('응모중', data);
-  dispatch(afterApplyList(data));
-};
-
-const loadBeforeData = async () => {
-  const data = await customAxios
-    .get('mainpage?searchKeyword=&order=register&status=READY_APPLYING')
-    .then((res) => {
-      return res.data;
-    });
-  console.log('응모전', data);
-  dispatch(beforeApplyList(data));
-};
-
 const HomeView = () => {
   const customAxios = useAxios();
   //redux 적용
@@ -56,18 +36,40 @@ const HomeView = () => {
     }
   };
 
+  const loadAfterData = async () => {
+    const data = await customAxios
+      .get('mainpage?searchKeyword=&order=register&status=APPLYING')
+      .then((res) => {
+        return res.data;
+      });
+    console.log('응모중', data);
+    dispatch(afterApplyList(data));
+  };
+
+  const loadBeforeData = async () => {
+    const data = await customAxios
+      .get('mainpage?searchKeyword=&order=register&status=READY_APPLYING')
+      .then((res) => {
+        return res.data;
+      });
+    console.log('응모전', data);
+    dispatch(beforeApplyList(data));
+  };
+
   return (
     <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat font-milk font-bold">
       <Navbar isFan={true}></Navbar>
       {/* 캐러셀 */}
       <Carousel />
-      <ToggleButton
-        type={false}
-        isApplying={isApplying}
-        toggleApply={handleToggle}
-      ></ToggleButton>
-      <h1>응모 리스트</h1>
-      <List />
+      <div className="flex items-center justify-between pb-12 mb-6">
+        <h1 className="bolder">응모 리스트</h1>
+        <ToggleButton
+          type={false}
+          isApplying={isApplying}
+          toggleApply={handleToggle}
+        ></ToggleButton>
+        <List />
+      </div>
     </div>
   );
 };
