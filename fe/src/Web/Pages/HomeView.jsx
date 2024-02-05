@@ -25,15 +25,15 @@ const HomeView = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
-    loadAfterData();
+    loadAfterData(searchKeyword);
   }, []);
 
   const handleToggle = () => {
     setIsApplying(!isApplying);
     if (isApplying) {
-      loadAfterData();
+      loadAfterData(searchKeyword);
     } else {
-      loadBeforeData();
+      loadBeforeData(searchKeyword);
     }
   };
 
