@@ -27,8 +27,10 @@ class VideoRoomComponent extends Component {
       currentVideoDevice: undefined,
       postit: undefined, // postit 저장
       count: 0, // 참여인원 수
-      waitingNumber: 1, // 대기번호
       signTime: 30, // 팬싸인 시간
+      joinNo: null, // 호출해야 하는 번호
+      fanData: this.props.fanData,
+      number: '테스트용',
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -65,6 +67,18 @@ class VideoRoomComponent extends Component {
     window.addEventListener('resize', this.updateLayout);
     window.addEventListener('resize', this.checkSize);
     this.joinSession();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // props가 변했을 때 A함수 실행
+    if (this.props.someProp !== prevProps.someProp) {
+      this.handlePropsChange();
+    }
+
+    // state가 변했을 때 B함수 실행
+    if (this.state.number !== prevState.number && this.state.count === 1) {
+      this.props.inviteFan(1);
+    }
   }
 
   componentWillUnmount() {
@@ -305,14 +319,7 @@ class VideoRoomComponent extends Component {
 
   removeCount() {
     const count = this.state.count;
-    const waitingNumber = this.state.waitingNumber;
-    console.log(`#@#@#@#@############### 1번 ${this.state.waitingNumber}`);
     this.setState({ count: count - 1 });
-    this.setState({ waitingNumber: waitingNumber + 1 });
-    console.log(`#@#@#@#@############### 2번${this.state.waitingNumber}`);
-    // if(this.state.count === 1){
-    //     this.invite()
-    // }
   }
 
   // 자동 입장 및 퇴장 타이머
@@ -323,31 +330,11 @@ class VideoRoomComponent extends Component {
       }));
       if (this.state.signTime === 0) {
         clearInterval(this.timer);
-        this.goodbye();
+        {
+          this.props.fanData && this.props.byebye(this.props.fanData.waitNo);
+        } // checkponit
       }
     }, 1000); // 매초마다 실행
-  }
-
-  // 시간 종료 인원 자동 퇴장
-  goodbye() {
-    const mySession = this.state.session;
-    if (mySession) {
-      mySession
-        .signal({
-          type: 'timeOut',
-          data: JSON.stringify({
-            type: 'timeOut',
-            userWait: this.state.waitingNumber,
-          }),
-        })
-        .then(() => {
-          this.setState({ postit: undefined });
-          console.log('timeOut 전송 성공', this.state.waitingNumber);
-        })
-        .catch((error) => {
-          console.error('timeOut 전송 실패', error);
-        });
-    }
   }
 
   render() {

@@ -27,6 +27,7 @@ class VideoRoomComponent extends Component {
       currentVideoDevice: undefined,
       fanData: props.fanData, // 팬 정보
       signTime: 30, // 팬싸인회 시간
+      closeFansign: this.props.closeFansign, // 팬싸인 종료 props
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -72,6 +73,13 @@ class VideoRoomComponent extends Component {
     }, 1000); // 매초마다 실행
   }
 
+  // closeFansign값이 업데이트 되면 이동 CheckPoint
+  componentDidUpdate(prevProps) {
+    if (this.props.closeFansign !== prevProps.closeFansign) {
+      this.props.comeBackHome();
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload);
     window.removeEventListener('resize', this.updateLayout);
@@ -102,7 +110,7 @@ class VideoRoomComponent extends Component {
             data.type === 'timeOut' &&
             data.userWait == this.state.fanData.userWait
           ) {
-            this.props.goBackStation(data.userWait + 1);
+            this.props.comeBackHome();
           }
         });
       },

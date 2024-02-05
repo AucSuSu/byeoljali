@@ -43,7 +43,7 @@ export default function FansignModal({ memberFansignId }) {
 
   const participate = async () => {
     const openviduData = await joinFansign();
-    navigate('/test', {
+    navigate('/artist-fansign', {
       state: {
         propsData: {
           watch: 1,

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import SockJs from 'sockjs-client';
 
-export default function Socket({ memberFansignId, name }) {
+export default function Socket({
+  memberFansignId,
+  joinSignal,
+  closeSignal,
+  waitNo,
+}) {
   const [socket, setSocket] = useState(null);
   const [inputMessage, setInputMessage] = useState('');
-  // const [memberFansignId, setMemberFansignId] = useState('');
 
   useEffect(() => {
     // WebSocket 서버에 연결
@@ -13,10 +17,10 @@ export default function Socket({ memberFansignId, name }) {
 
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
-      if (message.type === 'join' && message.message === 'waitNum') {
-        joinFansign();
-      } else if (message.type === 'close' && message.message === 'waitNum') {
-        closeFansign();
+      if (message.type === 'join' && message.message === waitNo) {
+        joinSignal();
+      } else if (message.type === 'close' && message.message === waitNo) {
+        closeSignal();
       }
     };
 
@@ -42,7 +46,7 @@ export default function Socket({ memberFansignId, name }) {
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${memberFansignId}`,
-        sender: `Send${name}`,
+        sender: `Send`,
         // 필요하다면 사용하는 식별자
         msg: inputMessage,
         // 메세지
@@ -61,7 +65,7 @@ export default function Socket({ memberFansignId, name }) {
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${memberFansignId}`,
-      sender: `Enter${name}`, // 필요하다면 사용하는 식별자
+      sender: `Enter`, // 필요하다면 사용하는 식별자
       msg: 'Enter 완료',
     };
 
@@ -69,10 +73,6 @@ export default function Socket({ memberFansignId, name }) {
     newSocket.send(JSON.stringify(myMessage));
     setInputMessage(''); // 입력 필드 초기화
   };
-
-  const joinFansign = () => {};
-
-  const closeFansign = () => {};
 
   return <></>;
 }
