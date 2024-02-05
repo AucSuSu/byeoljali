@@ -98,7 +98,7 @@ export default function CreateFansignModal({}) {
     title: title,
     information: information,
     startApplyTime: `${startApplyTime} 12:00:00`,
-    endApplyTime: `${endApplyTime} 12:00:00`,
+    endApplyTime: `${endApplyTime} 23:59:59`,
     startFansignTime: `${startFansignDate} ${startFansignHour}:00:00`,
     mode: selectedMode,
     memberIdList: memberIdList,
