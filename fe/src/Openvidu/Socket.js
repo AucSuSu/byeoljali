@@ -23,7 +23,7 @@ export default function Socket({ memberFansignId, name }) {
     };
 
     newSocket.onopen = async () => {
-      await enterMessage();
+      await enterMessage(newSocket);
       console.log('OPEN 들어왔어요~ : WebSocket connection opened');
     };
 
@@ -62,24 +62,20 @@ export default function Socket({ memberFansignId, name }) {
   // 원래는 해당 페이지 들어가자마자 실행되어야 함 ㅜㅜ
   // 팬기준은 대기방 들어가자마자
   // 아티스트 기준은 팬싸방 들어가자마자
-  const enterMessage = () => {
-    if (socket) {
-      const myMessage = {
-        type: 'ENTER',
-        roomId: `memberFansignSession${memberFansignId}`,
-        sender: `Enter${name}`,
-        // 필요하다면 사용하는 식별자
-        msg: 'Enter 완료',
-        // 메세지
-      };
+  const enterMessage = (newSocket) => {
+    const myMessage = {
+      type: 'ENTER',
+      roomId: `memberFansignSession${memberFansignId}`,
+      sender: `Enter${name}`,
+      // 필요하다면 사용하는 식별자
+      msg: 'Enter 완료',
+      // 메세지
+    };
 
-      // 서버로 메시지 전송
-      socket.send(JSON.stringify(myMessage));
-      console.log('입장');
-      setInputMessage(''); // 입력 필드 초기화
-    } else {
-      console.log('아직 소켓이 없어용');
-    }
+    // 서버로 메시지 전송
+    newSocket.send(JSON.stringify(myMessage));
+    console.log('입장');
+    setInputMessage(''); // 입력 필드 초기화
   };
 
   return (
