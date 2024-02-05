@@ -43,7 +43,7 @@ public class FanService {
                 imageUrl = null;
             }else
                 imageUrl = s3Uploader.uploadProfile(dto.getProfileImage(), "fan", fan.getEmail());
-            fan.update(dto.getName(), dto.getNickname(), fan.getProfileImageUrl());
+            fan.update(dto.getName(), dto.getNickname(), imageUrl);
             fanRepsitory.save(fan);
         } catch (IOException e) {
             throw new RuntimeException(e);
