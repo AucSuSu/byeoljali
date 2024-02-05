@@ -78,7 +78,6 @@ const HomeView = () => {
           placeholder="검색 키워드를 입력하세요"
           className="input border border-pink border-2 bg-transparent rounded w-24 py-2 px-3"
           value={searchKeyword}
-          onChange={handleSearchChange}
         />
         <button
           className="w-40 btn font-bold py-2 px-4 rounded border bg-white mr-12"
