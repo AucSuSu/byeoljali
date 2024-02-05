@@ -58,17 +58,6 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      })
-
-      // 로그아웃 테스트
-      .addCase(logout.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        console.log('로그아웃 API 전송');
-      })
-      .addCase(logout.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-        console.log('에러 : ', state.error);
       });
   },
 });
