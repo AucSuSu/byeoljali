@@ -43,9 +43,9 @@ export default function Test() {
 
   return (
     <div>
-      {/* <Socket memberFansignId={propsData.memberFansignId} /> */}
+      <Socket memberFansignId={propsData.memberFansignId} name={'수수'} />
 
-      {flag === 1 && <Artist propsData={propsData} />}
+      {/* {flag === 1 && <Artist propsData={propsData} />}
       {flag === 2 && (
         <Fan
           propsData={propsData}
@@ -63,7 +63,7 @@ export default function Test() {
           sessionId={propsData.sessionId}
           token={propsData.tokenId}
         />
-      )}
+      )} */}
     </div>
   );
 }
