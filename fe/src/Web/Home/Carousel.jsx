@@ -30,33 +30,31 @@ const Carousel = () => {
   };
 
   return (
-    <div className="w-1200 h-450">
-      <Slider ref={sliderRef} {...settings}>
-        {videoUrls.map((url, index) => (
-          <div
-            key={index}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '700px',
-            }}
-          >
-            <ReactPlayer
-              ref={(player) => (playerRef.current[index] = player)}
-              url={url}
-              playing={index === playingIndex}
-              muted={true}
-              controls={true}
-              onEnded={() => handleVideoEnd(index)}
-              width="80%"
-              height="500px"
-              style={{ margin: 'auto' }} // ReactPlayer에 직접 스타일을 적용
-            />
-          </div>
-        ))}
-      </Slider>
-    </div>
+    <Slider ref={sliderRef} {...settings}>
+      {videoUrls.map((url, index) => (
+        <div
+          key={index}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '700px',
+          }}
+        >
+          <ReactPlayer
+            ref={(player) => (playerRef.current[index] = player)}
+            url={url}
+            playing={index === playingIndex}
+            muted={true}
+            controls={true}
+            onEnded={() => handleVideoEnd(index)}
+            width="80%"
+            height="450px"
+            style={{ margin: 'auto' }} // ReactPlayer에 직접 스타일을 적용
+          />
+        </div>
+      ))}
+    </Slider>
   );
 };
 
