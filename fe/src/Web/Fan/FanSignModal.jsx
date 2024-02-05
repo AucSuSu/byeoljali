@@ -48,7 +48,7 @@ function FanSignModal({ data, onClose }) {
   const [fanSignDetail, setFanSignDetail] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (fanSignId) => {
       try {
         const res = await axios.get(
           `${BASE_URL}applyPage/detail/${fanSignId}`,
@@ -64,7 +64,7 @@ function FanSignModal({ data, onClose }) {
       }
     };
 
-    fetchData();
+    fetchData(fanSignId);
   }, [fanSignId]);
 
   // 모달 바깥 영역을 클릭하면 모달을 닫습니다.
@@ -87,7 +87,7 @@ function FanSignModal({ data, onClose }) {
             {/* 여기에 추가적인 모달 컨텐츠 */}
             <div>
               {fanSignDetail.status === 'SESSION_CONNECTED' ? (
-                <button>입장하기</button>
+                <button onClick={participate}>입장하기</button>
               ) : null}
             </div>
             <button onClick={() => onClose()}>닫기</button>
@@ -95,17 +95,7 @@ function FanSignModal({ data, onClose }) {
           </div>
         </div>
       ) : (
-        <div className="modal-background" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={handleModalContentClick}>
-            <h1>응모한 애들 모달</h1>
-            <div>{fanSignId}번 싸인회 상세보기</div>
-            {/* 여기에 추가적인 모달 컨텐츠 */}
-            <button onClick={() => onClose()}>닫기</button>
-            {/* 모달을 닫는 버튼 */}
-            {/* 임시 참여 */}
-            <button onClick={participate}>팬싸 두가자~</button>
-          </div>
-        </div>
+        <div></div>
       )}
     </div>
   );
