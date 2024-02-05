@@ -24,11 +24,20 @@ function FanApply() {
   };
 
   return (
-    <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
-      <div className="mt-10 ml-16 mr-20">
-        <h1 className="text-25 bolder">응모 페이지</h1>
+    <div className="mt-12 ml-24 mr-14 font-milk font-bold">
+      <div className="flex items-center justify-between pb-12 mb-6">
+        <div>
+          <div className="text-3xl bolder mb-2">응모 내역 확인</div>
+          <div className="border-t-2"></div>
+        </div>
+      </div>
+      <div>
         {data.map((data, index) => (
-          <FanSignList key={index} data={data} />
+          <FanSignList
+            key={index}
+            data={data}
+            className="flex-auto w-64 h-64"
+          />
         ))}
       </div>
     </div>

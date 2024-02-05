@@ -5,8 +5,10 @@ import FanApply from '../Fan/FanApply';
 function FanApplyView() {
   return (
     <>
-      <NavBar isFan={true} />
-      <FanApply />
+      <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
+        <NavBar isFan={true} />
+        <FanApply />
+      </div>
     </>
   );
 }
