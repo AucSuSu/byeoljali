@@ -33,8 +33,9 @@ class App extends Component {
       remainingTime: 600, // 대기 시간 임시 개발
       myScript: '스크립트를 작성해주세요', // 스크립트 작성 내용
       myPostit: '포스트잇을 작성해주세요', // 포스트잇 작성 내용
-      wait: props.wait, // 대기번호
+      wait: this.props.propsData.orders, // 대기번호
       token: this.props.token,
+      joinFansign: this.props.joinFansign, // 팬싸인방 입장 트리거
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -66,6 +67,13 @@ class App extends Component {
         myUserName: `팬미팅이 종료된 유저${this.state.wait - 1}`,
       });
       this.joinSession();
+    }
+  }
+
+  // joinFansign값이 업데이트 되면 이동 CheckPoint
+  componentDidUpdate(prevProps) {
+    if (this.props.joinFansign !== prevProps.joinFansign) {
+      this.Meeting();
     }
   }
 
@@ -204,15 +212,6 @@ class App extends Component {
           this.setState({ messages });
         });
 
-        // 자동 초대 리스너
-        mySession.on('signal:invite', (event) => {
-          const data = JSON.parse(event.data);
-          /// 지금 === 쓰면 안됨, 하나가 str고 하나가 int인듯
-          if (data.userWait == this.state.myUserWait) {
-            this.Meeting();
-          }
-        });
-
         // 'session-left' 신호에 대한 리스너를 추가합니다.
         mySession.on('signal:session-left', (event) => {
           const data = JSON.parse(event.data);
@@ -333,25 +332,8 @@ class App extends Component {
   }
 
   leaveSession() {
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
     const mySession = this.state.session;
-
-    // 세션을 떠나기 전에 다른 참여자들에게 신호를 보냅니다.
-
-    // 세션에서 연결을 해제합니다.
     mySession.disconnect();
-
-    // Empty all properties...
-    this.OV = null;
-    this.setState({
-      session: undefined,
-      subscribers: [],
-      mySessionId: 'SessionStation',
-      myUserName: 'Participant' + Math.floor(Math.random() * 100),
-      mainStreamManager: undefined,
-      publisher: undefined,
-    });
   }
 
   Meeting() {
@@ -363,25 +345,6 @@ class App extends Component {
       postit: this.state.myPostit,
     };
 
-    const mySession = this.state.session;
-
-    // 세션을 이동하기 전 다른 참여자에게 signal을 보냄
-    if (mySession) {
-      mySession
-        .signal({
-          type: 'session-left',
-          data: JSON.stringify({
-            userName: this.state.myUserName,
-            userWait: this.state.myUserWait,
-          }),
-        })
-        .then(() => {
-          console.log(this.state.myUserName + ' has left the session');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
     clearInterval(this.checkVolume); // 볼륨체크 클리어
     this.leaveSession();
     this.props.onMeetingClick(sendData);
