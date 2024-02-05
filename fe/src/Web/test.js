@@ -11,7 +11,7 @@ export default function Test() {
 
   const joinFansign = async () => {
     const response = await customAxios
-      .get(`fan/fansigns/enterFansign/${memberFansignId}`)
+      .get(`fan/fansigns/enterFansign/${propsData.memberFansignId}`)
       .then((res) => {
         return res.data;
       });
@@ -43,11 +43,12 @@ export default function Test() {
 
   return (
     <div>
-      <Socket memberFansignId={propsData.memberFansignId} />
+      <Socket memberFansignId={propsData.memberFansignId} name={'수수'} />
 
-      {flag === 1 && <Artist propsData={propsData} />}
+      {/* {flag === 1 && <Artist propsData={propsData} />}
       {flag === 2 && (
         <Fan
+          propsData={propsData}
           fanData={data}
           goBackStation={switchToStation}
           sessionId={fanData.object.sessionId}
@@ -56,12 +57,13 @@ export default function Test() {
       )}
       {flag === 3 && (
         <Station
+          propsData={propsData}
           wait={wait}
           onMeetingClick={switchToFan}
           sessionId={propsData.sessionId}
           token={propsData.tokenId}
         />
-      )}
+      )} */}
     </div>
   );
 }

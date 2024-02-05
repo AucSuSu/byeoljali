@@ -1,15 +1,14 @@
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
-import ChatComponent from './chat/ChatComponent';
-import StreamComponent from './stream/StreamComponent';
 import './Artist.css';
 import OpenViduLayout from '../Artist/layout/openvidu-layout';
 import UserModel from '../Artist/models/user-model';
 import Header from './custom/Header.jsx';
 import Footer from './custom/Footer.jsx';
 import Postit from './custom/Postit.jsx';
+import Video from './custom/Video.js';
 
-var localUser = new UserModel();
+let localUser = new UserModel();
 
 class VideoRoomComponent extends Component {
   constructor(props) {
@@ -36,7 +35,6 @@ class VideoRoomComponent extends Component {
     this.leaveSession = this.leaveSession.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
     this.updateLayout = this.updateLayout.bind(this);
-
     this.toggleChat = this.toggleChat.bind(this);
     this.checkSize = this.checkSize.bind(this);
     this.addCount = this.addCount.bind(this);
@@ -192,7 +190,6 @@ class VideoRoomComponent extends Component {
           this.sendSignalUserChanged({
             isAudioActive: this.state.localUser.isAudioActive(),
             isVideoActive: this.state.localUser.isVideoActive(),
-
             nickname: this.state.localUser.getNickname(),
           });
         }
@@ -226,9 +223,7 @@ class VideoRoomComponent extends Component {
   subscribeToStreamCreated() {
     this.state.session.on('streamCreated', (event) => {
       const subscriber = this.state.session.subscribe(event.stream, undefined);
-      // var subscribers = this.state.subscribers;
       subscriber.on('streamPlaying', (e) => {
-        this.checkSomeoneShareScreen();
         subscriber.videos[0].video.parentElement.classList.remove(
           'custom-class',
         );
@@ -247,13 +242,8 @@ class VideoRoomComponent extends Component {
   }
 
   subscribeToStreamDestroyed() {
-    // On every Stream destroyed...
     this.state.session.on('streamDestroyed', (event) => {
-      // Remove the stream from 'subscribers' array
       this.deleteSubscriber(event.stream);
-      setTimeout(() => {
-        this.checkSomeoneShareScreen();
-      }, 20);
       event.preventDefault();
       this.updateLayout();
     });
@@ -361,12 +351,11 @@ class VideoRoomComponent extends Component {
   }
 
   render() {
-    const mySessionId = this.state.mySessionId;
     const localUser = this.state.localUser;
     var chatDisplay = { display: this.state.chatDisplay };
 
     return (
-      <div>
+      <div className="container" id="container">
         <Header
           title={this.props.propsData.title}
           member={this.props.propsData.member}
@@ -376,11 +365,7 @@ class VideoRoomComponent extends Component {
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
               <div className="OT_root OT_publisher custom-class" id="localUser">
-                <StreamComponent
-                  postit={this.state.postit}
-                  isFan={false}
-                  user={localUser}
-                />
+                <Video user={localUser} />
               </div>
             )}
           <div>
@@ -390,21 +375,12 @@ class VideoRoomComponent extends Component {
                 className="OT_root OT_publisher custom-class"
                 id="remoteUsers"
               >
-                {/* fan 화면에 isFan='true' 값 추가 */}
-                <StreamComponent
-                  postit={this.state.postit}
-                  isFan={true}
+                <Video
                   user={sub}
                   streamId={sub.streamManager.stream.streamId}
                 />
               </div>
             ))}
-            {/* 입장 인원이 없으면 띄워줌 */}
-            {this.state.postit === undefined && (
-              <div className="OT_root OT_publisher custom-class">
-                <img id="image-preview" src="/favicon.ico" alt="Preview" />
-              </div>
-            )}
           </div>
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (

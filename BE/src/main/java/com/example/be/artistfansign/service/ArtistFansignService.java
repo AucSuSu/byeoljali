@@ -48,8 +48,25 @@ public class ArtistFansignService {
         try {
             String imageUrl = s3Uploader.uploadPoster(image, "fansignPoster", artist.getName(), startFansignTime);
             // artistFansign 개설
+
+            // 응모 시작일이 오늘과 동일하다면 상태는 응모 중 상태로
+
+            // 현재 날짜
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String nowFormattedDate = now.format(formatter);
+
+            // 들어온 입력 데이터 날짜
+            System.out.println("입력 날짜 string : " + dto.getStartApplyTime().split(" ")[0]);
+            System.out.println("현재 날짜 string : " + nowFormattedDate);
+            String dtoFormattedDate = dto.getStartApplyTime().split(" ")[0];
+            FansignStatus status = FansignStatus.READY_APPLYING;
+            if(dtoFormattedDate.equals(nowFormattedDate)){
+                status = FansignStatus.APPLYING ;
+            }
+
             ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
-                    , endApplyTime, startFansignTime, FansignStatus.READY_APPLYING, dto.getMode(), artist);
+                    , endApplyTime, startFansignTime, status, dto.getMode(), artist);
             artistFansignRepository.save(artistFansign);
             Long artisFansignId = artistFansign.getArtistfansignId();
 

@@ -36,12 +36,12 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.tokenRefresh = action.payload.tokenRefresh;
     },
-    // logout(state) {
-    //   state.token = null;
-    //   state.tokenRefresh = null;
-    //   state.isArtist = null;
-    //   console.log('로그아웃 했어용');
-    // },
+    logout(state) {
+      state.token = null;
+      state.tokenRefresh = null;
+      state.isArtist = null;
+      console.log('로그아웃 했어용');
+    },
   },
   extraReducers: (builder) => {
     builder
