@@ -8,6 +8,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
 import com.example.be.config.redis.RedisService;
+import com.example.be.exception.RefreshTokenIncorrectException;
 import com.example.be.fan.entity.Fan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,15 @@ public class TokenService {
     }
 
     // refresh 토큰 검증
-    public String verifyRefreshToken(String token) {
+    /**
+     * 현재 return -> accessToken 값만 리턴함
+     * 아이디어
+     *  - accessToken과 refreshToken을 함께 리턴하도록 함 (JWT)
+     *  - 만약에 refreshToken이 기존과 다르다면 exception을 처리해서 다른 값을 리턴하도록 해야함
+     *      -> exception을 만들어서 해당 문제 발생시 throw 시키기
+     */
+    public JwtToken verifyRefreshToken(String token) {
+
         try {
             // JWT 서명 검증
             DecodedJWT jwt = verifyToken(token);
@@ -50,7 +59,9 @@ public class TokenService {
             String role = jwt.getClaim("role").toString();
             String id = jwt.getClaim("artistId").toString();
 
-            if( id == null) return "유효하지 않은 리프레시 토큰입니다.";
+            // id가 null일때 -> 유효하지 않은 refreshToken
+            if(id == null)
+                throw new RefreshTokenIncorrectException("유효하지 않은 refreshToken입니다.");
 
             String redisToken = redisService.getValues(JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id);
 
@@ -58,13 +69,27 @@ public class TokenService {
 
             if (token.equals(redisToken)){
                 System.out.println("레디스 == 기존");
-                return generateAccessToken(Long.parseLong(id), role);
+                String newAccessToken = generateAccessToken(Long.parseLong(id), role);
+                String newRefreshToken = generateRefreshToken(Long.parseLong(id), role);
+
+                // refreshToken 다시 저장하기
+                redisService.setValuesWithTimeout(JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id, newRefreshToken, JwtProperties.REFRESH_EXPIRATION_TIME );
+
+                // 반환값
+                JwtToken genetatedJWT = new JwtToken(newAccessToken,newRefreshToken, true);
+                return genetatedJWT;
+            }else {
+                // 같지 않을때 -> 검증 실패
+                throw new RefreshTokenIncorrectException("유효하지 않은 refreshToken입니다.");
             }
+
+            // 이거 어떤 상황에서 나는 에러임 ??? -> 따호한테 물어보기
         } catch (JWTVerificationException e) {
-            e.printStackTrace();
+            throw new RefreshTokenIncorrectException("유효하지 않은 refreshToken입니다.");
         }
-        return "올바르지 않은 리프레시 토큰입니다.";
     }
+
+    // 여기서 accessToken도 재발급 해줘야한다고 하하
     public String generateAccessToken(Long id, String role){
 
         // HMAC 방식의 access 토큰
