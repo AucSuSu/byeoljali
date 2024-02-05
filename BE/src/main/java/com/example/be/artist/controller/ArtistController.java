@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -47,9 +48,7 @@ public class ArtistController {
         return new ResponseEntity<>(message,HttpStatus.OK);
     }
 
-
     // 아티스트 프로필 이미지 변경
-
     @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Message> updateImage(@RequestParam(value = "image") MultipartFile image){
         String s = artistService.updateImage(image);
@@ -64,5 +63,6 @@ public class ArtistController {
         Message message = new Message(HttpStatusEnum.OK, "아티스트 멤버 정보 수정 성공", id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
 
 }
