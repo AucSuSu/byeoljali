@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-import './FanSignModal.css';
 import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,6 +45,7 @@ function FanSignModal({ data, onClose }) {
   const fanSignId = data.memberfansignId;
 
   const [fanSignDetail, setFanSignDetail] = useState('');
+  console.log(fanSignDetail);
 
   useEffect(() => {
     const fetchData = async (fanSignId) => {
@@ -80,8 +80,14 @@ function FanSignModal({ data, onClose }) {
   return (
     <div>
       {fanSignDetail ? (
-        <div className="modal-background" onClick={handleCloseModal}>
-          <div className="modal-content" onClick={handleModalContentClick}>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 z-50"
+          onClick={handleCloseModal}
+        >
+          <div
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 z-50 w-1/2 shadow-lg"
+            onClick={handleModalContentClick}
+          >
             <h1>당첨된 애들 모달</h1>
             <div>{fanSignId}번 싸인회 상세보기</div>
             {/* 여기에 추가적인 모달 컨텐츠 */}
