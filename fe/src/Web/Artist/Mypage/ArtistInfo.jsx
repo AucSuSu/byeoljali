@@ -46,8 +46,8 @@ export default function ArtistInfo() {
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      <div>
+    <div className="h-screen flex flex-col font-milk font-bold">
+      {/* <div>
         <label>번호</label>
         <input
           className="border-4"
@@ -64,34 +64,38 @@ export default function ArtistInfo() {
         />
         <button onClick={testSocket}>소켓 테스트</button>
       </div>
-      {socketOpen && <Socket memberFansignId={portNumber} name={name} />}
-      <div className="p-8 ml-20 mr-20 overflow-y-auto flex-grow-0">
+      {socketOpen && <Socket memberFansignId={portNumber} name={name} />} */}
+      <div className="p-5 h-[1/2*full]">
         {artistData && (
-          <div className="mb-8 flex items-center">
-            <div className="w-1/2 h-1/2 object-cover rounded-lg mb-8">
+          <div className="pb-8 flex items-center">
+            <div className="w-1/2 m-7 object-cover rounded-lg mb-8">
               <img
-                className="w-full h-full object-cover rounded-lg hover:border-4 hover:border-blue-500 transition duration-300"
+                className="object-cover rounded-lg hover:border-4 hover:border-blue-500 transition duration-300"
                 src={artistData.object.artistImageUrl}
                 alt="Artist"
                 onClick={handleImageClick}
               />
             </div>
-
             <div className="w-1/2 pl-8 pt-4 pb-4">
-              <div className="mt-4 text-gray-600 border-t-2 border-gray-900">
+            <div className="ps-2 text-gray-600 text-xs">
                 {artistData.object.companyName}
-              </div>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold mb-4">
+            </div>
+            <div className="flex items-center">
+                <h3 className="ps-2 text-xl font-semibold ">
                   {artistData.object.name}
                 </h3>
-                <div className="flex space-x-4">
-                  <div className="mb-4">icon1</div>
-                  <div className="mb-4">icon2</div>
-                  <div className="mb-4">icon3</div>
+                <div className="pr-3 flex space-x-4 ml-auto">
+                  <div className="">icon1</div>
+                  <div className="">icon2</div>
+                  <div className="">icon3</div>
                 </div>
+            </div>
+              
+              <div className="flex items-center justify-between mb-4">
+                
+                
               </div>
-              <div className="mt-4 flex justify-center space-x-4 pb-4 border-b border-t border-gray-500">
+              <div className="bg-pink rounded mt-4 flex justify-center space-x-4  p-5">
                 <div className="flex-1 text-center">
                   <p className="py-2 rounded-lg">예정</p>
                   <p className="text-sm text-gray-600 mt-2">12</p>
@@ -112,17 +116,19 @@ export default function ArtistInfo() {
         )}
       </div>
 
-      <div className="p-8 overflow-y-auto flex-1">
-        <div className="bar flex justify-between items-center mb-4 border-b border-black">
-          <p className="text-2xl font-bold mx-auto mb-2">Members</p>
+      <div className="flex-1">
+        <div className="bar flex justify-between items-center mb-4 ">
+          <div className="text-2xl font-bold mx-auto border-b p-2">
+          <p className=""> Members </p>
+          </div>
           <AddMemberModal className="ml-auto" />
         </div>
 
         <div>
           {artistData && (
-            <div>
+            <div className='m-3'>
               {artistData.object.memberList.map((member) => (
-                <MemberList key={member.memberId} data={member} />
+                <MemberList  key={member.memberId} data={member} />
               ))}
             </div>
           )}
