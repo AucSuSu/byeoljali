@@ -50,7 +50,6 @@ class App extends Component {
     this.updateWaitTime = this.updateWaitTime.bind(this);
     this.handleMyScript = this.handleMyScript.bind(this); // 스크립트 작성 바인드
     this.handleMyPostit = this.handleMyPostit.bind(this); // 포스트잇 작성 바인드
-    this.invite = this.invite.bind(this); // 자동 초대 바인드
     this.mainVideoRef = React.createRef(); // 캡처
   }
 
@@ -158,25 +157,6 @@ class App extends Component {
     this.setState({
       myPostit: e,
     });
-  }
-
-  // 임시 팬 자동 호출 ** 로직 고민해야 함 **
-  invite() {
-    const mySession = this.state.session;
-    if (mySession) {
-      mySession
-        .signal({
-          type: 'invite',
-          data: JSON.stringify({ type: 'intive', userWait: this.state.wait }),
-        })
-        .then(() => {
-          console.log('intive 전송 성공');
-          this.leaveSession();
-        })
-        .catch((error) => {
-          console.error('intive 전송 실패', error);
-        });
-    }
   }
 
   deleteSubscriber(streamManager) {
@@ -302,11 +282,6 @@ class App extends Component {
               mainStreamManager: publisher,
               publisher: publisher,
             });
-          })
-          .then(() => {
-            if (this.state.myUserWait === 0) {
-              this.invite();
-            }
           })
           .catch((error) => {
             console.log(
