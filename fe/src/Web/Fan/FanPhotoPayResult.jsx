@@ -60,9 +60,21 @@ function FanPhotoPayResult() {
   };
 
   return (
-    <div>
-      <h1>결제완료!!</h1>
-      <button onClick={handleApprove}>결제 완료 버튼</button>
+    <div className="bg-white font-milk flex flex-col items-center justify-center m-12">
+      <h1 className="text-4xl font-bold mb-6 border-b-2">카카오페이 결제</h1>
+      <div className="rounded-full bg-gray-200 w-24 h-24 flex items-center justify-center mb-4">
+        <span className="text-gray-500 font-semibold">Logo 들어감</span>
+      </div>
+      <p className="mb-2 text-xl font-bold">카카오페이 결제 완료 후</p>
+      <p className="mb-12 text-xl font-bold">
+        브라우저에서 결제 완료 버튼을 눌러주세요!
+      </p>
+      <button
+        onClick={handleApprove}
+        className="bg-kakao-yellow  active:bg-yellow-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+      >
+        결제 완료
+      </button>
     </div>
   );
 }
