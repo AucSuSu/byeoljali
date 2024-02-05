@@ -1,16 +1,15 @@
-import { OpenVidu, Session } from 'openvidu-browser';
+import { OpenVidu } from 'openvidu-browser';
 
 import axios from 'axios';
-import React, { Component, useRef } from 'react';
+import React, { Component } from 'react';
 import html2canvas from 'html2canvas';
 import UserVideoComponent from './comp/UserVideoComponent.js';
 import './Station.css';
 import { selectToken } from '../../Web/Stores/authReducer.js';
 import { connect } from 'react-redux';
-
-// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
-const APPLICATION_SERVER_URL =
-  process.env.NODE_ENV === 'production' ? '' : 'https://byeoljali.shop/';
+import Note from './custom/Note.jsx';
+import Header from './custom/Header.jsx';
+import Chat from './custom/Chat.jsx';
 
 const mapStateToProps = (state) => ({
   authToken: selectToken(state),
@@ -40,13 +39,11 @@ class App extends Component {
 
     this.joinSession = this.joinSession.bind(this);
     this.leaveSession = this.leaveSession.bind(this);
-    this.switchCamera = this.switchCamera.bind(this);
     this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleChangeUserWait = this.handleChangeUserWait.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
-    this.handleMessageInput = this.handleMessageInput.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.Meeting = this.Meeting.bind(this);
     this.updateWaitTime = this.updateWaitTime.bind(this);
@@ -101,7 +98,7 @@ class App extends Component {
           volumeBar.style.width = average + '%'; // 볼륨 수치에 따라 너비 변경
         };
 
-        setInterval(updateVolume, 100);
+        this.checkVolume = setInterval(updateVolume, 100); // 해당 메서드 특정할 수 있게 해줌
       })
       .catch((error) => {
         console.error('마이크 접근 중 오류 발생:', error);
@@ -145,22 +142,14 @@ class App extends Component {
   // 스크립트 & 포스트잇 양방향 바인딩
   handleMyScript(e) {
     this.setState({
-      myScript: e.target.value,
+      myScript: e,
     });
   }
 
   handleMyPostit(e) {
     this.setState({
-      myPostit: e.target.value,
+      myPostit: e,
     });
-  }
-
-  // 채팅 메시지 입력 처리 메서드
-  handleMessageInput(event) {
-    if (event.key === 'Enter') {
-      this.sendMessage(event.target.value);
-      event.target.value = '';
-    }
   }
 
   // 임시 팬 자동 호출 ** 로직 고민해야 함 **
@@ -285,7 +274,7 @@ class App extends Component {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: '640x480', // The resolution of your video
+              resolution: '1280x720', // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
@@ -365,45 +354,6 @@ class App extends Component {
     });
   }
 
-  async switchCamera() {
-    try {
-      const devices = await this.OV.getDevices();
-      var videoDevices = devices.filter(
-        (device) => device.kind === 'videoinput',
-      );
-
-      if (videoDevices && videoDevices.length > 1) {
-        var newVideoDevice = videoDevices.filter(
-          (device) =>
-            device.deviceId !== this.state.currentVideoDevice.deviceId,
-        );
-
-        if (newVideoDevice.length > 0) {
-          // Creating a new publisher with specific videoSource
-          // In mobile devices the default and first camera is the front one
-          var newPublisher = this.OV.initPublisher(undefined, {
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: true,
-            publishVideo: true,
-            mirror: true,
-          });
-
-          //newPublisher.once("accessAllowed", () => {
-          await this.state.session.unpublish(this.state.mainStreamManager);
-
-          await this.state.session.publish(newPublisher);
-          this.setState({
-            currentVideoDevice: newVideoDevice[0],
-            mainStreamManager: newPublisher,
-            publisher: newPublisher,
-          });
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   Meeting() {
     // 팬싸방 이전 할 때 script와 postit Data를 전달
     const sendData = {
@@ -432,6 +382,7 @@ class App extends Component {
           console.error(error);
         });
     }
+    clearInterval(this.checkVolume); // 볼륨체크 클리어
     this.leaveSession();
     this.props.onMeetingClick(sendData);
   }
@@ -499,215 +450,79 @@ class App extends Component {
   };
 
   render() {
-    const mySessionId = this.state.mySessionId;
-    const myUserName = this.state.myUserName;
-    const myUserWait = this.state.myUserWait;
-    const curUser = this.state.curUser;
-    const remainingUsers = this.state.myUserWait - this.state.curUser; // 남은 인원 계산
-    const minutes = Math.floor(this.state.remainingTime / 60); // 남은 시간 관련 계산
-    const seconds = this.state.remainingTime % 60;
-
     return (
-      <div className="container">
-        {/* 입장전 화면 */}
-        {this.state.session === undefined ? (
-          <div id="join">
-            <div id="img-div">
-              <img
-                src="resources/images/openvidu_grey_bg_transp_cropped.png"
-                alt="OpenVidu logo"
-              />
-            </div>
-            <div id="join-dialog" className="jumbotron vertical-center">
-              <h1> Join a video session </h1>
-              <form className="form-group" onSubmit={this.joinSession}>
-                <p>
-                  <label>Participant: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userName"
-                    value={myUserName}
-                    onChange={this.handleChangeUserName}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> Session: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="sessionId"
-                    value={mySessionId}
-                    onChange={this.handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> WaitNo: </label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    id="userWait"
-                    value={myUserWait}
-                    onChange={this.handleChangeUserWait}
-                    required
-                  />
-                </p>
-                <p className="text-center">
-                  <input
-                    className="btn btn-lg btn-success"
-                    name="commit"
-                    type="submit"
-                    value="JOIN"
-                  />
-                </p>
-              </form>
-            </div>
-          </div>
-        ) : null}
+      <div className="flex flex-col h-screen font-milk font-bold">
+        {/* 헤더 고정 */}
+        <div className="mb-8">
+          <Header
+            title={this.props.propsData.title}
+            member={this.props.propsData.member}
+            timer={this.state.remainingTime}
+          />
+        </div>
 
-        {/* 입장후 화면 */}
-        {this.state.session !== undefined ? (
-          <div id="session" className="p-4">
-            <div
-              id="session-header"
-              className="flex items-center justify-between mb-4"
-            >
-              {/* sessionId 가리기(테스트 중이라 열어놓음) */}
-              <h1 id="session-title" className="text-2xl font-bold">
-                {mySessionId}
-              </h1>
-              <div className="flex space-x-4">
-                <span>
-                  <strong>내 대기번호 :</strong> {myUserWait}
-                </span>
-                <span>
-                  <strong>현재 참여번호 :</strong> {curUser}
-                </span>
-                <span>
-                  <strong>남은 인원 :</strong> {remainingUsers}
-                </span>
-                <span>
-                  <strong>예상 대기 시간 :</strong>{' '}
-                  {`${minutes}분 ${seconds.toString().padStart(2, '0')}초`}
-                </span>
-              </div>
-              <div className="flex space-x-4">
-                <input
-                  className="btn btn-danger"
-                  type="button"
-                  id="buttonLeaveSession"
-                  onClick={this.leaveSession}
-                  value="Leave session"
-                />
-                <button className="btn" onClick={this.Meeting}>
-                  Meeting
-                </button>
-              </div>
-            </div>
+        {/* 나머지 3등분 */}
+        <div className="flex h-screen w-screen">
+          {/* 첫번째 덩어리 */}
+          <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 ">
+            <button className="btn" onClick={this.Meeting}>
+              Meeting
+            </button>
 
             {/* 비디오 출력 화면 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div id="main-video" ref={this.mainVideoRef}>
-                <UserVideoComponent
-                  streamManager={this.state.mainStreamManager}
-                />
-              </div>
-              {/* 볼륨 바 컨테이너 */}
-              <div id="volume-container" class="volume-container">
-                {/* 실제 볼륨 바 */}
-                <div id="volume-bar" class="volume-bar"></div>
-              </div>
+            <div className="h-[70%] border-2">
+              <UserVideoComponent
+                streamManager={this.state.mainStreamManager}
+              />
+            </div>
 
-              {/* 캡처 버튼 */}
-              <button onClick={this.captureMainVideo}>캡쳐하기</button>
+            {/* 볼륨 바 컨테이너 */}
+            <div className="h-[10%] bg-lime-100 flex flex-row border-r-2 border-l-2 items-center">
+              <p className="border-r-2 pl-4 pr-4">마이크</p>
+              {/* 실제 볼륨 바 */}
+              <div id="volume-bar" className="volume-bar pl-4"></div>
+            </div>
 
-              {/* 스크립트 & 포스트잇 */}
-              <div id="script-postit">
-                <div className="mb-4">
-                  <label className="font-bold text-lg text-blue-500">
-                    Script
-                  </label>
-                  <input
-                    className="border rounded p-2 w-full"
-                    type="text"
-                    value={this.state.myScript}
-                    onChange={this.handleMyScript}
-                  />
-                </div>
-                <div>
-                  <label className="font-bold text-lg">Postit</label>
-                  <input
-                    className="border rounded p-2 w-full"
-                    type="text"
-                    value={this.state.myPostit}
-                    onChange={this.handleMyPostit}
-                  />
-                </div>
-              </div>
-
-              {/* 채팅 추가 UI */}
-              <div id="chat">
-                <h2 className="text-xl font-bold mb-2">Chat</h2>
-                <div id="message-list" className="mb-4">
-                  {this.state.messages.map((messageData, index) => (
-                    <div key={index} className="mb-2">
-                      <strong>
-                        {messageData.user} '대기순서'{messageData.wait}:
-                      </strong>{' '}
-                      {messageData.text}
-                    </div>
-                  ))}
-                </div>
-                <input
-                  type="text"
-                  placeholder="Enter a message"
-                  onKeyPress={this.handleMessageInput}
-                  className="border rounded p-2 w-full"
-                />
+            {/* 캡처 버튼 */}
+            <div className="flex flex-row h-[10%] border-2 items-center justify-center ">
+              <p className="pr-2">
+                {true ? '본인 인증이 완료되었습니다' : '본인 인증이 필요합니다'}
+              </p>
+              <div
+                className="bg-pink rounded-md w-40 h-8 flex items-center justify-center text-center "
+                onClick={this.captureMainVideo}
+              >
+                본인 인증
               </div>
             </div>
+
+            {/* 순서 */}
+            <div className="bg-pink flex flex-row h-[10%] border-l-2 border-r-2 border-b-2 items-center">
+              <p className="border-r-2 pl-4 pr-4">내 순서</p>
+              <p className="pl-4">N번째</p>
+            </div>
           </div>
-        ) : null}
+
+          {/* 두번째 덩어리 */}
+          <div className="flex-grow h-[95%] ml-4 mr-4">
+            <Note
+              script={this.state.myScript}
+              postit={this.state.myPostit}
+              handleScript={this.handleMyScript}
+              handlePostit={this.handleMyPostit}
+            />
+          </div>
+          {/* 세번쨰 덩어리 */}
+          <div className="flex-grow h-[95%] ml-4 mr-8">
+            <Chat
+              messages={this.state.messages}
+              handleSendMessage={this.sendMessage}
+            />
+          </div>
+        </div>
       </div>
     );
   }
-
-  async getToken() {
-    const sessionId = await this.createSession(this.state.mySessionId);
-    return await this.createToken(sessionId);
-  }
-
-  async createSession(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + 'api/sessions',
-      { customSessionId: sessionId },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
-    return response.data; // The sessionId
-  }
-
-  async createToken(sessionId) {
-    const response = await axios.post(
-      APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections',
-      {},
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
-    return response.data; // The token
-  }
-
-  // 이하 채팅 추가 부분
-  handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      this.sendMessage(event.target.value);
-      event.target.value = '';
-    }
-  };
 }
 
 export default connect(mapStateToProps)(App);

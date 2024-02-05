@@ -1,16 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFansign } from '../Stores/joinFansignReducer';
 import axios from 'axios';
 import './FanSignModal.css';
 import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
 
 function FanSignModal({ data, onClose }) {
-  // console.log(data);
+  console.log(data);
 
-  const stationData = useSelector((state) => state.join.stationData); // 대기방 참여 정보
-  //const token = useSelector((state) => state.auth.token)
+  // 대기방 참가 로직
+  const customAxios = useAxios();
+  const navigate = useNavigate();
+
+  const joinFansign = async () => {
+    const response = await customAxios
+      .get(`fan/fansigns/enterwaiting/${fanSignId}`)
+      .then((res) => {
+        return res.data;
+      });
+    return response;
+  };
+
+  const participate = async () => {
+    const openviduData = await joinFansign();
+    navigate('/test', {
+      state: {
+        propsData: {
+          watch: 3,
+          sessionId: openviduData.object.sessionId,
+          tokenId: openviduData.object.tokenId,
+          memberFansignId: data.memberfansignId,
+          title: data.artistFansignTitle,
+          member: data.memberName,
+          artistFansignId: null,
+        },
+      },
+    });
+    onClose();
+  };
+  // 대기방 참가 로직 끝
+
   const token = useSelector((state) => state.token.token);
 
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -18,7 +47,6 @@ function FanSignModal({ data, onClose }) {
 
   const [fanSignDetail, setFanSignDetail] = useState('');
 
-  console.log(fanSignDetail);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,31 +77,9 @@ function FanSignModal({ data, onClose }) {
     e.stopPropagation();
   };
 
-  // 대기방 참가 로직
-  const navigate = useNavigate;
-  const dispatch = useDispatch();
-
-  const customAxios = useAxios();
-  const joinStation = async () => {
-    const response = await customAxios.get(
-      `fan/fansigns/enterwaiting/${fanSignId}`,
-    );
-    dispatch(getFansign(response));
-
-    // navigate('/test', {
-    //   state: {
-    //     watch: 3,
-    //     sessionId: stationData.sessionId,
-    //     tokenId: stationData.tokenId,
-    //     memberFansignId: fanSignId,
-    //   },
-    // });
-    // closeModal();
-  };
-
   return (
     <div>
-      {fanSignDetail.isWon ? (
+      {fanSignDetail ? (
         <div className="modal-background" onClick={handleCloseModal}>
           <div className="modal-content" onClick={handleModalContentClick}>
             <h1>당첨된 애들 모달</h1>
@@ -96,6 +102,8 @@ function FanSignModal({ data, onClose }) {
             {/* 여기에 추가적인 모달 컨텐츠 */}
             <button onClick={() => onClose()}>닫기</button>
             {/* 모달을 닫는 버튼 */}
+            {/* 임시 참여 */}
+            <button onClick={participate}>팬싸 두가자~</button>
           </div>
         </div>
       )}
