@@ -23,6 +23,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -58,12 +60,18 @@ public class OAuthService {
             return null;
         }
         System.out.println(profile);
+
+        // 팬 회원가입 정보
+        String profileImageUrl = profile.getKakao_account().getProfile().getProfile_image_url();
+        String email = profile.getKakao_account().getEmail();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMdd");
+        LocalDate birthday = LocalDate.parse(profile.getKakao_account().getBirthday(), formatter);
+        String nickName = profile.getKakao_account().getProfile().getNickname();
+
+
         Optional<Fan> fan = fanRepository.findByEmail(profile.getKakao_account().getEmail());
         Fan realFan = fan.orElseGet(() -> {
-            Fan newFan = new Fan(profile.getKakao_account().getEmail(),
-                    profile.getKakao_account().getProfile().getProfile_image_url(),
-                    profile.getKakao_account().getProfile().getNickname(),
-                    0, false);
+            Fan newFan = new Fan(email, profileImageUrl, nickName, birthday, 0, false);
             fanRepository.save(newFan);
             return newFan;
         });
