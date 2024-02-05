@@ -8,7 +8,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
 import com.example.be.config.redis.RedisService;
-import com.example.be.fan.entity.Fan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +19,15 @@ public class TokenService {
 
     private final RedisService redisService;
 
-    // 로그인할 fan 정보로 JWT Token 만들기
-    public JwtToken createToken(Fan fan){
+    // 로그인 정보로 JWT Token 만들기
+    public JwtToken createToken(String role, Long id){
         // HMAC 방식으로 암호화 된 토큰
-        Long fanId = fan.getFanId();
-        String accessToken = generateAccessToken(fanId, "FAN");
-        String refreshToken = generateRefreshToken(fanId, "FAN");
-        redisService.setValuesWithTimeout("REFRESH_TOKEN_FAN_" + fanId.toString(), refreshToken,
+        String accessToken = generateAccessToken(id, role);
+        String refreshToken = generateRefreshToken(id, role);
+        redisService.setValuesWithTimeout(JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id, refreshToken,
                 JwtProperties.ACCESS_EXPIRATION_TIME);
 
-        return new JwtToken(accessToken, refreshToken, true);
+        return new JwtToken(accessToken, refreshToken, id);
 
     }
 
@@ -40,30 +38,37 @@ public class TokenService {
         return verifier.verify(refreshToken);
     }
 
-    // refresh 토큰 검증
-    public String verifyRefreshToken(String token) {
+    // refresh 토큰이 redis의 refresh 토큰과 같은지 검증
+    public JwtToken verifyRefreshToken(String refreshToken) {
         try {
             // JWT 서명 검증
-            DecodedJWT jwt = verifyToken(token);
+            DecodedJWT jwt = verifyToken(refreshToken);
 
             // 토큰에서 role과 id 추출
-            String role = jwt.getClaim("role").toString();
-            String id = jwt.getClaim("artistId").toString();
+            String role = jwt.getClaim("role").asString();
+            String id = jwt.getClaim("id").toString();
+            System.out.println(role);
+            System.out.println(id);
+            if( id == null) return null;
 
-            if( id == null) return "유효하지 않은 리프레시 토큰입니다.";
-
-            String redisToken = redisService.getValues(JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id);
+            // 레디스에서 refreshToken 가져오기
+            String redisTokenKey = JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id;
+            String redisToken = redisService.getValues(redisTokenKey);
 
             System.out.println("레디스 리프레시 토큰  : " + redisToken);
-
-            if (token.equals(redisToken)){
-                System.out.println("레디스 == 기존");
-                return generateAccessToken(Long.parseLong(id), role);
+            String realRefreshToken = jwt.getToken();
+            // Redis 토큰과 입력받은 토큰이 일치하면 새로운 토큰 생성
+            if(realRefreshToken.equals(redisToken)) {
+                return createToken(role, Long.parseLong(id));
+            } else {
+                System.out.println("리프레시 토큰이 일치하지 않습니다.");
+                return null;
             }
         } catch (JWTVerificationException e) {
             e.printStackTrace();
+            System.out.println("토큰 검증 실패: " + e.getMessage());
+            return null;
         }
-        return "올바르지 않은 리프레시 토큰입니다.";
     }
     public String generateAccessToken(Long id, String role){
 
@@ -91,7 +96,7 @@ public class TokenService {
     public Long deleteRefreshToken(String accessToken){
         DecodedJWT jwt = verifyToken(accessToken);
 
-        String role = jwt.getClaim("role").toString();
+        String role = jwt.getClaim("role").asString();
         String id = jwt.getClaim("id").toString();
 
         String key = JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id;
