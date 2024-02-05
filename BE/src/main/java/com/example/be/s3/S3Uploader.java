@@ -124,7 +124,7 @@ public class S3Uploader {
     }
 
     private String uploadProfile(File uploadFile, String dirName, String name){
-        String fileName = dirName + "/" + name + "/profile/" + uploadFile.getName();
+        String fileName = dirName + "/" + name + "/profile/profileImage.jpg";
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile); // MultipartFile -> File 로 전환하며 로컬에 생성된 file 삭제
 
@@ -146,7 +146,6 @@ public class S3Uploader {
 
         return uploadImageUrl;      // 업로드된 파일의 S3 URL 주소 반환
     }
-
 
 
     /**
