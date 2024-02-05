@@ -9,12 +9,7 @@
   min-width: 400px !important;
 }
 
-.toolbar{
-  min-height: 40px !important;
-
-}
-
-#titleContent{
+#titleContent {
   max-width: 100px;
   background-color: #494949;
   margin: 5px -18px;
@@ -24,39 +19,37 @@
   text-overflow: ellipsis;
 }
 
-.buttonsContent{
-	height: 40px !important;
-	text-align: center;
-	margin: auto;
-    min-width: 400px;
+.buttonsContent {
+  height: 40px !important;
+  text-align: center;
+  margin: auto;
+  min-width: 400px;
 }
-.navButton{
-	height: 40px !important;
-	width : 40px !important;
+.navButton {
+  height: 40px !important;
+  width: 40px !important;
 }
 
-#navChatButton{
+#navChatButton {
   position: absolute;
   right: 0;
 }
 .stream-container {
-    padding: 0;
+  padding: 0;
 }
 
-
 .bounds {
-  background-color: #494949;
+  background: gary;
   overflow: hidden;
   position: absolute;
   left: 0;
   right: 0;
-  top: 40px;
+  top: 50px;
   bottom: 0;
-  height: inherit;
+  height: 100%;
   min-width: 400px !important;
-  width: inherit;
+  width: 100%;
 }
-
 
 /*!
  * Copyright (c) 2017 TokBox, Inc.
@@ -64,7 +57,7 @@
  * http://opensource.org/licenses/MIT
  */
 
- .custom-class {
+.custom-class {
   min-height: 0px !important;
 }
 
@@ -261,9 +254,9 @@
 .OT_subscriber {
   position: relative;
   min-width: 48px;
-	min-height: 48px;
-	width: 100%;
-	height: 100%;
+  min-height: 48px;
+  width: 100%;
+  height: 100%;
 }
 
 .OT_publisher .OT_video-element,
@@ -741,7 +734,11 @@
 .OT_audio-level-meter__value {
   position: absolute;
   border-radius: 50%;
-  background-image: radial-gradient(circle, rgba(151, 206, 0, 1) 0%, rgba(151, 206, 0, 0) 100%);
+  background-image: radial-gradient(
+    circle,
+    rgba(151, 206, 0, 1) 0%,
+    rgba(151, 206, 0, 0) 100%
+  );
 }
 
 .OT_audio-level-meter.OT_mode-off {
@@ -887,4 +884,3 @@
   height: 100%;
   margin-top: 40px;
 }
-  

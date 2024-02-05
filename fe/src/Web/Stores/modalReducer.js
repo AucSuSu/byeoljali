@@ -4,7 +4,7 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     modifyMember: { open: false, key: null },
-    fansignInfo: { open: false, key: null },
+    fansignInfo: null,
     addFansign: false,
   },
   reducers: {
@@ -13,8 +13,7 @@ const modalSlice = createSlice({
       state.modifyMember.key = action.payload;
     },
     handleFansignInfo: (state, action) => {
-      state.fansignInfo.open = !state.fansignInfo.open;
-      state.fansignInfo.key = action.payload;
+      state.fansignInfo = action.payload;
     },
     handleAddFansign: (state) => {
       state.addFansign = !state.addFansign;

@@ -1,14 +1,13 @@
-import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
 import ChatComponent from './chat/ChatComponent';
-import DialogExtensionComponent from './dialog-extension/DialogExtension';
 import StreamComponent from './stream/StreamComponent';
 import './Artist.css';
-
 import OpenViduLayout from '../Artist/layout/openvidu-layout';
 import UserModel from '../Artist/models/user-model';
-import ToolbarComponent from '../Artist/toolbar/ToolbarComponent';
+import Header from './custom/Header.jsx';
+import Footer from './custom/Footer.jsx';
+import Postit from './custom/Postit.jsx';
 
 var localUser = new UserModel();
 
@@ -17,14 +16,11 @@ class VideoRoomComponent extends Component {
     super(props);
     this.hasBeenUpdated = false;
     this.layout = new OpenViduLayout();
-    let userName = this.props.user
-      ? this.props.user
-      : 'OpenVidu_User' + Math.floor(Math.random() * 100);
     this.remotes = [];
     this.localUserAccessAllowed = false;
     this.state = {
-      mySessionId: this.props.sessionId,
-      myUserName: userName,
+      mySessionId: this.props.propsData.sessionId,
+      myUserName: this.props.propsData.member,
       session: undefined,
       localUser: undefined,
       subscribers: [],
@@ -41,9 +37,6 @@ class VideoRoomComponent extends Component {
     this.onbeforeunload = this.onbeforeunload.bind(this);
     this.updateLayout = this.updateLayout.bind(this);
 
-    this.toggleFullscreen = this.toggleFullscreen.bind(this);
-
-    this.closeDialogExtension = this.closeDialogExtension.bind(this);
     this.toggleChat = this.toggleChat.bind(this);
     this.checkSize = this.checkSize.bind(this);
     this.addCount = this.addCount.bind(this);
@@ -126,12 +119,9 @@ class VideoRoomComponent extends Component {
   }
 
   async connectToSession() {
-    if (this.props.token !== undefined) {
-      console.log('토큰 받았음 : ', this.props.token);
-      this.connect(this.props.token);
-    }
-    // 아래 부분 getToken 없애도 될듯? ##체크포인트
-    else {
+    if (this.props.propsData.tokenId !== undefined) {
+      this.connect(this.props.propsData.tokenId);
+    } else {
       console.log('초비상!!! 토큰없다!!!!!!');
     }
   }
@@ -217,19 +207,6 @@ class VideoRoomComponent extends Component {
     if (mySession) {
       mySession.disconnect();
     }
-
-    // Empty all properties...
-    this.OV = null;
-    this.setState({
-      session: undefined,
-      subscribers: [],
-      mySessionId: 'SessionFanSign',
-      myUserName: 'OpenVidu_User' + Math.floor(Math.random() * 100),
-      localUser: undefined,
-    });
-    if (this.props.leaveSession) {
-      this.props.leaveSession();
-    }
   }
 
   deleteSubscriber(stream) {
@@ -296,54 +273,18 @@ class VideoRoomComponent extends Component {
     this.state.session.signal(signalOptions);
   }
 
-  toggleFullscreen() {
-    const document = window.document;
-    const fs = document.getElementById('container');
-    if (
-      !document.fullscreenElement &&
-      !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement &&
-      !document.msFullscreenElement
-    ) {
-      if (fs.requestFullscreen) {
-        fs.requestFullscreen();
-      } else if (fs.msRequestFullscreen) {
-        fs.msRequestFullscreen();
-      } else if (fs.mozRequestFullScreen) {
-        fs.mozRequestFullScreen();
-      } else if (fs.webkitRequestFullscreen) {
-        fs.webkitRequestFullscreen();
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
-    }
-  }
-
-  closeDialogExtension() {
-    this.setState({ showExtensionDialog: false });
-  }
-
   toggleChat(property) {
     let display = property;
 
     if (display === undefined) {
       display = this.state.chatDisplay === 'none' ? 'block' : 'none';
     }
-    if (display === 'block') {
-      this.setState({ chatDisplay: display, messageReceived: false });
-    } else {
-      console.log('chat', display);
+
+    if (this.state.chatDisplay !== display) {
+      // 상태가 변경될 때만 업데이트하는 걸로 수정 -> 무한루프 방지
       this.setState({ chatDisplay: display });
+      this.updateLayout();
     }
-    this.updateLayout();
   }
 
   checkSize() {
@@ -425,21 +366,12 @@ class VideoRoomComponent extends Component {
     var chatDisplay = { display: this.state.chatDisplay };
 
     return (
-      <div className="container" id="container">
-        <ToolbarComponent
-          sessionId={mySessionId}
-          user={localUser}
-          showNotification={this.state.messageReceived}
-          toggleFullscreen={this.toggleFullscreen}
-          leaveSession={this.leaveSession}
-          toggleChat={this.toggleChat}
+      <div>
+        <Header
+          title={this.props.propsData.title}
+          member={this.props.propsData.member}
           timer={this.state.signTime}
         />
-        <DialogExtensionComponent
-          showDialog={this.state.showExtensionDialog}
-          cancelClicked={this.closeDialogExtension}
-        />
-        ?
         <div id="layout" className="bounds">
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
@@ -469,9 +401,8 @@ class VideoRoomComponent extends Component {
             ))}
             {/* 입장 인원이 없으면 띄워줌 */}
             {this.state.postit === undefined && (
-              <div>
-                <p>postit</p>
-                <p>준비중이다냥</p>
+              <div className="OT_root OT_publisher custom-class">
+                <img id="image-preview" src="/favicon.ico" alt="Preview" />
               </div>
             )}
           </div>
@@ -481,13 +412,15 @@ class VideoRoomComponent extends Component {
                 className="OT_root OT_publisher custom-class"
                 style={chatDisplay}
               >
-                <ChatComponent
+                <Postit
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
+                  postit={this.state.postit}
                 />
               </div>
             )}
         </div>
+        <Footer id="4" toggleChat={this.toggleChat} />
       </div>
     );
   }
