@@ -64,14 +64,13 @@ public class OAuthService {
         // 팬 회원가입 정보
         String profileImageUrl = profile.getKakao_account().getProfile().getProfile_image_url();
         String email = profile.getKakao_account().getEmail();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMdd");
-//        LocalDate birthday = LocalDate.parse(profile.getKakao_account().getBirthday(), formatter);
+        String birth = profile.getKakao_account().getBirthday();
         String nickName = profile.getKakao_account().getProfile().getNickname();
 
 
         Optional<Fan> fan = fanRepository.findByEmail(profile.getKakao_account().getEmail());
         Fan realFan = fan.orElseGet(() -> {
-            Fan newFan = new Fan(email, profileImageUrl, nickName, 0, false);
+            Fan newFan = new Fan(email, profileImageUrl, nickName, birth,0, false);
             fanRepository.save(newFan);
             return newFan;
         });
@@ -121,27 +120,6 @@ public class OAuthService {
                 String.class
         );
 
-        //Response 데이터 파싱
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObj = null;
-        try {
-            jsonObj = (JSONObject) jsonParser.parse(kakaoProfileResponse.getBody());
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        JSONObject account = (JSONObject) jsonObj.get("kakao_account");
-        JSONObject profile = (JSONObject) account.get("profile");
-
-        long id = (long) jsonObj.get("id");
-        String email = String.valueOf(account.get("email"));
-        String nickname = String.valueOf(profile.get("nickname"));
-        String profileImage = String.valueOf(profile.get("profile_image_url"));
-
-        System.out.println("id : " + id);
-        System.out.println("email : " + email);
-        System.out.println("nickname : " + nickname);
-        System.out.println("profileImage : " + profileImage);
-
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoProfile kakaoProfile = null;
         System.out.println(kakaoProfileResponse.getBody());
@@ -150,12 +128,9 @@ public class OAuthService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
         return kakaoProfile;
 
     }
-
-
 
     // 카카오 회원 정보를 가져오기 위한 토큰 발급
     public OauthToken getAccessToken(String code){

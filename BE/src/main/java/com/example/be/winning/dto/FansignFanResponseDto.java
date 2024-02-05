@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Getter
 public class FansignFanResponseDto {
 
-    private LocalDate birth;
+    private String birth;
     private String nickname;
     private String name;
 
