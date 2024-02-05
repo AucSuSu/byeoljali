@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -46,8 +47,6 @@ public class S3Uploader {
 
         Fan fan = getFan();
         Fan readFan = fanRepository.findById(fan.getFanId()).orElseThrow(() -> new IllegalArgumentException("회원이 없습니다"));
-        System.out.println(readFan.toString());
-        System.out.println();
         String fileName = "fan/" +readFan.getEmail() + "/certificate/certImage.jpg";
         validateFileExists(fileName);
 
@@ -56,7 +55,6 @@ public class S3Uploader {
 
         try {
             byte[] byteArray = IOUtils.toByteArray(objectContent);
-            System.out.println(byteArray.toString());
             return Base64.encodeBase64(byteArray);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -170,13 +168,17 @@ public class S3Uploader {
         }
     }
 
-    private Optional<File> convert(MultipartFile file) throws IOException{
-        File convertFile = new File(file.getOriginalFilename());
-        if(convertFile.createNewFile()){
-            try (FileOutputStream fos = new FileOutputStream(convertFile)){
-                fos.write(file.getBytes());
+    private Optional<File> convert(MultipartFile file){
+        File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+        try {
+            if(convertFile.createNewFile()){
+                try (FileOutputStream fos = new FileOutputStream(convertFile)){
+                    fos.write(file.getBytes());
+                }
+                return Optional.of(convertFile);
             }
-            return Optional.of(convertFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return Optional.empty();
     }
