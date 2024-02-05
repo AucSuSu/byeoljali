@@ -16,8 +16,7 @@ function FanSignList({ data }) {
             onClick={toggleModal}
             src={data.posterImageUrl}
             alt="Poster Image"
-            width="200"
-            height="200"
+            className="w-full h-full"
           />
         </div>
         <div>{data.artistFansignTitle}</div>
