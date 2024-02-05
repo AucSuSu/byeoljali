@@ -10,7 +10,7 @@ const List = (type) => {
   // applyList.data 배열을 사용하여 리스트 아이템 렌더링
   return (
     <div>
-      <div>
+      <div className="ml-14">
         {Array.isArray(applyList?.object) &&
           applyList.object.map((item, index) => (
             <ListItem key={index} data={item} type={type} />

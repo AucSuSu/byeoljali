@@ -27,7 +27,7 @@ const ListItem = ({ data }) => {
   };
   return (
     <div
-      style={{ textAlign: 'center', margin: '10px', display: 'inline-block' }}
+      style={{ textAlign: 'center', margin: '20px', display: 'inline-block' }}
     >
       <img
         src={data.posterImageUrl}

@@ -13,14 +13,14 @@ export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
   }
 });
 
-export const logout = createAsyncThunk('axios/logout', async () => {
-  try {
-    const response = await axios.post(`${BASE_URL}kakaoLogout`);
-    return response;
-  } catch (error) {
-    throw error; // 실패 시 에러를 던져서 rejected 상태로 전달
-  }
-});
+// export const logout = createAsyncThunk('axios/logout', async () => {
+//   try {
+//     const response = await axios.post(`${BASE_URL}kakaoLogout`);
+//     return response;
+//   } catch (error) {
+//     throw error; // 실패 시 에러를 던져서 rejected 상태로 전달
+//   }
+// });
 
 const authSlice = createSlice({
   name: 'auth',
@@ -74,6 +74,6 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { setToken } = authSlice.actions;
+export const { setToken, logout } = authSlice.actions;
 export const selectToken = (state) => state.auth.token;
 export const isArtist = (state) => state.auth.isArtist;

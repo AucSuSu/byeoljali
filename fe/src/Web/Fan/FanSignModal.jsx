@@ -22,9 +22,10 @@ function FanSignModal({ data, onClose }) {
 
   const participate = async () => {
     const openviduData = await joinFansign();
-    navigate('/test', {
+    navigate('/fan-fansign', {
       state: {
         propsData: {
+          orders: fanSignDetail.orders,
           watch: 3,
           sessionId: openviduData.object.sessionId,
           tokenId: openviduData.object.tokenId,

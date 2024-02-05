@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import Station from '../Openvidu/Station/Station.js';
-import Fan from '../Openvidu/Fan/Fan.js';
-import Artist from '../Openvidu/Artist/Artist.js';
-import Socket from '../Openvidu/Socket.js';
+import Station from '../Station/Station.js';
+import Fan from '../Fan/Fan.js';
+import FanSocket from './FanSocket.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useAxios from '../Web/axios.js';
+import useAxios from '../../Web/axios.js';
 
 export default function Test() {
   const customAxios = useAxios();
@@ -51,15 +50,13 @@ export default function Test() {
 
   return (
     <div>
-      <Socket
+      <FanSocket
         memberFansignId={propsData.memberFansignId}
-        name={'수수'}
         joinSignal={joinSignal}
         closeSignal={closeSignal}
-        waitNumber={1}
+        waitNo={propsData.orders}
       />
 
-      {flag === 1 && <Artist propsData={propsData} />}
       {flag === 2 && (
         <Fan
           propsData={propsData}
