@@ -52,3 +52,9 @@ cloud:
       auto: false
     stack:
       auto: false
+
+# Default 이미지 URL 설정
+default:
+  image:
+    url: https://testbyeoljari.s3.ap-northeast-2.amazonaws.com/no-profile.jpg
+
