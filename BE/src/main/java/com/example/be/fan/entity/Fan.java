@@ -62,11 +62,12 @@ public class Fan extends BaseEntity {
         this.isBlacklist = isBlacklist;
         this.roles = "ROLE_FAN";
     }
-    public Fan(String email, String profileImageUrl, String nickname, String birth, int changeCount, boolean isBlacklist) {
+    public Fan(String email, String profileImageUrl, String nickname, String birth, String certificationImageUrl, int changeCount, boolean isBlacklist) {
         this.email = email;
         this.profileImageUrl = profileImageUrl;
         this.nickname = nickname;
         this.birth = birth;
+        this.certificationImageUrl = certificationImageUrl;
         this.changeCount = changeCount;
         this.isBlacklist = isBlacklist;
         this.roles = "ROLE_FAN";

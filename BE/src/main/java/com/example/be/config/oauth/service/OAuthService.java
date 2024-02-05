@@ -43,6 +43,9 @@ public class OAuthService {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String redirectUri;
 
+    @Value("${default.image.url}")
+    private String noImageUrl;
+
     private String logoutRedirectUri;
 
     /**
@@ -70,7 +73,7 @@ public class OAuthService {
 
         Optional<Fan> fan = fanRepository.findByEmail(profile.getKakao_account().getEmail());
         Fan realFan = fan.orElseGet(() -> {
-            Fan newFan = new Fan(email, profileImageUrl, nickName, birth,0, false);
+            Fan newFan = new Fan(email, profileImageUrl, nickName, birth, noImageUrl, 0, false);
             fanRepository.save(newFan);
             return newFan;
         });

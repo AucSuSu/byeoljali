@@ -40,6 +40,7 @@ public class S3Uploader {
 
     private final AmazonS3Client amazonS3Client;
     private final FanRepository fanRepository;
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
