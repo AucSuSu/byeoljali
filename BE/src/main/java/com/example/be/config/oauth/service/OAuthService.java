@@ -65,13 +65,13 @@ public class OAuthService {
         String profileImageUrl = profile.getKakao_account().getProfile().getProfile_image_url();
         String email = profile.getKakao_account().getEmail();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMdd");
-        LocalDate birthday = LocalDate.parse(profile.getKakao_account().getBirthday(), formatter);
+//        LocalDate birthday = LocalDate.parse(profile.getKakao_account().getBirthday(), formatter);
         String nickName = profile.getKakao_account().getProfile().getNickname();
 
 
         Optional<Fan> fan = fanRepository.findByEmail(profile.getKakao_account().getEmail());
         Fan realFan = fan.orElseGet(() -> {
-            Fan newFan = new Fan(email, profileImageUrl, nickName, birthday, 0, false);
+            Fan newFan = new Fan(email, profileImageUrl, nickName, 0, false);
             fanRepository.save(newFan);
             return newFan;
         });
