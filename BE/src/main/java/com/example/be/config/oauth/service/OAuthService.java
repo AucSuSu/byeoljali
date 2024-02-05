@@ -127,11 +127,12 @@ public class OAuthService {
         long id = (long) jsonObj.get("id");
         String email = String.valueOf(account.get("email"));
         String nickname = String.valueOf(profile.get("nickname"));
+        String profileImage = String.valueOf(profile.get("profile_image_url"));
 
         System.out.println("id : " + id);
         System.out.println("email : " + email);
         System.out.println("nickname : " + nickname);
-        System.out.println();
+        System.out.println("profileImage : " + profileImage);
 
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoProfile kakaoProfile = null;
