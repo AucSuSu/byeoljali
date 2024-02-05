@@ -6,7 +6,7 @@ import { logout } from '../Stores/authReducer';
 import { useDispatch } from 'react-redux';
 
 const NavbarContainer = styled.nav`
-  background-color: #888;
+  background-color: #FBE8E1;
   height: 40px;
   padding: 10px;
   display: flex;
@@ -24,11 +24,12 @@ const NavbarItem = styled.li`
   color: #fff;
   margin-top: 15px;
   position: relative;
+  margin : 10px;
 `;
 
 const NavbarLink = styled(Link)`
   text-decoration: none;
-  color: #fff;
+  color: black;
   font-weight: bold;
 
   &:hover {
@@ -48,7 +49,8 @@ const DropdownContent = styled.div`
   min-width: 160px;
   z-index: 1;
   top: 100%;
-  left: 0;
+  right: 0;
+  margin-top: 10px;
 
   ${Dropdown}:hover & {
     display: flex;
@@ -79,17 +81,15 @@ const Navbar = ({ isFan }) => {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpqYJDnLH7XxH1vrI3VCvNq6E5JipsPi5WrqrlMrWqsA&s';
 
   return (
-    <NavbarContainer>
+    <NavbarContainer className='font-bold font-milk pb-8'>
       <h2>Logo</h2>
       <NavbarList>
-        <NavbarItem>
-          <NavbarLink to="/home">홈</NavbarLink>
-        </NavbarItem>
+        
         {isFan ? (
           // Fan일 경우
           <>
             <NavbarItem>
-              <NavbarLink to="/fan-apply">응모 내역</NavbarLink>
+              <NavbarLink  to="/fan-apply">응모 내역</NavbarLink>
             </NavbarItem>
             <NavbarItem>
               <NavbarLink to="/fan-win">당첨 내역</NavbarLink>
