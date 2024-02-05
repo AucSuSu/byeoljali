@@ -1,4 +1,4 @@
-package com.example.be.config.oauth.controller;
+package com.example.be.config.auth.controller;
 
 import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
@@ -10,22 +10,19 @@ import com.example.be.config.oauth.service.OAuthService;
 import com.example.be.fan.service.FanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
-public class OAuthController {
+public class AuthController {
 
-
-    private final FanService fanService;
     private final OAuthService oAuthService;
     private final TokenService tokenService;
+
     // 프론트 측에서 인가코드를 받아오는 메소드
     @GetMapping("/api/oauth")
     public ResponseEntity<String> getLogin(@RequestParam("code") String code){
@@ -62,6 +59,16 @@ public class OAuthController {
         headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
 
         return ResponseEntity.ok().headers(headers).body(message);
+    }
+
+    @DeleteMapping("/api/logout")
+    public ResponseEntity<Message> logout(HttpServletRequest request){
+        String accessToken = request.getHeader("Authorization");
+
+        Long id = tokenService.deleteRefreshToken(accessToken);
+        Message message = new Message(HttpStatusEnum.OK, "리프레쉬 토큰 삭제 완료", id);
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
 //    @PostMapping("/api/kakaoLogout")

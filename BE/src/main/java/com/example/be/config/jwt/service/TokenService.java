@@ -24,8 +24,8 @@ public class TokenService {
     public JwtToken createToken(Fan fan){
         // HMAC 방식으로 암호화 된 토큰
         Long fanId = fan.getFanId();
-        String accessToken = generateAccessToken(fanId, "ROLE_FAN");
-        String refreshToken = generateRefreshToken(fanId, "ROLE_FAN");
+        String accessToken = generateAccessToken(fanId, "FAN");
+        String refreshToken = generateRefreshToken(fanId, "FAN");
         redisService.setValuesWithTimeout("REFRESH_TOKEN_FAN_" + fanId.toString(), refreshToken,
                 JwtProperties.ACCESS_EXPIRATION_TIME);
 
@@ -33,43 +33,32 @@ public class TokenService {
 
     }
 
+    private DecodedJWT verifyToken(String token){
+        String refreshToken = token.substring(7);
+        Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET);
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        return verifier.verify(refreshToken);
+    }
+
     // refresh 토큰 검증
     public String verifyRefreshToken(String token) {
         try {
             // JWT 서명 검증
-            String refreshToken = token.substring(7);
-            Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET);
-            JWTVerifier verifier = JWT.require(algorithm).build();
-            DecodedJWT jwt = verifier.verify(refreshToken);
+            DecodedJWT jwt = verifyToken(token);
 
-            // artist인지 fan인지 확인
-            String artistId = jwt.getClaim("artistId").toString();
-
-            String key = "REFRESH_TOKEN_";
-            String role = null;
-            String id = null;
-            if(!artistId.equals("Missing claim")){ // artist 이면
-                id = artistId;
-                role = "ARTIST";
-            }else{
-                String fanId = jwt.getClaim("fanId").toString();
-                if(!fanId.equals("Missing claim")){
-                    id = fanId;
-                    role = "FAN";
-                }
-            }
+            // 토큰에서 role과 id 추출
+            String role = jwt.getClaim("role").toString();
+            String id = jwt.getClaim("artistId").toString();
 
             if( id == null) return "유효하지 않은 리프레시 토큰입니다.";
-            System.out.println("내가 가지고 있던 refresh token : " + refreshToken);
-            System.out.println();
 
-            String redisToken = redisService.getValues(key + role + "_" + id);
+            String redisToken = redisService.getValues(JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id);
 
             System.out.println("레디스 리프레시 토큰  : " + redisToken);
 
-            if (refreshToken.equals(redisToken)){
+            if (token.equals(redisToken)){
                 System.out.println("레디스 == 기존");
-                return generateAccessToken(Long.parseLong(id), "ROLE_" + role);
+                return generateAccessToken(Long.parseLong(id), role);
             }
         } catch (JWTVerificationException e) {
             e.printStackTrace();
@@ -77,35 +66,38 @@ public class TokenService {
         return "올바르지 않은 리프레시 토큰입니다.";
     }
     public String generateAccessToken(Long id, String role){
-        String key = null;
-        if( role.equals("ROLE_FAN")){
-            key = "fanId";
-        }else if(role.equals("ROLE_ARTIST")){
-            key = "artistId";
-        }
 
         // HMAC 방식의 access 토큰
         return JWT.create()
                 .withSubject(JwtProperties.ACCESS_TOKEN)
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME)) //30분
-                .withClaim(key, id)
+                .withClaim("role", role)
+                .withClaim("id", id)
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET));
     }
 
     public String generateRefreshToken(Long id, String role){
-        String key = null;
-        if( role.equals("ROLE_FAN")){
-            key = "fanId";
-        }else if(role.equals("ROLE_ARTIST")){
-            key = "artistId";
-        }
 
         // HMAC 방식의 access 토큰
         return JWT.create()
                 .withSubject(JwtProperties.REFRESH_TOKEN)
                 .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME)) //30분
-                .withClaim(key, id)
+                .withClaim("role", role)
+                .withClaim("id", id)
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET));
+    }
+
+    // 로그아웃시 redis의 리프레시 토큰 날려버리기
+    public Long deleteRefreshToken(String accessToken){
+        DecodedJWT jwt = verifyToken(accessToken);
+
+        String role = jwt.getClaim("role").toString();
+        String id = jwt.getClaim("id").toString();
+
+        String key = JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id;
+        redisService.deleteValues(key);
+
+        return Long.parseLong(id);
     }
 
 }
