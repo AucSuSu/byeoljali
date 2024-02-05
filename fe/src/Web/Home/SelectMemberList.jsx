@@ -13,22 +13,24 @@ const SelectList = ({ dataList }) => {
   };
 
   return (
-    <div className="image-gallery">
-      {Array.isArray(dataList) &&
-        dataList.map((member, index) => (
-          <div
-            key={index}
-            className={`member-item ${selectedImage === index ? 'selected' : 'not-selected'}`}
-            onClick={() => select(index, member.memberId)}
-          >
-            <img
-              src={member.profileImageUrl}
-              alt={member.name}
-              style={{ width: '200px', borderRadius: '10px' }}
-            />
-            <p>{member.name}</p>
-          </div>
-        ))}
+    <div className="bg-pink rounded-lg p-4">
+      <div className="flex flex-wrap justify-center gap-2">
+        {Array.isArray(dataList) &&
+          dataList.map((member, index) => (
+            <div
+              key={index}
+              className={`member-item ${selectedImage === index ? 'selected' : 'not-selected'} flex flex-col items-center m-1`}
+              onClick={() => select(index, member.memberId)}
+            >
+              <img
+                src={member.profileImageUrl}
+                alt={member.name}
+                className="w-[100px] h-[100px] rounded-full mx-auto"
+              />
+              <p className="mt-2 text-center">{member.name}</p>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

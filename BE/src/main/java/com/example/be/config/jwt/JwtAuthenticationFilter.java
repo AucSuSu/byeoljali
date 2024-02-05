@@ -73,11 +73,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
         Long artistId = principalDetails.getArtist().getArtistId();
         // HMAC 방식으로 암호화 된 토큰
-        String accessToken = tokenService.generateAccessToken(artistId, "ROLE_ARTIST");
-        String refreshToken = tokenService.generateRefreshToken(artistId, "ROLE_ARTIST");
+        String accessToken = tokenService.generateAccessToken(artistId, "ARTIST");
+        String refreshToken = tokenService.generateRefreshToken(artistId, "ARTIST");
 
         // 레디스에 refresh-token 저장
-        redisService.setValuesWithTimeout("REFRESH_TOKEN_ARTIST_" + artistId, refreshToken, 1000*60*60*24);
+        redisService.setValuesWithTimeout(JwtProperties.REDIS_REFRESH_PREFIX + "ARTIST_" + artistId, refreshToken, 1000*60*60*24);
 
         // 응답 헤더에 두 개의 토큰 추가
         response.addHeader("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음

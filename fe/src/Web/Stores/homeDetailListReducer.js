@@ -17,33 +17,6 @@ export const detailList = createAsyncThunk('axios/detailList', async (data) => {
   }
 });
 
-// export const applyForm = createAsyncThunk(
-//   'axios/applyForm',
-//   async ({ id, data }, { getState }) => {
-//     console.log(applyForm);
-//     console.log(data);
-//     console.log(id);
-//     try {
-//       // const token = getState().auth.token
-//       const token = getState().token.token;
-//       const response = await axios.post(
-//         `${BASE_URL}mainpage/apply/${id}`,
-//         data,
-//         {
-//           headers: {
-//             Authorization: token,
-//           },
-//         },
-//       );
-//       console.log('팬 사인회 응모 성공');
-//       console.log(response.data);
-//       return response.data;
-//     } catch (error) {
-//       console.error('팬 사인회 응모 실패: ', error);
-//     }
-//   },
-// );
-
 const homeDetailListSlice = createSlice({
   name: 'detailList',
   initialState: {
