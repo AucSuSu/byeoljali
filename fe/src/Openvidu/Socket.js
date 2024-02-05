@@ -22,8 +22,8 @@ export default function Socket({ memberFansignId, name }) {
       setChatMessages((prevMessages) => [...prevMessages, message]);
     };
 
-    newSocket.onopen = () => {
-      enterMessage();
+    newSocket.onopen = async () => {
+      await enterMessage();
       console.log('OPEN 들어왔어요~ : WebSocket connection opened');
     };
 
@@ -96,23 +96,26 @@ export default function Socket({ memberFansignId, name }) {
           <div key={index}>{message.message}</div>
         ))}
       </div>
-      <input
-        type="text"
-        value={inputMessage}
-        onChange={(e) => setInputMessage(e.target.value)}
-      />
-      {/* <input
+      <div className="flex justify-end">
+        <input
+          type="text"
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+        />
+        {/* <input
         className="border mx-auto text-blue-500"
         type="text"
         value={memberFansignId}
         onChange={(e) => setMemberFansignId(e.target.value)}
       /> */}
-      <button className="border-1" onClick={sendMessage}>
-        전송
-      </button>
-      <button className="border-1" onClick={enterMessage}>
-        입장
-      </button>
+
+        <button className="border-1" onClick={sendMessage}>
+          전송
+        </button>
+        <button className="border-1" onClick={enterMessage}>
+          입장
+        </button>
+      </div>
     </div>
   );
 }
