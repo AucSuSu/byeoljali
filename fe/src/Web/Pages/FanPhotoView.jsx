@@ -80,6 +80,14 @@ function FanPhotoView() {
     }
   };
 
+  // 엔터로 검색하는 기능
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // form 제출을 방지하여 페이지가 새로고침되는 것을 막습니다.
+      handleSearchSubmit();
+    }
+  };
+
   if (Array.isArray(photoData)) {
     // photoData is an array, safe to use .map()
     return (
@@ -102,6 +110,7 @@ function FanPhotoView() {
                 className="input border rounded w-full py-2 px-3"
                 value={searchKeyword}
                 onChange={handleSearchChange}
+                onKeyPress={handleKeyPress}
               />
               <button
                 className="w-auto btn font-bold pr-2 rounded  "

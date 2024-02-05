@@ -10,6 +10,7 @@ import ArtistImgModal from '../Modal/ArtistImgModal.jsx';
 
 export default function ArtistInfo() {
   const artistData = useSelector((state) => state.artistInfo.artistData);
+  const [artistCountData, setArtistCountData] = useState('');
   const customAxios = useAxios();
   const dispatch = useDispatch();
 
@@ -20,8 +21,21 @@ export default function ArtistInfo() {
     dispatch(getInfo(response));
   };
 
+  const getArtistCountData = async () => {
+    const result = customAxios
+      .get('artists/fansignCount')
+      .then((res) => {
+        console.log(res);
+        setArtistCountData(res.data.object);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getArtistInfo();
+    getArtistCountData();
   }, []);
 
   // 모달 표시 상태를 관리하는 useState 추가
@@ -78,38 +92,34 @@ export default function ArtistInfo() {
               
             </div>
             <div className="w-1/2 pl-8 pt-4 pb-4">
-            <div className="ps-2 text-gray-600 text-xs">
+              <div className="ps-2 text-gray-600 text-xs">
                 {artistData.object.companyName}
-            </div>
-            <div className="flex items-center">
+              </div>
+              <div className="flex items-center">
                 <h3 className="ps-2 text-xl font-semibold ">
                   {artistData.object.name}
                 </h3>
-                <div className="pr-3 flex space-x-4 ml-auto">
-                  <div className="">icon1</div>
-                  <div className="">icon2</div>
-                  <div className="">icon3</div>
-                </div>
-            </div>
-              
-              <div className="flex items-center justify-between mb-4">
-                
-                
               </div>
+
+              <div className="flex items-center justify-between mb-4"></div>
               <div className="bg-pink rounded mt-4 flex justify-center space-x-4  p-5">
                 <div className="flex-1 text-center">
                   <p className="py-2 rounded-lg">예정</p>
-                  <p className="text-sm text-gray-600 mt-2">12</p>
+                  <p className="text-sm text-gray-600 mt-2">
+                    {artistCountData.ready_COUNT}
+                  </p>
                 </div>
                 <div className="flex-1 text-center">
                   <p className="py-2 rounded-lg">진행중</p>
                   <p className="text-sm text-gray-600 mt-2 border-l border-r border-gray-300">
-                    5
+                    {artistCountData.applying_COUNT}
                   </p>
                 </div>
                 <div className="flex-1 text-center">
                   <p className="py-2 rounded-lg">사인회</p>
-                  <p className="text-sm text-gray-600 mt-2">3</p>
+                  <p className="text-sm text-gray-600 mt-2">
+                    {artistCountData.fansign_COUNT}
+                  </p>
                 </div>
               </div>
             </div>
@@ -120,16 +130,16 @@ export default function ArtistInfo() {
       <div className="flex-1">
         <div className="bar flex justify-between items-center mb-4 ">
           <div className="text-2xl font-bold mx-auto border-b p-2">
-          <p className=""> Members </p>
+            <p className=""> Members </p>
           </div>
           <AddMemberModal className="ml-auto" />
         </div>
 
         <div>
           {artistData && (
-            <div className='m-3'>
+            <div className="m-3">
               {artistData.object.memberList.map((member) => (
-                <MemberList  key={member.memberId} data={member} />
+                <MemberList key={member.memberId} data={member} />
               ))}
             </div>
           )}
