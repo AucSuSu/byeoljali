@@ -37,6 +37,10 @@ const HomeView = () => {
     }
   };
 
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
   const loadAfterData = async (keyword) => {
     const data = await customAxios
       .get(
@@ -73,23 +77,29 @@ const HomeView = () => {
       {/* 캐러셀 */}
       <Carousel />
       <div className="flex items-center justify-between mt-4 pb-12 mb-6">
-        <input
-          type="text"
-          placeholder="검색 키워드를 입력하세요"
-          className="input border border-pink border-2 bg-transparent rounded w-24 py-2 px-3"
-          value={searchKeyword}
-        />
-        <button
-          className="w-40 btn font-bold py-2 px-4 rounded border bg-white mr-12"
-          onClick={handleSearchSubmit}
-        >
-          검색
-        </button>
+        {/* 검색바와 검색 버튼을 담은 컨테이너 */}
+        <div className="flex items-center justify-center flex-grow">
+          <input
+            type="text"
+            placeholder="검색 키워드를 입력하세요"
+            className="border border-pink-500 border-2 bg-transparent rounded py-2 px-3"
+            value={searchKeyword}
+            onChange={handleSearchChange}
+          />
+          <button
+            className="ml-2 btn font-bold py-2 px-4 rounded border bg-white"
+            onClick={handleSearchSubmit}
+          >
+            검색
+          </button>
+        </div>
+
+        {/* 토글 버튼 */}
         <ToggleButton
           type={false}
           isApplying={isApplying}
           toggleApply={handleToggle}
-        ></ToggleButton>
+        />
       </div>
       <div className="mt-6">
         <List />
