@@ -8,7 +8,11 @@ import com.example.be.fan.entity.Fan;
 import com.example.be.fan.repository.FanRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -108,6 +112,26 @@ public class OAuthService {
                 kakaoProfileRequest,
                 String.class
         );
+
+        //Response 데이터 파싱
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObj = null;
+        try {
+            jsonObj = (JSONObject) jsonParser.parse(kakaoProfileResponse.getBody());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        JSONObject account = (JSONObject) jsonObj.get("kakao_account");
+        JSONObject profile = (JSONObject) account.get("profile");
+
+        long id = (long) jsonObj.get("id");
+        String email = String.valueOf(account.get("email"));
+        String nickname = String.valueOf(profile.get("nickname"));
+
+        System.out.println("id : " + id);
+        System.out.println("email : " + email);
+        System.out.println("nickname : " + nickname);
+        System.out.println();
 
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoProfile kakaoProfile = null;
