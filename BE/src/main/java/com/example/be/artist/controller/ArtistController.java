@@ -21,7 +21,7 @@ public class ArtistController {
 
     private final ArtistService artistService;
 
-    @PostMapping("/signUp")
+    @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody ArtistSignUpDto dto){
         SignUpResponseDto responseDto = artistService.signUp(dto);
 

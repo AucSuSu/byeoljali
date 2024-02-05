@@ -36,11 +36,12 @@ public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
         return new ArrayList<>();
     }
 
-    public static Artist createArtist(String email, String password, String name){
+    public static Artist createArtist(String email, String password, String name, String artistImageUrl){
         Artist artist = new Artist();
         artist.email = email;
         artist.password = password;
         artist.name = name;
+        artist.artistImageUrl = artistImageUrl;
         artist.roles = "ROLE_ARTIST";
 
         return artist;

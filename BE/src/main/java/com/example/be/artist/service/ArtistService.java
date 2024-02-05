@@ -8,6 +8,7 @@ import com.example.be.member.entity.Member;
 import com.example.be.member.repository.MemberRepository;
 import com.example.be.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +28,9 @@ public class ArtistService {
     private final MemberRepository memberRepository;
     private final S3Uploader s3Uploader;
 
+    @Value("${default.image.url}")
+    private String noImageUrl;
+
     public SignUpResponseDto signUp(ArtistSignUpDto dto){
 
         SignUpResponseDto responseDto = new SignUpResponseDto();
@@ -41,7 +45,7 @@ public class ArtistService {
         String email = dto.getEmail();
         String name = dto.getName();
 
-        Artist artist = Artist.createArtist(email, encodePwd, name);
+        Artist artist = Artist.createArtist(email, encodePwd, name, noImageUrl);
         artistRepository.save(artist);
 
         responseDto.setMsg("회원가입 성공");
