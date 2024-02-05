@@ -50,7 +50,11 @@ export default function ArtistFanSignView() {
               <PlusIcon className="h-5 w-5" /> {/* 아이콘 크기 조정 */}
             </button>
           </div>
-          <Toggle isApplying={isApplying} toggleApply={handleToggle} />
+          <Toggle
+            type={false}
+            isApplying={isApplying}
+            toggleApply={handleToggle}
+          />
         </div>
 
         {addFansign && <CreateFansignModal />}

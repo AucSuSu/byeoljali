@@ -119,6 +119,11 @@ export default function FansignModal({ memberFansignId }) {
               <p>|</p>
               {detailData.object.status == 'READY_APPLYING' && <p>응모 예정</p>}
               {detailData.object.status == 'APPLYING' && <p>응모 중</p>}
+              {detailData.object.status == 'READY_FANSIGN' && (
+                <p>사인회 예정</p>
+              )}
+              {detailData.object.status == 'FANSIGN' && <p>사인회 중</p>}
+              {detailData.object.status == 'FINISH' && <p>사인회 종료</p>}
             </div>
             <div className="flex justify-center mt-4">
               {true && (
@@ -126,14 +131,14 @@ export default function FansignModal({ memberFansignId }) {
                   className="bg-pink text-black px-4 py-3 rounded-xl"
                   onClick={participate}
                 >
-                  팬싸인 참가하기
+                  사인회 참여
                 </button>
               )}
               <button
                 className="bg-light-gray text-black px-4 py-3 rounded-xl ml-5"
                 onClick={closeModal}
               >
-                Close Modal
+                닫기
               </button>
             </div>
           </div>
