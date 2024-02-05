@@ -22,6 +22,7 @@ const HomeView = () => {
   const dispatch = useDispatch();
 
   const [isApplying, setIsApplying] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
     loadAfterData();
@@ -54,6 +55,26 @@ const HomeView = () => {
       });
     console.log('응모전', data);
     dispatch(beforeApplyList(data));
+  };
+
+  const getUserSearchResult = async (keyword) => {
+    const data = await customAxios
+      .get(
+        'mainpage?searchKeyword=' + keyword + '&order=register&status=APPLYING',
+      )
+      .then((res) => {
+        return res.data;
+      });
+    console.log('응모전', data);
+    dispatch(getUserSearchResult(data));
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    getUserSearchResult(searchKeyword);
   };
 
   return (
