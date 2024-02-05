@@ -69,7 +69,9 @@ const HomeView = () => {
           toggleApply={handleToggle}
         ></ToggleButton>
       </div>
-      <List />
+      <div className="mt-6">
+        <List />
+      </div>
     </div>
   );
 };
