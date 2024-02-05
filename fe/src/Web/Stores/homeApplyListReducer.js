@@ -19,6 +19,10 @@ const homeApplyListSlice = createSlice({
       state.data = action.payload;
       console.log('응모중 데이터 : ', state.data);
     },
+    getUserSearchResult(state, action) {
+      state.data = action.payload;
+      console.log('검색 데이터 : ', state.data);
+    },
   },
 });
 
