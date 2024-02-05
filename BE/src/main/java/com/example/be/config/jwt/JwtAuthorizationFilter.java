@@ -73,7 +73,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
             // 토큰에서 role, id 추출
 
-            String role = decodedJWT.getClaim("role").toString();
+            String role = decodedJWT.getClaim("role").asString();
             String id = decodedJWT.getClaim("id").toString();
 
             Authentication authentication = null;
