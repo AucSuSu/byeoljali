@@ -75,6 +75,7 @@ export default function ArtistInfo() {
                 alt="Artist"
                 onClick={handleImageClick}
               />
+              
             </div>
             <div className="w-1/2 pl-8 pt-4 pb-4">
             <div className="ps-2 text-gray-600 text-xs">
