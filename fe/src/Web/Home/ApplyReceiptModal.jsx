@@ -61,7 +61,7 @@ function ApplyReceiptModal({ onClose, title }) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h1>이미지 업로드 모달</h1>
+        <h1 className="bolder text-18 mt-2 mb-6">영수증을 등록해주세요!</h1>
         <div>
           {imageSrc && <img id="image-preview" src={imageSrc} alt="Preview" />}
           <input
@@ -71,13 +71,18 @@ function ApplyReceiptModal({ onClose, title }) {
             ref={fileInputRef}
           />
         </div>
-        <button className="upload-btn" onClick={handleButtonClick}>
+        <button
+          className="bg-hot-pink text-white px-4 py-2 rounded-xl mb-8"
+          onClick={handleButtonClick}
+        >
           Upload Image
         </button>
-        <button className="post-btn" onClick={handlePost}>
-          POST
+        <button
+          className="bg-light-gray text-black px-4 py-2 rounded-xl"
+          onClick={onClose}
+        >
+          닫기
         </button>
-        <button onClick={onClose}>닫기</button>
       </div>
     </div>
   );
