@@ -41,7 +41,6 @@ class VideoRoomComponent extends Component {
     this.checkSize = this.checkSize.bind(this);
     this.addCount = this.addCount.bind(this);
     this.removeCount = this.removeCount.bind(this);
-    this.goodbye = this.goodbye.bind(this);
     this.timerEvnet = this.timerEvnet.bind(this);
   }
 

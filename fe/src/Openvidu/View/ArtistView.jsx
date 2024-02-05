@@ -29,7 +29,7 @@ export default function ArtistView() {
         memberFansignId={propsData.memberFansignId}
         waitNo={waitNo}
         joinNo={joinNo}
-        getFanData={getFanData}
+        getFanData={fanData}
       />
       <Artist
         propsData={propsData}

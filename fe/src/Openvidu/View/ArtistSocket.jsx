@@ -22,14 +22,6 @@ export default function Socket({
       }
     };
 
-    useEffect(() => {
-      sendMessage('close', waitNo);
-    }, [waitNo]);
-
-    useEffect(() => {
-      sendMessage('join', joinNo);
-    }, [joinNo]);
-
     newSocket.onopen = async () => {
       await enterMessage(newSocket);
       console.log('OPEN 들어왔어요~ : WebSocket connection opened');
@@ -45,6 +37,14 @@ export default function Socket({
       newSocket.close();
     };
   }, []);
+
+  useEffect(() => {
+    sendMessage('close', waitNo);
+  }, [waitNo]);
+
+  useEffect(() => {
+    sendMessage('join', joinNo);
+  }, [joinNo]);
 
   // 메시지 전송 함수
   const sendMessage = (messageType, number) => {

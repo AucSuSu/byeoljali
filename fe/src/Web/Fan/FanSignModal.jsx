@@ -99,6 +99,8 @@ function FanSignModal({ data, onClose }) {
             </div>
             <button onClick={() => onClose()}>닫기</button>
             {/* 모달을 닫는 버튼 */}
+            <button onClick={participate}>TEST</button>
+            {/* TEST는 나중에 삭제, 지금 테스트에서 입장하기 버튼이 안보임 */}
           </div>
         </div>
       ) : (
