@@ -29,7 +29,7 @@ public class Fan extends BaseEntity {
     private String profileImageUrl; // 자기 프사
     private String name;
     private String nickname;
-    private LocalDate birth;
+    private String birth;
     private String certificationImageUrl; // 인증사진
     private int changeCount; // 인증 사진 변경 횟수
     private boolean isBlacklist = false;
@@ -51,7 +51,7 @@ public class Fan extends BaseEntity {
     @OneToMany(mappedBy = "fan")
     private List<Winning> winningList = new ArrayList<>();
 
-    public Fan(String email, String profileImageUrl, String name, String nickname, LocalDate birth, String certificationImageUrl, int changeCount, boolean isBlacklist) {
+    public Fan(String email, String profileImageUrl, String name, String nickname, String birth, String certificationImageUrl, int changeCount, boolean isBlacklist) {
         this.email = email;
         this.profileImageUrl = profileImageUrl;
         this.name = name;
@@ -62,7 +62,7 @@ public class Fan extends BaseEntity {
         this.isBlacklist = isBlacklist;
         this.roles = "ROLE_FAN";
     }
-    public Fan(String email, String profileImageUrl, String nickname, LocalDate birth, int changeCount, boolean isBlacklist) {
+    public Fan(String email, String profileImageUrl, String nickname, String birth, int changeCount, boolean isBlacklist) {
         this.email = email;
         this.profileImageUrl = profileImageUrl;
         this.nickname = nickname;
