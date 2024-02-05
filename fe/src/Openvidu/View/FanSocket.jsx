@@ -8,7 +8,11 @@ export default function Socket({
   waitNo,
 }) {
   const [socket, setSocket] = useState(null);
-  const [inputMessage, setInputMessage] = useState('');
+  useEffect(() => {
+    if (fanData) {
+      sendMessage(data, fanData);
+    }
+  }, [fanData]);
 
   useEffect(() => {
     // WebSocket 서버에 연결
@@ -17,9 +21,9 @@ export default function Socket({
 
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
-      if (message.type === 'join' && message.message === waitNo) {
+      if (message.type === 'join' && message.msg === waitNo) {
         joinSignal();
-      } else if (message.type === 'close' && message.message === waitNo) {
+      } else if (message.type === 'close' && message.msg === waitNo) {
         closeSignal();
       }
     };
@@ -41,21 +45,20 @@ export default function Socket({
   }, []);
 
   // 메시지 전송 함수
-  const sendMessage = (messageType) => {
+  const sendMessage = (messageType, data) => {
     if (socket) {
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${memberFansignId}`,
         sender: `Send`,
         // 필요하다면 사용하는 식별자
-        msg: inputMessage,
+        msg: data,
         // 메세지
       };
 
       // 서버로 메시지 전송
       socket.send(JSON.stringify(myMessage));
       console.log('전송');
-      setInputMessage(''); // 입력 필드 초기화
     } else {
       console.log('아직 소켓이 없어용');
     }
@@ -71,7 +74,6 @@ export default function Socket({
 
     // 서버로 메시지 전송
     newSocket.send(JSON.stringify(myMessage));
-    setInputMessage(''); // 입력 필드 초기화
   };
 
   return <></>;

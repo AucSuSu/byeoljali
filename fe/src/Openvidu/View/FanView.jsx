@@ -70,7 +70,6 @@ export default function Test() {
       {flag === 3 && (
         <Station
           propsData={propsData}
-          wait={wait}
           onMeetingClick={switchToFan}
           joinFansign={joinTrigger} // 트리거
           sessionId={propsData.sessionId}

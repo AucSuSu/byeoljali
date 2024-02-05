@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 
-export default function Footer({ id, toggleChat }) {
+export default function Footer({ id, toggleChat, updateCount }) {
+  const [test, setTest] = useState();
   const blakcList = (id) => {
     console.log('blackList^^', id);
   };
@@ -37,6 +38,12 @@ export default function Footer({ id, toggleChat }) {
             <ChatIcon />
           </IconButton>
         </div>
+        <div onClick={updateCount(test)}> testStart</div>
+        <input
+          type="text"
+          value={test}
+          onChange={(e) => setTest(e.target.value)}
+        />
       </div>
     </>
   );

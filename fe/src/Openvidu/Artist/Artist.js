@@ -28,9 +28,9 @@ class VideoRoomComponent extends Component {
       postit: undefined, // postit 저장
       count: 0, // 참여인원 수
       signTime: 30, // 팬싸인 시간
-      joinNo: null, // 호출해야 하는 번호
+      waitNo: this.props.fanData.orders,
       fanData: this.props.fanData,
-      number: '테스트용',
+      testTime: 10,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -68,15 +68,9 @@ class VideoRoomComponent extends Component {
     this.joinSession();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // props가 변했을 때 A함수 실행
-    if (this.props.someProp !== prevProps.someProp) {
-      this.handlePropsChange();
-    }
-
-    // state가 변했을 때 B함수 실행
-    if (this.state.number !== prevState.number && this.state.count === 1) {
-      this.props.inviteFan(1);
+  componentDidUpdate(prevState) {
+    if (prevState.count === 2 && this.state.count === 1) {
+      this.updateCount();
     }
   }
 
@@ -330,11 +324,54 @@ class VideoRoomComponent extends Component {
       if (this.state.signTime === 0) {
         clearInterval(this.timer);
         {
-          this.props.fanData && this.props.byebye(this.props.fanData.waitNo);
+          this.props.fanData && this.props.byebye(this.props.fanData.orders);
         } // checkponit
       }
     }, 1000); // 매초마다 실행
   }
+
+  // 테스트 타이머 CheckPoint
+
+  updateCount = (number) => {
+    this.setState(
+      (prevState) => ({ count: prevState.count + 1 }),
+      () => {
+        if (this.state.count === 1) {
+          this.startTestTimer(number);
+        } else if (this.state.count === 2) {
+          this.stopTestTimer();
+          this.setState({ testTime: 10 });
+        }
+      },
+    );
+  };
+
+  startTestTimer = (number) => {
+    this.testTimer = setInterval(() => {
+      this.setState(
+        (prevState) => ({ testTime: prevState.testTime - 1 }),
+        () => {
+          if (this.state.count === 2) {
+            this.stopTestTimer();
+            this.setState({ testTime: 10 });
+          }
+          if (this.state.testTime === 0 && this.state.count === 1) {
+            if (number) {
+              this.props.inviteFan(number);
+            } else {
+              this.props.inviteFan(this.state.waitNo);
+              this.setState({ testTime: 10 });
+            }
+          }
+        },
+      );
+    }, 1000);
+  };
+
+  stopTestTimer = () => {
+    clearInterval(this.testTimer);
+    this.testTimer = null;
+  };
 
   render() {
     const localUser = this.state.localUser;
@@ -382,7 +419,7 @@ class VideoRoomComponent extends Component {
               </div>
             )}
         </div>
-        <Footer id="4" toggleChat={this.toggleChat} />
+        <Footer id="4" toggleChat={this.toggleChat} test={this.updateCount} />
       </div>
     );
   }
