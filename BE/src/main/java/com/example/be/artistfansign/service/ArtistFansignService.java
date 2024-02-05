@@ -57,7 +57,8 @@ public class ArtistFansignService {
             String nowFormattedDate = now.format(formatter);
 
             // 들어온 입력 데이터 날짜
-            System.out.println( "입력 날짜 string : " + dto.getStartApplyTime().split(" "));
+            System.out.println("입력 날짜 string : " + dto.getStartApplyTime().split(" ")[0]);
+            System.out.println("현재 날짜 string : " + nowFormattedDate);
             String dtoFormattedDate = dto.getStartApplyTime().split(" ")[0];
             FansignStatus status = FansignStatus.READY_APPLYING;
             if(dtoFormattedDate.equals(nowFormattedDate)){
@@ -65,7 +66,7 @@ public class ArtistFansignService {
             }
 
             ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
-                    , endApplyTime, startFansignTime, FansignStatus.READY_APPLYING, dto.getMode(), artist);
+                    , endApplyTime, startFansignTime, status, dto.getMode(), artist);
             artistFansignRepository.save(artistFansign);
             Long artisFansignId = artistFansign.getArtistfansignId();
 
