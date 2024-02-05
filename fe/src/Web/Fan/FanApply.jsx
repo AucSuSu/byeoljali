@@ -24,11 +24,13 @@ function FanApply() {
   };
 
   return (
-    <div>
-      <h1>응모 페이지</h1>
-      {data.map((data, index) => (
-        <FanSignList key={index} data={data} />
-      ))}
+    <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
+      <div className="mt-10 ml-16 mr-20">
+        <h1 className="text-25 bolder">응모 페이지</h1>
+        {data.map((data, index) => (
+          <FanSignList key={index} data={data} />
+        ))}
+      </div>
     </div>
   );
 }
