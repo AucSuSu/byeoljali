@@ -71,34 +71,34 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
             DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(JwtProperties.SECRET)).build().verify(token);
 
-            // Artist ID 추출 (클레임이 없는 경우 null 처리)
-            String artistId = decodedJWT.getClaim("artistId").toString();
+            // 토큰에서 role, id 추출
+
+            String role = decodedJWT.getClaim("role").toString();
+            String id = decodedJWT.getClaim("id").toString();
+
+            Authentication authentication = null;
 
             // username이 있다는 말은 사용자가 정상적으로 인증이 됐다는 뜻!
-            if(!artistId.equals("Missing claim")){
-                Artist artist = artistRepository.findById(Long.parseLong(artistId)).orElse(null);
-
+            if( role.equals("ARTIST")){
+                // artist 찾기
+                Artist artist = artistRepository.findById(Long.parseLong(id)).orElse(null);
+                // artist를 PrincipalDetails에 넣기
                 PrincipalDetails principalDetails = new PrincipalDetails(artist);
+
                 // 사용자가 인증이 됐으니까 강제적으로 authentication 객체를 만들어줘도 되는거임 with principalDetails, null, authorities
-                Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
+                authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
 
-                // 강제로 시큐리티의 세션에 authentication 객체를 저장
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }else if( role.equals("FAN")){
+                Fan fan = fanRepository.findById(Long.parseLong(id)).orElse(null);
 
-            }else{
-                String fanId = decodedJWT.getClaim("fanId").toString();
-
-                if(!fanId.equals("Missing claim")){
-                    Fan fan = fanRepository.findById(Long.parseLong(fanId)).orElse(null);
-
-                    FanPrincipalDetails fanPrincipalDetails = new FanPrincipalDetails(fan);
-                    // 사용자가 인증이 됐으니까 강제적으로 authentication 객체를 만들어줘도 되는거임 with principalDetails, null, authorities
-                    Authentication authentication = new UsernamePasswordAuthenticationToken(fanPrincipalDetails, null, fanPrincipalDetails.getAuthorities());
-
-                    // 강제로 시큐리티의 세션에 authentication 객체를 저장
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+                FanPrincipalDetails fanPrincipalDetails = new FanPrincipalDetails(fan);
+                // 사용자가 인증이 됐으니까 강제적으로 authentication 객체를 만들어줘도 되는거임 with principalDetails, null, authorities
+                authentication = new UsernamePasswordAuthenticationToken(fanPrincipalDetails, null, fanPrincipalDetails.getAuthorities());
             }
+
+            // 강제로 시큐리티의 세션에 authentication 객체를 저장
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
         } catch (TokenExpiredException e){ // 토큰 만료되면
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 코드 설정
             response.setContentType("application/json");
