@@ -68,8 +68,8 @@ const HomeView = () => {
           isApplying={isApplying}
           toggleApply={handleToggle}
         ></ToggleButton>
-        <List />
       </div>
+      <List />
     </div>
   );
 };
