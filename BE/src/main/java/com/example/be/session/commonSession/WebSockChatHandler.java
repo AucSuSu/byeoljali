@@ -2,6 +2,7 @@ package com.example.be.session.commonSession;
 import java.io.IOException;
 import java.util.*;
 
+import com.example.be.exception.SessionClosedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,14 @@ public class WebSockChatHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
     private final ChatService chatService;
 
+    @Override
+    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        // 여기서 잡아주는 IllegalStateException은 세션이 닫혔을때 발생하는 에러임
+        if(exception instanceof IllegalStateException) {
+            throw new SessionClosedException("세션이 닫혔습니다.");
+        }
+        super.handleTransportError(session, exception);
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -35,28 +44,32 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         ChatRoom room = chatService.findRoomById(chatMessage.getRoomId());
         Set<WebSocketSession> sessions = room.getSessions();   //방에 있는 현재 사용자 한명이 WebsocketSession
         log.info("payload -> "+ payload);
-        if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
-            sessions.add(session);
-            chatMessage.setMessage(chatMessage.getMessage());
-            log.info("*** 입장 확인 완료 *** ");
-            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-            log.info("*** 입장 확인 메세지 전송*** ");
-        }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
-            sessions.remove(session);
-            log.info("*** QUIT CODE *** ");
-            chatMessage.setMessage(chatMessage.getMessage());
-            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-        }else if (chatMessage.getType().equals(ChatMessage.MessageType.CLOSE)) {
-            log.info("*** CLOSE CODE *** ");
-            chatMessage.setMessage(chatMessage.getMessage());
-            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-        }else if (chatMessage.getType().equals(ChatMessage.MessageType.JOIN)) {
-            log.info("*** JOIN CODE *** ");
-            chatMessage.setMessage(chatMessage.getMessage());
-            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-        }else {
-            log.info("메세지 도착" + message);
-            sendToEachSocket(sessions,message); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
+        try {
+            if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
+                sessions.add(session);
+                chatMessage.setMessage(chatMessage.getMessage());
+                log.info("*** 입장 확인 완료 *** ");
+                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                log.info("*** 입장 확인 메세지 전송*** ");
+            }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
+                sessions.remove(session);
+                log.info("*** QUIT CODE *** ");
+                chatMessage.setMessage(chatMessage.getMessage());
+                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+            }else if (chatMessage.getType().equals(ChatMessage.MessageType.CLOSE)) {
+                log.info("*** CLOSE CODE *** ");
+                chatMessage.setMessage(chatMessage.getMessage());
+                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+            }else if (chatMessage.getType().equals(ChatMessage.MessageType.JOIN)) {
+                log.info("*** JOIN CODE *** ");
+                chatMessage.setMessage(chatMessage.getMessage());
+                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+            }else {
+                log.info("메세지 도착" + message);
+                sendToEachSocket(sessions,message); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
+            }
+        }catch (IllegalStateException e) {
+            throw new SessionClosedException("session이 닫혔습니다.");
         }
     }
     private  void sendToEachSocket(Set<WebSocketSession> sessions, TextMessage message){
@@ -69,8 +82,6 @@ public class WebSockChatHandler extends TextWebSocketHandler {
             }
         });
     }
-
-
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
