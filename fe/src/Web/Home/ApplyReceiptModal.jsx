@@ -65,24 +65,33 @@ function ApplyReceiptModal({ onClose, title }) {
       onClick={onClose}
     >
       <div
-        className="w-120 h-auto bg-white flex flex-col "
+        className="w-120 h-auto bg-white flex flex-col items-center "
         onClick={(e) => e.stopPropagation()}
       >
-        <h1 className="bolder text-18 mt-2 mb-6">영수증을 등록해주세요!</h1>
         <div>
-          <img
-            id="image-preview"
-            src={imageSrc}
-            alt="Preview"
-            onClick={handleButtonClick}
-            className="w-100 h-100 object-fill"
-          />
-          <input
-            type="file"
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-            ref={fileInputRef}
-          />
+          <h1 className="bolder text-2xl mt-2 mb-6">영수증을 등록해주세요!</h1>
+        </div>
+        <div>
+          <div className="relative mb-4">
+            <img
+              src={imageSrc}
+              alt="Preview"
+              className="w-72 h-80 rounded-lg object-fill"
+            />
+            <button
+              onClick={handleButtonClick}
+              className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
+            >
+              {/* Icon or text to indicate upload, hidden by default and only shown on hover/focus */}
+              <span className="text-white text-5xl">+</span>
+            </button>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              className="hidden"
+              ref={fileInputRef}
+            />
+          </div>
         </div>
         <div className="flex gap-3">
           <button
