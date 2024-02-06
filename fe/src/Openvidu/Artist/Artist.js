@@ -27,7 +27,9 @@ class VideoRoomComponent extends Component {
       currentVideoDevice: undefined,
       count: 0, // 참여인원 수
       signTime: 30, // 팬싸인 시간
-      orders: 0,
+      orders: 1,
+      countTime: 10,
+      remainingTime: 20,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -41,6 +43,7 @@ class VideoRoomComponent extends Component {
     this.timerEvnet = this.timerEvnet.bind(this);
     this.startCountdown = this.startCountdown.bind(this);
     this.inviteCountDown = this.inviteCountDown.bind(this);
+    this.remainingTimer = this.remainingTimer.bind(this);
     this.testCount = this.testCount.bind(this);
   }
 
@@ -66,6 +69,7 @@ class VideoRoomComponent extends Component {
     window.addEventListener('resize', this.updateLayout);
     window.addEventListener('resize', this.checkSize);
     this.joinSession();
+    this.remainingTimer();
   }
 
   componentWillUnmount() {
@@ -81,12 +85,7 @@ class VideoRoomComponent extends Component {
 
   // 자동 초대 로직 새로 작성
   componentDidUpdate(_, prevState) {
-    console.log(
-      '카운트 테스트 prevCount, nowCount : ',
-      prevState.count,
-      this.state.count,
-    );
-    if (prevState.count !== 0 && prevState.count !== this.state.count) {
+    if (prevState.count !== this.state.count) {
       this.startCountdown();
     }
   }
@@ -94,34 +93,36 @@ class VideoRoomComponent extends Component {
   startCountdown = () => {
     const { count } = this.state;
     if (count === 1) {
-      console.log('카운트다운 실행');
       this.inviteCountDown();
     }
   };
 
   inviteCountDown = () => {
+    this.props.inviteFan(this.state.orders);
     const { count } = this.state;
 
     if (count > 1) {
       return;
     }
 
-    let countdown = 10;
+    console.log('카운트 다운 실행~');
 
-    const timer = setInterval(() => {
+    const countTimer = setInterval(() => {
+      const { countTime } = this.state;
       if (count !== 1) {
-        clearInterval(timer);
+        this.setState({ countTime: 10 });
+        console.log('카운트 타이머 종료');
+        clearInterval(countTimer);
         return;
       }
 
-      countdown--;
+      this.setState({ countTime: countTime - 1 });
 
-      if (countdown === 0 && this.state.count === 1) {
-        const { orders } = this.state;
-        this.props.inviteFan(orders + 1);
-        this.setState({ orders: orders + 1 });
-        clearInterval(timer);
+      if (this.state.countTime === 0) {
+        this.setState({ countTime: 10 });
+        this.setState({ orders: this.state.orders + 1 });
         this.startCountdown();
+        clearInterval(countTimer);
       }
     }, 1000);
   };
@@ -132,6 +133,20 @@ class VideoRoomComponent extends Component {
   }
   testGetOUT(e) {
     this.props.timeOver(e);
+  }
+
+  // 자동 입장 및 퇴장 타이머
+  remainingTimer() {
+    this.timer = setInterval(() => {
+      this.setState((prevState) => ({
+        remainingTime: Math.max(prevState.remainingTime - 1, 0), // 0 이하로 내려가지 않도록
+      }));
+      if (this.state.remainingTime === 0) {
+        this.props.inviteFan(this.state.orders);
+        clearInterval(this.timer);
+        // checkponit
+      }
+    }, 1000); // 매초마다 실행
   }
 
   joinSession() {
@@ -361,8 +376,9 @@ class VideoRoomComponent extends Component {
         signTime: Math.max(prevState.signTime - 1, 0), // 0 이하로 내려가지 않도록
       }));
       if (this.state.signTime === 0) {
-        clearInterval(this.timer);
+        this.setState({ signTime: 30 });
         this.props.timeOver(this.state.orders);
+        clearInterval(this.timer);
         // checkponit
       }
     }, 1000); // 매초마다 실행
@@ -378,6 +394,7 @@ class VideoRoomComponent extends Component {
           title={this.props.propsData.title}
           member={this.props.propsData.member}
           timer={this.state.signTime}
+          remainingTime={this.state.remainingTime}
         />
         <div id="layout" className="bounds">
           {localUser !== undefined &&
