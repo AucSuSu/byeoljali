@@ -24,7 +24,6 @@ public class Member extends BaseEntity {
     @Column(name = "member_id")
     private Long memberId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")
     private Artist artist;
