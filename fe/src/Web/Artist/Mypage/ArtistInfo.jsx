@@ -70,28 +70,11 @@ export default function ArtistInfo() {
 
   return (
     <div className="h-screen flex flex-col font-milk font-bold">
-      {/* <div>
-        <label>번호</label>
-        <input
-          className="border-4"
-          type="text"
-          value={portNumber}
-          onChange={(e) => setPortNumber(e.target.value)}
-        />
-        <label>이름</label>
-        <input
-          className="border-4"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button onClick={testSocket}>소켓 테스트</button>
-      </div>
-      {socketOpen && <Socket memberFansignId={portNumber} name={name} />} */}
-      <div className="p-5 h-[1/2*full]">
+      {/* 아티스트 박스 */}
+      <div className="p-5">
         {artistData && (
           <div className="pb-8 flex items-center">
-            <div className="w-1/2 m-7 object-cover rounded-lg mb-8">
+            <div className="m-8 w-300 h-400 overflow-hidden rounded-lg">
               <img
                 className="object-cover rounded-lg hover:border-4 hover:border-blue-500 transition duration-300"
                 src={artistData.object.artistImageUrl}
@@ -134,8 +117,8 @@ export default function ArtistInfo() {
           </div>
         )}
       </div>
-
-      <div className="flex-1">
+      {/* 맴버 박스 */}
+      <div className="h-[40%]">
         <div className="bar flex items-center mb-4 "></div>
 
         <div className="flex justify-center pb-2">
