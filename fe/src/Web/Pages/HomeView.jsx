@@ -29,15 +29,6 @@ const HomeView = () => {
     loadAfterData(searchKeyword);
   }, []);
 
-  const handleToggle = () => {
-    setIsApplying(!isApplying);
-    if (isApplying) {
-      loadAfterData(searchKeyword);
-    } else {
-      loadBeforeData(searchKeyword);
-    }
-  };
-
   const handleSearchChange = (e) => {
     setSearchKeyword(e.target.value);
   };
@@ -50,7 +41,18 @@ const HomeView = () => {
     }
   };
 
-  const loadAfterData = async (keyword) => {
+  const handleToggle = () => {
+    const nextIsApplying = !isApplying; // 다음 상태를 임시 변수에 저장
+    // 상태 업데이트 없이 임시 변수를 기반으로 데이터 로딩
+    if (nextIsApplying) {
+      loadAfterData(searchKeyword, nextIsApplying);
+    } else {
+      loadBeforeData(searchKeyword, nextIsApplying);
+    }
+  };
+
+  // 비동기 데이터 로딩 함수에 nextIsApplying 인자 추가
+  const loadAfterData = async (keyword, nextIsApplying) => {
     const data = await customAxios
       .get(
         'mainpage?searchKeyword=' + keyword + '&order=register&status=APPLYING',
@@ -60,9 +62,10 @@ const HomeView = () => {
       });
     console.log('응모중', data);
     dispatch(afterApplyList(data));
+    setIsApplying(nextIsApplying); // 비동기 작업 완료 후 실제 상태 업데이트
   };
 
-  const loadBeforeData = async (keyword) => {
+  const loadBeforeData = async (keyword, nextIsApplying) => {
     const data = await customAxios
       .get(
         'mainpage?searchKeyword=' +
@@ -74,6 +77,7 @@ const HomeView = () => {
       });
     console.log('응모전', data);
     dispatch(beforeApplyList(data));
+    setIsApplying(nextIsApplying); // 비동기 작업 완료 후 실제 상태 업데이트
   };
 
   return (
