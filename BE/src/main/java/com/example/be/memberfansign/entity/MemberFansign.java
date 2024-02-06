@@ -53,4 +53,9 @@ public class MemberFansign extends BaseEntity {
         artistFansign.getMemberFansignList().add(this);
     }
 
+    public void setMember(Member member){
+        this.member = member;
+        member.getMemberFansignList().add(this);
+    }
+
 }
