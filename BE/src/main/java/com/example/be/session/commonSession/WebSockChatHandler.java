@@ -37,26 +37,26 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         log.info("payload -> "+ payload);
         if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
             sessions.add(session);
-            chatMessage.setMessage("입장했습니다.");
+            chatMessage.setMessage(chatMessage.getMessage());
             log.info("*** 입장 확인 완료 *** ");
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
             log.info("*** 입장 확인 메세지 전송*** ");
         }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
             sessions.remove(session);
             log.info("*** QUIT CODE *** ");
-            chatMessage.setMessage("퇴장했습니다..");
+            chatMessage.setMessage(chatMessage.getMessage());
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
         }else if (chatMessage.getType().equals(ChatMessage.MessageType.CLOSE)) {
             log.info("*** CLOSE CODE *** ");
-            chatMessage.setMessage(chatMessage.getMessage()+ "님 퇴장시키기");
+            chatMessage.setMessage(chatMessage.getMessage());
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
         }else if (chatMessage.getType().equals(ChatMessage.MessageType.JOIN)) {
             log.info("*** JOIN CODE *** ");
-            chatMessage.setMessage(chatMessage.getMessage()+ "님 입장시키기");
+            chatMessage.setMessage(chatMessage.getMessage());
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
         }else {
             log.info("메세지 도착" + message);
-            sendToEachSocket(sessions,message ); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
+            sendToEachSocket(sessions,message); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
         }
     }
     private  void sendToEachSocket(Set<WebSocketSession> sessions, TextMessage message){
