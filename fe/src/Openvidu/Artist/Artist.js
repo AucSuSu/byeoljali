@@ -89,7 +89,6 @@ class VideoRoomComponent extends Component {
 
   startCountdown = () => {
     const { count } = this.state;
-    console.log(count);
     if (count === 1) {
       this.inviteCountDown();
     }
