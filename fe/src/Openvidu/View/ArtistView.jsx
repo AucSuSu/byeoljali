@@ -9,7 +9,7 @@ export default function ArtistView() {
 
   const [closeNo, setCloseNo] = useState(null);
   const [joinNo, setJoinNo] = useState(null);
-  const [fanData, setfanData] = useState(null);
+  const [fanData, setFanData] = useState(null);
 
   const timeOver = (e) => {
     setCloseNo(e);
@@ -19,7 +19,7 @@ export default function ArtistView() {
   };
 
   const getFanData = (data) => {
-    setfanData(data);
+    setFanData(data);
   };
 
   return (
