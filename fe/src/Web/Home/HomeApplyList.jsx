@@ -4,7 +4,7 @@ import ListItem from './HomeApplyListItem';
 
 const HomeApplyList = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(2);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
 
   const applyList = useSelector((state) => state.homeapply.data);
 
