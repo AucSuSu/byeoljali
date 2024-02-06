@@ -39,20 +39,30 @@ export default function Socket({
   }, []);
 
   useEffect(() => {
-    sendMessage('CLOSE', closeNo);
+    sendMessage('CLOSE', {
+      orders: closeNo,
+      postit: null,
+      birthday: null,
+      nickname: null,
+    });
   }, [closeNo]);
 
   useEffect(() => {
-    sendMessage('JOIN', joinNo);
+    sendMessage('JOIN', {
+      orders: joinNo,
+      postit: null,
+      birthday: null,
+      nickname: null,
+    });
   }, [joinNo]);
 
   // 메시지 전송 함수
-  const sendMessage = (messageType, number) => {
+  const sendMessage = (messageType, msg) => {
     if (socket) {
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${memberFansignId}`,
-        message: number,
+        message: msg,
       };
       socket.send(JSON.stringify(myMessage));
     }
@@ -63,7 +73,7 @@ export default function Socket({
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${memberFansignId}`,
-      message: 'Enter 완료',
+      message: { orders: null, postit: null, birthday: null, nickname: null },
     };
     newSocket.send(JSON.stringify(myMessage));
   };

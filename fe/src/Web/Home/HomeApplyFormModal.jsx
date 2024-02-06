@@ -34,6 +34,25 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     closeModal();
   };
 
+  // 날짜 계산용
+  const formatDate = (dateString) => {
+    const options = { month: '2-digit', day: '2-digit' }; // 월과 일만 표시
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ko-KR', options); // 'ko-KR' 로케일을 사용하여 날짜 형식을 조정
+  };
+
+  // 팬사인 계산용
+  const formatFansignTime = (dateTimeString) => {
+    const optionsDate = { month: '2-digit', day: '2-digit' }; // 월과 일만 표시
+    const optionsTime = { hour: '2-digit', minute: '2-digit', hour12: false }; // 24시간제 시간과 분만 표시
+
+    const date = new Date(dateTimeString);
+    const datePart = date.toLocaleDateString('ko-KR', optionsDate); // 날짜 포맷팅 "MM/DD"
+    const timePart = date.toLocaleTimeString('ko-KR', optionsTime).slice(0, 5); // 시간 포맷팅 "HH:MM", 초를 제거하기 위해 slice 사용
+
+    return `${datePart} ${timePart}`; // "MM/DD HH:MM" 형식으로 결합
+  };
+
   const customStyle = {
     content: {
       width: '700px',
@@ -101,18 +120,15 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
               <h2 className="bolder min-w-[80px]">응모 일정</h2>
               <p className="ml-4 mr-4">|</p>
               <p>
-                {data?.object?.startApplyTime.slice(5, 10)} ~{' '}
-                {data?.object?.endApplyTime.slice(5, 10)}
+                {formatDate(data?.object?.startApplyTime)} {' ~ '}
+                {formatDate(data?.object?.endApplyTime)}
               </p>
             </div>
 
             <div className="flex mt-2 ml-12">
               <h2 className="bolder min-w-[80px]">사인회 일정</h2>
               <p className="ml-4 mr-4">|</p>
-              <p>
-                {data?.object?.startFansignTime.slice(5, 10)} /{' '}
-                {data?.object?.startFansignTime.slice(11, 16)}
-              </p>
+              <p>{formatFansignTime(data?.object?.startFansignTime)}</p>
             </div>
 
             <h2 className="bolder text-18 text-center mt-8 mb-6">참여 멤버</h2>

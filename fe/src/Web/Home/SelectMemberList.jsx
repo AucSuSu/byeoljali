@@ -25,7 +25,13 @@ const SelectList = ({ dataList }) => {
               <img
                 src={member.profileImageUrl}
                 alt={member.name}
-                className="w-[100px] h-[100px] rounded-full mx-auto"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  cursor: 'pointer',
+                }}
               />
               <p className="mt-2 text-center">{member.name}</p>
             </div>
