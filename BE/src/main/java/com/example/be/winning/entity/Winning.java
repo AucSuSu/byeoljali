@@ -36,14 +36,14 @@ public class Winning extends BaseEntity { // 당첨자 테이블
     @JoinColumn(name="applicant_id")
     private Applicant applicant;
 
-    // 연관관계 메서드
+    // 연관관계 편의 메서드
     public void setMemberfansign(MemberFansign memberfansign){
         this.memberfansign = memberfansign;
         memberfansign.getWinningList().add(this);
     }
 
     public void setFan(Fan fan){
-        this.fan =fan;
+        this.fan = fan;
         fan.getWinningList().add(this);
     }
 

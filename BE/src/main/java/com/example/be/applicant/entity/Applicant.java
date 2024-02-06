@@ -42,4 +42,11 @@ public class Applicant extends BaseEntity {
         this.boughtAlbum = boughtAlbum;
         this.artistFansign = artistFansign;
     }
+
+    // 연관관계 편의 메서드
+    public void setMemberFansign(MemberFansign memberfansign){
+        this.memberfansign = memberfansign;
+        memberfansign.getApplicantList().add(this);
+    }
+
 }

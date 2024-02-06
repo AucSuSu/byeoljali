@@ -1,5 +1,6 @@
 package com.example.be.photo.entity;
 
+import com.example.be.artist.entity.Artist;
 import com.example.be.artistfansign.entity.ArtistFansign;
 import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.common.BaseEntity;
@@ -72,4 +73,16 @@ public class Photo extends BaseEntity {
     public void payComplete(){
         this.pay = PayOrNot.Y;
     }
+
+    // 연관관계 편의 메서드
+    public void setMemberfansign(MemberFansign memberfansign){
+        this.memberfansign = memberfansign;
+        memberfansign.getPhotoList().add(this);
+    }
+
+    public void setFan(Fan fan){
+        this.fan = fan;
+        fan.getPhotoList().add(this);
+    }
+
 }
