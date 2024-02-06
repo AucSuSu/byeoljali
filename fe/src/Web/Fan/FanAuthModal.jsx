@@ -8,14 +8,6 @@ function FanAuthModal({ onClose, userData }) {
   const [imageSrc, setImageSrc] = useState(userData.certificationImageUrl);
   const fileInputRef = useRef(null);
 
-  // 이미지 업로드 관련 URL, token 설정
-  // const IMG_POST_URL = process.env.REACT_APP_BASE_URL;
-  // const token = useSelector((state) => state.auth.token)
-  // const token = useSelector((state) => state.token.token);
-  // console.log(token);
-
-  // console.log(IMG_POST_URL);
-
   useEffect(() => {
     if (imageFile) {
       const reader = new FileReader();
