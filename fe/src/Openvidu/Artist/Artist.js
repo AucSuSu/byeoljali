@@ -27,8 +27,10 @@ class VideoRoomComponent extends Component {
       currentVideoDevice: undefined,
       count: 0, // 참여인원 수
       signTime: 30, // 팬싸인 시간
-      postit: this.props.fanData ? this.props.fanData.postit : null,
-      orders: this.props.fanData ? this.props.fanData.orders : 0,
+      postit: null,
+      orders: 0,
+      nickname: null,
+      birthday: null,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -108,7 +110,7 @@ class VideoRoomComponent extends Component {
     }
 
     let countdown = 10;
-
+    f;
     const timer = setInterval(() => {
       if (count !== 1) {
         clearInterval(timer);
@@ -152,6 +154,8 @@ class VideoRoomComponent extends Component {
           if (data.type === 'fanData') {
             this.setState({
               postit: data.postit,
+              nickname: data.nickname,
+              birthday: data.birthday,
             });
           }
         });
@@ -419,6 +423,8 @@ class VideoRoomComponent extends Component {
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
                   postit={this.state.postit}
+                  birthday={this.state.birthday}
+                  nickname={this.state.nickname}
                 />
               </div>
             )}

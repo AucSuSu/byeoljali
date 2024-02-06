@@ -46,7 +46,7 @@ export default function Test() {
     <div>
       <FanSocket
         propsData={propsData}
-        recievePostit={stationData}
+        stationData={stationData}
         joinSignal={joinSignal}
         closeSignal={closeSignal}
       />

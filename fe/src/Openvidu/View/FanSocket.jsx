@@ -3,16 +3,16 @@ import SockJs from 'sockjs-client';
 
 export default function Socket({
   propsData,
-  recievePostit,
+  stationData,
   joinSignal,
   closeSignal,
 }) {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
-    if (recievePostit) {
-      sendMessage('TALK', recievePostit.postit);
+    if (stationData) {
+      sendMessage('TALK', stationData);
     }
-  }, [recievePostit]);
+  }, [stationData]);
 
   useEffect(() => {
     // WebSocket 서버에 연결
