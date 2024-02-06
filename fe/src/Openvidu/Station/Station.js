@@ -22,7 +22,7 @@ class App extends Component {
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
       mySessionId: this.props.propsData.sessionId,
-      myUserName: 'Participant' + Math.floor(Math.random() * 100),
+      myUserName: this.props.propsData.nickname,
       myUserWait: 1, // 내 팬미팅 참여 순서
       curUser: 0, // 현재 참여중인 유저의 번호
       session: this.props.propsData.sessionId,
@@ -296,6 +296,8 @@ class App extends Component {
   Meeting() {
     // 팬싸방 이전 할 때 script와 postit Data를 전달
     const sendData = {
+      birthday: this.props.propsData.birthday,
+      nickname: this.state.myUserName,
       script: this.state.myScript,
       postit: this.state.myPostit,
     };
@@ -432,6 +434,7 @@ class App extends Component {
           {/* 세번쨰 덩어리 */}
           <div className="flex-grow h-[95%] ml-4 mr-8">
             <Chat
+              nickname={this.state.myUserName}
               messages={this.state.messages}
               handleSendMessage={this.sendMessage}
             />

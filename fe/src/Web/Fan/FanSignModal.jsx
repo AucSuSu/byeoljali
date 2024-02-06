@@ -26,7 +26,8 @@ function FanSignModal({ data, onClose }) {
       state: {
         propsData: {
           orders: fanSignDetail.orders,
-          watch: 3,
+          nickname: '수수',
+          birthday: '2020-02-02',
           sessionId: openviduData.object.sessionId,
           tokenId: openviduData.object.tokenId,
           memberFansignId: data.memberfansignId,

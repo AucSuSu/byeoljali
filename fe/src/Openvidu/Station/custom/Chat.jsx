@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
-const Chat = ({ messages, handleSendMessage }) => {
+const Chat = ({ messages, handleSendMessage, nickname }) => {
   const [inputMessage, setInputMessage] = useState('');
   const mywait = 1;
 
@@ -13,12 +13,15 @@ const Chat = ({ messages, handleSendMessage }) => {
           <div
             key={index}
             className={`mb-2 ${
-              messageData.wait === mywait
+              messageData.user == nickname
                 ? 'text-blue-500 text-right'
                 : 'text-red-500 text-left'
             }`}
           >
-            {messageData.text}
+            <div className="flex flex-col">
+              {messageData.user}
+              {messageData.text}
+            </div>
           </div>
         ))}
       </div>
