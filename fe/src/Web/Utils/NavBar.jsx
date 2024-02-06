@@ -7,11 +7,12 @@ import { useDispatch } from 'react-redux';
 
 const NavbarContainer = styled.nav`
   background-color: #fbe8e1;
-  height: 40px;
+  height: 50px;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 2px solid black;
 `;
 
 const NavbarList = styled.ul`
