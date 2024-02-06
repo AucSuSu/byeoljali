@@ -39,17 +39,6 @@ public class Photo extends BaseEntity {
     @JoinColumn(name="artistfansign_id")
     private ArtistFansign artistFansign;
 
-    // 연관관계 편의 메서드
-    public void setFan(Fan fan){
-        this.fan = fan;
-        fan.getPhotoList().add(this);
-    }
-
-    public void setMemberfansign(MemberFansign memberfansign){
-        this.memberfansign=memberfansign;
-        memberfansign.getPhotoList().add(this);
-    }
-
 
     // fanId 없는 생성자
     public Photo(Fan fan, MemberFansign memberFansign, String photoUrl, PayOrNot pay, ArtistFansign artistFansign) {
