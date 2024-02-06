@@ -62,18 +62,12 @@ export default function LoginView() {
         },
       });
       console.log('서버 전송 성공 : ', res); // 받은 데이터 출력
-      if (res.headers['no-email']) {
-        alert('이메일 필수입력이에요 ^^');
-        setCode(null);
-        handleFanLogin();
-      } else {
-        dispatch(
-          setToken({
-            token: res.headers['authorization'],
-            tokenRefresh: res.headers['authorization-refresh'],
-          }),
-        );
-      }
+      dispatch(
+        setToken({
+          token: res.headers['authorization'],
+          tokenRefresh: res.headers['authorization-refresh'],
+        }),
+      );
     } catch (error) {
       console.error('백엔드 전송 실패', error);
       console.log(code);
