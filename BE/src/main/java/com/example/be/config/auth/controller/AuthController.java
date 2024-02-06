@@ -53,10 +53,10 @@ public class AuthController {
         JwtToken jwtToken = tokenService.verifyRefreshToken(refreshToken);
 
         // 검증 실패 시 처리
-        if (jwtToken == null) {
-            Message errorMessage = new Message(HttpStatusEnum.BAD_REQUEST, "리프레시 토큰 검증 실패", null);
-            return ResponseEntity.badRequest().body(errorMessage);
-        }
+//        if (jwtToken == null) {
+//            Message errorMessage = new Message(HttpStatusEnum.BAD_REQUEST, "리프레시 토큰 검증 실패", null);
+//            return ResponseEntity.badRequest().body(errorMessage);
+//        }
 
         Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰, 리프레시 토큰 재발급 완료", jwtToken.getId());
         HttpHeaders headers = new HttpHeaders();

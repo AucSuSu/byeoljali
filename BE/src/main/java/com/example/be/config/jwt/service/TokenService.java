@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Date;
 
 import static com.example.be.config.jwt.TokenType.ACCESS;
@@ -39,12 +41,13 @@ public class TokenService {
 
     }
 
-    private DecodedJWT verifyToken(String token){
+    public DecodedJWT verifyToken(String token) throws TokenExpiredException {
         String refreshToken = token.substring(7);
         Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET);
         JWTVerifier verifier = JWT.require(algorithm).build();
         return verifier.verify(refreshToken);
     }
+
 
     // refresh 토큰 검증
     /**
@@ -57,6 +60,7 @@ public class TokenService {
     // refresh 토큰이 redis의 refresh 토큰과 같은지 검증
     public JwtToken verifyRefreshToken(String refreshToken) {
         try {
+            System.out.println("여기당");
             // JWT 서명 검증
             DecodedJWT jwt = verifyToken(refreshToken);
 
@@ -79,9 +83,11 @@ public class TokenService {
             if(realRefreshToken.equals(redisToken)) {
                 return createToken(role, Long.parseLong(id));
             } else {
-                System.out.println("리프레시 토큰이 일치하지 않습니다.");
                 throw new RefreshTokenIncorrectException("리프레시 토큰이 일치하지 않습니다.");
             }
+        } catch (TokenExpiredException e) {
+            Instant expiredOn = e.getExpiredOn();
+            throw new TokenExpiredException("토큰이만료되었습니다.", expiredOn);
         } catch (JWTVerificationException e) {
             log.error("토큰 검증 실패 : ", e);
             throw new RefreshTokenIncorrectException("유효하지 않은 refreshToken입니다.");
