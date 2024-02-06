@@ -25,12 +25,10 @@ class VideoRoomComponent extends Component {
       subscribers: [],
       chatDisplay: 'block',
       currentVideoDevice: undefined,
-      postit: undefined, // postit 저장
       count: 0, // 참여인원 수
       signTime: 30, // 팬싸인 시간
-      waitNo: this.props.fanData.orders,
-      fanData: this.props.fanData,
-      testTime: 10,
+      postit: this.props.fanData ? this.props.fanData.postit : null,
+      orders: this.props.fanData ? this.props.fanData.orders : 0,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -42,6 +40,9 @@ class VideoRoomComponent extends Component {
     this.addCount = this.addCount.bind(this);
     this.removeCount = this.removeCount.bind(this);
     this.timerEvnet = this.timerEvnet.bind(this);
+    this.startCountdown = this.startCountdown.bind(this);
+    this.inviteCountDown = this.inviteCountDown.bind(this);
+    this.testCount = this.testCount.bind(this);
   }
 
   componentDidMount() {
@@ -68,12 +69,6 @@ class VideoRoomComponent extends Component {
     this.joinSession();
   }
 
-  componentDidUpdate(prevState) {
-    if (prevState.count === 2 && this.state.count === 1) {
-      this.updateCount();
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload);
     window.removeEventListener('resize', this.updateLayout);
@@ -83,6 +78,54 @@ class VideoRoomComponent extends Component {
 
   onbeforeunload(event) {
     this.leaveSession();
+  }
+
+  // 자동 초대 로직 새로 작성
+  componentDidUpdate(_, prevState) {
+    if (prevState.count !== 0 && prevState.count !== this.state.count) {
+      this.startCountdown();
+    }
+  }
+
+  startCountdown = () => {
+    const { count } = this.state;
+    console.log(count);
+    if (count === 1) {
+      this.inviteCountDown();
+    }
+  };
+
+  inviteCountDown = () => {
+    const { count } = this.state;
+
+    if (count == 2) {
+      return;
+    }
+
+    let countdown = 10;
+
+    const timer = setInterval(() => {
+      if (count !== 1) {
+        clearInterval(timer);
+        return;
+      }
+
+      countdown--;
+
+      if (countdown <= 0) {
+        const { orders } = this.state;
+        this.setState({ orders: orders + 1 });
+        clearInterval(timer);
+        this.props.inviteFan(orders + 1);
+        this.startCountdown();
+      }
+    }, 1000);
+  };
+  // 자동 초대 로직 끝
+  // 테스트용
+  testCount(e) {
+    const number = Number(e);
+    this.setState({ count: number });
   }
 
   joinSession() {
@@ -323,55 +366,11 @@ class VideoRoomComponent extends Component {
       }));
       if (this.state.signTime === 0) {
         clearInterval(this.timer);
-        {
-          this.props.fanData && this.props.byebye(this.props.fanData.orders);
-        } // checkponit
+        this.props.timeOver(this.state.orders);
+        // checkponit
       }
     }, 1000); // 매초마다 실행
   }
-
-  // 테스트 타이머 CheckPoint
-
-  updateCount = (number) => {
-    this.setState(
-      (prevState) => ({ count: prevState.count + 1 }),
-      () => {
-        if (this.state.count === 1) {
-          this.startTestTimer(number);
-        } else if (this.state.count === 2) {
-          this.stopTestTimer();
-          this.setState({ testTime: 10 });
-        }
-      },
-    );
-  };
-
-  startTestTimer = (number) => {
-    this.testTimer = setInterval(() => {
-      this.setState(
-        (prevState) => ({ testTime: prevState.testTime - 1 }),
-        () => {
-          if (this.state.count === 2) {
-            this.stopTestTimer();
-            this.setState({ testTime: 10 });
-          }
-          if (this.state.testTime === 0 && this.state.count === 1) {
-            if (number) {
-              this.props.inviteFan(number);
-            } else {
-              this.props.inviteFan(this.state.waitNo);
-              this.setState({ testTime: 10 });
-            }
-          }
-        },
-      );
-    }, 1000);
-  };
-
-  stopTestTimer = () => {
-    clearInterval(this.testTimer);
-    this.testTimer = null;
-  };
 
   render() {
     const localUser = this.state.localUser;
@@ -419,7 +418,11 @@ class VideoRoomComponent extends Component {
               </div>
             )}
         </div>
-        <Footer id="4" toggleChat={this.toggleChat} test={this.updateCount} />
+        <Footer
+          id="4"
+          toggleChat={this.toggleChat}
+          countdown={this.testCount}
+        />
       </div>
     );
   }

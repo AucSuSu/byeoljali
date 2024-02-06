@@ -21,11 +21,11 @@ class App extends Component {
 
     // These properties are in the state's component in order to re-render the HTML whenever their values change
     this.state = {
-      mySessionId: this.props.sessionId,
+      mySessionId: this.props.propsData.sessionId,
       myUserName: 'Participant' + Math.floor(Math.random() * 100),
       myUserWait: 1, // 내 팬미팅 참여 순서
       curUser: 0, // 현재 참여중인 유저의 번호
-      session: undefined,
+      session: this.props.propsData.sessionId,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
       publisher: undefined,
       subscribers: [],
@@ -33,8 +33,7 @@ class App extends Component {
       remainingTime: 600, // 대기 시간 임시 개발
       myScript: '스크립트를 작성해주세요', // 스크립트 작성 내용
       myPostit: '포스트잇을 작성해주세요', // 포스트잇 작성 내용
-      wait: this.props.propsData.orders, // 대기번호
-      token: this.props.token,
+      orders: this.props.propsData.orders, // 대기번호
       joinFansign: this.props.joinFansign, // 팬싸인방 입장 트리거
     };
 
@@ -58,15 +57,6 @@ class App extends Component {
     this.setupMicrophone();
     window.addEventListener('beforeunload', this.onbeforeunload);
     this.joinSession();
-
-    // 팬미팅이 종료 됬으면 초대 로직 실행
-    if (this.state.wait !== undefined) {
-      this.setState({ myUserWait: 0 });
-      this.setState({
-        myUserName: `팬미팅이 종료된 유저${this.state.wait - 1}`,
-      });
-      this.joinSession();
-    }
   }
 
   // joinFansign값이 업데이트 되면 이동 CheckPoint
@@ -171,11 +161,7 @@ class App extends Component {
   }
 
   joinSession() {
-    // --- 1) Get an OpenVidu object ---
-
     this.OV = new OpenVidu();
-
-    // --- 2) Init a session ---
 
     this.setState(
       {
@@ -228,21 +214,16 @@ class App extends Component {
           console.log(this.state.subscribers);
         });
 
-        // On every Stream destroyed...
         mySession.on('streamDestroyed', (event) => {
-          // Remove the stream from 'subscribers' array
           this.deleteSubscriber(event.stream.streamManager);
         });
-
-        // On every asynchronous exception...
         mySession.on('exception', (exception) => {
           console.warn(exception);
         });
-
-        // --- 4) Connect to the session with a valid user token ---
-
         mySession
-          .connect(this.state.token, { clientData: this.state.myUserName })
+          .connect(this.props.propsData.tokenId, {
+            clientData: this.state.myUserName,
+          })
           .then(async () => {
             // --- 5) Get your own camera stream ---
 
@@ -284,6 +265,7 @@ class App extends Component {
             });
           })
           .catch((error) => {
+            console.log('오픈비두 연결실패');
             console.log(
               'There was an error connecting to the session:',
               error.code,
@@ -314,22 +296,19 @@ class App extends Component {
   Meeting() {
     // 팬싸방 이전 할 때 script와 postit Data를 전달
     const sendData = {
-      type: 'fanData',
-      userWait: this.state.myUserWait,
       script: this.state.myScript,
       postit: this.state.myPostit,
     };
 
     clearInterval(this.checkVolume); // 볼륨체크 클리어
     this.leaveSession();
-    this.props.onMeetingClick(sendData);
+    this.props.switchToFan(sendData);
   }
 
   // 채팅 메시지 전송 메서드
   sendMessage(message) {
     const messageData = {
       user: this.state.myUserName,
-      wait: this.state.myUserWait,
       text: message,
     };
     this.state.session
