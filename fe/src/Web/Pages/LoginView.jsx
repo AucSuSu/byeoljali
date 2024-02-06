@@ -26,7 +26,7 @@ export default function LoginView() {
     if (token) {
       if (isArtist) {
         console.log('아티스트 로그인');
-        navigate('/artistInfo');
+        navigate('/artist-profile');
       } else {
         console.log('팬 소셜 로그인');
         navigate('/home');

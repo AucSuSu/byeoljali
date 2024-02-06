@@ -83,6 +83,14 @@ const Navbar = ({ isFan }) => {
     navigate('/');
   };
 
+  const goFanProfile = () => {
+    navigate('/fan-profile');
+  };
+
+  const goArtistProfile = () => {
+    navigate('/artist-profile');
+  };
+
   const profileImageUrl =
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpqYJDnLH7XxH1vrI3VCvNq6E5JipsPi5WrqrlMrWqsA&s';
 
@@ -107,9 +115,7 @@ const Navbar = ({ isFan }) => {
             <Dropdown>
               <ProfileImage imageUrl={profileImageUrl} />
               <DropdownContent>
-                <DropdownItem>
-                  <NavbarLink to="/fan-profile">프로필 보기</NavbarLink>
-                </DropdownItem>
+                <DropdownItem onClick={goFanProfile}>프로필 보기</DropdownItem>
                 <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
               </DropdownContent>
             </Dropdown>
@@ -126,8 +132,8 @@ const Navbar = ({ isFan }) => {
             <Dropdown>
               <ProfileImage imageUrl={profileImageUrl} />
               <DropdownContent>
-                <DropdownItem>
-                  <NavbarLink to="/artistInfo">프로필 보기</NavbarLink>
+                <DropdownItem onClick={goArtistProfile}>
+                  프로필 보기
                 </DropdownItem>
                 <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
               </DropdownContent>

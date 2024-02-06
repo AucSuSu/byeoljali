@@ -23,7 +23,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<LoginView />} />
         <Route path="counter" element={<CounterView />} />
-        <Route path="/artistInfo" element={<ArtistInfoView />} />
+        <Route path="/artist-profile" element={<ArtistInfoView />} />
         <Route path="/home" element={<HomeView />} />
         <Route path="/test" element={<Test />} />
         <Route path="/fan-profile" element={<FanInfoView />} />
