@@ -127,10 +127,9 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 <div>
                   <div className="flex justify-center items-center space-x-2 mt-6 mb-6">
                     <h3>구매 앨범</h3>
-                    <input
-                      className="border-b border-gray focus:border-hot-pink focus:outline-none w-16"
-                      value={data.albumNum}
-                    ></input>
+                    <div className="border-b border-gray focus:border-hot-pink focus:outline-none w-16">
+                      {data.albumNum}
+                    </div>
                     <button
                       className="bg-pink px-4 py-2 rounded-xl"
                       onClick={openReceiptModal}
