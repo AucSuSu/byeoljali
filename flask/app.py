@@ -10,6 +10,8 @@ import requests
 import uuid
 import time
 import json
+# 문자열 비교 (영수증, 팬싸인회 이름 비교)
+from difflib import SequenceMatcher
 # from flask_cors import CORS
 from PIL import Image, ImageOps
 from werkzeug.serving import run_simple
@@ -203,9 +205,10 @@ def upload_receipt():
             for data in data_list:
                 # 받아온 팬싸인회 이름과 구매항목 앨범 이름 대조 
                 # 같은게 있다면 개수를 return 해줌 -> 없으면 0 
-                if data['name'] in fansign_title or fansign_title in data['name'] :
+                if SequenceMatcher(None, data['name'], fansign_title).ratio() > 0.2 : 
                     print(data['name'])
                     print(data['count'])
+                    print(SequenceMatcher(None, data['name'], fansign_title).ratio())
                     result_count = data['count']
                 print(data)
 
@@ -394,4 +397,5 @@ def add_border(file_list,x_min, y_min, y_size):
     return file_list, x_min, y_min, y_size
 
 if __name__ == "__main__":
+    SequenceMatcher(None, "굿모닝 우유 900ml", "서울 우유 리뉴얼 기념 팬싸인회").ratio()
     run_simple('0.0.0.0', 8000, app)
