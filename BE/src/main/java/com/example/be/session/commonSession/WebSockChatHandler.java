@@ -2,6 +2,7 @@ package com.example.be.session.commonSession;
 import java.io.IOException;
 import java.util.*;
 
+import com.example.be.exception.SessionClosedException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,14 @@ public class WebSockChatHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
     private final ChatService chatService;
 
+    @Override
+    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        // 여기서 잡아주는 IllegalStateException은 세션이 닫혔을때 발생하는 에러임
+        if(exception instanceof IllegalStateException) {
+            throw new SessionClosedException("세션이 닫혔습니다.");
+        }
+        super.handleTransportError(session, exception);
+    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -69,8 +78,6 @@ public class WebSockChatHandler extends TextWebSocketHandler {
             }
         });
     }
-
-
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
