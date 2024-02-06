@@ -58,6 +58,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
       width: '700px',
       height: '500px',
       margin: 'auto',
+      pading: 0,
     },
   };
 
