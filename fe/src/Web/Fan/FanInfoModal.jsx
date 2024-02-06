@@ -109,16 +109,17 @@ function FanInfoModal({ userData, onClose }) {
         <div className="w-72">
           {/* Input Fields */}
           <div className="w-full mb-3">
-            <span className="font-bold text-lg">닉네임 </span>
-
-            <input
-              type="text"
-              id="nickname"
-              name="nickname"
-              value={localUserData.nickname}
-              onChange={handleInputChange}
-              className="mt-1 block w-full border-b border-b-1 py-2 px-3 bg-transparent focus:outline-none "
-            />
+            <div className="flex">
+              <p className="font-bold text-lg">닉네임 </p>
+              <input
+                type="text"
+                id="nickname"
+                name="nickname"
+                value={localUserData.nickname}
+                onChange={handleInputChange}
+                className="mt-1 block w-full border-b border-b-1 py-2 px-3 bg-transparent focus:outline-none "
+              />
+            </div>
           </div>
           <div className="w-full mb-4">
             <div className="flex ">
