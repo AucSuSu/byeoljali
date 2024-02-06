@@ -48,8 +48,15 @@ function FanInfoModal({ userData, onClose }) {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((res) => {
-        console.log('user정보 수정 완료', res.data);
+      .then((response) => {
+        console.log('업로드 성공', response.data);
+        alert('Image uploaded successfully');
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 413) {
+          alert('이미지의 용량을 1MB 이하로 낮춰주세요');
+        }
+        console.error('Error uploading the image: ', error);
       });
   };
 
@@ -109,16 +116,17 @@ function FanInfoModal({ userData, onClose }) {
         <div className="w-72">
           {/* Input Fields */}
           <div className="w-full mb-3">
-            <span className="font-bold text-lg">닉네임 </span>
-
-            <input
-              type="text"
-              id="nickname"
-              name="nickname"
-              value={localUserData.nickname}
-              onChange={handleInputChange}
-              className="mt-1 block w-full border-b border-b-1 py-2 px-3 bg-transparent focus:outline-none "
-            />
+            <div className="flex">
+              <p className="font-bold text-lg">닉네임 </p>
+              <input
+                type="text"
+                id="nickname"
+                name="nickname"
+                value={localUserData.nickname}
+                onChange={handleInputChange}
+                className="mt-1 block w-full border-b border-b-1 py-2 px-3 bg-transparent focus:outline-none "
+              />
+            </div>
           </div>
           <div className="w-full mb-4">
             <div className="flex ">
