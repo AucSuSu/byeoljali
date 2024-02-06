@@ -31,6 +31,7 @@
 //@Transactional
 //@Rollback(value = true)
 //class ApplicantRepositoryTest {
+
 //
 //    @Autowired
 //    ApplicantRepository applicantRepository;
