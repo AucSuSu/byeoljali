@@ -87,7 +87,6 @@ class VideoRoomComponent extends Component {
       this.state.count,
     );
     if (prevState.count !== 0 && prevState.count !== this.state.count) {
-      console.log('카운트다운 실행');
       this.startCountdown();
     }
   }
@@ -95,6 +94,7 @@ class VideoRoomComponent extends Component {
   startCountdown = () => {
     const { count } = this.state;
     if (count === 1) {
+      console.log('카운트다운 실행');
       this.inviteCountDown();
     }
   };
@@ -102,7 +102,7 @@ class VideoRoomComponent extends Component {
   inviteCountDown = () => {
     const { count } = this.state;
 
-    if (count == 2) {
+    if (count > 1) {
       return;
     }
 
@@ -116,7 +116,7 @@ class VideoRoomComponent extends Component {
 
       countdown--;
 
-      if (countdown <= 0) {
+      if (countdown === 0) {
         const { orders } = this.state;
         this.setState({ orders: orders + 1 });
         clearInterval(timer);
@@ -127,9 +127,12 @@ class VideoRoomComponent extends Component {
   };
   // 자동 초대 로직 끝
   // 테스트용
-  testCount(e) {
-    const number = Number(e);
-    this.setState({ count: number });
+  testCount() {
+    this.setState({ count: 2 });
+    this.setState({ count: 1 });
+  }
+  testGetOUT(e) {
+    this.props.timeOver(e);
   }
 
   joinSession() {
