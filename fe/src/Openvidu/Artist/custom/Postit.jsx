@@ -13,25 +13,21 @@ export default function Postit({ chatDisplay, close, fanData }) {
           </IconButton>
         </div>
         <div className="w-full h-full bg-lime-400">
-          <p>닉네임 : {fanData.nickname}</p>
-          <p>생일 : {fanData.birthday}</p>
+          <p>닉네임 : {fanData ? fanData.nickname : '없지롱'}</p>
+          <p>생일 : {fanData ? fanData.birthday : '모르지롱'}</p>
         </div>
         <div className="w-full h-full bg-white">
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
-          <p>TEST MESSAGE : postit{fanData.postit}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
+          <p>TEST MESSAGE : postit{fanData ? fanData.postit : 'ㅎㅎ'}</p>
         </div>
       </div>
     </div>
