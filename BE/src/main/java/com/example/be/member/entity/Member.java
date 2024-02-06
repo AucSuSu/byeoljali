@@ -40,4 +40,10 @@ public class Member extends BaseEntity {
         this.name = name;
         this.profileImageUrl = profileImageUrl;
     }
+
+    // 연관관계 편의 메서드
+    public void setArtist(Artist artist){
+        this.artist=artist;
+        artist.getMemberList().add(this);
+    }
 }

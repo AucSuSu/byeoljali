@@ -50,4 +50,6 @@ public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
     @JsonBackReference
     private List<Member> memberList = new ArrayList<>();
 
+
+
 }

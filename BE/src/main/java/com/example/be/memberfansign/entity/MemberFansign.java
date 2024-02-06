@@ -46,4 +46,11 @@ public class MemberFansign extends BaseEntity {
         this.artistFansign = artistFansign;
         this.member = member;
     }
+
+    // 연관관계 메서드
+    public void setArtistFansign(ArtistFansign artistFansign){
+        this.artistFansign = artistFansign;
+        artistFansign.getMemberFansignList().add(this);
+    }
+
 }
