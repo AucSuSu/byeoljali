@@ -7,7 +7,9 @@ import { useDispatch } from 'react-redux';
 function ApplyReceiptModal({ onClose, title }) {
   const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState(null);
-  const [imageSrc, setImageSrc] = useState('');
+  const [imageSrc, setImageSrc] = useState(
+    'https://testbyeoljari.s3.ap-northeast-2.amazonaws.com/default-receipt.png',
+  );
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +20,9 @@ function ApplyReceiptModal({ onClose, title }) {
       };
       reader.readAsDataURL(imageFile);
     } else {
-      setImageSrc('');
+      setImageSrc(
+        'https://testbyeoljari.s3.ap-northeast-2.amazonaws.com/default-receipt.png',
+      );
     }
   }, [imageFile]);
 
