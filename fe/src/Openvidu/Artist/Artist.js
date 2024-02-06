@@ -422,9 +422,7 @@ class VideoRoomComponent extends Component {
                 <Postit
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
-                  postit={this.state.postit}
-                  birthday={this.state.birthday}
-                  nickname={this.state.nickname}
+                  fanData={this.props.fanData}
                 />
               </div>
             )}

@@ -10,7 +10,13 @@ export default function Socket({
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     if (stationData) {
-      sendMessage('TALK', stationData);
+      console.log('stationData 전달했음 ^^');
+      sendMessage('TALK', {
+        orders: null,
+        postit: stationData.postit,
+        birthday: stationData.birthday,
+        nickname: stationData.nickname,
+      });
     }
   }, [stationData]);
 
@@ -23,12 +29,12 @@ export default function Socket({
       console.log('팬이 전달받은 메세지 : ', message);
       if (
         message.type === 'JOIN' &&
-        message.message === `${propsData.orders}`
+        message.message.orders === propsData.orders
       ) {
         joinSignal();
       } else if (
         message.type === 'CLOSE' &&
-        message.message === `${propsData.orders}`
+        message.message.orders === propsData.orders
       ) {
         closeSignal();
       }
@@ -51,12 +57,12 @@ export default function Socket({
   }, []);
 
   // 메시지 전송 함수
-  const sendMessage = (messageType, data) => {
+  const sendMessage = (messageType, msg) => {
     if (socket) {
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${propsData.memberFansignId}`,
-        message: data,
+        message: msg,
       };
       socket.send(JSON.stringify(myMessage));
     }
@@ -67,7 +73,7 @@ export default function Socket({
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${propsData.memberFansignId}`,
-      message: 'Enter 완료',
+      message: { orders: null, postit: null, birthday: null, nickname: null },
     };
     newSocket.send(JSON.stringify(myMessage));
   };
