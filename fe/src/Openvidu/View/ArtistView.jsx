@@ -6,14 +6,13 @@ import { useLocation } from 'react-router-dom';
 export default function ArtistView() {
   const location = useLocation();
   const { propsData } = location.state || {};
-  console.log('프롭데이터 : ', propsData);
 
-  const [waitNo, setWaitNo] = useState(null);
+  const [closeNo, setCloseNo] = useState(null);
   const [joinNo, setJoinNo] = useState(null);
   const [fanData, setfanData] = useState(null);
 
-  const byebye = (e) => {
-    setWaitNo(e);
+  const timeOver = (e) => {
+    setCloseNo(e);
   };
   const inviteFan = (e) => {
     setJoinNo(e);
@@ -27,7 +26,7 @@ export default function ArtistView() {
     <div>
       <ArtistSocket
         memberFansignId={propsData.memberFansignId}
-        waitNo={waitNo}
+        closeNo={closeNo}
         joinNo={joinNo}
         getFanData={getFanData}
       />
@@ -35,7 +34,7 @@ export default function ArtistView() {
         propsData={propsData}
         fanData={fanData}
         inviteFan={inviteFan}
-        byebye={byebye}
+        timeOver={timeOver}
       />
     </div>
   );

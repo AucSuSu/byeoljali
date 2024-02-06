@@ -3,7 +3,7 @@ import SockJs from 'sockjs-client';
 
 export default function Socket({
   memberFansignId,
-  waitNo,
+  closeNo,
   joinNo,
   GetFanData,
 }) {
@@ -12,10 +12,10 @@ export default function Socket({
   useEffect(() => {
     // WebSocket 서버에 연결
     const newSocket = new SockJs('https://i10e104.p.ssafy.io/socket');
-    console.log(` roomId에용 : memberFansignSession${memberFansignId}`);
 
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
+      console.log('메세지 전달받음 : ', message);
       if (message.type === 'date') {
         GetFanData(message.msg);
         console.log('fanData 테스트 : ', message);
@@ -39,8 +39,8 @@ export default function Socket({
   }, []);
 
   useEffect(() => {
-    sendMessage('close', waitNo);
-  }, [waitNo]);
+    sendMessage('close', closeNo);
+  }, [closeNo]);
 
   useEffect(() => {
     sendMessage('join', joinNo);
@@ -52,29 +52,19 @@ export default function Socket({
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${memberFansignId}`,
-        sender: `Send`,
-        // 필요하다면 사용하는 식별자
         msg: number,
-        // 메세지
       };
-
-      // 서버로 메시지 전송
       socket.send(JSON.stringify(myMessage));
-      console.log('전송');
-    } else {
-      console.log('아직 소켓이 없어용');
     }
   };
+
   // 팬싸인 세션 입장하면 즉시 실행
   const enterMessage = (newSocket) => {
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${memberFansignId}`,
-      sender: `Enter`, // 필요하다면 사용하는 식별자
       msg: 'Enter 완료',
     };
-
-    // 서버로 메시지 전송
     newSocket.send(JSON.stringify(myMessage));
   };
 

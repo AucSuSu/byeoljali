@@ -116,25 +116,28 @@ export default function LoginView() {
       <img
         src="/susu.jpg"
         alt="로고"
-        className="my-4 rounded-full h-25 w-25 object-cover"
+        className="mt-[80px] my-4 rounded-full h-[100px] w-[100px] object-cover"
       />
       <div className="mb-4">
-        <h1 className="text-3xl font-bold">별자리</h1>
+        <h1 className="text-3xl bolder mb-5">별자리</h1>
         {/* <button onClick={kakaoLogout}>테스트 로그아웃</button> */}
       </div>
 
-      <div className="login-section w-full h-1/2 border p-4 rounded-md bg-gray-200 flex flex-col justify-between">
+      <div className="w-full h-1/2 p-4 bg-gray bg-opacity-70 flex flex-col justify-between">
         <div className="mb-4 flex-grow flex flex-col items-center justify-center">
-          <div className="h-full p-2 mx-auto max-w-md">
-            좋은 소식이에요! 이제 웹페이지를 통해 미미무 마미무 우미무미무에
-            참여할 수 있어요! - 이하 생략 - 소중한 아이돌과의 기억에 남을 만남을
-            놓치지 마세요!
+          <div className="h-full pt-10 mx-auto text-white">
+            좋은 소식이에요! <br />
+            이제 내가 좋아하는 아이돌과의 팬싸인회에 간편하게 참여하고 만남의
+            기회를 얻을 수 있어요.
+            <br /> 여러분의 응원에 보답하는 특별한 순간을 즐기며, 소중한 기억을
+            만들어 보세요.
+            <br /> 아이돌과의 둘만의 추억을 간직할 기회를 놓치지 마세요!
           </div>
         </div>
 
         <div className="mb-4 item flex items-center justify-center">
           <div
-            className="cursor-pointer bg-yellow-300 text-black py-2 px-4 rounded-md w-1/2"
+            className="cursor-pointer bg-kakao-yellow py-3 px-4 rounded-md w-[200px] h-[50px] bolder"
             onClick={handleFanLogin}
           >
             카카오톡 로그인
@@ -143,7 +146,7 @@ export default function LoginView() {
 
         <div className="mb-4 flex flex-col items-center justify-center">
           <p
-            className="cursor-pointer bg-slate-400 text-white py-2 px-4 rounded-md w-1/2"
+            className="cursor-pointer text-white py-2 px-4 rounded-md w-1/2"
             onClick={viewArtistLogin}
           >
             {showLoginForm ? '접기' : '기업 로그인'}
