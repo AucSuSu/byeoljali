@@ -71,44 +71,44 @@ export default function ArtistInfo() {
   return (
     <div className="h-screen flex flex-col font-milk font-bold">
       {/* 아티스트 박스 */}
-      <div className="p-5">
+      <div className="p-5 pt-0">
         {artistData && (
-          <div className="pb-8 flex items-center">
-            <div className="m-8 w-300 h-400 overflow-hidden rounded-lg">
+          <div className="grid grid-cols-2">
+            <div className="m-8 rounded-lg flex justify-center items-center">
               <img
-                className="object-cover rounded-lg hover:border-4 hover:border-blue-500 transition duration-300"
+                className=" w-140 h-100 object-fill rounded-lg hover:border-4 hover:border-blue-500 "
                 src={artistData.object.artistImageUrl}
                 alt="Artist"
                 onClick={handleOpenArtistImg}
               />
             </div>
-            <div className="w-1/2 pl-8 pt-4 pb-4">
-              <div className="ps-2 text-gray-600 text-xs">
+            <div className=" p-8">
+              <div className="ps-2 text-gray-600 text-lg">
                 {artistData.object.companyName}
               </div>
               <div className="flex items-center">
-                <h3 className="ps-2 text-xl font-semibold ">
+                <h3 className="ps-2 text-3xl font-semibold mt-2">
                   {artistData.object.name}
                 </h3>
               </div>
 
               <div className="flex items-center justify-between mb-4"></div>
-              <div className="bg-pink rounded mt-4 flex justify-center space-x-4  p-5">
-                <div className="flex-1 text-center">
-                  <p className="py-2 rounded-lg">예정</p>
-                  <p className="text-sm text-gray-600 mt-2">
+              <div className="bg-pink h-80 rounded mt-4 flex justify-center items-center  p-5">
+                <div className="flex-1 text-center border-r-2 border-zinc-500">
+                  <div className="py-2 rounded-lg text-xl">예정</div>
+                  <div className="text-md text-gray-600 mt-2">
                     {artistCountData.ready_COUNT}
-                  </p>
+                  </div>
                 </div>
-                <div className="flex-1 text-center">
-                  <p className="py-2 rounded-lg">진행중</p>
-                  <p className="text-sm text-gray-600 mt-2 border-l border-r border-gray-300">
+                <div className="flex-1 text-center border-r-2 border-zinc-500">
+                  <p className="py-2 rounded-lg text-xl">진행중</p>
+                  <p className="text-md text-gray-600 mt-2">
                     {artistCountData.applying_COUNT}
                   </p>
                 </div>
                 <div className="flex-1 text-center">
-                  <p className="py-2 rounded-lg">사인회</p>
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="py-2 rounded-lg text-xl">사인회</p>
+                  <p className="text-md text-gray-600 mt-2">
                     {artistCountData.fansign_COUNT}
                   </p>
                 </div>
