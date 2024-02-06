@@ -9,6 +9,7 @@ export default function Socket({
 }) {
   const [socket, setSocket] = useState(null);
   useEffect(() => {
+    console.log('stationData 변화함 ^^', stationData);
     if (stationData) {
       console.log('stationData 전달했음 ^^');
       sendMessage('TALK', {
