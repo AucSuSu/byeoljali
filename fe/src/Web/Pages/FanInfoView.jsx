@@ -65,7 +65,7 @@ function FanInfoView() {
                 </div>
               </div>
               <div className="flex flex-col justify-center items-center w-full h-48  px-4">
-                <div className="w-full h-full bg-pink flex flex-col justify-center items-center">
+                <div className="w-full h-full bg-pink flex flex-col justify-center items-center rounded-md">
                   <div>
                     <div className="font-milk ">
                       <strong>생일 :</strong>

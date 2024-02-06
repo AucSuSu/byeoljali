@@ -143,9 +143,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 <div>
                   <div className="flex justify-center items-center space-x-2 mt-6 mb-6">
                     <h3>구매 앨범</h3>
-                    <div className="border-b border-gray  w-16">
-                      {currAlbumNum}
-                    </div>
+                    <div className="w-16">{currAlbumNum}개</div>
                     <button
                       className="bg-pink px-4 py-2 rounded-xl"
                       onClick={openReceiptModal}

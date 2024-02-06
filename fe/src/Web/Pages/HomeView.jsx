@@ -28,7 +28,8 @@ const HomeView = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
-    loadAfterData(searchKeyword);
+    const nextIsApplying = !isApplying;
+    loadAfterData(searchKeyword, nextIsApplying);
     getUserInfoData();
   }, []);
 
@@ -45,9 +46,11 @@ const HomeView = () => {
 
   const handleSearchSubmit = () => {
     if (isApplying) {
-      loadAfterData(searchKeyword);
+      const nextIsApplying = !isApplying;
+      loadAfterData(searchKeyword, nextIsApplying);
     } else {
-      loadBeforeData(searchKeyword);
+      const nextIsApplying = !isApplying;
+      loadBeforeData(searchKeyword, nextIsApplying);
     }
   };
 
