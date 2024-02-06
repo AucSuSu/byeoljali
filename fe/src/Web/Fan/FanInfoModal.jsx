@@ -71,6 +71,7 @@ function FanInfoModal({ userData, onClose }) {
     console.log(formData);
     editUserInfoData(formData); // 서버에 데이터 전송
     onClose(); // 모달 닫기
+    window.location.reload();
   };
 
   return (
