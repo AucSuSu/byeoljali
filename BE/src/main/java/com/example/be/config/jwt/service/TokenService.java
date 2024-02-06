@@ -7,15 +7,20 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
+import com.example.be.config.jwt.TokenType;
 import com.example.be.config.redis.RedisService;
 import com.example.be.exception.RefreshTokenIncorrectException;
-import com.example.be.fan.entity.Fan;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+import static com.example.be.config.jwt.TokenType.ACCESS;
+import static com.example.be.config.jwt.TokenType.REFRESH;
+
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TokenService {
 
@@ -24,8 +29,9 @@ public class TokenService {
     // 로그인 정보로 JWT Token 만들기
     public JwtToken createToken(String role, Long id){
         // HMAC 방식으로 암호화 된 토큰
-        String accessToken = generateAccessToken(id, role);
-        String refreshToken = generateRefreshToken(id, role);
+
+        String accessToken = generateToken(id,role, ACCESS);
+        String refreshToken = generateToken(id,role, REFRESH);
         redisService.setValuesWithTimeout(JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id, refreshToken,
                 JwtProperties.ACCESS_EXPIRATION_TIME);
 
@@ -74,36 +80,36 @@ public class TokenService {
                 return createToken(role, Long.parseLong(id));
             } else {
                 System.out.println("리프레시 토큰이 일치하지 않습니다.");
-                return null;
+                throw new RefreshTokenIncorrectException("리프레시 토큰이 일치하지 않습니다.");
             }
         } catch (JWTVerificationException e) {
-            e.printStackTrace();
-            System.out.println("토큰 검증 실패: " + e.getMessage());
+            log.error("토큰 검증 실패 : ", e);
             throw new RefreshTokenIncorrectException("유효하지 않은 refreshToken입니다.");
         }
-        return "올바르지 않은 리프레시 토큰입니다.";
     }
-    public String generateAccessToken(Long id, String role){
+    public String generateToken(Long id, String role, TokenType tokenType) {
+        long expirationTime = 0;
+        String tokenSubject = "";
 
-        // HMAC 방식의 access 토큰
+        switch (tokenType) {
+            case ACCESS:
+                expirationTime = JwtProperties.ACCESS_EXPIRATION_TIME;
+                tokenSubject = JwtProperties.ACCESS_TOKEN;
+                break;
+            case REFRESH:
+                expirationTime = JwtProperties.REFRESH_EXPIRATION_TIME;
+                tokenSubject = JwtProperties.REFRESH_TOKEN;
+                break;
+        }
+
         return JWT.create()
-                .withSubject(JwtProperties.ACCESS_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.ACCESS_EXPIRATION_TIME)) //30분
+                .withSubject(tokenSubject)
+                .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
                 .withClaim("role", role)
                 .withClaim("id", id)
                 .sign(Algorithm.HMAC256(JwtProperties.SECRET));
     }
 
-    public String generateRefreshToken(Long id, String role){
-
-        // HMAC 방식의 access 토큰
-        return JWT.create()
-                .withSubject(JwtProperties.REFRESH_TOKEN)
-                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.REFRESH_EXPIRATION_TIME)) //30분
-                .withClaim("role", role)
-                .withClaim("id", id)
-                .sign(Algorithm.HMAC256(JwtProperties.SECRET));
-    }
 
     // 로그아웃시 redis의 리프레시 토큰 날려버리기
     public Long deleteRefreshToken(String accessToken){
