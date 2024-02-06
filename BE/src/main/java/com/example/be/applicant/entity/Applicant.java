@@ -49,4 +49,9 @@ public class Applicant extends BaseEntity {
         memberfansign.getApplicantList().add(this);
     }
 
+    public void setFan(Fan fan){
+        this.fan = fan;
+        fan.getApplicantList().add(this);
+    }
+
 }
