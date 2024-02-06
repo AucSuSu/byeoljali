@@ -22,13 +22,13 @@ export default function Socket({
       const message = JSON.parse(e.data);
       console.log('팬이 전달받은 메세지 : ', message);
       if (
-        message.type === 'join' &&
+        message.type === 'JOIN' &&
         message.message === `${propsData.orders}`
       ) {
         joinSignal();
       } else if (
-        message.type === 'close' &&
-        message.msg === `${propsData.orders}`
+        message.type === 'CLOSE' &&
+        message.message === `${propsData.orders}`
       ) {
         closeSignal();
       }

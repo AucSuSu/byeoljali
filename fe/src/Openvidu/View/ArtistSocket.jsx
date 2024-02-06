@@ -16,7 +16,7 @@ export default function Socket({
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
       console.log('아티스트가 메세지 전달받음 : ', message);
-      if (message.type === 'date') {
+      if (message.type === 'TALK') {
         GetFanData(message.message);
         console.log('아티스트가 전달받은 fanData : ', message);
       }
