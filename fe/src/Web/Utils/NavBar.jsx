@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
 import { logout } from '../Stores/authReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavbarContainer = styled.nav`
   background-color: #fbe8e1;
@@ -83,8 +83,17 @@ const Navbar = ({ isFan }) => {
     navigate('/');
   };
 
-  const profileImageUrl =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpqYJDnLH7XxH1vrI3VCvNq6E5JipsPi5WrqrlMrWqsA&s';
+  const goFanProfile = () => {
+    navigate('/fan-profile');
+  };
+
+  const goArtistProfile = () => {
+    navigate('/artist-profile');
+  };
+
+  const profileImageUrl = useSelector(
+    (state) => state.faninfo.data.profileImageUrl,
+  );
 
   return (
     <NavbarContainer className="font-bold font-milk pb-8">
@@ -107,9 +116,7 @@ const Navbar = ({ isFan }) => {
             <Dropdown>
               <ProfileImage imageUrl={profileImageUrl} />
               <DropdownContent>
-                <DropdownItem>
-                  <NavbarLink to="/fan-profile">프로필 보기</NavbarLink>
-                </DropdownItem>
+                <DropdownItem onClick={goFanProfile}>프로필 보기</DropdownItem>
                 <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
               </DropdownContent>
             </Dropdown>
@@ -126,8 +133,8 @@ const Navbar = ({ isFan }) => {
             <Dropdown>
               <ProfileImage imageUrl={profileImageUrl} />
               <DropdownContent>
-                <DropdownItem>
-                  <NavbarLink to="/artistInfo">프로필 보기</NavbarLink>
+                <DropdownItem onClick={goArtistProfile}>
+                  프로필 보기
                 </DropdownItem>
                 <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
               </DropdownContent>
