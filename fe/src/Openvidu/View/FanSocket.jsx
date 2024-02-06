@@ -20,6 +20,7 @@ export default function Socket({
 
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
+      console.log('FanSocket SendMessage : ', message);
       if (message.type === 'join' && message.msg === `${propsData.orders}`) {
         joinSignal();
       } else if (
@@ -41,9 +42,9 @@ export default function Socket({
 
     setSocket(newSocket);
     // 컴포넌트 언마운트 시 소켓 연결 해제
-    return () => {
-      newSocket.close();
-    };
+    // return () => {
+    //   newSocket.close();
+    // };
   }, []);
 
   // 메시지 전송 함수
