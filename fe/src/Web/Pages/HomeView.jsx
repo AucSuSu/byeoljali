@@ -30,6 +30,7 @@ const HomeView = () => {
   useEffect(() => {
     const nextIsApplying = !isApplying;
     loadAfterData(searchKeyword, nextIsApplying);
+    setIsApplying(!isApplying);
     getUserInfoData();
   }, []);
 
