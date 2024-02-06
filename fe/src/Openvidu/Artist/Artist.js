@@ -110,7 +110,7 @@ class VideoRoomComponent extends Component {
     }
 
     let countdown = 10;
-    f;
+
     const timer = setInterval(() => {
       if (count !== 1) {
         clearInterval(timer);

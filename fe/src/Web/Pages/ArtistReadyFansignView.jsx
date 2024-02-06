@@ -40,7 +40,6 @@ export default function ArtistFanSignView() {
       <Navbar />
       <div className="mt-12 ml-24 mr-14 font-milk font-bold ">
         <div className="flex items-center justify-between pb-12 mb-6">
-          {' '}
           <div className="flex items-center space-x-4">
             <h1 className="text-3xl bolder">응모 팬 사인회 관리</h1>
             <button
