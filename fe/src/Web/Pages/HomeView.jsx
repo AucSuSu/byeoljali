@@ -10,6 +10,8 @@ import {
   afterApplyList,
 } from '../Stores/homeApplyListReducer';
 
+import { getUserInfo } from '../Stores/fanInfoReducer';
+
 import List from '../Home/HomeApplyList';
 import Carousel from '../Home/Carousel';
 import ToggleButton from '../Utils/ToggleButton';
@@ -27,7 +29,15 @@ const HomeView = () => {
 
   useEffect(() => {
     loadAfterData(searchKeyword);
+    getUserInfoData();
   }, []);
+
+  const getUserInfoData = async () => {
+    const data = await customAxios.get('mypage/').then((res) => {
+      return res.data.object;
+    });
+    dispatch(getUserInfo(data));
+  };
 
   const handleToggle = () => {
     setIsApplying(!isApplying);
