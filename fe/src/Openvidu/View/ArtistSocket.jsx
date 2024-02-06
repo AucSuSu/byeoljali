@@ -5,7 +5,7 @@ export default function Socket({
   memberFansignId,
   closeNo,
   joinNo,
-  GetFanData,
+  getFanData,
 }) {
   const [socket, setSocket] = useState(null);
 
@@ -17,7 +17,7 @@ export default function Socket({
       const message = JSON.parse(e.data);
       console.log('아티스트가 메세지 전달받음 : ', message);
       if (message.type === 'TALK') {
-        GetFanData(message.message);
+        getFanData(message.message);
         console.log('아티스트가 전달받은 fanData : ', message);
       }
     };

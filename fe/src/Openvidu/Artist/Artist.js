@@ -127,9 +127,8 @@ class VideoRoomComponent extends Component {
   };
   // 자동 초대 로직 끝
   // 테스트용
-  testCount() {
-    this.setState({ count: 2 });
-    this.setState({ count: 1 });
+  testCount(e) {
+    this.setState({ count: e });
   }
   testGetOUT(e) {
     this.props.timeOver(e);

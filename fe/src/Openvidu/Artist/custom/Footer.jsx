@@ -39,7 +39,7 @@ export default function Footer({ id, toggleChat, countdown }) {
           </IconButton>
         </div>
         <div>
-          <p onClick={() => countdown()}>자동입장 테스트</p>
+          <p onClick={() => countdown(test)}>자동입장 테스트</p>
           <p onClick={() => countdown(test)}>강퇴 테스트 </p>
           <input
             className="text-black"
