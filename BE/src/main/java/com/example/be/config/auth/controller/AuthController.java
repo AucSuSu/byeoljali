@@ -61,6 +61,7 @@ public class AuthController {
         Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰, 리프레시 토큰 재발급 완료", jwtToken.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
+        // 기존에 accessToken만 넣어주던걸 -> refreshToken도 추가해줌
         headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
         headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
 

@@ -8,6 +8,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.be.config.jwt.JwtProperties;
 import com.example.be.config.jwt.JwtToken;
 import com.example.be.config.redis.RedisService;
+import com.example.be.exception.RefreshTokenIncorrectException;
+import com.example.be.fan.entity.Fan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,14 @@ public class TokenService {
         return verifier.verify(refreshToken);
     }
 
+    // refresh 토큰 검증
+    /**
+     * 현재 return -> accessToken 값만 리턴함
+     * 아이디어
+     *  - accessToken과 refreshToken을 함께 리턴하도록 함 (JWT)
+     *  - 만약에 refreshToken이 기존과 다르다면 exception을 처리해서 다른 값을 리턴하도록 해야함
+     *      -> exception을 만들어서 해당 문제 발생시 throw 시키기
+     */
     // refresh 토큰이 redis의 refresh 토큰과 같은지 검증
     public JwtToken verifyRefreshToken(String refreshToken) {
         try {
@@ -49,7 +59,9 @@ public class TokenService {
             String id = jwt.getClaim("id").toString();
             System.out.println(role);
             System.out.println(id);
-            if( id == null) return null;
+            // id가 null일때 -> 유효하지 않은 refreshToken
+            if(id == null)
+                throw new RefreshTokenIncorrectException("유효하지 않은 refreshToken입니다.");
 
             // 레디스에서 refreshToken 가져오기
             String redisTokenKey = JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id;
@@ -67,8 +79,9 @@ public class TokenService {
         } catch (JWTVerificationException e) {
             e.printStackTrace();
             System.out.println("토큰 검증 실패: " + e.getMessage());
-            return null;
+            throw new RefreshTokenIncorrectException("유효하지 않은 refreshToken입니다.");
         }
+        return "올바르지 않은 리프레시 토큰입니다.";
     }
     public String generateAccessToken(Long id, String role){
 

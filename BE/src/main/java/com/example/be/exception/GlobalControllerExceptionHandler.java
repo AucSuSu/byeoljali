@@ -21,4 +21,13 @@ public class GlobalControllerExceptionHandler {
         Message message = new Message(HttpStatusEnum.BAD_REQUEST, "이미지가 너무 큽니다.",null);
         return new ResponseEntity<>(message, HttpStatus.FORBIDDEN); // ForBidden으로 해야하나? 따호 한테 물어보기
     }
+
+    // refreshToken 불일치 핸들러
+    @ExceptionHandler(value = RefreshTokenIncorrectException.class)
+    public ResponseEntity<Message> RefreshTokenIncorrectHandler(Exception e){
+        log.info(" *** refreshToken 불일치 핸들러 *** ");
+        Message message = new Message(HttpStatusEnum.BAD_REQUEST, "refreshToken이 일치하지 않습니다.",null);
+        // 재로그인 해달라는 요청임 -> 프론트에서 받아줘요
+        return new ResponseEntity<>(message, HttpStatus.FORBIDDEN); // ForBidden으로 해야하나? 따호 한테 물어보기
+    }
 }
