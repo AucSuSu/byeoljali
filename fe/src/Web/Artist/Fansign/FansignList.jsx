@@ -75,10 +75,9 @@ export default function MemberList({ data, status }) {
     'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4';
 
   return (
-    <div className="text-center ml-20 mb-10 inline-block relative">
+    <div className="text-center ml-14 mb-10 mr-6 inline-block relative">
       {/* 이미지와 텍스트를 포함할 컨테이너에 `relative` 위치 지정 */}
       <div className="relative w-[250px] h-[250px] ">
-        {' '}
         {/* 이미지와 오버레이 컨텐츠를 포함하는 컨테이너 */}
         <img
           src={data.posterImageUrl}
