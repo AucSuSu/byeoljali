@@ -40,14 +40,23 @@ export default function ArtistInfo() {
 
   // 모달 표시 상태를 관리하는 useState 추가
   const [showArtistImgModal, setShowArtistImgModal] = useState(false);
+  const [showAddMemberModal, setShowAddMemberModal] = useState(false);
 
-  // 이미지 클릭시 모달을 보여주는 함수
-  const handleImageClick = () => {
+  // 모달 열고 닫는 함수들
+  const handleOpenArtistImg = () => {
     setShowArtistImgModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseArtistImg = () => {
     setShowArtistImgModal(false);
+  };
+
+  const handleOpenAddMember = () => {
+    setShowAddMemberModal(true);
+  };
+
+  const handleCloseAddMember = () => {
+    setShowAddMemberModal(false);
   };
 
   // testCode
@@ -87,9 +96,8 @@ export default function ArtistInfo() {
                 className="object-cover rounded-lg hover:border-4 hover:border-blue-500 transition duration-300"
                 src={artistData.object.artistImageUrl}
                 alt="Artist"
-                onClick={handleImageClick}
+                onClick={handleOpenArtistImg}
               />
-              
             </div>
             <div className="w-1/2 pl-8 pt-4 pb-4">
               <div className="ps-2 text-gray-600 text-xs">
@@ -128,13 +136,28 @@ export default function ArtistInfo() {
       </div>
 
       <div className="flex-1">
-        <div className="bar flex justify-between items-center mb-4 ">
-          <div className="text-2xl font-bold mx-auto border-b p-2">
-            <p className=""> Members </p>
-          </div>
-          <AddMemberModal className="ml-auto" />
-        </div>
+        <div className="bar flex items-center mb-4 "></div>
 
+        <div className="flex justify-center pb-2">
+          <div className="text-xl border-b-2 ">Member</div>
+
+          <button className="border-b-2 " onClick={handleOpenAddMember}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </button>
+        </div>
         <div>
           {artistData && (
             <div className="m-3">
@@ -149,9 +172,10 @@ export default function ArtistInfo() {
       {showArtistImgModal && (
         <ArtistImgModal
           artistImageUrl={artistData.object.artistImageUrl}
-          onClose={handleCloseModal}
+          onClose={handleCloseArtistImg}
         />
       )}
+      {showAddMemberModal && <AddMemberModal onClose={handleCloseAddMember} />}
     </div>
   );
 }

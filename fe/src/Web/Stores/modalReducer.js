@@ -12,6 +12,10 @@ const modalSlice = createSlice({
       state.modifyMember.open = !state.modifyMember.open;
       state.modifyMember.key = action.payload;
     },
+    handleCloseModifyMember: (state, action) => {
+      state.modifyMember.open = !state.modifyMember.open;
+      state.modifyMember.key = action.payload;
+    },
     handleFansignInfo: (state, action) => {
       state.fansignInfo = action.payload;
     },
@@ -21,6 +25,10 @@ const modalSlice = createSlice({
   },
 });
 
-export const { handleModifyMember, handleFansignInfo, handleAddFansign } =
-  modalSlice.actions;
+export const {
+  handleModifyMember,
+  handleCloseModifyMember,
+  handleFansignInfo,
+  handleAddFansign,
+} = modalSlice.actions;
 export default modalSlice.reducer;

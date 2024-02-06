@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getUserInfo } from '../Stores/fanInfoReducer';
 import useAxios from '../axios';
 
-import ImgUploadModal from '../Fan/ImgUploadModal';
+import FanAuthModal from '../Fan/FanAuthModal';
 import FanInfoModal from '../Fan/FanInfoModal';
 import NavBar from '../Utils/NavBar';
 
@@ -40,7 +40,7 @@ function FanInfoView() {
 
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const [showImgUploadModal, setShowImgUploadModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   return (
     <>
@@ -114,7 +114,7 @@ function FanInfoView() {
                   src={userData.certificationImageUrl}
                   alt="Auth img"
                   className="w-64 h-64 rounded-md hover:border-red-500 hover:border-2" // 이미지 크기와 라운드 조정
-                  onClick={() => setShowImgUploadModal(true)}
+                  onClick={() => setShowAuthModal(true)}
                 />
                 <h3 className="text-2xl font-bold ml-2 font-milk self-end pl-4">
                   {userData.changeCount} / 4
@@ -122,10 +122,10 @@ function FanInfoView() {
               </div>
               <div>
                 {/* 인증사진 수정 모달 */}
-                {showImgUploadModal && (
-                  <ImgUploadModal
+                {showAuthModal && (
+                  <FanAuthModal
                     userData={userData}
-                    onClose={() => setShowImgUploadModal(false)}
+                    onClose={() => setShowAuthModal(false)}
                     // 필요한 경우 다른 props 전달
                   />
                 )}
