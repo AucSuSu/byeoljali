@@ -48,12 +48,14 @@ function ArtistImgModal({ onClose, artistImageUrl }) {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log('업로드 성공', response.data);
         alert('Image uploaded successfully');
       })
       .catch((error) => {
+        if (error.response && error.response.status === 413) {
+          alert('이미지의 용량을 1MB 이하로 낮춰주세요');
+        }
         console.error('Error uploading the image: ', error);
-        alert('Error uploading image');
       });
   };
 
