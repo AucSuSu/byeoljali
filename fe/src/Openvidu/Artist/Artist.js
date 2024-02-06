@@ -27,10 +27,7 @@ class VideoRoomComponent extends Component {
       currentVideoDevice: undefined,
       count: 0, // 참여인원 수
       signTime: 30, // 팬싸인 시간
-      postit: null,
       orders: 0,
-      nickname: null,
-      birthday: null,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -147,18 +144,6 @@ class VideoRoomComponent extends Component {
         await this.connectToSession();
         // 참여 인원 카운트
         this.countEvent();
-
-        // fanData 시그널 리스너
-        this.state.session.on('signal', (event) => {
-          const data = JSON.parse(event.data);
-          if (data.type === 'fanData') {
-            this.setState({
-              postit: data.postit,
-              nickname: data.nickname,
-              birthday: data.birthday,
-            });
-          }
-        });
       },
     );
   }
