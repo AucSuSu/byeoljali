@@ -78,7 +78,7 @@ public class WebSockChatHandler extends TextWebSocketHandler {
                 System.out.println(message);
                 roomSession.sendMessage(message);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new SessionClosedException("session이 닫혔습니다.");
             }
         });
     }
