@@ -55,7 +55,8 @@ function ApplyReceiptModal({ onClose, title }) {
       .then((response) => {
         console.log(response.data);
         dispatch(setAlbumNum(response.data.boughtAlbum));
-        alert('Image uploaded successfully');
+        alert('영수증 인증 성공');
+        onClose(); // 모달 닫기
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
