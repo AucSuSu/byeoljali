@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import useAxios from '../axios';
 import { useSelector } from 'react-redux';
 
-function ImgUploadModal({ onClose, userData }) {
+function FanAuthModal({ onClose, userData }) {
   const customAxios = useAxios();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState(userData.certificationImageUrl);
@@ -122,4 +122,4 @@ function ImgUploadModal({ onClose, userData }) {
   );
 }
 
-export default ImgUploadModal;
+export default FanAuthModal;

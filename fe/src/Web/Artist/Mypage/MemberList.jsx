@@ -1,14 +1,22 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ModifyMemberModal from '../Modal/ModifyMemberModal.jsx';
-import { handleModifyMember } from '../../Stores/modalReducer.js';
+import {
+  handleModifyMember,
+  handleCloseModifyMember,
+} from '../../Stores/modalReducer.js';
 
 export default function MemberList({ data }) {
+  console.log(data);
   const dispatch = useDispatch();
   const modifyMember = useSelector((state) => state.modal.modifyMember);
 
   const openModifyMember = () => {
     dispatch(handleModifyMember(data.memberId));
+  };
+
+  const closeModifyMember = () => {
+    dispatch(handleCloseModifyMember(null));
   };
 
   return (
@@ -29,7 +37,7 @@ export default function MemberList({ data }) {
       />
       <p>{data.name}</p>
       {modifyMember.open && modifyMember.key === data.memberId && (
-        <ModifyMemberModal data={data} />
+        <ModifyMemberModal data={data} onClose={closeModifyMember} />
       )}
     </div>
   );
