@@ -106,7 +106,7 @@ function FanSignModal({ data, onClose }) {
           onClick={handleCloseModal}
         >
           <div
-            className="bg-white max-w-96 w-96 h-auto p-5 rounded relative flex flex-col items-center z-50"
+            className="bg-white max-w-120 w-120 h-auto p-5 rounded relative flex flex-col items-center z-50"
             onClick={handleModalContentClick}
           >
             <div className="text-3xl bg-pink">
