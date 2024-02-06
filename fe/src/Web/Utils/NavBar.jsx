@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
 import { logout } from '../Stores/authReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavbarContainer = styled.nav`
   background-color: #fbe8e1;
@@ -91,8 +91,9 @@ const Navbar = ({ isFan }) => {
     navigate('/artist-profile');
   };
 
-  const profileImageUrl =
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpqYJDnLH7XxH1vrI3VCvNq6E5JipsPi5WrqrlMrWqsA&s';
+  const profileImageUrl = useSelector(
+    (state) => state.faninfo.data.profileImageUrl,
+  );
 
   return (
     <NavbarContainer className="font-bold font-milk pb-8">
