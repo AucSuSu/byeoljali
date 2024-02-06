@@ -7,7 +7,9 @@ import { useDispatch } from 'react-redux';
 function ApplyReceiptModal({ onClose, title }) {
   const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState(null);
-  const [imageSrc, setImageSrc] = useState('');
+  const [imageSrc, setImageSrc] = useState(
+    'https://testbyeoljari.s3.ap-northeast-2.amazonaws.com/default-receipt.png',
+  );
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +20,9 @@ function ApplyReceiptModal({ onClose, title }) {
       };
       reader.readAsDataURL(imageFile);
     } else {
-      setImageSrc('');
+      setImageSrc(
+        'https://testbyeoljari.s3.ap-northeast-2.amazonaws.com/default-receipt.png',
+      );
     }
   }, [imageFile]);
 
@@ -55,7 +59,8 @@ function ApplyReceiptModal({ onClose, title }) {
       .then((response) => {
         console.log(response.data);
         dispatch(setAlbumNum(response.data.boughtAlbum));
-        alert('Image uploaded successfully');
+        alert('영수증 인증 성공');
+        onClose(); // 모달 닫기
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
