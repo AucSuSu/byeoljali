@@ -15,10 +15,10 @@ export default function Socket({
 
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
-      console.log('메세지 전달받음 : ', message);
+      console.log('아티스트가 메세지 전달받음 : ', message);
       if (message.type === 'date') {
-        GetFanData(message.msg);
-        console.log('fanData 테스트 : ', message);
+        GetFanData(message.message);
+        console.log('아티스트가 전달받은 fanData : ', message);
       }
     };
 
@@ -39,11 +39,11 @@ export default function Socket({
   }, []);
 
   useEffect(() => {
-    sendMessage('close', closeNo);
+    sendMessage('CLOSE', closeNo);
   }, [closeNo]);
 
   useEffect(() => {
-    sendMessage('join', joinNo);
+    sendMessage('JOIN', joinNo);
   }, [joinNo]);
 
   // 메시지 전송 함수
@@ -52,7 +52,7 @@ export default function Socket({
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${memberFansignId}`,
-        msg: number,
+        message: number,
       };
       socket.send(JSON.stringify(myMessage));
     }
@@ -63,7 +63,7 @@ export default function Socket({
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${memberFansignId}`,
-      msg: 'Enter 완료',
+      message: 'Enter 완료',
     };
     newSocket.send(JSON.stringify(myMessage));
   };

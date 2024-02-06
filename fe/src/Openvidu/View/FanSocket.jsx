@@ -10,7 +10,7 @@ export default function Socket({
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     if (recievePostit) {
-      sendMessage('data', recievePostit.postit);
+      sendMessage('TALK', recievePostit.postit);
     }
   }, [recievePostit]);
 
@@ -20,8 +20,11 @@ export default function Socket({
 
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
-      console.log('FanSocket SendMessage : ', message);
-      if (message.type === 'join' && message.msg === `${propsData.orders}`) {
+      console.log('팬이 전달받은 메세지 : ', message);
+      if (
+        message.type === 'join' &&
+        message.message === `${propsData.orders}`
+      ) {
         joinSignal();
       } else if (
         message.type === 'close' &&
@@ -53,7 +56,7 @@ export default function Socket({
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${propsData.memberFansignId}`,
-        msg: data,
+        message: data,
       };
       socket.send(JSON.stringify(myMessage));
     }
@@ -64,7 +67,7 @@ export default function Socket({
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${propsData.memberFansignId}`,
-      msg: 'Enter 완료',
+      message: 'Enter 완료',
     };
     newSocket.send(JSON.stringify(myMessage));
   };

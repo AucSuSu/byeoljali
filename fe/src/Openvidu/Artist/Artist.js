@@ -82,7 +82,13 @@ class VideoRoomComponent extends Component {
 
   // 자동 초대 로직 새로 작성
   componentDidUpdate(_, prevState) {
+    console.log(
+      '카운트 테스트 prevCount, nowCount : ',
+      prevState.count,
+      this.state.count,
+    );
     if (prevState.count !== 0 && prevState.count !== this.state.count) {
+      console.log('카운트다운 실행');
       this.startCountdown();
     }
   }
