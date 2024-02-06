@@ -25,9 +25,7 @@ class VideoRoomComponent extends Component {
       subscribers: [],
       chatDisplay: 'block',
       currentVideoDevice: undefined,
-      fanData: props.fanData, // 팬 정보
       signTime: 30, // 팬싸인회 시간
-      closeFansign: this.props.closeFansign, // 팬싸인 종료 props
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -36,7 +34,6 @@ class VideoRoomComponent extends Component {
     this.updateLayout = this.updateLayout.bind(this);
     this.toggleChat = this.toggleChat.bind(this);
     this.checkSize = this.checkSize.bind(this);
-    this.sendData = this.sendData.bind(this);
   }
 
   componentDidMount() {
@@ -73,13 +70,6 @@ class VideoRoomComponent extends Component {
     }, 1000); // 매초마다 실행
   }
 
-  // closeFansign값이 업데이트 되면 이동 CheckPoint
-  componentDidUpdate(prevProps) {
-    if (this.props.closeFansign !== prevProps.closeFansign) {
-      this.props.comeBackHome();
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload);
     window.removeEventListener('resize', this.updateLayout);
@@ -101,18 +91,6 @@ class VideoRoomComponent extends Component {
       async () => {
         this.subscribeToStreamCreated();
         await this.connectToSession();
-
-        // timeOut 시그널 리스너
-        this.state.session.on('signal:timeOut', (event) => {
-          const data = JSON.parse(event.data);
-          // 값 하나는 str, 하나는 int임 === 사용 안됨
-          if (
-            data.type === 'timeOut' &&
-            data.userWait == this.state.fanData.userWait
-          ) {
-            this.props.comeBackHome();
-          }
-        });
       },
     );
   }
@@ -160,8 +138,6 @@ class VideoRoomComponent extends Component {
           if (this.props.joinSession) {
             this.props.joinSession();
           }
-          // sendData 호출 위치 변경
-          this.sendData();
         });
       });
     }
@@ -207,24 +183,6 @@ class VideoRoomComponent extends Component {
 
     if (mySession) {
       mySession.disconnect();
-    }
-  }
-
-  // fanData를 Artist에게 전달.
-  sendData() {
-    const mySession = this.state.session;
-    if (mySession) {
-      mySession
-        .signal({
-          type: 'fanData',
-          data: JSON.stringify(this.state.fanData),
-        })
-        .then(() => {
-          console.log('fanData 전송 성공', this.state.fanData);
-        })
-        .catch((error) => {
-          console.error('fanData 전송 실패', error);
-        });
     }
   }
 
@@ -357,7 +315,7 @@ class VideoRoomComponent extends Component {
                 <Script
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
-                  script={this.props.fanData.script}
+                  script={this.props.recieveScript.script}
                 />
               </div>
             )}
