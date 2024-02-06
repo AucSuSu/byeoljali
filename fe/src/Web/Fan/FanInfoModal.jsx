@@ -50,7 +50,8 @@ function FanInfoModal({ userData, onClose }) {
       })
       .then((response) => {
         console.log('업로드 성공', response.data);
-        alert('Image uploaded successfully');
+        onClose(); // 모달 닫기
+        window.location.reload();
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
@@ -70,8 +71,6 @@ function FanInfoModal({ userData, onClose }) {
     }
     console.log(formData);
     editUserInfoData(formData); // 서버에 데이터 전송
-    onClose(); // 모달 닫기
-    window.location.reload();
   };
 
   return (
