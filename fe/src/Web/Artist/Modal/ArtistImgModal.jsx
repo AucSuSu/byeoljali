@@ -49,7 +49,8 @@ function ArtistImgModal({ onClose, artistImageUrl }) {
       })
       .then((response) => {
         console.log('업로드 성공', response.data);
-        alert('Image uploaded successfully');
+        onClose(); // 모달 닫기
+        window.location.reload();
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
