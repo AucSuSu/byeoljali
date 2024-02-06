@@ -76,7 +76,7 @@ public class SecurityConfig {
             http
                     .addFilter(corsConfig.corsFilter())
                     .addFilter(new JwtAuthenticationFilter(authenticationManager, redisService, tokenService))
-                    .addFilter(new JwtAuthorizationFilter(authenticationManager, artistRepository, fanRepository));
+                    .addFilter(new JwtAuthorizationFilter(authenticationManager, artistRepository, fanRepository, tokenService));
         }
     }
 }
