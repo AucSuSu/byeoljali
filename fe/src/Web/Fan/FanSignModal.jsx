@@ -109,7 +109,7 @@ function FanSignModal({ data, onClose }) {
             className="bg-white max-w-120 w-120 h-auto p-5 rounded relative flex flex-col items-center z-50"
             onClick={handleModalContentClick}
           >
-            <div className="text-3xl bg-pink">
+            <div className="text-3xl bg-pink mb-4">
               [ {fanSignDetail.artistFansignTitle} ]
             </div>
             {/* 여기에 추가적인 모달 컨텐츠 */}
