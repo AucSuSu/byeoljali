@@ -43,7 +43,7 @@ public class SchedulingService {
 
     }
 
-    @Scheduled(cron = "30 52 15 * * ?") // 매일 23:59:59 에 응모 마감 닫기
+    @Scheduled(cron = "00 59 23 * * ?") // 매일 23:59:59 에 응모 마감 닫기
    //여기서 transactional을 빼주면.. 에반데 ㅜㅜ
     @Transactional
     public void endApplyingStatusCheck() {
