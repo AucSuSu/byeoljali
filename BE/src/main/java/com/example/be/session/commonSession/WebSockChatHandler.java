@@ -45,6 +45,12 @@ public class WebSockChatHandler extends TextWebSocketHandler {
             sessions.remove(session);
             chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장했습니다..");
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+        }else if (chatMessage.getType().equals(ChatMessage.MessageType.CLOSE)) {
+            chatMessage.setMessage(chatMessage.getMessage()+ "님 퇴장시키기");
+            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+        }else if (chatMessage.getType().equals(ChatMessage.MessageType.JOIN)) {
+            chatMessage.setMessage(chatMessage.getMessage()+ "님 입장시키기");
+            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
         }else {
             log.info("메세지 도착" + message);
             sendToEachSocket(sessions,message ); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
