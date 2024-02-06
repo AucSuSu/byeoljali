@@ -37,18 +37,23 @@ public class FanService {
 
     public Long update(FanMyPageUpdateRequestDto dto) {
         Fan fan = getFan(); // getFan() 메소드는 현재 사용자(Fan)를 가져오는 로직을 구현
+        Optional<MultipartFile> optionalImage = Optional.ofNullable(dto.getProfileImage());
 
-        // 이미지 업로드 및 URL 설정
-        String imageUrl = Optional.ofNullable(dto.getProfileImage())
-                .map(profileImage -> {
-                    try {
-                        return s3Uploader.uploadProfile(profileImage, "fan", fan.getEmail());
-                    } catch (IOException e) {
-                        // IOException을 더 구체적인 비즈니스 의미를 가진 예외로 변환
-                        throw new ImageUploadException("프로필 이미지 업로드에 실패했습니다.", e);
-                    }
-                })
-                .orElse(null);
+        String imageUrl = fan.getProfileImageUrl(); // 원래 이미지
+
+        if(!optionalImage.isEmpty()){
+            // 이미지 업로드 및 URL 설정
+                imageUrl = optionalImage
+                    .map(profileImage -> {
+                        try {
+                            return s3Uploader.uploadProfile(profileImage, "fan", fan.getEmail());
+                        } catch (IOException e) {
+                            // IOException을 더 구체적인 비즈니스 의미를 가진 예외로 변환
+                            throw new ImageUploadException("프로필 이미지 업로드에 실패했습니다.", e);
+                        }
+                    })
+                    .orElse(null);
+        }
 
         fan.update(dto.getName(), dto.getNickname(), imageUrl);
         fanRepository.save(fan);
