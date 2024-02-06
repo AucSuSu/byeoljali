@@ -116,11 +116,11 @@ class VideoRoomComponent extends Component {
 
       countdown--;
 
-      if (countdown === 0) {
+      if (countdown === 0 && this.state.count === 1) {
         const { orders } = this.state;
+        this.props.inviteFan(orders + 1);
         this.setState({ orders: orders + 1 });
         clearInterval(timer);
-        this.props.inviteFan(orders + 1);
         this.startCountdown();
       }
     }, 1000);
