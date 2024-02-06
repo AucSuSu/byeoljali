@@ -48,7 +48,7 @@ function ModifyMemberModal({ onClose, data }) {
     formData.append('name', name);
 
     customAxios
-      .put(`artists/member/${data.memberId}`, formData, {
+      .put(`artists/members/${data.memberId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
