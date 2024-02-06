@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { setAlbumNum } from '../Stores/homeDetailListReducer';
+import { useDispatch } from 'react-redux';
 
 function ApplyReceiptModal({ onClose, title }) {
+  const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState('');
   const fileInputRef = useRef(null);
@@ -51,6 +54,7 @@ function ApplyReceiptModal({ onClose, title }) {
       })
       .then((response) => {
         console.log(response.data);
+        dispatch(setAlbumNum(response.data.boughtAlbum));
         alert('Image uploaded successfully');
       })
       .catch((error) => {
@@ -93,15 +97,15 @@ function ApplyReceiptModal({ onClose, title }) {
             />
           </div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-8">
           <button
-            className="bg-hot-pink text-white px-4 py-2 rounded-xl mb-8"
+            className="bg-hot-pink text-black px-4 py-2 rounded-xl mb-8"
             onClick={handlePost}
           >
             제출
           </button>
           <button
-            className="bg-light-gray text-black px-4 py-2 rounded-xl"
+            className="bg-light-gray text-black px-4 py-2 rounded-xl mb-8"
             onClick={onClose}
           >
             닫기
