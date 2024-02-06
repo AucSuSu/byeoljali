@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import './ApplyReceiptModal.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
@@ -42,6 +41,8 @@ function ApplyReceiptModal({ onClose, title }) {
     formData.append('image', imageFile);
     formData.append('fansignTitle', title);
 
+    console.log(formData);
+
     axios
       .post(`flask/checkreceipt`, formData, {
         headers: {
@@ -59,8 +60,14 @@ function ApplyReceiptModal({ onClose, title }) {
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
+      onClick={onClose}
+    >
+      <div
+        className="w-120 h-auto flex flex-col "
+        onClick={(e) => e.stopPropagation()}
+      >
         <h1 className="bolder text-18 mt-2 mb-6">영수증을 등록해주세요!</h1>
         <div>
           <img
@@ -68,6 +75,7 @@ function ApplyReceiptModal({ onClose, title }) {
             src={imageSrc}
             alt="Preview"
             onClick={handleButtonClick}
+            className="w-100 h-100 object-fill"
           />
           <input
             type="file"
