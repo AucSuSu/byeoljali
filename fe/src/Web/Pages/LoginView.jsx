@@ -116,14 +116,14 @@ export default function LoginView() {
       <img
         src="/susu.jpg"
         alt="로고"
-        className="mt-[80px] my-4 rounded-full h-[100px] w-[100px] object-cover"
+        className="mt-[75px] my-4 rounded-full h-[100px] w-[100px] object-cover"
       />
       <div className="mb-4">
         <h1 className="text-3xl bolder mb-5">별자리</h1>
         {/* <button onClick={kakaoLogout}>테스트 로그아웃</button> */}
       </div>
 
-      <div className="w-full h-1/2 p-4 bg-gray bg-opacity-70 flex flex-col justify-between">
+      <div className="w-full min-h-1/2 p-4 bg-gray bg-opacity-70 flex flex-col justify-between">
         <div className="mb-4 flex-grow flex flex-col items-center justify-center">
           <div className="h-full pt-10 mx-auto text-white">
             좋은 소식이에요! <br />
@@ -135,7 +135,7 @@ export default function LoginView() {
           </div>
         </div>
 
-        <div className="mb-4 item flex items-center justify-center">
+        <div className="mt-2 mb-3 item flex items-center justify-center">
           <div
             className="cursor-pointer bg-kakao-yellow py-3 px-4 rounded-md w-[200px] h-[50px] bolder"
             onClick={handleFanLogin}
@@ -153,34 +153,32 @@ export default function LoginView() {
           </p>
 
           {showLoginForm && (
-            <form onSubmit={handleArtistLogin} className="md-2">
-              <div className="mx-auto">
-                <div className="flex">
-                  <label className="text-purple-700">이메일:</label>
-                  <input
-                    className="w-full border p-2"
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
+            <form onSubmit={handleArtistLogin} className="md-2 mt-2">
+              <div className="flex items-center">
+                <label className="md:w-1/3 text-white">이메일 </label>
+                <input
+                  className="md:w-2/3
+                    bg-slate  rounded-md m-2"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
 
-              <div className="mx-auto">
-                <div className="flex">
-                  <label className="text-purple-700">비밀번호:</label>
-                  <input
-                    className="w-full border p-2"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
+              <div className="flex items-center">
+                <label className="md:w-1/3 text-white">비밀번호 </label>
+                <input
+                  className="md:w-2/3
+                    bg-slate  rounded-md m-2"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
 
               <button
                 type="submit"
-                className="bg-purple-700 text-white py-2 px-4 rounded-md"
+                className="mt-1 bg-hot-pink p-2 rounded-md text-sm bolder"
               >
                 로그인
               </button>
