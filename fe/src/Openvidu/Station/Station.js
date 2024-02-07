@@ -358,7 +358,7 @@ class App extends Component {
         // axios를 사용하여 Base64 인코딩된 이미지 데이터를 POST 요청으로 전송
         // 플라스크 서버 주소 추가할 것!!!!!!!!!!
         axios
-          .post('/flask/checksame', formData, {
+          .post('flask/checksame', formData, {
             headers: {
               Authorization: this.props.authToken,
               'Content-Type': 'multipart/form-data',
