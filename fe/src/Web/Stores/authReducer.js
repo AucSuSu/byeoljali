@@ -18,8 +18,8 @@ const authSlice = createSlice({
   initialState: {
     token: null,
     tokenRefresh: null,
-    isArtist: null,
     kakaoAuthorization: null,
+    isArtist: null,
     status: 'idle', // 'idle === 동작 전
     error: null,
   },

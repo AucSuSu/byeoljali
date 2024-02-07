@@ -69,8 +69,9 @@ public class AuthController {
     }
     @PostMapping("/api/logout")
     public ResponseEntity<Message> kakaoLogout(HttpServletRequest request){
-        String accessToken = request.getHeader("Authorization");
-        String kakaoAccessToken = request.getHeader("Kakao-Authorization");
+        String accessToken = request.getHeader("authorization");
+        System.out.println("로그아웃 할때 필요한 access-token : " + accessToken);
+        String kakaoAccessToken = request.getHeader("kakao-authorization");
         System.out.println("로그아웃 할때 필요한 kakao-access-token : " + kakaoAccessToken);
         Long logoutId = oAuthService.logout(kakaoAccessToken, accessToken);
         Message message = new Message(HttpStatusEnum.OK, "팬 로그아웃 완료", logoutId);
