@@ -413,7 +413,7 @@ class VideoRoomComponent extends Component {
           timer={this.state.signTime}
           remainingTime={this.state.remainingTime}
         />
-        <div id="layout" className="bounds">
+        <div id="layout" className="bounds-artist">
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
               <div className="OT_root OT_publisher custom-class" id="localUser">

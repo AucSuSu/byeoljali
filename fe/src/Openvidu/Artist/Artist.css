@@ -38,7 +38,7 @@
   padding: 0;
 }
 
-.bounds {
+.bounds-artist {
   background: gary;
   overflow: hidden;
   position: absolute;
