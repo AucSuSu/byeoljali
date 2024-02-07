@@ -1,14 +1,12 @@
-package com.example.be.session.repository;
+package com.example.be.scheduling.repository;
 
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.be.artistfansign.entity.QArtistFansign.artistFansign;

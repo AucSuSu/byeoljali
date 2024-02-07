@@ -1,4 +1,4 @@
-package com.example.be.session.repository;
+package com.example.be.scheduling.repository;
 
 import com.example.be.artist.entity.Artist;
 import com.example.be.memberfansign.entity.MemberFansign;
