@@ -5,6 +5,7 @@ import Navbar from '../Utils/NavBar.jsx';
 import { isArtist } from '../Stores/authReducer.js';
 import Toggle from '../Utils/ToggleButton.jsx';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function ArtistFanSignView() {
   useEffect(() => {

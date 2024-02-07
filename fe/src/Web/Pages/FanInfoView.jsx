@@ -35,7 +35,7 @@ function FanInfoView() {
         <div className="bg-white min-h-screen">
           {' '}
           {/* 배경 이미지와 전체 높이 적용, 글꼴 적용 */}
-          <NavBar isFan={true} />
+          <NavBar />
           <div className="profile-container min-h-screen grid grid-cols-2 grid-rows-2">
             {' '}
             {/* 그리드 레이아웃 적용 */}
