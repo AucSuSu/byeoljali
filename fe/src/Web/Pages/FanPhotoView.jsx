@@ -92,7 +92,7 @@ function FanPhotoView() {
     // photoData is an array, safe to use .map()
     return (
       <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
-        <NavBar isFan={true} />
+        <NavBar />
         <div className="mt-12 ml-24 mr-14 font-milk font-bold">
           <div className="flex items-center justify-between pb-12 mb-6">
             <div>
