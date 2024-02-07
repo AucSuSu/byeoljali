@@ -20,7 +20,7 @@ export default class OpenViduVideoComponent extends Component {
 
   render() {
     const videoStyle = {
-      width: '80%', // 원하는 너비로 설정
+      width: '100%', // 원하는 너비로 설정
       height: '100%', // 높이를 자동으로 조정
     };
 

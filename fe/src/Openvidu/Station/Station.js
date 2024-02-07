@@ -91,8 +91,11 @@ class App extends Component {
           const average =
             dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
           // console.log('>>>>>>볼륨: ' + average);
+
+          const maxVolume = 70;
+          const limitedVolume = Math.min(average, maxVolume); // 볼륨 상한선 추가
           const volumeBar = document.getElementById('volume-bar');
-          volumeBar.style.width = average + '%'; // 볼륨 수치에 따라 너비 변경
+          volumeBar.style.width = limitedVolume + '%'; // 볼륨 수치에 따라 너비 변경
         };
 
         this.checkVolume = setInterval(updateVolume, 100); // 해당 메서드 특정할 수 있게 해줌
@@ -234,7 +237,7 @@ class App extends Component {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: '1280x720', // The resolution of your video
+              resolution: '640x480', // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
@@ -310,7 +313,9 @@ class App extends Component {
   // 채팅 메시지 전송 메서드
   sendMessage(message) {
     const messageData = {
-      user: this.state.myUserName,
+      profileImage: this.props.propsData.profileImage,
+      orders: this.state.orders,
+      nickname: this.state.myUserName,
       text: message,
     };
     this.state.session
@@ -384,14 +389,11 @@ class App extends Component {
         <div className="flex h-screen w-screen">
           {/* 첫번째 덩어리 */}
           <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 ">
-            <button className="btn" onClick={this.Meeting}>
-              Meeting
-            </button>
-
             {/* 비디오 출력 화면 */}
-            <div className="h-[70%] border-2">
+            <div className="h-[70%] border-2 overflow-hidden">
               <UserVideoComponent
                 streamManager={this.state.mainStreamManager}
+                className="w-full h-full object-cover"
               />
             </div>
 
@@ -399,7 +401,7 @@ class App extends Component {
             <div className="h-[10%] bg-lime-100 flex flex-row border-r-2 border-l-2 items-center">
               <p className="border-r-2 pl-4 pr-4">마이크</p>
               {/* 실제 볼륨 바 */}
-              <div id="volume-bar" className="volume-bar pl-4"></div>
+              <div id="volume-bar" className="volume-bar pl-4 "></div>
             </div>
 
             {/* 캡처 버튼 */}
@@ -418,7 +420,7 @@ class App extends Component {
             {/* 순서 */}
             <div className="bg-pink flex flex-row h-[10%] border-l-2 border-r-2 border-b-2 items-center">
               <p className="border-r-2 pl-4 pr-4">내 순서</p>
-              <p className="pl-4">N번째</p>
+              <p className="pl-4">{this.state.orders}번째</p>
             </div>
           </div>
 
@@ -434,7 +436,7 @@ class App extends Component {
           {/* 세번쨰 덩어리 */}
           <div className="flex-grow h-[95%] ml-4 mr-8">
             <Chat
-              nickname={this.state.myUserName}
+              orders={this.state.orders}
               messages={this.state.messages}
               handleSendMessage={this.sendMessage}
             />
