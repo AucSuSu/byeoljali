@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import SockJs from 'sockjs-client';
+import { useNavigate } from 'react-router-dom';
 
-export default function Socket({
-  propsData,
-  stationData,
-  joinSignal,
-  closeSignal,
-}) {
+export default function FanSocket({ propsData, stationData, joinSignal }) {
+  const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     console.log('stationData 변화함 ^^', stationData);
@@ -37,7 +34,7 @@ export default function Socket({
         message.type === 'CLOSE' &&
         message.message.orders === propsData.orders
       ) {
-        closeSignal();
+        navigate('/home');
       }
     };
 
