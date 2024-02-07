@@ -898,11 +898,11 @@
 }
 
 #capture-part > div,
-.flex > div {
+.custom-flex > div {
   flex: 1; /* 각각의 비디오와 스크립트가 동일한 비율로 표시되도록 설정 */
 }
 
-.flex {
+.custom-flex {
   display: flex;
   flex-grow: 1; /* 스크립트 컴포넌트가 적절한 공간을 차지하도록 설정 */
 }
