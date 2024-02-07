@@ -64,7 +64,7 @@ export default function LoginView() {
         setToken({
           token: res.headers['authorization'],
           tokenRefresh: res.headers['authorization-refresh'],
-          isArtist: res.headers['isartist'],
+          isArtist: res.headers['isartist'] === 'true',
         }),
       );
     } catch (error) {
