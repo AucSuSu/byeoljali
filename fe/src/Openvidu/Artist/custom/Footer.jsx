@@ -12,11 +12,7 @@ export default function Footer({
   removeCount,
 }) {
   const blakcList = () => {
-    console.log('blackList^^', id);
-  };
-
-  const shutDown = () => {
-    timeOver(orders);
+    console.log('blackList^^');
   };
 
   return (
@@ -24,7 +20,7 @@ export default function Footer({
       <div className="bg-pink fixed bottom-0 w-full h-15 font-milk text-white font-bold flex justify-center ">
         <div className="flex justify-center mt-2 mb-2">
           <div className="flex items-center mx-2 bg-slate-400 rounded-md">
-            <IconButton onClick={() => blakcList(id)}>
+            <IconButton onClick={() => blakcList()}>
               <AddIcon />
             </IconButton>
             <p className="mx-2">블랙리스트</p>
@@ -32,9 +28,9 @@ export default function Footer({
 
           <div
             className="flex items-center mx-2 bg-slate-400 rounded-md"
-            onClick={() => timeOver(orders)}
+            onClick={() => timeOver(orders, false)}
           >
-            <IconButton onClick={() => shutDown(id)}>
+            <IconButton >
               <CloseIcon />
             </IconButton>
             <p className="mx-2">강제종료</p>

@@ -6,16 +6,14 @@ import { useLocation } from 'react-router-dom';
 export default function ArtistView() {
   const location = useLocation();
   const { propsData } = location.state || {};
-
-  const [closeNo, setCloseNo] = useState(null);
-  const [joinNo, setJoinNo] = useState(null);
+  const [autoData, setAutoData] = useState({orders : null, state : null})
   const [fanData, setFanData] = useState(null);
 
-  const timeOver = (e) => {
-    setCloseNo(e);
+  const timeOver = (e, s) => {
+    setAutoData({orders : e, state : s});
   };
-  const inviteFan = (e) => {
-    setJoinNo(e);
+  const inviteFan = (e, s) => {
+    setAutoData({orders : e, state : s});
   };
 
   const getFanData = (data) => {
@@ -26,8 +24,7 @@ export default function ArtistView() {
     <div>
       <ArtistSocket
         memberFansignId={propsData.memberFansignId}
-        closeNo={closeNo}
-        joinNo={joinNo}
+        autoData={autoData}
         getFanData={getFanData}
       />
       <Artist

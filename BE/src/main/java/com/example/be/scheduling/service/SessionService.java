@@ -1,24 +1,17 @@
-package com.example.be.session.service;
+package com.example.be.scheduling.service;
 
-import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.memberfansign.entity.MemberFansign;
 import com.example.be.scheduling.repository.SchedulingRepository;
 import com.example.be.session.commonSession.ChatService;
-import com.example.be.session.repository.SessionRepository;
+import com.example.be.scheduling.repository.SessionRepository;
 import com.example.be.config.redis.RedisService;
 import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;

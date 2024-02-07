@@ -23,7 +23,7 @@ class App extends Component {
     this.state = {
       mySessionId: this.props.propsData.sessionId,
       myUserName: this.props.propsData.nickname,
-      curUser: 0, // 현재 참여중인 유저의 번호
+      curUser: this.props.curUser, // 현재 참여중인 유저의 번호
       session: this.props.propsData.sessionId,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
       publisher: undefined,
@@ -62,7 +62,7 @@ class App extends Component {
     if (this.props.joinFansign !== prevProps.joinFansign) {
       this.Meeting();
     }
-    if (this.props.curUser !== prevState.curUser) {
+    if (this.state.curUser !== prevState.curUser) {
       this.updateWaitTime();
     }
   }

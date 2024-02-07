@@ -91,17 +91,15 @@ class VideoRoomComponent extends Component {
   }
 
   startCountdown = () => {
-    const { count } = this.state;
-    if (count === 1) {
+    if (this.state.count === 1) {
       this.inviteCountDown();
     }
   };
 
   inviteCountDown = () => {
-    this.props.inviteFan(this.state.orders); // 대기번호 내가 호출 할
-    const { count } = this.state;
+    this.props.inviteFan(this.state.orders, true); // 대기번호 내가 호출 할
 
-    if (count > 1) {
+    if (this.state.count > 1) {
       return;
     }
 
@@ -392,9 +390,13 @@ class VideoRoomComponent extends Component {
       this.setState((prevState) => ({
         signTime: Math.max(prevState.signTime - 1, 0), // 0 이하로 내려가지 않도록
       }));
+      if (this.state.count === 1){
+        this.setState({ signTime: 30})
+        clearInterval(this.timer)
+      }
       if (this.state.signTime === 0) {
-        this.setState({ signTime: 30 });
-        this.props.timeOver(this.state.orders);
+        this.props.timeOver(this.state.orders, false);
+        this.setState({ signTime: 30, orders : this.state.orders + 1 });
         clearInterval(this.timer);
         // checkponit
       }
@@ -450,7 +452,7 @@ class VideoRoomComponent extends Component {
         </div>
         <Footer
           id="4"
-          timeOver={this.timeOver}
+          timeOver={this.props.timeOver}
           orders={this.state.orders}
           toggleChat={this.toggleChat}
           addCount={this.addCount}

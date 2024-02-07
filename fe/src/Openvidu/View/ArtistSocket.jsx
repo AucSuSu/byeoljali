@@ -3,8 +3,7 @@ import SockJs from 'sockjs-client';
 
 export default function ArtistSocket({
   memberFansignId,
-  orders,
-  state,
+  autoData,
   getFanData,
 }) {
   const [socket, setSocket] = useState(null);
@@ -18,59 +17,47 @@ export default function ArtistSocket({
       console.log('아티스트가 메세지 전달받음 : ', message);
       if (message.type === 'TALK') {
         getFanData(message.message);
-        console.log('아티스트가 전달받은 fanData : ', message);
-      }
-      if (message.type === 'ENTER') {
-        sendMessage('TALK', {
-          orders: orders,
-          postit: null,
-          birthday: null,
-          nickname: null,
-        });
+      } else if (message.type === 'ENTER' && message.message.nickname !== 'Artist') {
+        sendMessage('ENTER');
       }
     };
 
     newSocket.onopen = async () => {
       await enterMessage(newSocket);
-      console.log('OPEN 들어왔어요~ : WebSocket connection opened');
+      console.log('OPEN Artist 들어왔어요~');
     };
 
     newSocket.onclose = (event) => {
-      console.log(' CLOSE 나갔어요... : WebSocket connection closed:', event);
+      console.log('CLOSE Artist 나갔어요~', event);
     };
 
     setSocket(newSocket);
-    // 컴포넌트 언마운트 시 소켓 연결 해제
-    // return () => {
-    //   newSocket.close();
-    // };
+
+    return () => {
+      newSocket.close();
+    };
   }, []);
 
   useEffect(() => {
-    if (state) {
-      sendMessage('JOIN', {
-        orders: orders,
-        postit: null,
-        birthday: null,
-        nickname: null,
-      });
+    if (autoData.state) {
+      sendMessage('JOIN');
     } else {
-      sendMessage('CLOSE', {
-        orders: orders,
-        postit: null,
-        birthday: null,
-        nickname: null,
-      });
+      sendMessage('CLOSE');
     }
-  }, [orders]);
+  }, [autoData]);
 
   // 메시지 전송 함수
-  const sendMessage = (messageType, msg) => {
+  const sendMessage = (messageType) => {
     if (socket) {
       const myMessage = {
         type: messageType,
         roomId: `memberFansignSession${memberFansignId}`,
-        message: msg,
+        message: {
+          orders: autoData.orders,
+          postit: null,
+          birthday: null,
+          nickname: 'Artist',
+        }
       };
       socket.send(JSON.stringify(myMessage));
     }

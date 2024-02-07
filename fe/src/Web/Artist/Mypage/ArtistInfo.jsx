@@ -25,7 +25,6 @@ export default function ArtistInfo() {
     const result = customAxios
       .get('artists/fansignCount')
       .then((res) => {
-        console.log(res);
         setArtistCountData(res.data.object);
       })
       .catch((err) => {

@@ -7,7 +7,6 @@ import {
 } from '../../Stores/modalReducer.js';
 
 export default function MemberList({ data }) {
-  console.log(data);
   const dispatch = useDispatch();
   const modifyMember = useSelector((state) => state.modal.modifyMember);
 
