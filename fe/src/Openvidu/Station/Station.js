@@ -323,37 +323,59 @@ class App extends Component {
     }
   }
 
+  // Base64 문자열을 Blob 객체로 변환하는 함수
+  base64ToBlob(base64, contentType) {
+    const byteCharacters = atob(base64.split(',')[1]);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, { type: contentType });
+  }
+
   //화면 캡처 메서드
   captureMainVideo = () => {
-    html2canvas(this.mainVideoRef.current).then((canvas) => {
-      // FormData 인스턴스 생성
-      const formData = new FormData();
-      // Canvas를 Base64 인코딩된 문자열로 변환
-      const base64Image = canvas.toDataURL('unknown_person/jpg');
+    if (this.mainVideoRef.current) {
+      html2canvas(this.mainVideoRef.current).then((canvas) => {
+        // FormData 인스턴스 생성
+        const formData = new FormData();
+        // Canvas를 Base64 인코딩된 문자열로 변환
+        const base64Image = canvas.toDataURL('unknown_person/jpg');
 
-      // 'image' 필드에 파일 데이터 추가 (예제에서는 base64 인코딩된 이미지를 Blob으로 변환하여 추가)
-      // Blob 변환 과정이 필요한 경우에만 아래의 'base64ToBlob' 함수 구현 참고
-      const blob = base64ToBlob(base64Image);
-      formData.append('image', blob, 'unknown_person.jpg'); // 두 번째 인자는 파일 데이터, 세 번째 인자는 파일명
+        // 'image' 필드에 파일 데이터 추가 (예제에서는 base64 인코딩된 이미지를 Blob으로 변환하여 추가)
+        // Blob 변환 과정이 필요한 경우에만 아래의 'base64ToBlob' 함수 구현 참고
+        const blob = this.base64ToBlob(base64Image);
+        formData.append('image', blob, 'unknown_person.jpg'); // 두 번째 인자는 파일 데이터, 세 번째 인자는 파일명
 
-      // axios를 사용하여 Base64 인코딩된 이미지 데이터를 POST 요청으로 전송
-      // 플라스크 서버 주소 추가할 것!!!!!!!!!!
-      axios
-        .post('YOUR_SERVER_ENDPOINT', formData, {
-          headers: {
-            Authorization: this.props.authToken,
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then((response) => {
-          // 요청 성공 시 처리
-          console.log('서버에 대기방 사진 전송 완료', response);
-        })
-        .catch((error) => {
-          // 요청 실패 시 처리
-          console.error('서버에 대기방 사진 전송 실패', error);
-        });
-    });
+        // axios를 사용하여 Base64 인코딩된 이미지 데이터를 POST 요청으로 전송
+        // 플라스크 서버 주소 추가할 것!!!!!!!!!!
+        axios
+          .post('/flask/checksame', formData, {
+            headers: {
+              Authorization: this.props.authToken,
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((response) => {
+            // 요청 성공 시 처리
+            console.log('서버에 대기방 사진 전송 완료', response);
+          })
+          .catch((error) => {
+            // 요청 실패 시 처리
+            console.error('서버에 대기방 사진 전송 실패', error);
+          });
+      });
+    } else {
+      console.log('본인 인증을 위한 DOM 요소가 준비되지 않았습니다.');
+    }
   };
 
   render() {
@@ -374,7 +396,10 @@ class App extends Component {
           {/* 첫번째 덩어리 */}
           <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 ">
             {/* 비디오 출력 화면 */}
-            <div className="h-[70%] border-2 overflow-hidden">
+            <div
+              className="h-[70%] border-2 overflow-hidden"
+              ref={this.mainVideoRef}
+            >
               <UserVideoComponent
                 streamManager={this.state.mainStreamManager}
                 className="w-full h-full object-cover"
