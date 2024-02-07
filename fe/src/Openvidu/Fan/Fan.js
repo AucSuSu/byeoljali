@@ -313,19 +313,21 @@ class VideoRoomComponent extends Component {
               ))}
             </div>
           </div>
-          {localUser !== undefined &&
-            localUser.getStreamManager() !== undefined && (
-              <div
-                className="OT_root OT_publisher custom-class"
-                style={chatDisplay}
-              >
-                <Script
-                  chatDisplay={this.state.chatDisplay}
-                  close={this.toggleChat}
-                  scripts={this.props.recieveScript.script}
-                />
-              </div>
-            )}
+          <div className="flex">
+            {localUser !== undefined &&
+              localUser.getStreamManager() !== undefined && (
+                <div
+                  className="OT_root OT_publisher custom-class"
+                  style={chatDisplay}
+                >
+                  <Script
+                    chatDisplay={this.state.chatDisplay}
+                    close={this.toggleChat}
+                    scripts={this.props.recieveScript.script}
+                  />
+                </div>
+              )}
+          </div>
         </div>
         <Footer id="4" toggleChat={this.toggleChat} />
       </div>
