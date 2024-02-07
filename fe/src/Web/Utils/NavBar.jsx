@@ -6,27 +6,6 @@ import { isArtist, logout, kakaoAuthorization } from '../Stores/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../axios';
 
-// 로그아웃 API 요청
-const customAxios = useAxios();
-const dispatch = useDispatch();
-const testLogout = () => {
-  if (isArtist) {
-    customAxios
-      .delete(`logout/`)
-      .then(() => dispatch(logout()))
-      .catch((err) => console.log(err));
-  } else {
-    customAxios
-      .post(`logout/`, {
-        headers: {
-          'kakao-authorization': kakaoAuthorization,
-        },
-      })
-      .then(() => dispatch(logout()))
-      .catch((err) => console.log(err));
-  }
-};
-
 const NavbarContainer = styled.nav`
   background-color: #fbe8e1;
   height: 50px;
@@ -99,6 +78,26 @@ const DropdownItem = styled.div`
 const Navbar = ({ isArtist }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // 로그아웃 API 요청
+  const customAxios = useAxios();
+  const testLogout = () => {
+    if (isArtist) {
+      customAxios
+        .delete(`logout/`)
+        .then(() => dispatch(logout()))
+        .catch((err) => console.log(err));
+    } else {
+      customAxios
+        .post(`logout/`, {
+          headers: {
+            'kakao-authorization': kakaoAuthorization,
+          },
+        })
+        .then(() => dispatch(logout()))
+        .catch((err) => console.log(err));
+    }
+  };
 
   const setLogout = () => {
     testLogout();
