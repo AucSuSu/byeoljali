@@ -25,6 +25,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(sessionHandler, "/socket")
                 .setAllowedOrigins("https://i10e104.p.ssafy.io")
+                .setAllowedOrigins("https://localhost:3000")
+                .setAllowedOrigins("http://localhost:3000")
                 .withSockJS();
     }
 
