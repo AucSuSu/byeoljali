@@ -9,6 +9,7 @@ import com.example.be.fan.repository.FanRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OAuthService {
 
@@ -40,7 +42,7 @@ public class OAuthService {
     @Value("${default.image.url}")
     private String noImageUrl;
 
-    private String logoutRedirectUri;
+    private String logoutRedirectUri = "";
 
     /**
      * OAuth 관련
@@ -75,27 +77,31 @@ public class OAuthService {
 
     }
 
-    private void logout(){
+    public Long logout(String kakaoToken, String accessToken){
 
         RestTemplate restTemplate = new RestTemplate();
 
 
         HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        headers.add("Authorization", kakaoToken);
 
-        String kakaoLogoutUrl = "https://kauth.kakao.com/oauth/logout"
-                + "?client_id=" + kakaoClientId
-                + "&logout_redirect_uri=" + logoutRedirectUri;
+        String kakaoLogoutUrl = "https://kapi.kakao.com/v1/user/logout";
 
-        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest = new HttpEntity<>(headers);
+        HttpEntity<MultiValueMap<String, String>> kakaoLogoutRequest = new HttpEntity<>(headers);
 
-        ResponseEntity<String> kakaoProfileResponse = restTemplate.exchange(
+        ResponseEntity<String> kakaoLogoutResponse = restTemplate.exchange(
                 kakaoLogoutUrl,
-                HttpMethod.GET,
-                kakaoProfileRequest,
+                HttpMethod.POST,
+                kakaoLogoutRequest,
                 String.class
         );
 
+        // redis에 있는 refreshToken 삭제
+        Long id = tokenService.deleteRefreshToken(accessToken);
 
+        log.info(kakaoLogoutResponse.getBody());
+        return id;
     }
 
 
