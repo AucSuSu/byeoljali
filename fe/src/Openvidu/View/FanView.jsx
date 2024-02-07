@@ -44,12 +44,12 @@ export default function Test() {
 
   return (
     <div>
-      {/* <FanSocket
+      <FanSocket
         propsData={propsData}
         stationData={stationData}
         joinSignal={joinSignal}
         closeSignal={closeSignal}
-      /> */}
+      />
 
       {flag && (
         <Fan
