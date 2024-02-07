@@ -286,7 +286,7 @@ class VideoRoomComponent extends Component {
           timer={this.state.signTime}
         />
         <div id="layout" className="bounds">
-          <div id="capture-part" className="flex">
+          <div id="capture-part" className="custom-flex">
             <div>
               {localUser !== undefined &&
                 localUser.getStreamManager() !== undefined && (
@@ -313,7 +313,7 @@ class VideoRoomComponent extends Component {
               ))}
             </div>
           </div>
-          <div className="flex">
+          <div className="custom-flex">
             {localUser !== undefined &&
               localUser.getStreamManager() !== undefined && (
                 <div
