@@ -91,8 +91,12 @@ const Navbar = ({ isFan }) => {
     navigate('/artist-profile');
   };
 
-  const profileImageUrl = useSelector(
+  const fanProfileImageUrl = useSelector(
     (state) => state.faninfo.data.profileImageUrl,
+  );
+
+  const artistProfileImageUrl = useSelector(
+    (state) => state.artistInfo.artistData.object.artistImageUrl,
   );
 
   return (
@@ -114,7 +118,7 @@ const Navbar = ({ isFan }) => {
               <NavbarLink to="/fan-photo">내 앨범</NavbarLink>
             </NavbarItem>
             <Dropdown>
-              <ProfileImage imageUrl={profileImageUrl} />
+              <ProfileImage imageUrl={fanProfileImageUrl} />
               <DropdownContent>
                 <DropdownItem onClick={goFanProfile}>프로필 보기</DropdownItem>
                 <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
@@ -131,7 +135,7 @@ const Navbar = ({ isFan }) => {
               <NavbarLink to="/readyfansign">팬싸 관리</NavbarLink>
             </NavbarItem>
             <Dropdown>
-              <ProfileImage imageUrl={profileImageUrl} />
+              <ProfileImage imageUrl={artistProfileImageUrl} />
               <DropdownContent>
                 <DropdownItem onClick={goArtistProfile}>
                   프로필 보기
