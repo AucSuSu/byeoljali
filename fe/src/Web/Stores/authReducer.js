@@ -13,20 +13,15 @@ export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
   }
 });
 
-// export const logout = createAsyncThunk('axios/logout', async () => {
-//   try {
-//     const response = await axios.post(`${BASE_URL}kakaoLogout`);
-//     return response;
-//   } catch (error) {
-//     throw error; // 실패 시 에러를 던져서 rejected 상태로 전달
-//   }
-// });
-
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: null,
-    tokenRefresh: null,
+    token:
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3MiLCJleHAiOjE3MDczNjQ1MjcsInJvbGUiOiJGQU4iLCJpZCI6Nn0.fRp5JQhLXY0tOo0YnTlPQVp1jrYuh4BEeBTVAU0aTbA',
+    tokenRefresh:
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoIiwiZXhwIjoxNzA3MzY0NTI3LCJyb2xlIjoiRkFOIiwiaWQiOjZ9.QVNvFC1eRbu13EwFyI5vvR2R7CuP25k1403QmAIULU8',
+    // token: null,
+    // tokenRefresh: null,
     isArtist: null,
     status: 'idle', // 'idle === 동작 전
     error: null,
@@ -35,6 +30,7 @@ const authSlice = createSlice({
     setToken(state, action) {
       state.token = action.payload.token;
       state.tokenRefresh = action.payload.tokenRefresh;
+      state.isArtist = action.payload.isArtist;
     },
     logout(state) {
       state.token = null;

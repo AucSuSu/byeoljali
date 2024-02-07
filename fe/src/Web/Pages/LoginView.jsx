@@ -5,8 +5,6 @@ import { loginUser } from '../Stores/authReducer.js';
 import { setToken } from '../Stores/authReducer.js';
 import axios from 'axios';
 import './LoginView.css';
-import { isArtist } from '../Stores/authReducer.js';
-import { logout } from '../Stores/authReducer.js';
 
 export default function LoginView() {
   const token = useSelector((state) => state.auth.token);
@@ -34,7 +32,7 @@ export default function LoginView() {
     }
   }, [token]);
 
-  // Kakao Test
+  // Kakao
 
   const [code, setCode] = useState(null);
 
@@ -66,6 +64,7 @@ export default function LoginView() {
         setToken({
           token: res.headers['authorization'],
           tokenRefresh: res.headers['authorization-refresh'],
+          isArtist: res.headers['isartist'],
         }),
       );
     } catch (error) {
@@ -91,20 +90,6 @@ export default function LoginView() {
     setShowLoginForm(!showLoginForm);
   };
 
-  // const kakaoLogout = () => {
-  //   console.log('토큰 : ', token);
-  //   axios
-  //     .get(
-  //       `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${redirect_uri}`,
-  //     )
-  //     .then(() => {
-  //       console.log('로그아웃 성공이래요~');
-  //     })
-  //     .catch((e) => {
-  //       console.log('에러 ㅠㅠ : ', e);
-  //     });
-  // };
-
   return (
     <div className="content flex flex-col items-center font-milk font-bold">
       <img
@@ -114,7 +99,6 @@ export default function LoginView() {
       />
       <div className="mb-4">
         <h1 className="text-3xl bolder mb-5">별자리</h1>
-        {/* <button onClick={kakaoLogout}>테스트 로그아웃</button> */}
       </div>
 
       <div className="w-full min-h-1/2 p-4 bg-gray bg-opacity-70 flex flex-col justify-between">

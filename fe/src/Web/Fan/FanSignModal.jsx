@@ -8,6 +8,7 @@ function FanSignModal({ data, onClose }) {
   console.log(data);
 
   // 대기방 참가 로직
+  const fanInfo = useSelector((state) => state.faninfo.data);
   const customAxios = useAxios();
   const navigate = useNavigate();
 
@@ -25,9 +26,10 @@ function FanSignModal({ data, onClose }) {
     navigate('/fan-fansign', {
       state: {
         propsData: {
+          profileImage: fanInfo.profileImageUrl,
           orders: fanSignDetail.orders,
-          nickname: '수수',
-          birthday: '2020-02-02',
+          nickname: fanInfo.nickname,
+          birthday: fanInfo.birth,
           sessionId: openviduData.object.sessionId,
           tokenId: openviduData.object.tokenId,
           memberFansignId: data.memberfansignId,
