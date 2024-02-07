@@ -10,5 +10,7 @@ public interface JwtProperties {
     String REDIS_REFRESH_PREFIX = "REFRESH_TOKEN_";
     String TOKEN_PREFIX = "Bearer ";
     String ACCESS_HEADER_STRING = "Authorization";
+
+    String KAKAO_ACCESS_HEADER_STRING = "Kakao-Authorization";
     String REFRESH_HEADER_STRING = "Authorization-Refresh";
 }

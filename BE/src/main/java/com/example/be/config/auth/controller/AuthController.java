@@ -33,17 +33,16 @@ public class AuthController {
 
         // 발급받은 accessToken 으로 카카오 회원 정보 DB 저장
         JwtToken jwtToken = oAuthService.saveFanAndGetToken(oauthToken.getAccess_token());
+
+        // response 할 headers 설정
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist, need-logout"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
-        if(jwtToken == null){
-            headers.add("no-email", "true");
-            return ResponseEntity.ok().headers(headers).body("이메일을 선택하지 않았습니다.");
-        }else{
-            headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
-            headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
-            headers.add("isArtist", "false");
-            return ResponseEntity.ok().headers(headers).body("success");
-        }
+
+        headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist, Kakao-Authorization"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
+        headers.add(JwtProperties.KAKAO_ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + oauthToken.getAccess_token());
+        headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
+        headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
+        headers.add("isArtist", "false");
+        return ResponseEntity.ok().headers(headers).body("success");
     }
 
     @GetMapping("/api/refreshToken")
@@ -68,6 +67,16 @@ public class AuthController {
 
         return ResponseEntity.ok().headers(headers).body(message);
     }
+    @PostMapping("/api/logout")
+    public ResponseEntity<Message> kakaoLogout(HttpServletRequest request){
+        String accessToken = request.getHeader("Authorization");
+        String kakaoAccessToken = request.getHeader("Kakao-Authorization");
+        System.out.println("로그아웃 할때 필요한 kakao-access-token : " + kakaoAccessToken);
+        Long logoutId = oAuthService.logout(kakaoAccessToken, accessToken);
+        Message message = new Message(HttpStatusEnum.OK, "팬 로그아웃 완료", logoutId);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/api/logout")
     public ResponseEntity<Message> logout(HttpServletRequest request){
