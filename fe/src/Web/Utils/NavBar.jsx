@@ -76,26 +76,39 @@ const DropdownItem = styled.div`
 `;
 
 const Navbar = ({ isArtist }) => {
+  const trueArtist = useSelector((state) => state.auth.isArtist);
+  const kakaoAuth = useSelector((state) => state.auth.kakaoAuthorization);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // 로그아웃 API 요청
   const customAxios = useAxios();
   const testLogout = () => {
-    if (isArtist) {
+    if (trueArtist) {
       customAxios
         .delete(`logout/`)
-        .then(() => dispatch(logout()))
+        .then((res) => {
+          console.log('로그아웃 데이터 : ', res);
+          dispatch(logout());
+          navigate('/');
+        })
         .catch((err) => console.log(err));
+      console.log('아티스트 로그아웃');
     } else {
+      console.log('카카오 AUTH : ', kakaoAuth);
       customAxios
         .post(`logout/`, {
           headers: {
-            'kakao-authorization': kakaoAuthorization,
+            'kakao-authorization': kakaoAuth,
           },
         })
-        .then(() => dispatch(logout()))
+        .then(() => {
+          console.log('로그아웃 데이터 : ', res);
+          dispatch(logout());
+          navigate('/');
+        })
         .catch((err) => console.log(err));
+      console.log('팬 로그아웃');
     }
   };
 
