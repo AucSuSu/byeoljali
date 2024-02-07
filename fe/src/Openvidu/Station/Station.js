@@ -89,12 +89,15 @@ class App extends Component {
           analyser.getByteFrequencyData(dataArray);
           const average =
             dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
-          // console.log('>>>>>>볼륨: ' + average);
 
-          const maxVolume = 70;
-          const limitedVolume = Math.min(average, maxVolume); // 볼륨 상한선 추가
+          // dB 값을 0~1 사이로 정규화
+          average = average / 256; // Uint8Array이므로 최대값은 255
+
+          // 볼륨 수치를 0에서 100 사이로 조정
+          const volume = Math.min(Math.max(average * 100, 0), 100);
+
           const volumeBar = document.getElementById('volume-bar');
-          volumeBar.style.width = limitedVolume + '%'; // 볼륨 수치에 따라 너비 변경
+          volumeBar.style.width = volume + '%'; // 볼륨 수치에 따라 너비 변경
         };
 
         this.checkVolume = setInterval(updateVolume, 100); // 해당 메서드 특정할 수 있게 해줌
