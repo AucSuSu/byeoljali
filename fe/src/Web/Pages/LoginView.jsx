@@ -65,6 +65,7 @@ export default function LoginView() {
           token: res.headers['authorization'],
           tokenRefresh: res.headers['authorization-refresh'],
           isArtist: res.headers['isartist'],
+          kakaoAkakaoAuthorization: res.headers['kakao-authorization'],
         }),
       );
     } catch (error) {
