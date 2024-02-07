@@ -23,10 +23,8 @@ export default function LoginView() {
   useEffect(() => {
     if (token) {
       if (isArtist) {
-        console.log('아티스트 로그인');
         navigate('/artist-profile');
       } else {
-        console.log('팬 소셜 로그인');
         navigate('/home');
       }
     }
@@ -48,7 +46,6 @@ export default function LoginView() {
       getData(extractedCode);
     }
 
-    console.log('코드 : ', code);
   }, []);
 
   const getData = async (code) => {
@@ -70,7 +67,6 @@ export default function LoginView() {
       );
     } catch (error) {
       console.error('백엔드 전송 실패', error);
-      console.log(code);
     }
   };
 

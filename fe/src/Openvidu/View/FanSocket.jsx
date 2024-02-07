@@ -6,9 +6,7 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
-    console.log('stationData 변화함 ^^', stationData);
     if (stationData) {
-      console.log('stationData 전달했음 ^^');
       sendMessage('TALK', {
         orders: null,
         postit: stationData.postit,
@@ -35,16 +33,18 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
         message.message.orders === propsData.orders
       ) {
         navigate('/home');
-      }
+      } else if(
+        message.type ==='ENTER' && message.nickname ==='Artist'
+      ){}
     };
 
     newSocket.onopen = async () => {
       await enterMessage(newSocket);
-      console.log('OPEN 들어왔어요~ : WebSocket connection opened');
+      console.log('OPEN Fan 들어왔어요~');
     };
 
     newSocket.onclose = (event) => {
-      console.log(' CLOSE 나갔어요... : WebSocket connection closed:', event);
+      console.log(' CLOSE Fan 나갔어요~', event);
     };
 
     setSocket(newSocket);

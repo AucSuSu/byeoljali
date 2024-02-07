@@ -80,7 +80,7 @@ export default function FansignModal({ memberFansignId }) {
             <h2 className="bolder text-25 flex justify-center mr-6 bg-pink bg-opacity-50 rounded-xl">
               [ {detailData.object.title} ]
             </h2>
-            <div class="flex justify-center items-center">
+            <div className="flex justify-center items-center">
               <img
                 src={detailData.object.posterImageUrl}
                 alt="커버 이미지"
