@@ -89,7 +89,7 @@ class App extends Component {
 
         const updateVolume = () => {
           analyser.getByteFrequencyData(dataArray);
-          const average =
+          var average =
             dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
 
           // dB 값을 0~1 사이로 정규화
