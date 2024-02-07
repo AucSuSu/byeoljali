@@ -4,13 +4,19 @@ import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 
-export default function Footer({ id, timeOver, orders, toggleChat, addCount, removeCount }) {
-  const blakcList = (id) => {
+export default function Footer({
+  timeOver,
+  orders,
+  toggleChat,
+  addCount,
+  removeCount,
+}) {
+  const blakcList = () => {
     console.log('blackList^^', id);
   };
 
-  const shutDown = (id) => {
-    console.log('shutDown^^', id);
+  const shutDown = () => {
+    timeOver(orders);
   };
 
   return (
@@ -24,7 +30,10 @@ export default function Footer({ id, timeOver, orders, toggleChat, addCount, rem
             <p className="mx-2">블랙리스트</p>
           </div>
 
-          <div className="flex items-center mx-2 bg-slate-400 rounded-md" onClick={()=> timeOver(orders)}>
+          <div
+            className="flex items-center mx-2 bg-slate-400 rounded-md"
+            onClick={() => timeOver(orders)}
+          >
             <IconButton onClick={() => shutDown(id)}>
               <CloseIcon />
             </IconButton>
