@@ -35,7 +35,7 @@ function FanSignModal({ data, onClose }) {
           memberFansignId: data.memberfansignId,
           title: data.artistFansignTitle,
           member: data.memberName,
-          artistFansignId: null,
+          artistFansignId: fanSignDetail.artistfansignId,
         },
       },
     });
