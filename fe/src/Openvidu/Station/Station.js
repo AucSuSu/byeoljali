@@ -40,7 +40,6 @@ class App extends Component {
     this.leaveSession = this.leaveSession.bind(this);
     this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
-    this.handleChangeUserWait = this.handleChangeUserWait.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -62,6 +61,9 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props.joinFansign !== prevProps.joinFansign) {
       this.Meeting();
+    }
+    if (this.props.curUser !== prevState.curUser) {
+      this.updateWaitTime();
     }
   }
 
@@ -258,7 +260,7 @@ class App extends Component {
 
     // 초기 reaminingTime
     this.setState({
-      remainingTime: (this.state.myUserWait - this.state.curUser) * 600,
+      remainingTime: (this.state.orders - this.state.curUser) * 120,
     });
 
     // 타이머 설정
@@ -312,11 +314,8 @@ class App extends Component {
   // 타이머 관련 메서드
   updateWaitTime() {
     // 남은 사람 수에 기반한 대기 시간 계산
-    const remainingUsers = Math.max(
-      this.state.myUserWait - this.state.curUser,
-      0,
-    );
-    this.setState({ remainingTime: remainingUsers * 600 });
+    const remainingUsers = Math.max(this.state.orders - this.state.curUser, 0);
+    this.setState({ remainingTime: remainingUsers * 120 });
   }
 
   //화면 캡처 메서드

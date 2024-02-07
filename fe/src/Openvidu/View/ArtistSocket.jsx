@@ -20,6 +20,9 @@ export default function Socket({
         getFanData(message.message);
         console.log('아티스트가 전달받은 fanData : ', message);
       }
+      if (message.type === 'ENTER') {
+        console.log('ENTER, hi');
+      }
     };
 
     newSocket.onopen = async () => {

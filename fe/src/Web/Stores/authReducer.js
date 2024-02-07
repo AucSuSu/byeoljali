@@ -19,6 +19,7 @@ const authSlice = createSlice({
     token: null,
     tokenRefresh: null,
     isArtist: null,
+    kakaoAuthorization: null,
     status: 'idle', // 'idle === 동작 전
     error: null,
   },
@@ -27,11 +28,13 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.tokenRefresh = action.payload.tokenRefresh;
       state.isArtist = action.payload.isArtist;
+      state.kakaoAuthorization = action.payload.kakaoAuthorization;
     },
     logout(state) {
       state.token = null;
       state.tokenRefresh = null;
       state.isArtist = null;
+      state.kakaoAuthorization = null;
       console.log('로그아웃 했어용');
     },
   },
@@ -58,3 +61,4 @@ export default authSlice.reducer;
 export const { setToken, logout } = authSlice.actions;
 export const selectToken = (state) => state.auth.token;
 export const isArtist = (state) => state.auth.isArtist;
+export const kakaoAuthorization = (state) => state.auth.kakaoAuthorization;
