@@ -150,13 +150,18 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                 .on(artistFansign.artist.eq(artist)
                 ).join(member)
                 .on(member.eq(memberFansign.member))
-                .where(artistFansign.status.eq(status))
+                .where(statusCheck(status))
                 .orderBy(Expressions.dateTimeTemplate(
                         java.sql.Timestamp.class,
                         "function('timestampdiff', second, {0}, {1})",
                         artistFansign.startFansignTime,
                         currentDate).asc())
                 .fetch();
+    }
+
+    private BooleanExpression statusCheck(FansignStatus status) {
+        return status==FansignStatus.FANSIGN ?
+                (artistFansign.status.eq(FansignStatus.APPLYING).and(artistFansign.status.eq(FansignStatus.SESSION_CONNECTED))) : artistFansign.status.eq(status);
     }
 
     @Override
