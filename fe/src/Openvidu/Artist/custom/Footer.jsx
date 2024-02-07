@@ -4,8 +4,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 
-export default function Footer({ id, toggleChat, countdown }) {
-  const [test, setTest] = useState();
+export default function Footer({ id, timeOver, orders, toggleChat, addCount, removeCount }) {
   const blakcList = (id) => {
     console.log('blackList^^', id);
   };
@@ -25,7 +24,7 @@ export default function Footer({ id, toggleChat, countdown }) {
             <p className="mx-2">블랙리스트</p>
           </div>
 
-          <div className="flex items-center mx-2 bg-slate-400 rounded-md">
+          <div className="flex items-center mx-2 bg-slate-400 rounded-md" onClick={()=> timeOver(orders)}>
             <IconButton onClick={() => shutDown(id)}>
               <CloseIcon />
             </IconButton>
@@ -39,14 +38,8 @@ export default function Footer({ id, toggleChat, countdown }) {
           </IconButton>
         </div>
         <div>
-          <p onClick={() => countdown(test)}>자동입장 테스트</p>
-          <p onClick={() => countdown(test)}>강퇴 테스트 </p>
-          <input
-            className="text-black"
-            type="text"
-            value={test}
-            onChange={(e) => setTest(e.target.value)}
-          />
+          <p onClick={() => addCount()}>addCount</p>
+          <p onClick={() => removeCount()}>removeCount </p>
         </div>
       </div>
     </>

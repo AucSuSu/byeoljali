@@ -29,7 +29,7 @@ class VideoRoomComponent extends Component {
       signTime: 30, // 팬싸인 시간
       orders: 1,
       countTime: 10,
-      remainingTime: 20,
+      remainingTime: 10,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -40,11 +40,10 @@ class VideoRoomComponent extends Component {
     this.checkSize = this.checkSize.bind(this);
     this.addCount = this.addCount.bind(this);
     this.removeCount = this.removeCount.bind(this);
-    this.timerEvnet = this.timerEvnet.bind(this);
+    this.timerEvent = this.timerEvent.bind(this);
     this.startCountdown = this.startCountdown.bind(this);
     this.inviteCountDown = this.inviteCountDown.bind(this);
     this.remainingTimer = this.remainingTimer.bind(this);
-    this.testCount = this.testCount.bind(this);
   }
 
   componentDidMount() {
@@ -85,7 +84,7 @@ class VideoRoomComponent extends Component {
 
   // 자동 초대 로직 새로 작성
   componentDidUpdate(_, prevState) {
-    if (prevState.count !== this.state.count) {
+    if (prevState.count !== 0 && prevState.count !== this.state.count) {
       this.startCountdown();
     }
   }
@@ -105,19 +104,19 @@ class VideoRoomComponent extends Component {
       return;
     }
 
-    console.log('카운트 다운 실행~');
+    console.log('카운트 다운 실행~ : ', this.state.orders, '카운트 : ', this.state.count);
 
     const countTimer = setInterval(() => {
-      const { countTime } = this.state;
       if (count !== 1) {
         this.setState({ countTime: 10 });
-        console.log('카운트 타이머 종료');
+        console.log('카운트 타이머 종료, count : ', count);
         clearInterval(countTimer);
         return;
       }
 
-      this.setState({ countTime: countTime - 1 });
-
+      this.setState((prevState) => ({
+        countTime: Math.max(prevState.countTime - 1, 0), // 0 이하로 내려가지 않도록
+      }));
       if (this.state.countTime === 0) {
         this.setState({ countTime: 10 });
         this.setState({ orders: this.state.orders + 1 });
@@ -127,22 +126,15 @@ class VideoRoomComponent extends Component {
     }, 1000);
   };
   // 자동 초대 로직 끝
-  // 테스트용
-  testCount(e) {
-    this.setState({ count: e });
-  }
-  testGetOUT(e) {
-    this.props.timeOver(e);
-  }
 
-  // 자동 입장 및 퇴장 타이머
+  // 최초 자동 입장 타이머
   remainingTimer() {
     this.timer = setInterval(() => {
       this.setState((prevState) => ({
         remainingTime: Math.max(prevState.remainingTime - 1, 0), // 0 이하로 내려가지 않도록
       }));
       if (this.state.remainingTime === 0) {
-        this.props.inviteFan(this.state.orders);
+        this.inviteCountDown(this.state.orders);
         clearInterval(this.timer);
         // checkponit
       }
@@ -356,21 +348,30 @@ class VideoRoomComponent extends Component {
 
   // 인원 증가/감소 메서드
   addCount() {
-    const count = this.state.count;
-    this.setState({ count: count + 1 });
-    if (this.state.count === 2) {
-      this.setState({ signTime: 30 }); // 팬미팅 시간 갱신
-      this.timerEvnet();
-    }
+    this.setState(prevState => {
+      console.log('addCount 증가 전 : ', prevState.count);
+      return { count: prevState.count + 1 };
+    }, () => {
+      console.log('addCount 증가 후 : ', this.state.count);
+      if (this.state.count === 2) {
+        this.setState({ signTime: 30 });
+        this.timerEvent();
+      }
+    });
   }
-
+  
   removeCount() {
-    const count = this.state.count;
-    this.setState({ count: count - 1 });
+    this.setState(prevState => {
+      const count = prevState.count;
+      return { count: count - 1 };
+    }, () => {
+      console.log('removeCount 실행 : ', this.state.count);
+    });
   }
+  
 
   // 자동 입장 및 퇴장 타이머
-  timerEvnet() {
+  timerEvent() {
     this.timer = setInterval(() => {
       this.setState((prevState) => ({
         signTime: Math.max(prevState.signTime - 1, 0), // 0 이하로 내려가지 않도록
@@ -396,7 +397,7 @@ class VideoRoomComponent extends Component {
           timer={this.state.signTime}
           remainingTime={this.state.remainingTime}
         />
-        <div id="layout" className="bounds">
+        <div id="layout" className="bounds overflow-y: hidden">
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
               <div className="OT_root OT_publisher custom-class" id="localUser">
@@ -433,8 +434,11 @@ class VideoRoomComponent extends Component {
         </div>
         <Footer
           id="4"
+          timeOver={this.timeOver}
+          orders={this.state.orders}
           toggleChat={this.toggleChat}
-          countdown={this.testCount}
+          addCount={this.addCount}
+          removeCount={this.removeCount}
         />
       </div>
     );
