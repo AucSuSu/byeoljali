@@ -46,7 +46,7 @@
   right: 0;
   top: 60px;
   bottom: 80px;
-  height: calc(100vh - 60px - 80px);
+  height: calc(100vh - 60px - 80px) !important;
   min-width: 400px !important;
   width: 100%;
 }
