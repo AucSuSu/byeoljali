@@ -5,7 +5,7 @@ import FanSocket from './FanSocket.jsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAxios from '../../Web/axios.js';
 
-export default function Test() {
+export default function FanView() {
   const customAxios = useAxios();
   const navigator = useNavigate();
   const joinFansign = async () => {
@@ -48,7 +48,6 @@ export default function Test() {
         propsData={propsData}
         stationData={stationData}
         joinSignal={joinSignal}
-        closeSignal={closeSignal}
       />
 
       {flag && (

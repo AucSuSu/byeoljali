@@ -320,7 +320,7 @@ class VideoRoomComponent extends Component {
                 <Script
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
-                  script={this.props.recieveScript.script}
+                  scripts={this.props.recieveScript.script}
                 />
               </div>
             )}
