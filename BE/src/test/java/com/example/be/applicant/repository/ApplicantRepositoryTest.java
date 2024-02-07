@@ -31,7 +31,7 @@
 //@Transactional
 //@Rollback(value = true)
 //class ApplicantRepositoryTest {
-
+//
 //
 //    @Autowired
 //    ApplicantRepository applicantRepository;
@@ -60,8 +60,8 @@
 //        LocalDateTime date1 = LocalDateTime.now();
 //
 //        // 아티스트
-//        Artist artist = Artist.createArtist("unknown1@naver.com", "password", "unknown1");
-//        Artist artist2 = Artist.createArtist("unknown2@naver.com", "password", "unknown1");
+//        Artist artist = Artist.createArtist("unknown1@naver.com", "password", "unknown1", "artistImageUrl1");
+//        Artist artist2 = Artist.createArtist("unknown2@naver.com", "password", "unknown1", "artistImageUrl2");
 //        artistRepository.save(artist);
 //        artistRepository.save(artist2);
 //
