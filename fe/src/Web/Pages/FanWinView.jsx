@@ -6,7 +6,7 @@ function FanWinView() {
   return (
     <>
       <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
-        <NavBar isFan={true} />
+        <NavBar />
         <FanWin />
       </div>
     </>

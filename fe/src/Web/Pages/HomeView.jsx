@@ -99,7 +99,7 @@ const HomeView = () => {
 
   return (
     <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat font-milk font-bold">
-      <Navbar isFan={true}></Navbar>
+      <Navbar></Navbar>
       {/* 캐러셀 */}
       <Carousel />
       <div className="w-4/5 mx-auto flex flex-col">

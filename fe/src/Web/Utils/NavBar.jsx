@@ -75,7 +75,7 @@ const DropdownItem = styled.div`
   }
 `;
 
-const Navbar = ({ isArtist }) => {
+const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -117,6 +117,8 @@ const Navbar = ({ isArtist }) => {
   );
 
   const artistProfile = useSelector((state) => state.artistInfo.artistData);
+
+  const isArtist = useSelector((state) => state.auth.isArtist);
 
   return (
     <NavbarContainer className="font-bold font-milk pb-8">
