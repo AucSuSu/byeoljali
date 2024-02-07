@@ -286,48 +286,45 @@ class VideoRoomComponent extends Component {
           timer={this.state.signTime}
         />
         <div id="layout" className="bounds">
-          <div id="capture-part" className="custom-flex">
-            <div>
-              {localUser !== undefined &&
-                localUser.getStreamManager() !== undefined && (
-                  <div
-                    className="OT_root OT_publisher custom-class"
-                    id="localUser"
-                  >
-                    <Video user={localUser} />
-                  </div>
-                )}
-            </div>
-            <div>
-              {this.state.subscribers.map((sub, i) => (
-                <div
-                  key={i}
-                  className="OT_root OT_publisher custom-class"
-                  id="remoteUsers"
-                >
-                  <Video
-                    user={sub}
-                    streamId={sub.streamManager.stream.streamId}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="custom-flex">
+          <div>
             {localUser !== undefined &&
               localUser.getStreamManager() !== undefined && (
                 <div
                   className="OT_root OT_publisher custom-class"
-                  style={chatDisplay}
+                  id="localUser"
                 >
-                  <Script
-                    chatDisplay={this.state.chatDisplay}
-                    close={this.toggleChat}
-                    scripts={this.props.recieveScript.script}
-                  />
+                  <Video user={localUser} />
                 </div>
               )}
           </div>
+          <div>
+            {this.state.subscribers.map((sub, i) => (
+              <div
+                key={i}
+                className="OT_root OT_publisher custom-class"
+                id="remoteUsers"
+              >
+                <Video
+                  user={sub}
+                  streamId={sub.streamManager.stream.streamId}
+                />
+              </div>
+            ))}
+          </div>
+
+          {localUser !== undefined &&
+            localUser.getStreamManager() !== undefined && (
+              <div
+                className="OT_root OT_publisher custom-class"
+                style={chatDisplay}
+              >
+                <Script
+                  chatDisplay={this.state.chatDisplay}
+                  close={this.toggleChat}
+                  scripts={this.props.recieveScript.script}
+                />
+              </div>
+            )}
         </div>
         <Footer id="4" toggleChat={this.toggleChat} />
       </div>

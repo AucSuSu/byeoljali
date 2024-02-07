@@ -886,28 +886,3 @@
 }
 
 /* 테스트용 추가 본 */
-#container {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* 전체 컨테이너의 높이를 화면에 맞춤 */
-}
-
-#capture-part {
-  display: flex;
-  flex-grow: 2; /* 비디오 컴포넌트가 더 많은 공간을 차지하도록 설정 */
-}
-
-#capture-part > div,
-.custom-flex > div {
-  flex: 1; /* 각각의 비디오와 스크립트가 동일한 비율로 표시되도록 설정 */
-}
-
-.custom-flex {
-  display: flex;
-  flex-grow: 1; /* 스크립트 컴포넌트가 적절한 공간을 차지하도록 설정 */
-}
-
-.OT_root {
-  width: 100%;
-  height: 100%; /* 비디오 컴포넌트의 크기를 부모 요소에 맞춤 */
-}
