@@ -91,8 +91,12 @@ class App extends Component {
           analyser.getByteFrequencyData(dataArray);
           const average =
             dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
+          // console.log('>>>>>>볼륨: ' + average);
+
+          const maxVolume = 70;
+          const limitedVolume = Math.min(average, maxVolume); // 볼륨 상한선 추가
           const volumeBar = document.getElementById('volume-bar');
-          volumeBar.style.width = average + '%'; // 볼륨 수치에 따라 너비 변경
+          volumeBar.style.width = limitedVolume + '%'; // 볼륨 수치에 따라 너비 변경
         };
 
         this.checkVolume = setInterval(updateVolume, 100); // 해당 메서드 특정할 수 있게 해줌
@@ -305,10 +309,18 @@ class App extends Component {
   }
 
   // 타이머 관련 메서드
-  updateWaitTime() {
+  /*updateWaitTime() {
     // 남은 사람 수에 기반한 대기 시간 계산
     const remainingUsers = Math.max(this.state.orders - this.state.curUser, 0);
     this.setState({ remainingTime: remainingUsers * 120 });
+  }*/
+  updateWaitTime() {
+    const remainingUsers = Math.max(this.state.orders - this.state.curUser, 0);
+    const newRemainingTime = remainingUsers * 120;
+    // 현재 remainingTime 상태와 새로 계산된 값이 다를 때만 setState 호출
+    if (this.state.remainingTime !== newRemainingTime) {
+      this.setState({ remainingTime: newRemainingTime });
+    }
   }
 
   //화면 캡처 메서드
