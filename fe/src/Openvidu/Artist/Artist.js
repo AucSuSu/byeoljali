@@ -85,6 +85,7 @@ class VideoRoomComponent extends Component {
   // 자동 초대 로직 새로 작성
   componentDidUpdate(_, prevState) {
     if (prevState.count !== 0 && prevState.count !== this.state.count) {
+      // count는 입장 인원 수
       this.startCountdown();
     }
   }
@@ -97,19 +98,29 @@ class VideoRoomComponent extends Component {
   };
 
   inviteCountDown = () => {
-    this.props.inviteFan(this.state.orders);
+    this.props.inviteFan(this.state.orders); // 대기번호 내가 호출 할
     const { count } = this.state;
 
     if (count > 1) {
       return;
     }
 
-    console.log('카운트 다운 실행~ : ', this.state.orders, '카운트 : ', this.state.count);
+    console.log(
+      '카운트 다운 실행~ orders : ',
+      this.state.orders,
+      '카운트 count : ',
+      this.state.count,
+    );
 
     const countTimer = setInterval(() => {
-      if (count !== 1) {
+      if (this.state.count !== 1) {
         this.setState({ countTime: 10 });
-        console.log('카운트 타이머 종료, count : ', count);
+        console.log(
+          '카운트 타이머 종료, count : ',
+          this.state.count,
+          'orders : ',
+          this.state.orders,
+        );
         clearInterval(countTimer);
         return;
       }
@@ -348,27 +359,32 @@ class VideoRoomComponent extends Component {
 
   // 인원 증가/감소 메서드
   addCount() {
-    this.setState(prevState => {
-      console.log('addCount 증가 전 : ', prevState.count);
-      return { count: prevState.count + 1 };
-    }, () => {
-      console.log('addCount 증가 후 : ', this.state.count);
-      if (this.state.count === 2) {
-        this.setState({ signTime: 30 });
-        this.timerEvent();
-      }
-    });
+    this.setState(
+      (prevState) => {
+        console.log('addCount 증가 전 : ', prevState.count);
+        return { count: prevState.count + 1 };
+      },
+      () => {
+        console.log('addCount 증가 후 : ', this.state.count);
+        if (this.state.count === 2) {
+          this.setState({ signTime: 30 });
+          this.timerEvent();
+        }
+      },
+    );
   }
-  
+
   removeCount() {
-    this.setState(prevState => {
-      const count = prevState.count;
-      return { count: count - 1 };
-    }, () => {
-      console.log('removeCount 실행 : ', this.state.count);
-    });
+    this.setState(
+      (prevState) => {
+        const count = prevState.count;
+        return { count: count - 1 };
+      },
+      () => {
+        console.log('removeCount 실행 : ', this.state.count);
+      },
+    );
   }
-  
 
   // 자동 입장 및 퇴장 타이머
   timerEvent() {
@@ -397,7 +413,7 @@ class VideoRoomComponent extends Component {
           timer={this.state.signTime}
           remainingTime={this.state.remainingTime}
         />
-        <div id="layout" className="bounds overflow-y: hidden">
+        <div id="layout" className="bounds">
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
               <div className="OT_root OT_publisher custom-class" id="localUser">

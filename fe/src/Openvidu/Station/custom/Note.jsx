@@ -26,11 +26,11 @@ export default function Note({ handlePostit, handleScript }) {
   };
 
   const deletePostit = (index) => {
-    setPostit((prev) => prev.filter((_, i) => i !== index));
+    setTypingPostits((prev) => prev.filter((_, i) => i !== index));
   };
 
   const deleteScript = (index) => {
-    setScript((prev) => prev.filter((_, i) => i !== index));
+    setTypingScripts((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (

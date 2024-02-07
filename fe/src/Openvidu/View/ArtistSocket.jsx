@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import SockJs from 'sockjs-client';
 
-export default function Socket({
+export default function ArtistSocket({
   memberFansignId,
-  closeNo,
-  joinNo,
+  orders,
+  state,
   getFanData,
 }) {
   const [socket, setSocket] = useState(null);
@@ -21,7 +21,12 @@ export default function Socket({
         console.log('아티스트가 전달받은 fanData : ', message);
       }
       if (message.type === 'ENTER') {
-        console.log('ENTER, hi');
+        sendMessage('TALK', {
+          orders: orders,
+          postit: null,
+          birthday: null,
+          nickname: null,
+        });
       }
     };
 
@@ -42,22 +47,22 @@ export default function Socket({
   }, []);
 
   useEffect(() => {
-    sendMessage('CLOSE', {
-      orders: closeNo,
-      postit: null,
-      birthday: null,
-      nickname: null,
-    });
-  }, [closeNo]);
-
-  useEffect(() => {
-    sendMessage('JOIN', {
-      orders: joinNo,
-      postit: null,
-      birthday: null,
-      nickname: null,
-    });
-  }, [joinNo]);
+    if (state) {
+      sendMessage('JOIN', {
+        orders: orders,
+        postit: null,
+        birthday: null,
+        nickname: null,
+      });
+    } else {
+      sendMessage('CLOSE', {
+        orders: orders,
+        postit: null,
+        birthday: null,
+        nickname: null,
+      });
+    }
+  }, [orders]);
 
   // 메시지 전송 함수
   const sendMessage = (messageType, msg) => {
