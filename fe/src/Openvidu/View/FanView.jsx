@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import Station from '../Station/Station.js';
 import Fan from '../Fan/Fan.js';
 import FanSocket from './FanSocket.jsx';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import useAxios from '../../Web/axios.js';
 
 export default function FanView() {
   const customAxios = useAxios();
-  const navigator = useNavigate();
   const joinFansign = async () => {
     const response = await customAxios
       .get(`fan/fansigns/enterFansign/${propsData.memberFansignId}`)
@@ -24,7 +23,7 @@ export default function FanView() {
 
   const [flag, setFlag] = useState(false);
   const [stationData, setStationData] = useState(null);
-
+  const [curUser, setCurUser] = useState(0)
   const [joinTrigger, setJoinTrigger] = useState(false); // Staion에서 Fan으로 이동하는 트리거
 
   // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
@@ -38,9 +37,10 @@ export default function FanView() {
   const joinSignal = () => {
     setJoinTrigger(!joinTrigger);
   };
-  const closeSignal = () => {
-    navigator('/home');
-  };
+
+  const updateCurUser = (e) => {
+    setCurUser(e)
+  }
 
   return (
     <div>
@@ -48,6 +48,7 @@ export default function FanView() {
         propsData={propsData}
         stationData={stationData}
         joinSignal={joinSignal}
+        updateCurUser={updateCurUser}
       />
 
       {flag && (
@@ -60,6 +61,7 @@ export default function FanView() {
       )}
       {!flag && (
         <Station
+        curUser={curUser}
           propsData={propsData}
           switchToFan={switchToFan}
           joinFansign={joinTrigger} // 트리거

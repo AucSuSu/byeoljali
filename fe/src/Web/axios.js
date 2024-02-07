@@ -23,7 +23,6 @@ export default function useAxios() {
   });
   axiosInstance.interceptors.response.use(
     (response) => {
-      console.log(response);
       return response;
     },
     async (error) => {
