@@ -2,8 +2,30 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
-import { logout } from '../Stores/authReducer';
+import { isArtist, logout, kakaoAuthorization } from '../Stores/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import useAxios from '../axios';
+
+// 로그아웃 API 요청
+const customAxios = useAxios();
+const dispatch = useDispatch();
+const testLogout = () => {
+  if (isArtist) {
+    customAxios
+      .delete(`logout/`)
+      .then(() => dispatch(logout()))
+      .catch((err) => console.log(err));
+  } else {
+    customAxios
+      .post(`logout/`, {
+        headers: {
+          'kakao-authorization': kakaoAuthorization,
+        },
+      })
+      .then(() => dispatch(logout()))
+      .catch((err) => console.log(err));
+  }
+};
 
 const NavbarContainer = styled.nav`
   background-color: #fbe8e1;
@@ -79,7 +101,7 @@ const Navbar = ({ isArtist }) => {
   const navigate = useNavigate();
 
   const setLogout = () => {
-    dispatch(logout());
+    testLogout();
     navigate('/');
   };
 
