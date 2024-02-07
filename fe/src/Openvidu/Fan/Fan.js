@@ -285,7 +285,7 @@ class VideoRoomComponent extends Component {
           member={this.props.propsData.member}
           timer={this.state.signTime}
         />
-        <div id="layout-fan" className="bounds">
+        <div id="layout" className="bounds">
           <div id="capture-part" className="flex">
             <div>
               {localUser !== undefined &&
