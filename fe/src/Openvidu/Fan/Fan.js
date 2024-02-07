@@ -285,31 +285,33 @@ class VideoRoomComponent extends Component {
           member={this.props.propsData.member}
           timer={this.state.signTime}
         />
-        <div id="layout" className="bounds">
-          <div>
-            {localUser !== undefined &&
-              localUser.getStreamManager() !== undefined && (
+        <div id="layout-fan" className="bounds">
+          <div id="capture-part" className="flex">
+            <div>
+              {localUser !== undefined &&
+                localUser.getStreamManager() !== undefined && (
+                  <div
+                    className="OT_root OT_publisher custom-class"
+                    id="localUser"
+                  >
+                    <Video user={localUser} />
+                  </div>
+                )}
+            </div>
+            <div>
+              {this.state.subscribers.map((sub, i) => (
                 <div
+                  key={i}
                   className="OT_root OT_publisher custom-class"
-                  id="localUser"
+                  id="remoteUsers"
                 >
-                  <Video user={localUser} />
+                  <Video
+                    user={sub}
+                    streamId={sub.streamManager.stream.streamId}
+                  />
                 </div>
-              )}
-          </div>
-          <div>
-            {this.state.subscribers.map((sub, i) => (
-              <div
-                key={i}
-                className="OT_root OT_publisher custom-class"
-                id="remoteUsers"
-              >
-                <Video
-                  user={sub}
-                  streamId={sub.streamManager.stream.streamId}
-                />
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
