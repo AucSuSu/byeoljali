@@ -20,9 +20,7 @@ export default function MemberList({ data }) {
   };
 
   return (
-    <div
-      style={{ textAlign: 'center', margin: '10px', display: 'inline-block' }}
-    >
+    <div className="m-2.5 ml-12 text-center inline-block">
       <img
         src={data.profileImageUrl}
         alt={data.name}

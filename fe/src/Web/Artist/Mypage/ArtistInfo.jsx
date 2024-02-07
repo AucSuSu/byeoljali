@@ -95,13 +95,13 @@ export default function ArtistInfo() {
               <div className="flex items-center justify-between mb-4"></div>
               <div className="bg-pink h-80 rounded mt-4 flex justify-center items-center  p-5">
                 <div className="flex-1 text-center border-r-2 border-zinc-500">
-                  <div className="py-2 rounded-lg text-xl">예정</div>
+                  <div className="py-2 rounded-lg text-xl">응모전</div>
                   <div className="text-md text-gray-600 mt-2">
                     {artistCountData.ready_COUNT}
                   </div>
                 </div>
                 <div className="flex-1 text-center border-r-2 border-zinc-500">
-                  <p className="py-2 rounded-lg text-xl">진행중</p>
+                  <p className="py-2 rounded-lg text-xl">응모중</p>
                   <p className="text-md text-gray-600 mt-2">
                     {artistCountData.applying_COUNT}
                   </p>
@@ -143,7 +143,7 @@ export default function ArtistInfo() {
         </div>
         <div>
           {artistData && (
-            <div className="m-3">
+            <div className="flex justify-center mr-10">
               {artistData.object.memberList.map((member) => (
                 <MemberList key={member.memberId} data={member} />
               ))}
