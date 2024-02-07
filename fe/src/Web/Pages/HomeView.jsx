@@ -28,9 +28,12 @@ const HomeView = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
-    const nextIsApplying = !isApplying;
-    loadAfterData(searchKeyword, nextIsApplying);
-    setIsApplying(!isApplying);
+    // 초기 상태인 isApplying에 따라 적절한 함수 호출
+    if (isApplying) {
+      loadAfterData(searchKeyword, isApplying);
+    } else {
+      loadBeforeData(searchKeyword, isApplying);
+    }
     getUserInfoData();
   }, []);
 

@@ -74,7 +74,7 @@ const DropdownItem = styled.div`
   }
 `;
 
-const Navbar = ({ isFan }) => {
+const Navbar = ({ isArtist }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -91,8 +91,12 @@ const Navbar = ({ isFan }) => {
     navigate('/artist-profile');
   };
 
-  const profileImageUrl = useSelector(
+  const fanProfileImageUrl = useSelector(
     (state) => state.faninfo.data.profileImageUrl,
+  );
+
+  const artistProfileImageUrl = useSelector(
+    (state) => state.artistInfo.artistData.object.artistImageUrl,
   );
 
   return (
@@ -101,7 +105,26 @@ const Navbar = ({ isFan }) => {
         <h2>Logo</h2>
       </Link>
       <NavbarList>
-        {isFan ? (
+        {isArtist ? (
+          // Artist일 경우
+          <>
+            <NavbarItem>
+              <NavbarLink to="/fansign">응모 관리</NavbarLink>
+            </NavbarItem>
+            <NavbarItem>
+              <NavbarLink to="/readyfansign">팬싸 관리</NavbarLink>
+            </NavbarItem>
+            <Dropdown>
+              <ProfileImage imageUrl={artistProfileImageUrl} />
+              <DropdownContent>
+                <DropdownItem onClick={goArtistProfile}>
+                  프로필 보기
+                </DropdownItem>
+                <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
+              </DropdownContent>
+            </Dropdown>
+          </>
+        ) : (
           // Fan일 경우
           <>
             <NavbarItem>
@@ -114,28 +137,9 @@ const Navbar = ({ isFan }) => {
               <NavbarLink to="/fan-photo">내 앨범</NavbarLink>
             </NavbarItem>
             <Dropdown>
-              <ProfileImage imageUrl={profileImageUrl} />
+              <ProfileImage imageUrl={fanProfileImageUrl} />
               <DropdownContent>
                 <DropdownItem onClick={goFanProfile}>프로필 보기</DropdownItem>
-                <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
-              </DropdownContent>
-            </Dropdown>
-          </>
-        ) : (
-          // Artist일 경우
-          <>
-            <NavbarItem>
-              <NavbarLink to="/fansign">응모 관리</NavbarLink>
-            </NavbarItem>
-            <NavbarItem>
-              <NavbarLink to="/readyfansign">팬싸 관리</NavbarLink>
-            </NavbarItem>
-            <Dropdown>
-              <ProfileImage imageUrl={profileImageUrl} />
-              <DropdownContent>
-                <DropdownItem onClick={goArtistProfile}>
-                  프로필 보기
-                </DropdownItem>
                 <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
               </DropdownContent>
             </Dropdown>
