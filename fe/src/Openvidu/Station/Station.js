@@ -23,7 +23,6 @@ class App extends Component {
     this.state = {
       mySessionId: this.props.propsData.sessionId,
       myUserName: this.props.propsData.nickname,
-      myUserWait: 1, // 내 팬미팅 참여 순서
       curUser: 0, // 현재 참여중인 유저의 번호
       session: this.props.propsData.sessionId,
       mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
@@ -60,7 +59,7 @@ class App extends Component {
   }
 
   // joinFansign값이 업데이트 되면 이동 CheckPoint
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.joinFansign !== prevProps.joinFansign) {
       this.Meeting();
     }
@@ -126,12 +125,6 @@ class App extends Component {
     });
   }
 
-  handleChangeUserWait(e) {
-    this.setState({
-      myUserWait: e.target.value,
-    });
-  }
-
   handleMainVideoStream(stream) {
     if (this.state.mainStreamManager !== stream) {
       this.setState({
@@ -179,24 +172,6 @@ class App extends Component {
           const messages = this.state.messages;
           messages.push(messageData);
           this.setState({ messages });
-        });
-
-        // 'session-left' 신호에 대한 리스너를 추가합니다.
-        mySession.on('signal:session-left', (event) => {
-          const data = JSON.parse(event.data);
-          console.log(
-            '닉네임' +
-              data.userName +
-              ' 대기번호 ' +
-              data.userWait +
-              ' has left the session',
-          );
-          // 필요한 추가 처리를 여기에 작성합니다.
-          this.setState({
-            curUser: data.userWait,
-          });
-          // 타이머 실행
-          this.updateWaitTime();
         });
 
         // --- 3) Specify the actions when events take place in the session ---
@@ -359,6 +334,7 @@ class App extends Component {
       axios
         .post('YOUR_SERVER_ENDPOINT', formData, {
           headers: {
+            Authorization: this.props.authToken,
             'Content-Type': 'multipart/form-data',
           },
         })
@@ -427,8 +403,6 @@ class App extends Component {
           {/* 두번째 덩어리 */}
           <div className="flex-grow h-[95%] ml-4 mr-4">
             <Note
-              script={this.state.myScript}
-              postit={this.state.myPostit}
               handleScript={this.handleMyScript}
               handlePostit={this.handleMyPostit}
             />

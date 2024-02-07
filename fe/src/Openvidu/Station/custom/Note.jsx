@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
-export default function Note({ script, postit, handlePostit, handleScript }) {
-  const [testPostits, setTestPostits] = useState(null);
-  const [testScripts, setTestScripts] = useState(null);
-  const [typingPostit, setTypingPostit] = useState([]);
-  const [typingScript, setTypingScript] = useState([]);
+export default function Note({ handlePostit, handleScript }) {
+  const [postit, setPostit] = useState('포스트잇을 입력해주세요');
+  const [script, setScript] = useState('스크립트를 입력해주세요');
+  const [typingPostits, setTypingPostits] = useState([]);
+  const [typingScripts, setTypingScripts] = useState([]);
+
+  useEffect(() => {
+    handlePostit(typingPostits);
+  }, [typingPostits]);
+
+  useEffect(() => {
+    handleScript(typingScripts);
+  }, [typingScripts]);
 
   const inputPostit = () => {
-    setTypingPostit((prev) => prev.concat(testPostits));
-    setTestPostits([]);
+    setTypingPostits((prev) => prev.concat(postit));
+    setPostit([]);
   };
 
   const inputScript = () => {
-    setTypingScript((prev) => prev.concat(testScripts));
-    setTestScripts([]);
+    setTypingScripts((prev) => prev.concat(script));
+    setScript([]);
   };
 
   const deletePostit = (index) => {
-    setTestPostits((prev) => prev.filter((_, i) => i !== index));
+    setPostit((prev) => prev.filter((_, i) => i !== index));
   };
 
   const deleteScript = (index) => {
-    setTypingScript((prev) => prev.filter((_, i) => i !== index));
+    setScript((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -32,20 +40,19 @@ export default function Note({ script, postit, handlePostit, handleScript }) {
           포스트잇
         </label>
         <div className="border-l-2 border-r-2 w-full h-full p-2 text-center">
-          {postit}
-          {/* {typingPostit.map((testPostit, index) => (
+          {typingPostits.map((typingPostit, index) => (
             <div key={index}>
-              <p>{testPostit}</p>
+              <p>{typingPostit}</p>
               <button onClick={() => deletePostit(index)}>X</button>
             </div>
-          ))} */}
+          ))}
         </div>
         <div className="border-2  w-full flex mt-auto">
           <input
             type="text"
             value={postit}
             onChange={(e) => {
-              handlePostit(e.target.value);
+              setPostit(e.target.value);
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -67,19 +74,18 @@ export default function Note({ script, postit, handlePostit, handleScript }) {
           스크립트
         </label>
         <div className="border-l-2 border-r-2 w-full h-full p-2 text-center">
-          {script}
-          {/* {typingScript.map((testScript, index) => (
+          {typingScripts.map((typingScript, index) => (
             <div key={index}>
-              <p>{testScript}</p>
+              <p>{typingScript}</p>
               <button onClick={() => deleteScript(index)}>X</button>
             </div>
-          ))} */}
+          ))}
         </div>
         <div className="border-2  w-full flex mt-auto">
           <input
             type="text"
             value={script}
-            onChange={(e) => handleScript(e.target.value)}
+            onChange={(e) => setScript(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 inputScript();
