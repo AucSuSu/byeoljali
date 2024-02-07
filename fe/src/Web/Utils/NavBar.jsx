@@ -93,22 +93,22 @@ const Navbar = () => {
           navigate('/');
         })
         .catch((err) => console.log(err));
-      console.log('아티스트 로그아웃');
     } else {
-      console.log('카카오 AUTH : ', kakaoAuth);
       customAxios
-        .post(`logout/`, {
-          headers: {
-            'kakao-authorization': kakaoAuth,
+        .post(
+          `logout/`,
+          {},
+          {
+            headers: {
+              'kakao-authorization': kakaoAuth,
+            },
           },
-        })
+        )
         .then(() => {
-          console.log('로그아웃 데이터 : ', res);
           dispatch(logout());
           navigate('/');
         })
         .catch((err) => console.log(err));
-      console.log('팬 로그아웃');
     }
   };
 
