@@ -162,6 +162,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                         Projections.constructor(
                                 ApplyPageDetailDto.class,
                                 memberFansign.memberfansignId,
+                                artistFansign.artistfansignId,
                                 artistFansign.posterImageUrl,
                                 artistFansign.title,
                                 member.name,
