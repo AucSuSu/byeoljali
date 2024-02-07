@@ -15,7 +15,7 @@ spring:
       hibernate:
         format_sql: true
   redis:
-    host: i10e104.p.ssafy.io
+    host: localhost
     port: 6379
     password: 'ssafy'
   profiles:
