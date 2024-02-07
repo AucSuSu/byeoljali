@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 @RestController
 @RequiredArgsConstructor
@@ -70,6 +71,16 @@ public class AuthController {
     @PostMapping("/api/logout")
     public ResponseEntity<Message> kakaoLogout(HttpServletRequest request){
         String accessToken = request.getHeader("authorization");
+
+        // 전체 헤더 이름과 값을 로그로 출력
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            System.out.println(headerName + ": " + headerValue);
+        }
+
+
         System.out.println("로그아웃 할때 필요한 access-token : " + accessToken);
         String kakaoAccessToken = request.getHeader("kakao-authorization");
         System.out.println("로그아웃 할때 필요한 kakao-access-token : " + kakaoAccessToken);
