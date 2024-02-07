@@ -54,14 +54,14 @@ def upload_file():
             if photo is not None :
                 print("photo 잘 저장했습니다")
 
-            photo.save("unknown_person.jpg") # 이미지화된 이미지를 check_image_file.jpg로 저장한다
+            photo.convert("RGB").save("unknown_person.jpg") # 이미지화된 이미지를 check_image_file.jpg로 저장한다
 
-            try:
-                # photo.convert("RGB").save("unknown_person.jpg") # 이미지화된 이미지를 unknown_person.jpg로 저장한다
-                photo.save("unknown_person.jpg") # 이미지화된 이미지를 unknown_person.jpg로 저장한다
-                print("Image saved successfully.")
-            except Exception as e:
-                print("Error saving image:", str(e))
+            # try:
+            #     # photo.convert("RGB").save("unknown_person.jpg") # 이미지화된 이미지를 unknown_person.jpg로 저장한다
+            #     photo.save("unknown_person.jpg") # 이미지화된 이미지를 unknown_person.jpg로 저장한다
+            #     print("Image saved successfully.")
+            # except Exception as e:
+            #     print("Error saving image:", str(e))
 
 
             print("===============================================")
