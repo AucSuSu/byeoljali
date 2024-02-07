@@ -44,9 +44,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 50px;
-  bottom: 0;
-  height: 100%;
+  top: 59px !important;
+  bottom: 64px !important;
+  height: calc(100vh - 59px - 64px);
   min-width: 400px !important;
   width: 100%;
 }
