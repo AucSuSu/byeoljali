@@ -44,8 +44,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 59px;
-  bottom: 80px;
+  top: 59px !important;
+  bottom: 80px !important;
   height: calc(100vh - 59px - 80px) !important;
   min-width: 400px !important;
   width: 100%;
