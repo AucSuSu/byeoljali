@@ -160,8 +160,8 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
     }
 
     private BooleanExpression statusCheck(FansignStatus status) {
-        return status==FansignStatus.FANSIGN ?
-                (artistFansign.status.eq(FansignStatus.APPLYING).and(artistFansign.status.eq(FansignStatus.SESSION_CONNECTED))) : artistFansign.status.eq(status);
+        return status==FansignStatus.SESSION_CONNECTED ?
+                (artistFansign.status.eq(FansignStatus.FANSIGN).and(artistFansign.status.eq(FansignStatus.SESSION_CONNECTED))) : artistFansign.status.eq(status);
     }
 
     @Override
