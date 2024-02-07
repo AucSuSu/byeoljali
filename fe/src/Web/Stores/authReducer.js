@@ -16,12 +16,8 @@ export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3MiLCJleHAiOjE3MDczNjQ1MjcsInJvbGUiOiJGQU4iLCJpZCI6Nn0.fRp5JQhLXY0tOo0YnTlPQVp1jrYuh4BEeBTVAU0aTbA',
-    tokenRefresh:
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoIiwiZXhwIjoxNzA3MzY0NTI3LCJyb2xlIjoiRkFOIiwiaWQiOjZ9.QVNvFC1eRbu13EwFyI5vvR2R7CuP25k1403QmAIULU8',
-    // token: null,
-    // tokenRefresh: null,
+    token: null,
+    tokenRefresh: null,
     isArtist: null,
     status: 'idle', // 'idle === 동작 전
     error: null,
