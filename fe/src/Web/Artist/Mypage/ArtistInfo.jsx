@@ -76,7 +76,7 @@ export default function ArtistInfo() {
           <div className="grid grid-cols-2">
             <div className="m-8 rounded-lg flex justify-center items-center">
               <img
-                className=" w-140 h-100 object-fill rounded-lg hover:border-4 hover:border-blue-500 "
+                className=" w-140 h-100 object-fill rounded-lg hover:border-4 hover:border-hot-pink "
                 src={artistData.object.artistImageUrl}
                 alt="Artist"
                 onClick={handleOpenArtistImg}
