@@ -95,9 +95,7 @@ const Navbar = ({ isArtist }) => {
     (state) => state.faninfo.data.profileImageUrl,
   );
 
-  const artistProfileImageUrl = useSelector(
-    (state) => state.artistInfo.artistData.object.artistImageUrl,
-  );
+  const artistProfile = useSelector((state) => state.artistInfo.artistData);
 
   return (
     <NavbarContainer className="font-bold font-milk pb-8">
@@ -115,7 +113,10 @@ const Navbar = ({ isArtist }) => {
               <NavbarLink to="/readyfansign">팬싸 관리</NavbarLink>
             </NavbarItem>
             <Dropdown>
-              <ProfileImage imageUrl={artistProfileImageUrl} />
+              {artistProfile && (
+                <ProfileImage imageUrl={artistProfile.object.artistImageUrl} />
+              )}
+
               <DropdownContent>
                 <DropdownItem onClick={goArtistProfile}>
                   프로필 보기
