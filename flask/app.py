@@ -104,7 +104,7 @@ def upload_file():
             
             # 결괏값 출력
             pred_value = False
-            if (distance < 0.35): # 거리가 0.6보다 작을 경우 -> distance 기준 값 변경하기
+            if (distance < 0.43): # 거리가 0.43보다 작을 경우 -> distance 기준 값 변경하기
                 pred_value = True # 같은 사람으로 판별
             else: # 거리가 더 크면
                 pred_value = False # 다른 사람으로 판별
@@ -227,7 +227,9 @@ def getDistance(): ## 거리를 가져오는 함수
     # 저장된 얼굴 사진 - S3에서 certificate_image를 가지고 와야한다!
     certificate_image = fr.load_image_file("./certificate_image.jpg")
     #좌표 인식
+    print("certificate_image print:")
     print(certificate_image)
+    print("face_locations print:")
     print(fr.face_locations(certificate_image))
     top, right, bottom, left = fr.face_locations(certificate_image)[0] # 각 인물의 이미지에서 얼굴의 위치를 찾
     certificate_image = certificate_image[top:bottom, left:right] # 해당 위치를 사용하여 얼굴을 자름
