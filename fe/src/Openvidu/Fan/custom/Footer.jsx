@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@material-ui/icons/Chat';
 import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded';
 import useAxios from '../../../Web/axios';
+import html2canvas from 'html2canvas';
 
 export default function Footer({
   id,

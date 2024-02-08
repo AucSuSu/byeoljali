@@ -372,8 +372,10 @@ class App extends Component {
             if (response.data.isSamePerson) {
               console.log('얼굴 인증 완료');
               this.isSamePerson = true;
+              alert('얼굴 인증 성공!!');
             } else {
               console.log('얼굴 인증 실패!');
+              alert('얼굴 인증 실패!!');
             }
           })
           .catch((error) => {
