@@ -41,9 +41,25 @@ export default function Note({ handlePostit, handleScript }) {
         </label>
         <div className="border-l-2 border-r-2 w-full h-full p-2 text-center">
           {typingPostits.map((typingPostit, index) => (
-            <div key={index}>
+            <div
+              key={index}
+              style={{
+                backgroundColor: '#FEE500',
+                padding: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
               <p>{typingPostit}</p>
-              <button onClick={() => deletePostit(index)}>X</button>
+              <button
+                onClick={() => deletePostit(index)}
+                style={{
+                  color: '#000',
+                }}
+              >
+                X
+              </button>
             </div>
           ))}
         </div>
@@ -75,9 +91,25 @@ export default function Note({ handlePostit, handleScript }) {
         </label>
         <div className="border-l-2 border-r-2 w-full h-full p-2 text-center">
           {typingScripts.map((typingScript, index) => (
-            <div key={index}>
+            <div
+              key={index}
+              style={{
+                backgroundColor: '#FEE500',
+                padding: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
               <p>{typingScript}</p>
-              <button onClick={() => deleteScript(index)}>X</button>
+              <button
+                onClick={() => deleteScript(index)}
+                style={{
+                  color: '#000',
+                }}
+              >
+                X
+              </button>
             </div>
           ))}
         </div>

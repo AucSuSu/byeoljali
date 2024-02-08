@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 const Chat = ({ messages, handleSendMessage, orders }) => {
+  // 스크롤 위치 고정
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    // .current === 참조된 DOM Element
+    // .scrollTop === 현재 스크롤 위치, .scrollHeight === 스크롤 길이
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [messages.length]);
+
   const [inputMessage, setInputMessage] = useState('');
 
   return (
     <div id="chat" className="flex flex-col h-full border-2">
       <h2 className="bg-lime-100 border-b-2 p-2 w-full text-center">Chat</h2>
-      <div id="message-list" className="mb-4 h-screenoverflow-auto p-2">
+      <div ref={scrollRef} className="mb-4 h-screen overflow-y-auto p-2">
         {messages.map((messageData, index) =>
           messageData.orders === orders ? (
             <div key={index} className="font-milk flex flex-col">
