@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -44,8 +45,11 @@ public class ArtistService {
         String encodePwd = bCryptPasswordEncoder.encode(dto.getPassword());
         String email = dto.getEmail();
         String name = dto.getName();
+        String companyName = dto.getCompanyName();
+        String fandomName = dto.getFandomName();
+        LocalDate debutDate = dto.getDebutDate();
 
-        Artist artist = Artist.createArtist(email, encodePwd, name, noImageUrl);
+        Artist artist = Artist.createArtist(email, encodePwd, name, noImageUrl, companyName, fandomName, debutDate);
         artistRepository.save(artist);
 
         responseDto.setMsg("회원가입 성공");
