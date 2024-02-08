@@ -53,6 +53,7 @@ export default function Footer({
 
     customAxios
       .post(uploadURL, formData, {
+        baseURL: 'https://i10e104.p.ssafy.io/',
         headers: {
           'Content-Type': 'multipart/form-data',
         },
