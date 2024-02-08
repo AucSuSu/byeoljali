@@ -14,7 +14,3 @@
 .stream-container {
   padding: 0;
 }
-
-#message-list {
-  overflow-y: auto; /* 내용이 높이를 초과할 경우 스크롤바 표시 */
-}

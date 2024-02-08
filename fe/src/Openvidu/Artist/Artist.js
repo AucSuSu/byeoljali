@@ -390,13 +390,13 @@ class VideoRoomComponent extends Component {
       this.setState((prevState) => ({
         signTime: Math.max(prevState.signTime - 1, 0), // 0 이하로 내려가지 않도록
       }));
-      if (this.state.count === 1){
-        this.setState({ signTime: 30})
-        clearInterval(this.timer)
+      if (this.state.count === 1) {
+        this.setState({ signTime: 30 });
+        clearInterval(this.timer);
       }
       if (this.state.signTime === 0) {
         this.props.timeOver(this.state.orders, false);
-        this.setState({ signTime: 30, orders : this.state.orders + 1 });
+        this.setState({ signTime: 30, orders: this.state.orders + 1 });
         clearInterval(this.timer);
         // checkponit
       }
