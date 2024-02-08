@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 import UserVideoComponent from './comp/UserVideoComponent.js';
 import './Station.css';
 import { selectToken } from '../../Web/Stores/authReducer.js';
+import { getData } from '../../Web/Stores/fanInfoReducer.js';
 import { connect } from 'react-redux';
 import Note from './custom/Note.jsx';
 import Header from './custom/Header.jsx';
@@ -367,7 +368,7 @@ class App extends Component {
           })
           .then((response) => {
             // 요청 성공 시 처리
-            console.log('서버에 대기방 사진 전송 완료');
+            console.log('서버에 대기방 사진 전송 완료', response);
             if (response.data.isSamePerson) {
               console.log('얼굴 인증 완료');
               this.isSamePerson = true;

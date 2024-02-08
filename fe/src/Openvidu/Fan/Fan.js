@@ -7,6 +7,8 @@ import Header from './custom/Header.jsx';
 import Footer from './custom/Footer.jsx';
 import Script from './custom/Script.jsx';
 import Video from './custom/Video.js';
+import html2canvas from 'html2canvas';
+import useAxios from '../../Web/axios.js';
 
 let localUser = new UserModel();
 
@@ -34,6 +36,8 @@ class VideoRoomComponent extends Component {
     this.updateLayout = this.updateLayout.bind(this);
     this.toggleChat = this.toggleChat.bind(this);
     this.checkSize = this.checkSize.bind(this);
+    this.captureArea = this.captureArea.bind(this);
+    this.sendCaptures = this.sendCaptures.bind(this);
   }
 
   componentDidMount() {
@@ -274,6 +278,8 @@ class VideoRoomComponent extends Component {
     }
   }
 
+  // 인생 네컷 캡쳐 시도
+
   render() {
     const localUser = this.state.localUser;
     var chatDisplay = { display: this.state.chatDisplay };
@@ -326,7 +332,12 @@ class VideoRoomComponent extends Component {
               </div>
             )}
         </div>
-        <Footer id="4" toggleChat={this.toggleChat} />
+        <Footer
+          id="4"
+          toggleChat={this.toggleChat}
+          memberFansignId={this.props.propsData.memberFansignId}
+          artistFansignId={this.props.propsData.artistFansignId}
+        />
       </div>
     );
   }
