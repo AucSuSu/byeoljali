@@ -34,6 +34,7 @@ class App extends Component {
       myPostit: '포스트잇을 작성해주세요', // 포스트잇 작성 내용
       orders: this.props.propsData.orders, // 대기번호
       joinFansign: this.props.joinFansign, // 팬싸인방 입장 트리거
+      isSamePerson: false, // 같은 사람인지 판단
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -366,7 +367,13 @@ class App extends Component {
           })
           .then((response) => {
             // 요청 성공 시 처리
-            console.log('서버에 대기방 사진 전송 완료', response);
+            console.log('서버에 대기방 사진 전송 완료');
+            if (response.data.isSamePerson) {
+              console.log('얼굴 인증 완료');
+              this.isSamePerson = true;
+            } else {
+              console.log('얼굴 인증 실패!');
+            }
           })
           .catch((error) => {
             // 요청 실패 시 처리
@@ -416,7 +423,9 @@ class App extends Component {
             {/* 캡처 버튼 */}
             <div className="flex flex-row h-[10%] border-2 items-center justify-center ">
               <p className="pr-2">
-                {true ? '본인 인증이 완료되었습니다' : '본인 인증이 필요합니다'}
+                {this.isSamePerson
+                  ? '본인 인증이 완료되었습니다'
+                  : '본인 인증이 필요합니다'}
               </p>
               <div
                 className="bg-pink rounded-md w-40 h-8 flex items-center justify-center text-center "
