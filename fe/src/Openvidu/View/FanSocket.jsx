@@ -71,7 +71,7 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${propsData.memberFansignId}`,
-      message: { orders: null, postit: null, birthday: null, nickname: null },
+      message: { orders: null, postit: null, birthday: null, nickname: null, fanId: null },
     };
     newSocket.send(JSON.stringify(myMessage));
   };

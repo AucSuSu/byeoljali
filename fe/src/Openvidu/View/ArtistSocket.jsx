@@ -60,6 +60,7 @@ export default function ArtistSocket({
           postit: null,
           birthday: null,
           nickname: 'Artist',
+          fanId : null
         },
       };
       socket.send(JSON.stringify(myMessage));
