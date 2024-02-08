@@ -13,7 +13,7 @@ const SelectList = ({ dataList }) => {
   };
 
   return (
-    <div className="bg-pink rounded-lg p-4">
+    <div className="bg-pink p-4">
       <div className="flex flex-wrap justify-center gap-2">
         {Array.isArray(dataList) &&
           dataList.map((member, index) => (
