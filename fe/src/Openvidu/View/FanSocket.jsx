@@ -12,6 +12,7 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
         postit: stationData.postit,
         birthday: stationData.birthday,
         nickname: stationData.nickname,
+        fanId: propsData.fanId,
       });
     }
   }, [stationData]);
@@ -33,9 +34,8 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
         message.message.orders === propsData.orders
       ) {
         navigate('/home');
-      } else if(
-        message.type ==='ENTER' && message.nickname ==='Artist'
-      ){}
+      } else if (message.type === 'ENTER' && message.nickname === 'Artist') {
+      }
     };
 
     newSocket.onopen = async () => {

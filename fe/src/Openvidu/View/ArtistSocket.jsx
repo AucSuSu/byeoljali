@@ -17,7 +17,10 @@ export default function ArtistSocket({
       console.log('아티스트가 메세지 전달받음 : ', message);
       if (message.type === 'TALK') {
         getFanData(message.message);
-      } else if (message.type === 'ENTER' && message.message.nickname !== 'Artist') {
+      } else if (
+        message.type === 'ENTER' &&
+        message.message.nickname !== 'Artist'
+      ) {
         sendMessage('ENTER');
       }
     };
@@ -57,7 +60,7 @@ export default function ArtistSocket({
           postit: null,
           birthday: null,
           nickname: 'Artist',
-        }
+        },
       };
       socket.send(JSON.stringify(myMessage));
     }
