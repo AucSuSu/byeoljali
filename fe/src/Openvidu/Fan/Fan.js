@@ -7,7 +7,6 @@ import Header from './custom/Header.jsx';
 import Footer from './custom/Footer.jsx';
 import Script from './custom/Script.jsx';
 import Video from './custom/Video.js';
-import html2canvas from 'html2canvas';
 import useAxios from '../../Web/axios.js';
 
 let localUser = new UserModel();
