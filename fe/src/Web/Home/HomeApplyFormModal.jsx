@@ -107,12 +107,12 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           style={customStyle}
         >
           <div className="font-milk font-bold">
-            <h2 className="text-center bolder text-25">
+            <h2 className="text-center bolder text-25 mt-10">
               [ {data?.object?.fansignTitle} ]
             </h2>
             <div className="flex flex-col items-center mt-8 ml-12 mr-12">
               <p className="bolder text-18">공지</p>
-              <p className="mt-2 border-t border-b border-gray-200 py-4 ">
+              <p className="mt-2 py-4 border-t border-b border-gray-200 inline-block pl-4 pr-2">
                 {data?.object?.fansignInfo}
               </p>
             </div>
@@ -158,7 +158,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                       />
                     )}
                   </div>
-                  <div className="flex justify-center mt-4">
+                  <div className="flex justify-center mt-4 mb-10">
                     <button
                       className="bg-hot-pink text-black px-4 py-2 rounded-xl"
                       onClick={() => handleSubmit()}
