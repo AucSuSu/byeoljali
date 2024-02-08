@@ -106,7 +106,10 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                                                 .when(applicant.applicantId.isNull()).then(false)
                                                 .otherwise(true),
                                         artistFansign.status,
-                                        artist.name
+                                        artist.name,
+                                        artistFansign.startApplyTime,
+                                        artistFansign.endApplyTime,
+                                        artistFansign.startFansignTime
                                 )
                         ).from(applicant)
                         .rightJoin(applicant.artistFansign, artistFansign)
