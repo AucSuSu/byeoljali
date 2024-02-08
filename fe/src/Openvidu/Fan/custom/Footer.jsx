@@ -42,7 +42,7 @@ export default function Footer({
 
   const sendCaptures = () => {
     const formData = new FormData();
-    state.captures.forEach((dataUrl, index) => {
+    captures.forEach((dataUrl, index) => {
       const blob = dataURLtoBlob(dataUrl);
       formData.append(`image${index + 1}`, blob, `capture${index + 1}.jpg`);
     });
