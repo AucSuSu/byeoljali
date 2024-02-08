@@ -28,7 +28,6 @@ class VideoRoomComponent extends Component {
       chatDisplay: 'block',
       currentVideoDevice: undefined,
       signTime: 30, // 팬싸인회 시간
-      captures: [], // 사진
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -281,59 +280,6 @@ class VideoRoomComponent extends Component {
 
   // 인생 네컷 캡쳐 시도
 
-  captureArea() {
-    if (this.state.captures.length < 4) {
-      html2canvas(document.querySelector('.bounds')).then((canvas) => {
-        const dataUrl = canvas.toDataURL('image/jpeg');
-        this.setState((prevState) => ({
-          captures: [...prevState.captures, dataUrl],
-        }));
-      });
-    } else {
-      alert('사진 4장 다 찍었음');
-    }
-  }
-
-  sendCaptures() {
-    const formData = new FormData();
-    this.state.captures.forEach((dataUrl, index) => {
-      const blob = this.dataURLtoBlob(dataUrl);
-      formData.append(`image${index + 1}`, blob, `capture${index + 1}.jpg`);
-    });
-    formData.append('memberFansignId', this.props.propsData.memberFansignId);
-    formData.append('artistFansignId', this.props.propsData.artistFansignId);
-
-    // Your upload URL
-    const uploadURL = 'flask/makelife4cut';
-
-    useAxios()
-      .post(uploadURL, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then((response) => {
-        console.log('Success:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }
-
-  dataURLtoBlob(dataUrl) {
-    const arr = dataUrl.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-
-    return new Blob([u8arr], { type: mime });
-  }
-
   render() {
     const localUser = this.state.localUser;
     var chatDisplay = { display: this.state.chatDisplay };
@@ -388,8 +334,8 @@ class VideoRoomComponent extends Component {
         <Footer
           id="4"
           toggleChat={this.toggleChat}
-          handleCapture={this.captureArea}
-          handleSend={this.sendCaptures}
+          memberFansignId={this.props.propsData.memberFansignId}
+          artistFansignId={this.props.propsData.artistFansignId}
         />
       </div>
     );
