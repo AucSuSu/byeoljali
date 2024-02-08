@@ -7,8 +7,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +32,9 @@ public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
     private String artistImageUrl;
     private String roles;
 
+    private LocalDate debutDate;
+    private String fandomName;
+
     public List<String> getRoleList(){
         if(this.roles.length() > 0){
             return Arrays.asList(this.roles.split(","));
@@ -36,13 +42,16 @@ public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
         return new ArrayList<>();
     }
 
-    public static Artist createArtist(String email, String password, String name, String artistImageUrl){
+    public static Artist createArtist(String email, String password, String name, String artistImageUrl, String companyName, String fandomName, LocalDate debutDate){
         Artist artist = new Artist();
         artist.email = email;
         artist.password = password;
         artist.name = name;
         artist.artistImageUrl = artistImageUrl;
         artist.roles = "ROLE_ARTIST";
+        artist.companyName = companyName;
+        artist.fandomName = fandomName;
+        artist.debutDate = debutDate;
 
         return artist;
     }
