@@ -30,7 +30,7 @@ export default function Footer({
             className="flex items-center mx-2 bg-slate-400 rounded-md"
             onClick={() => timeOver(orders, false)}
           >
-            <IconButton >
+            <IconButton>
               <CloseIcon />
             </IconButton>
             <p className="mx-2">강제종료</p>
@@ -42,10 +42,10 @@ export default function Footer({
             <ChatIcon />
           </IconButton>
         </div>
-        <div>
+        {/* <div>
           <p onClick={() => addCount()}>addCount</p>
           <p onClick={() => removeCount()}>removeCount </p>
-        </div>
+        </div> */}
       </div>
     </>
   );
