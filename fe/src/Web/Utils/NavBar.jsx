@@ -136,7 +136,7 @@ const Navbar = () => {
   return (
     <NavbarContainer className="font-bold font-milk pb-8">
       <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <h2>Logo</h2>
+        <img src="/logo.png" className="w-[45px] h-[45px]" />
       </Link>
       <NavbarList>
         {isArtist ? (
