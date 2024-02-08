@@ -15,6 +15,7 @@ public class FanMyPageResponseDto {
     private String email;
     private String certificationImageUrl;
     private int changeCount;
+    private boolean isBlackList;
 
     // entity to dto
     public FanMyPageResponseDto(Fan entity) {
@@ -26,5 +27,6 @@ public class FanMyPageResponseDto {
         this.email = entity.getEmail();
         this.certificationImageUrl = entity.getCertificationImageUrl();
         this.changeCount = entity.getChangeCount();
+        this.isBlackList = entity.isBlacklist();
     }
 }
