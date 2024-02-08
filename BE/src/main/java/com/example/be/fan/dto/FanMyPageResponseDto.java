@@ -7,6 +7,7 @@ import java.time.LocalDate;
 @Getter
 public class FanMyPageResponseDto {
 
+    private Long fanId;
     private String birth;
     private String nickname;
     private String name;
@@ -17,6 +18,7 @@ public class FanMyPageResponseDto {
 
     // entity to dto
     public FanMyPageResponseDto(Fan entity) {
+        this.fanId = entity.getFanId();
         this.birth = entity.getBirth();
         this.nickname = entity.getNickname();
         this.name = entity.getName();
