@@ -5,11 +5,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import useAxios from '../../../Web/axios.js';
 
-export default function Footer({ fanId, timeOver, orders, toggleChat }) {
+export default function Footer({ fanData, timeOver, orders, toggleChat }) {
   const customAxios = useAxios();
   const blackList = () => {
     customAxios
-      .post(`blacklist/${fanId}`)
+      .post(`blacklist/${fanData.fanId}`)
       .then((res) => {
         console.log('블랙리스트 성공 : ', res);
       })

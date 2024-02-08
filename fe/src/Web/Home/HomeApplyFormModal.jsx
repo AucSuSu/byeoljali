@@ -56,7 +56,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const customStyle = {
     content: {
       width: '700px',
-      height: '500px',
+      height: '600px',
       margin: 'auto',
       padding: 0,
     },
@@ -106,13 +106,13 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           contentLabel={data.title}
           style={customStyle}
         >
-          <div className="font-milk font-bold">
+          <div className="font-milk font-bold border-4 border-hot-pink m-10 rounded-md">
             <h2 className="text-center bolder text-25 mt-10">
               [ {data?.object?.fansignTitle} ]
             </h2>
             <div className="flex flex-col items-center mt-8 ml-12 mr-12">
               <p className="bolder text-18">공지</p>
-              <p className="mt-2 py-4 border-t border-b border-gray-200 inline-block pl-4 pr-2">
+              <p className="mt-2 py-4 border-t border-b border-gray-200 inline-block pl-4 pr-4">
                 {data?.object?.fansignInfo}
               </p>
             </div>
