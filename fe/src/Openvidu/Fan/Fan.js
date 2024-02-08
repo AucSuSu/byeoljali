@@ -36,8 +36,6 @@ class VideoRoomComponent extends Component {
     this.updateLayout = this.updateLayout.bind(this);
     this.toggleChat = this.toggleChat.bind(this);
     this.checkSize = this.checkSize.bind(this);
-    this.captureArea = this.captureArea.bind(this);
-    this.sendCaptures = this.sendCaptures.bind(this);
   }
 
   componentDidMount() {

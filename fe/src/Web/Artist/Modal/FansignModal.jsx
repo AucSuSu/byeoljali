@@ -46,7 +46,6 @@ export default function FansignModal({ memberFansignId }) {
     navigate('/artist-fansign', {
       state: {
         propsData: {
-          watch: 1,
           sessionId: openviduData.object.sessionId,
           tokenId: openviduData.object.tokenId,
           memberFansignId: memberFansignId,
@@ -122,11 +121,15 @@ export default function FansignModal({ memberFansignId }) {
               {detailData.object.status == 'READY_FANSIGN' && (
                 <p>사인회 예정</p>
               )}
-              {detailData.object.status == 'FANSIGN' && <p>사인회 중</p>}
+              {(detailData.object.status === 'FANSIGN' ||
+                detailData.object.status === 'SESSION_CONNECTED') && (
+                <p>사인회 중</p>
+              )}
               {detailData.object.status == 'FINISH' && <p>사인회 종료</p>}
             </div>
             <div className="flex justify-center mt-4">
-              {true && (
+              {(detailData.object.status === 'FANSIGN' ||
+                detailData.object.status === 'SESSION_CONNECTED') && (
                 <button
                   className="bg-pink text-black px-4 py-3 rounded-xl"
                   onClick={participate}

@@ -4,6 +4,7 @@ const artistFansignSlice = createSlice({
   name: 'artistFansign',
   initialState: {
     data: null,
+    connectedData: null,
     detail: null,
     status: 'idle',
     error: null,
@@ -11,7 +12,11 @@ const artistFansignSlice = createSlice({
   reducers: {
     getFansignInfo(state, action) {
       state.data = action.payload;
-      console.log('데이터:', state.data);
+      console.log('Fansign 데이터: ', state.data);
+    },
+    getConnectedInfo(state, action) {
+      state.connectedData = action.payload;
+      console.log('connected 데이터 : ', state.data);
     },
     fansignDetail(state, action) {
       state.detail = action.payload;
@@ -21,4 +26,5 @@ const artistFansignSlice = createSlice({
 });
 
 export default artistFansignSlice.reducer;
-export const { getFansignInfo, fansignDetail } = artistFansignSlice.actions;
+export const { getFansignInfo, getConnectedInfo, fansignDetail } =
+  artistFansignSlice.actions;

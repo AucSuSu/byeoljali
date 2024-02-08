@@ -26,6 +26,7 @@ function FanSignModal({ data, onClose }) {
     navigate('/fan-fansign', {
       state: {
         propsData: {
+          fanId: fanInfo.fanId,
           profileImage: fanInfo.profileImageUrl,
           orders: fanSignDetail.orders,
           nickname: fanInfo.nickname,

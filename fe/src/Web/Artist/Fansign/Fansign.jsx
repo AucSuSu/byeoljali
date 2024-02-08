@@ -10,7 +10,7 @@ export default function Fansign() {
   const customAxios = useAxios();
   const getFansign = async () => {
     const response = await customAxios
-      .get(`artists/apply?status=${status}`)
+      .get(`artists/apply?status=FANSIGN`)
       .then((res) => {
         return res.data;
       });
@@ -18,8 +18,6 @@ export default function Fansign() {
   };
 
   const dispatch = useDispatch();
-
-  const status = 'FANSIGN';
 
   useEffect(() => {
     getFansign();
@@ -33,7 +31,7 @@ export default function Fansign() {
             <FansignList
               key={fansign.memberFansignId}
               data={fansign}
-              status={status}
+              status={'FANSIGN'}
             />
           ))}
         </div>

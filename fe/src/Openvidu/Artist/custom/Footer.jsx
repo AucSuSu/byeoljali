@@ -1,26 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+import useAxios from '../../../Web/axios.js';
 
-export default function Footer({
-  timeOver,
-  orders,
-  toggleChat,
-  addCount,
-  removeCount,
-}) {
-  const blakcList = () => {
-    console.log('blackList^^');
+export default function Footer({ fanId, timeOver, orders, toggleChat }) {
+  const customAxios = useAxios();
+  const blackList = () => {
+    customAxios
+      .post(`blacklist/${fanId}`)
+      .then((res) => {
+        console.log('블랙리스트 성공 : ', res);
+      })
+      .catch((err) => console.log('블랙리스트 실패 : ', err));
+    return response;
   };
 
   return (
     <>
       <div className="bg-pink fixed bottom-0 w-full h-15 font-milk text-white font-bold flex justify-center ">
         <div className="flex justify-center mt-2 mb-2">
-          <div className="flex items-center mx-2 bg-slate-400 rounded-md">
-            <IconButton onClick={() => blakcList()}>
+          <div
+            onClick={() => blackList()}
+            className="flex items-center mx-2 bg-slate-400 rounded-md"
+          >
+            <IconButton>
               <AddIcon />
             </IconButton>
             <p className="mx-2">블랙리스트</p>
@@ -42,10 +47,6 @@ export default function Footer({
             <ChatIcon />
           </IconButton>
         </div>
-        {/* <div>
-          <p onClick={() => addCount()}>addCount</p>
-          <p onClick={() => removeCount()}>removeCount </p>
-        </div> */}
       </div>
     </>
   );

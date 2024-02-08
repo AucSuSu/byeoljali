@@ -451,12 +451,10 @@ class VideoRoomComponent extends Component {
             )}
         </div>
         <Footer
-          id="4"
+          fanId={this.props.fanData.fanId}
           timeOver={this.props.timeOver}
           orders={this.state.orders}
           toggleChat={this.toggleChat}
-          addCount={this.addCount}
-          removeCount={this.removeCount}
         />
       </div>
     );
