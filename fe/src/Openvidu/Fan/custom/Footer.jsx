@@ -33,9 +33,7 @@ export default function Footer({
     if (captures.length < 4) {
       html2canvas(document.querySelector('.bounds')).then((canvas) => {
         const dataUrl = canvas.toDataURL('image/jpeg');
-        setCaptures((prevState) => ({
-          captures: [...prevState.captures, dataUrl],
-        }));
+        setCaptures((prevState) => [...prevState, dataUrl]);
       });
     } else {
       alert('사진 4장 다 찍었음');
