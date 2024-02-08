@@ -222,31 +222,39 @@ def upload_receipt():
 
         
 def getDistance(): ## 거리를 가져오는 함수
-    # 들어온 두 값을 비교하여 인코딩한다.
+    try:
+        # 들어온 두 값을 비교하여 인코딩한다.
 
-    # 저장된 얼굴 사진 - S3에서 certificate_image를 가지고 와야한다!
-    certificate_image = fr.load_image_file("./certificate_image.jpg")
-    #좌표 인식
-    print("certificate_image print:")
-    print(certificate_image)
-    print("face_locations print:")
-    print(fr.face_locations(certificate_image))
-    top, right, bottom, left = fr.face_locations(certificate_image)[0] # 각 인물의 이미지에서 얼굴의 위치를 찾
-    certificate_image = certificate_image[top:bottom, left:right] # 해당 위치를 사용하여 얼굴을 자름
+        # 저장된 얼굴 사진 - S3에서 certificate_image를 가지고 와야한다!
+        certificate_image = fr.load_image_file("./certificate_image.jpg")
+        #좌표 인식
+        print("certificate_image print:")
+        print(certificate_image)
+        print("face_locations print:")
+        print(fr.face_locations(certificate_image))
+        top, right, bottom, left = fr.face_locations(certificate_image)[0] # 각 인물의 이미지에서 얼굴의 위치를 찾
+        certificate_image = certificate_image[top:bottom, left:right] # 해당 위치를 사용하여 얼굴을 자름
 
-    #### 검사 대상 이미지 업로드 !!!!!!!!
-    unknown_person = fr.load_image_file("./unknown_person.jpg")  
-    top, right, bottom, left = fr.face_locations(unknown_person)[0] # 검사 대상 이미지에서 얼굴 위치 찾고
-    unknown_face = unknown_person[top:bottom, left:right] # 얼굴만 자르기
-    enc_u_f = fr.face_encodings(np.ascontiguousarray(unknown_face)) # 검사 대상 이미지의 얼굴 특징 벡터 추출
+        #### 검사 대상 이미지 업로드 !!!!!!!!
+        unknown_person = fr.load_image_file("./unknown_person.jpg")  
+        top, right, bottom, left = fr.face_locations(unknown_person)[0] # 검사 대상 이미지에서 얼굴 위치 찾고
+        unknown_face = unknown_person[top:bottom, left:right] # 얼굴만 자르기
+        enc_u_f = fr.face_encodings(np.ascontiguousarray(unknown_face)) # 검사 대상 이미지의 얼굴 특징 벡터 추출
 
-    enc_k_f = fr.face_encodings(np.ascontiguousarray(certificate_image)) # 얼굴 특징 벡터 추출
-    # np.ascontiguousarray(face): 배열을 연속적인 형태로 만들 - 얼굴 이미지의 데이터를 numpy 배열로 변환하여 연속적인 메모리에 저장하여 얼굴 특징 벡터를 추출하는 과정에서의 성능 향상
+        enc_k_f = fr.face_encodings(np.ascontiguousarray(certificate_image)) # 얼굴 특징 벡터 추출
+        # np.ascontiguousarray(face): 배열을 연속적인 형태로 만들 - 얼굴 이미지의 데이터를 numpy 배열로 변환하여 연속적인 메모리에 저장하여 얼굴 특징 벡터를 추출하는 과정에서의 성능 향상
 
 
-    distance = fr.face_distance(enc_k_f, enc_u_f[0]) # 얼굴 이미지와의 거리 계산
+        distance = fr.face_distance(enc_k_f, enc_u_f[0]) # 얼굴 이미지와의 거리 계산
 
-    return distance
+        print("distance: "+distance)
+
+        return distance
+
+    except Exception as e:
+            
+            print("Distance - exception in!")
+            return jsonify({"success": False, "message": str(e)})
 
 
 

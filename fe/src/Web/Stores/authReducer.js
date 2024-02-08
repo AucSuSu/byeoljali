@@ -27,8 +27,8 @@ const authSlice = createSlice({
     setToken(state, action) {
       state.token = action.payload.token;
       state.tokenRefresh = action.payload.tokenRefresh;
-      state.isArtist = action.payload.isArtist;
       state.kakaoAuthorization = action.payload.kakaoAuthorization;
+      state.isArtist = action.payload.isArtist;
     },
     logout(state) {
       state.token = null;

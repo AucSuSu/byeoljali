@@ -399,7 +399,7 @@ class App extends Component {
         </div>
 
         {/* 나머지 3등분 */}
-        <div onClick={() => this.Meeting()}>Fansing 들어가기</div>
+        {/* <div onClick={() => this.Meeting()}>Fansing 들어가기</div> */}
         <div className="flex h-screen w-screen">
           {/* 첫번째 덩어리 */}
           <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 ">
