@@ -247,7 +247,7 @@ def getDistance(): ## 거리를 가져오는 함수
 
         distance = fr.face_distance(enc_k_f, enc_u_f[0]) # 얼굴 이미지와의 거리 계산
 
-        print("distance: "+distance)
+        print("distance: ", distance)
 
         return distance
 
@@ -409,4 +409,4 @@ def add_border(file_list,x_min, y_min, y_size):
 
 if __name__ == "__main__":
     SequenceMatcher(None, "굿모닝 우유 900ml", "서울 우유 리뉴얼 기념 팬싸인회").ratio()
-    run_simple('0.0.0.0', 8000, app)
+    run_simple('0.0.0.0', 5000, app)
