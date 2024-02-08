@@ -39,7 +39,6 @@
 }
 
 .bounds {
-  background: gary;
   overflow: hidden;
   position: absolute;
   left: 0;

@@ -3,15 +3,19 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@material-ui/icons/Chat';
 import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded';
 
-export default function Footer({ id, toggleChat }) {
+export default function Footer({ id, toggleChat, handleCapture, handleSend }) {
   const [count, setCount] = useState(4);
 
   const capture = (id) => {
-    if (count) {
+    if (count > 0) {
       setCount(count - 1);
-    } else {
-      alert('다 찍었어용');
+      handleCapture();
     }
+
+    if (count === 0) {
+      handleSend();
+    }
+
     console.log('capture^^', id);
   };
 
