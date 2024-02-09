@@ -67,7 +67,7 @@ const HomeView = () => {
             <h1 className=" bold text-18"> CURRENT APPLY</h1>
             <button>더보기 ▶</button>
           </div>
-          <HomeApplyList data={afterData} />
+          <HomeApplyList data={afterData} status="CurrentApply" />
         </div>
 
         {/* 4. Artist 넣어주세요 ~~~~  */}
@@ -80,7 +80,7 @@ const HomeView = () => {
           <h1 className=" bold text-18"> COMMING SOON</h1>
           <button>더보기 ▶</button>
         </div>
-        <HomeApplyList data={beforeData} />
+        <HomeApplyList data={beforeData} status="CommingSoon" />
       </div>
     </>
   );
