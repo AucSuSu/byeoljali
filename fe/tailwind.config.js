@@ -17,7 +17,7 @@ module.exports = {
         48: '48px',
       },
       colors: {
-        'hot-pink': '#FF6D79',
+        'hot-pink': '#FF2990',
         violet: '#8F00FF',
         yellow: '#F8FDDF',
         black: '#000000',

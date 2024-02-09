@@ -1,13 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSelector } from 'react-redux';
 import useAxios from '../axios';
+
+// css 추가
+import './HomeApplyFormModal.css';
 
 import SelectList from './SelectMemberList';
 
 import ApplyReceiptModal from './ApplyReceiptModal';
 
 const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
+  const [stars, setStars] = useState([]);
+
+  useEffect(() => {
+    const makeStars = () => {
+      const numStars = 50; // 원하는 별의 개수
+
+      const newStars = Array.from({ length: numStars }, (_, index) => ({
+        id: index,
+        left: Math.random() * 100 + 'vw', // 랜덤한 가로 위치
+        top: Math.random() * 100 + 'vh', // 랜덤한 세로 위치
+        animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
+      }));
+
+      setStars(newStars);
+    };
+
+    makeStars();
+
+    // 일정 시간마다 별의 위치를 재설정
+    const intervalId = setInterval(() => {
+      makeStars();
+    }, 5000);
+
+    // 컴포넌트가 언마운트되면 interval 제거
+    return () => clearInterval(intervalId);
+  }, []);
+
   const customAxios = useAxios();
   // console.log(propData);
   const data = useSelector((state) => state.homedetail.data);
@@ -55,8 +85,8 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
 
   const customStyle = {
     content: {
-      width: '700px',
-      height: '600px',
+      width: '1200px',
+      height: '850px',
       margin: 'auto',
       padding: 0,
     },
@@ -86,9 +116,9 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
         >
           <div className="flex flex-col items-center justify-center h-full bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat font-milk font-bold">
             <div className="flex flex-col items-center justify-center p-4 overflow-y-auto">
-              <h1 className="bolder mb-4 text-25">
+              <div className="bolder mb-4 text-25">
                 [ {data?.object?.fansignTitle} ]
-              </h1>
+              </div>
               <p className="bolder mb-4 text-25">이미 지원한 팬싸인회입니다.</p>
               <button
                 className="bg-light-gray px-4 py-2 rounded-lg mt-10"
@@ -106,74 +136,123 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           contentLabel={data.title}
           style={customStyle}
         >
-          <div className="font-milk font-bold border-4 border-hot-pink m-10 rounded-md">
-            <h2 className="text-center bolder text-25 mt-10">
-              [ {data?.object?.fansignTitle} ]
-            </h2>
-            <div className="flex flex-col items-center mt-8 ml-12 mr-12">
-              <p className="bolder text-18">공지</p>
-              <p className="mt-2 py-4 border-t border-b border-gray-200 inline-block pl-4 pr-4">
-                {data?.object?.fansignInfo}
-              </p>
+          <div
+            className="flex font-big bg-black text-white overflow-hidden p-3 "
+            style={{
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            }}
+          >
+            {stars.map((star) => (
+              <div
+                key={star.id}
+                className="star"
+                style={{
+                  left: star.left,
+                  top: star.top,
+                  animationDuration: star.animationDuration,
+                }}
+              ></div>
+            ))}
+            <div className="w-1/2">
+              <div className="text-40 flex-grow p-6">APPLY</div>{' '}
+              <img
+                className="pl-5 pr-5 pb-20"
+                src={data?.object?.posterImageUrl}
+                style={{
+                  width: '100%',
+                  height: '90%',
+                }}
+              ></img>
             </div>
+            <div className="w-1/2 flex-grow p-4">
+              <div className="rounded-md pt-10">
+                <h2
+                  className="font-big bolder text-40 mt-10 hot-pink"
+                  style={{
+                    textShadow:
+                      '0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF',
+                  }}
+                >
+                  [ {data?.object?.fansignTitle} ]
+                </h2>
+                <div className="pt-3">
+                  <p className="bolder text-18 mr-3">📌 공지</p>
+                  <p className=" py-4 border-gray-200 inline-block pl-4 pr-4">
+                    {data?.object?.fansignInfo}
+                  </p>
+                </div>
 
-            <div className="flex mt-8 ml-12">
-              <h2 className="bolder min-w-[80px]">응모 일정</h2>
-              <p className="ml-4 mr-4">|</p>
-              <p>
-                {formatDate(data?.object?.startApplyTime)} {' ~ '}
-                {formatDate(data?.object?.endApplyTime)}
-              </p>
-            </div>
+                <div className="pt-3">
+                  <p className="bolder text-18">🗓️ 응모 기간</p>
+                  <p className="mt-2 pl-4 pr-4">
+                    {formatDate(data?.object?.startApplyTime)} {' ~ '}
+                    {formatDate(data?.object?.endApplyTime)}
+                  </p>
+                </div>
 
-            <div className="flex mt-2 ml-12">
-              <h2 className="bolder min-w-[80px]">사인회 일정</h2>
-              <p className="ml-4 mr-4">|</p>
-              <p>{formatFansignTime(data?.object?.startFansignTime)}</p>
-            </div>
+                <div className="pt-3">
+                  <p className="bolder text-18">🗓️ 사인회 일정</p>
+                  <p className="mt-2 pl-4 pr-4">
+                    {formatFansignTime(data?.object?.startFansignTime)}
+                  </p>
+                </div>
 
-            <h2 className="bolder text-18 text-center mt-8 mb-6">참여 멤버</h2>
-
-            {data?.object?.memberList && (
-              <SelectList dataList={data?.object?.memberList} />
-            )}
-            {/* 정보 */}
-
-            <div>
-              {propData.status === 'APPLYING' ? (
                 <div>
-                  <div className="flex justify-center items-center space-x-2 mt-6 mb-6">
-                    <h3>구매 앨범</h3>
-                    <div className="w-16">{currAlbumNum}개</div>
-                    <button
-                      className="bg-pink px-4 py-2 rounded-xl"
-                      onClick={openReceiptModal}
-                    >
-                      영수증 등록
-                    </button>
-                    {isReceiptModalOpen && (
-                      <ApplyReceiptModal
-                        onClose={closeReceiptModal}
-                        title={propData.title}
-                      />
-                    )}
+                  <h2 className="bolder text-18 text-center item-center mt-8 mb-2">
+                    참여 멤버
+                  </h2>
+
+                  <div className="flex items-center p-4 h-40">
+                    <div>
+                      {data?.object?.memberList && (
+                        <SelectList dataList={data?.object?.memberList} />
+                      )}
+                    </div>
                   </div>
-                  <div className="flex justify-center mt-4 mb-10">
-                    <button
-                      className="bg-hot-pink text-black px-4 py-2 rounded-xl"
-                      onClick={() => handleSubmit()}
-                    >
-                      응모
-                    </button>
-                    <button
-                      className="bg-light-gray text-black px-4 py-2 rounded-xl ml-5"
-                      onClick={closeModal}
-                    >
-                      닫기
-                    </button>
+
+                  <div>
+                    {propData.status === 'APPLYING' ? (
+                      <div>
+                        <div className="flex justify-center items-center mt-6 mb-6">
+                          <h3 className="pe-3">앨범</h3>
+                          <span className="w-16 border-b underline text-center">
+                            {currAlbumNum}
+                          </span>
+                          <span className="ps-3">개 인증 완료</span>
+                          <button
+                            className="bg-hot-pink px-4 py-2 ml-10 rounded-xl"
+                            onClick={openReceiptModal}
+                          >
+                            영수증 인증
+                          </button>
+                          {isReceiptModalOpen && (
+                            <ApplyReceiptModal
+                              onClose={closeReceiptModal}
+                              title={propData.title}
+                            />
+                          )}
+                        </div>
+                        <div className="flex justify-center pl-20 pr-20">
+                          <button
+                            className="w-3/4 bg-hot-pink text-white px-4 py-2 rounded-xl"
+                            onClick={() => handleSubmit()}
+                          >
+                            응모하기
+                          </button>
+                          <button
+                            className="w-1/4 bg-light-gray text-black px-4 py-2 rounded-xl ml-5"
+                            onClick={closeModal}
+                          >
+                            닫기
+                          </button>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
-              ) : null}
+
+                {/* 정보 */}
+              </div>{' '}
             </div>
           </div>
         </Modal>
