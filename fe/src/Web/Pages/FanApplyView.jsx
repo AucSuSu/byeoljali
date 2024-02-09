@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 function FanApplyView() {
   return (
     <>
-      <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
+      <div className="min-h-screen bg-black">
         <NavBar />
         <FanApply />
       </div>
