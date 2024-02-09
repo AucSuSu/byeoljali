@@ -25,17 +25,30 @@ const ListItem = ({ data }) => {
     dispatch(clearData()); // data를 빈 배열로 초기화하는 액션을 디스패치
     setIsModalOpen(false);
   };
+
   return (
     <div
-      style={{ textAlign: 'center', margin: '20px', display: 'inline-block' }}
+      id="card_container"
+      className="bg-slate-900 text-white rounded-md m-1 font-sm transition-all"
     >
       <img
         src={data.posterImageUrl}
         alt={data.title}
-        style={{ width: '230px', height: '230px', cursor: 'pointer' }}
-        onClick={() => openModal()} // onClick 핸들러를 수정
+        className="mx-auto w-[80%] h-[65%] cursor-pointer rounded-md mt-5 mb-2 transition-all hover:scale-105"
+        onClick={() => openModal()}
       />
-      <p>{data.title}</p>
+      <div className="flex text-sm ml-5 mb-2">
+        <p className="mr-2 border border-red-500  text-red-500 rounded-md p-1">
+          READY
+        </p>
+        <p className="mr-2 border border-green-500  text-green-500 rounded-md p-1">
+          RANDOM
+        </p>
+      </div>
+      <div className="text-sm ml-5 h-[65px]">{data.title}</div>
+      <div className="text-sm ml-5 text-hot-pink">
+        시작까지 N일 N시간 NN분 NN초
+      </div>
 
       <ApplyFormModal
         fansignId={data.artistfansignId}
