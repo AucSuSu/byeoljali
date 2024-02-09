@@ -50,6 +50,7 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                         Projections.constructor(
                                 RecentFansignResponseDto.class,
                                 artistFansign.artistfansignId,
+                                artistFansign.artist.artistId,
                                 artistFansign.posterImageUrl,
                                 artistFansign.status
                         )
@@ -106,6 +107,7 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                                                 .when(applicant.applicantId.isNull()).then(false)
                                                 .otherwise(true),
                                         artistFansign.status,
+                                        artist.artistId,
                                         artist.name,
                                         artistFansign.startApplyTime,
                                         artistFansign.endApplyTime,
@@ -140,6 +142,7 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                                 artistFansign.artistfansignId,
                                 memberFansign.memberfansignId,
                                 artistFansign.title,
+                                artistFansign.artist.artistId,
                                 member.name,
                                 artistFansign.posterImageUrl,
                                 artistFansign.status,

@@ -4,14 +4,12 @@ import com.example.be.artist.dto.*;
 import com.example.be.artist.service.ArtistService;
 import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
-import com.example.be.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -28,11 +26,20 @@ public class ArtistController {
 
         return ResponseEntity.ok(responseDto);
     }
-    // 아티스트 마이페이지 조회
+    // 아티스트 마이페이지 조회 -
     @GetMapping("/")
     public ResponseEntity<Message> mypage(){
         log.info("*** 아티스트 마이페이지 조회 ***");
         ArtistMypageResponseDto dto = artistService.getMyPage();
+        Message message = new Message(HttpStatusEnum.OK, "읽어오기 성공", dto);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    //
+    @GetMapping("/{artistId}")
+    public ResponseEntity<Message> mypage(@PathVariable("artistId") Long artistId){
+        log.info("*** 아티스트 마이페이지 조회 ***");
+        ArtistMypageResponseDto dto = artistService.getMyPage(artistId);
         Message message = new Message(HttpStatusEnum.OK, "읽어오기 성공", dto);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -63,6 +70,5 @@ public class ArtistController {
         Message message = new Message(HttpStatusEnum.OK, "아티스트 멤버 정보 수정 성공", id);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
-
 
 }

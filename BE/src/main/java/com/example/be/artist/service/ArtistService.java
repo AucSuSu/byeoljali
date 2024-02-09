@@ -59,12 +59,20 @@ public class ArtistService {
     // 아티스트 마이페이지
     // 아티스트 멤버 추가하기
 
+    // 이건 아티스트가 마이페이지를 조회하는 것
     public ArtistMypageResponseDto getMyPage(){
 
         Artist artist = getArtist();
         Artist realArtist = artistRepository.findById(artist.getArtistId()).orElseThrow(() -> new IllegalArgumentException("해당 아티스트 정보가 없습니다."));
 
         return new ArtistMypageResponseDto(realArtist);
+    }
+
+    // 이건 팬이 아티스트 마이페이지를 조회하는 것
+    public ArtistMypageResponseDto getMyPage(Long artistId){
+        Artist artist = artistRepository.findById(artistId).orElseThrow(() -> new IllegalArgumentException("해당 아티스트 정보가 없습니다."));
+
+        return new ArtistMypageResponseDto(artist);
     }
 
     public Long addMember(ArtistMemberAddRequestDto dto, MultipartFile image){

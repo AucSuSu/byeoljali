@@ -12,12 +12,14 @@ import java.util.List;
 @NoArgsConstructor
 public class ArtistMypageResponseDto {
 
+    private Long artistId;
     private String name;
     private String artistImageUrl;
     private String companyName;
     private List<ArtistMypageResponseMemberDto> memberList = new ArrayList<>();
 
     public ArtistMypageResponseDto(Artist entity) {
+        this.artistId = entity.getArtistId();
         this.name = entity.getName();
         this.artistImageUrl = entity.getArtistImageUrl();
         this.companyName = entity.getCompanyName();
