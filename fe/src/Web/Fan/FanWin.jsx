@@ -23,7 +23,7 @@ function FanWin() {
   };
 
   return (
-    <div className="w-[80%]">
+    <div className="w-[80%] ml-[10%]">
       <div className="flex items-center justify-between pb-12 mb-6">
         <div>
           <div className="text-3xl bolder mb-2 text-white">당첨 내역</div>
@@ -35,7 +35,7 @@ function FanWin() {
           </div>
         </div>
       </div>
-      <div className="w-[80%] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pd-4 border-2 border-white">
+      <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 border-2 border-white">
         {data.map((data, index) => (
           <FanSignList key={index} data={data} />
         ))}
