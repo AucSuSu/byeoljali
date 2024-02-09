@@ -177,9 +177,11 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 </h2>
                 <div className="pt-3">
                   <p className="bolder text-18 mr-3">📌 공지</p>
-                  <p className=" py-4 border-gray-200 inline-block pl-4 pr-4">
-                    {data?.object?.fansignInfo}
-                  </p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: data?.object?.fansignInfo,
+                    }}
+                  />
                 </div>
 
                 <div className="pt-3">
