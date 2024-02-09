@@ -10,13 +10,13 @@ function FanSignList({ data }) {
 
   return (
     <>
-      <div className="text-center font-milk ml-20 mb-10 inline-block relative">
-        <div className="relative w-[80%] ">
+      <div className="text-white bg-slate-900 rounded-md">
+        <div className="w-[80%] ">
           <img
             onClick={toggleModal}
             src={data.posterImageUrl}
             alt="Poster Image"
-            className="w-full h-full"
+            className="w-[80%] cursor-pointer transition-all"
           />
         </div>
         <div>{data.artistFansignTitle}</div>
