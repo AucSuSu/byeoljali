@@ -25,7 +25,7 @@ function FanWin() {
   return (
     <>
       <div className="w-[80%] ml-[10%]">
-        <div className="flex items-center justify-between pb-12 mb-6">
+        <div className="flex items-center justify-between mt-6 mb-6">
           <div>
             <div className="text-3xl bolder mb-2 text-white">당첨 내역</div>
             <div className="text-dark-gray">
