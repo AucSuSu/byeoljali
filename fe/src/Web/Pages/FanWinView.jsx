@@ -5,7 +5,7 @@ import FanWin from '../Fan/FanWin';
 function FanWinView() {
   return (
     <>
-      <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
+      <div className="min-h-screen bg-black">
         <NavBar />
         <FanWin />
       </div>
