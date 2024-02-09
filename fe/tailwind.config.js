@@ -13,8 +13,12 @@ module.exports = {
         15: '15px',
         18: '18px',
         25: '25px',
+        27: '27px',
+        30: '30px',
+        35: '35px',
         40: '40px',
         48: '48px',
+        60: '60px',
       },
       colors: {
         'hot-pink': '#FF2990',
@@ -30,6 +34,8 @@ module.exports = {
         'kakao-yellow': '#FEE500',
         'sky-blue': '#00FFFF',
         red: '#FF0000',
+        neonBlue: '#00FFFF',
+        neonGreen: '#39FF14',
       },
       spacing: {
         96: '24rem', // 기존의 값

@@ -1,16 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ModifyMemberModal from '../Modal/ModifyMemberModal.jsx';
-import {
-  handleModifyMember,
-  handleCloseModifyMember,
-} from '../../Stores/modalReducer.js';
+import AddMemberModal from '../Modal/AddMemberModal.jsx';
 
-export default function MemberList({ data }) {
+export default function MemberList() {
   const dispatch = useDispatch();
   const modifyMember = useSelector((state) => state.modal.modifyMember);
 
-  const openModifyMember = () => {
+  const openAddMember = () => {
     dispatch(handleModifyMember(data.memberId));
   };
 
@@ -21,19 +17,18 @@ export default function MemberList({ data }) {
   return (
     <div className="m-2.5 ml-12 text-center inline-block">
       <img
-        src={data.profileImageUrl}
-        alt={data.name}
+        src="/addbutton.webp"
+        alt="addMember"
         style={{
           width: '130px',
           height: '130px',
           borderRadius: '50%',
           objectFit: 'cover',
           cursor: 'pointer',
-          marginBottom: '7px',
         }}
-        onClick={openModifyMember}
+        onClick={openAddMember}
       />
-      <p>{data.name}</p>
+      <p>멤버 추가</p>
       {modifyMember.open && modifyMember.key === data.memberId && (
         <ModifyMemberModal data={data} onClose={closeModifyMember} />
       )}

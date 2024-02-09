@@ -166,6 +166,7 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                                 artistFansign.posterImageUrl,
                                 artistFansign.title,
                                 member.name,
+                                artistFansign.artist.artistId,
                                 artistFansign.information,
                                 new CaseBuilder() // 당첨 여부에 따라서 갈려야 함
                                         .when(winning.winningId.isNull()).then(false) // 응모까지만

@@ -13,6 +13,7 @@ public class ApplyPageDetailDto { // 응모 페이지에서 보여야 할 값
     private String posterImageUrl; // 포스터 사진
     private String artistFansignTitle; // 팬싸인회 이름
     private String memberName; // 해당 멤버 이름
+    private Long artistId;
     private String information; // 팬싸인회 정보
     private Boolean isWon;
     private FansignStatus status;
@@ -25,12 +26,13 @@ public class ApplyPageDetailDto { // 응모 페이지에서 보여야 할 값
     private LocalDateTime startFansignTime; // 팬싸 시작 시간
     private int orders; // 당첨자의 팬싸 순서 - 미당첨자는 -1로 표기!
 
-    public ApplyPageDetailDto(Long memberfansignId, Long artistfansignId, String posterImageUrl, String artistFansignTitle, String memberName, String information, Boolean isWon, FansignStatus status, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, int orders) {
+    public ApplyPageDetailDto(Long memberfansignId, Long artistfansignId, String posterImageUrl, String artistFansignTitle, String memberName, Long artistId, String information, Boolean isWon, FansignStatus status, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, int orders) {
         this.memberfansignId = memberfansignId;
         this.artistfansignId = artistfansignId;
         this.posterImageUrl = posterImageUrl;
         this.artistFansignTitle = artistFansignTitle;
         this.memberName = memberName;
+        this.artistId = artistId;
         this.information = information;
         this.isWon = isWon;
         this.status = status;
