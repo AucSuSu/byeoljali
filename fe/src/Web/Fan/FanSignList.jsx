@@ -11,7 +11,7 @@ function FanSignList({ data }) {
   return (
     <>
       <div className="text-center font-milk ml-20 mb-10 inline-block relative">
-        <div className="relative w-[250px] h-[250px] ">
+        <div className="relative w-[80%] ">
           <img
             onClick={toggleModal}
             src={data.posterImageUrl}
