@@ -35,7 +35,7 @@ function FanWin() {
           </div>
         </div>
       </div>
-      <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 border-2 border-white">
+      <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 border-2 border-white">
         {data.map((data, index) => (
           <FanSignList key={index} data={data} />
         ))}
