@@ -204,8 +204,9 @@ export default function CreateFansignModal({}) {
                     onReady={(editor) => {
                       console.log('Editor is ready to use!', editor);
                     }}
-                    onChange={(event) => {
-                      (e) => setInformation(e.target.value);
+                    onChange={(event, editor) => {
+                      const newData = editor.getData();
+                      setInformation(newData);
                     }}
                     onBlur={(event, editor) => {
                       console.log('Blur.', editor);
