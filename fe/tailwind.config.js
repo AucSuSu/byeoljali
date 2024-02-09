@@ -18,6 +18,7 @@ module.exports = {
       },
       colors: {
         'hot-pink': '#FF2990',
+        'neon-red' : '#FF007F',
         violet: '#8F00FF',
         yellow: '#F8FDDF',
         black: '#000000',
