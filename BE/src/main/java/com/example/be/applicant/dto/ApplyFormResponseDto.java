@@ -18,6 +18,7 @@ public class ApplyFormResponseDto { // 응모 폼 생성할 때 프론트에 전
     private LocalDateTime startApplyTime; // 응모 시작 시간
     private LocalDateTime endApplyTime; // 응모 끝나는 시간
     private LocalDateTime startFansignTime; // 팬싸 시작 시간
+    private String posterImageUrl;
 
     public ApplyFormResponseDto(ArtistFansign entity){
         this.fansignTitle = entity.getTitle();
@@ -29,6 +30,8 @@ public class ApplyFormResponseDto { // 응모 폼 생성할 때 프론트에 전
         this.startApplyTime=entity.getStartApplyTime();
         this.endApplyTime=entity.getEndApplyTime();
         this.startFansignTime=entity.getStartFansignTime();
+        this.posterImageUrl = entity.getPosterImageUrl();
     }
+
 
 }

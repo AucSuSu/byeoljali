@@ -28,7 +28,6 @@ import java.util.List;
 public class ApplicantService {
 
     private final ApplicantRepository applicantRepository;
-    private final FanRepository fanRepository;
     private final MemberFansignRepository memberFansignRepository;
     private final ArtistFansignRepository artistFansignRepository;
 
