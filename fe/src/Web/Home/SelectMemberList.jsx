@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './SelectMemberList.css';
 import { useDispatch } from 'react-redux';
 import { setMemberId } from '../Stores/homeDetailListReducer';
@@ -12,22 +12,47 @@ const SelectList = ({ dataList }) => {
     dispatch(setMemberId(id)); // dispatch 함수 사용
   };
 
+  // 팬싸인회 참여 멤버 목록 좌우 스크롤
+  const containerRef = useRef(null);
+
+  const handleScroll = (direction) => {
+    const container = containerRef.current;
+    const scrollAmount = 108; // Adjust the scroll amount as needed
+
+    if (container) {
+      if (direction === 'left') {
+        console.log('left');
+        container.scrollLeft -= scrollAmount;
+      } else if (direction === 'right') {
+        console.log('right');
+        container.scrollLeft += scrollAmount;
+      }
+    }
+  };
+
   return (
-    <div className="bg-pink p-4">
-      <div className="flex flex-wrap justify-center gap-2">
+    <div className="flex">
+      <button className="m-3" onClick={() => handleScroll('left')}>
+        ←
+      </button>
+      <div
+        ref={containerRef}
+        className="flex flex-wrap-none overflow-x-auto p-1 item-center "
+        style={{ width: '450px' }}
+      >
         {Array.isArray(dataList) &&
           dataList.map((member, index) => (
-            <div
+            <div //하나의 멤버
               key={index}
-              className={`member-item ${selectedImage === index ? 'selected' : 'not-selected'} flex flex-col items-center m-1`}
+              className={`member-item ${selectedImage === index ? 'selected' : 'not-selected'} m-1 flex-none`}
               onClick={() => select(index, member.memberId)}
             >
               <img
                 src={member.profileImageUrl}
                 alt={member.name}
                 style={{
-                  width: '100px',
-                  height: '100px',
+                  width: '103px',
+                  height: '103px',
                   borderRadius: '50%',
                   objectFit: 'cover',
                   cursor: 'pointer',
@@ -37,6 +62,9 @@ const SelectList = ({ dataList }) => {
             </div>
           ))}
       </div>
+      <button className="m-3" onClick={() => handleScroll('right')}>
+        →
+      </button>
     </div>
   );
 };
