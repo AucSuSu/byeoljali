@@ -12,12 +12,15 @@ function FanSignList({ data }) {
     <>
       <div className="text-white bg-slate-900 rounded-md">
         <div className="w-[80%] ml-[10%]">
-          <img
-            onClick={toggleModal}
-            src={data.posterImageUrl}
-            alt="Poster Image"
-            className="cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500"
-          />
+          <div className="aspect-w-1 aspect-h-1">
+            <img
+              onClick={toggleModal}
+              src={data.posterImageUrl}
+              alt="Poster Image"
+              className="w-full h-full cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 my-2
+              "
+            />
+          </div>
           <div>{data.artistFansignTitle}</div>
         </div>
 
