@@ -330,12 +330,13 @@ def makelife4cut():
                 'artistFansignId' : artistFansignId,
                 'memberFansignId' : memberFansignId
             }
+            print("byte 데이터로 전환 완료")
 
             # Send a POST request to the Spring application
-            url = 'http://localhost:8080/api/myalbum'
+            url = 'http://i10e104.p.ssafy.io:8080/api/myalbum'
             response = requests.request("POST", url, headers=headers, files=files, data=data)
 
-
+            print("spring으로 post 요청 전송 완료")
             # Handle the response from the Spring application
             spring_response = response.json()
             return jsonify({"spring_response": spring_response})
