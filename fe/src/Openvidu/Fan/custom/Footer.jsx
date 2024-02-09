@@ -51,6 +51,10 @@ export default function Footer({
 
     const uploadURL = 'flask/makelife4cut';
 
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+
     customAxios
       .post(uploadURL, formData, {
         baseURL: 'https://i10e104.p.ssafy.io/',
@@ -59,6 +63,7 @@ export default function Footer({
         },
       })
       .then((response) => {
+        console.log(response);
         console.log('Success:', response.data);
       })
       .catch((error) => {
