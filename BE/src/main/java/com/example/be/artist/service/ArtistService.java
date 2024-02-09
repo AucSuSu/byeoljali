@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,13 @@ public class ArtistService {
 
     @Value("${default.image.url}")
     private String noImageUrl;
+
+    public List<ArtistsResponseDto> getArtists() {
+        List<ArtistsResponseDto> list = artistRepository.findAllArtists();
+
+        return list;
+    }
+
 
     public SignUpResponseDto signUp(ArtistSignUpDto dto){
 
