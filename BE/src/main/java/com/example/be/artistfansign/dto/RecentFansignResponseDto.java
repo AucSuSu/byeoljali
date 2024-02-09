@@ -8,6 +8,7 @@ import lombok.Data;
 public class RecentFansignResponseDto {
 
     private Long artistfansignId;
+    private Long artistId;
     private String posterImageUrl;
     private FansignStatus status;
 

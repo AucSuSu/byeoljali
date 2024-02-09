@@ -13,17 +13,19 @@ public class ArtistsMyFansignResponseDto {
     private Long memberFansignId;
     private String title;
     private String memberName;
+    private Long artistId;
     private String posterImageUrl;
     private FansignStatus status;
     private LocalDateTime startApplyTime;
     private LocalDateTime endApplyTime;
     private LocalDateTime startFansignTime;
 
-    public ArtistsMyFansignResponseDto(Long artistFansignId, Long memberFansignId, String title, String memberName, String posterImageUrl, FansignStatus status, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime) {
+    public ArtistsMyFansignResponseDto(Long artistFansignId, Long memberFansignId, String title, String memberName, Long artistId, String posterImageUrl, FansignStatus status, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime) {
         this.artistFansignId = artistFansignId;
         this.memberFansignId = memberFansignId;
         this.title = title;
         this.memberName = memberName;
+        this.artistId = artistId;
         this.posterImageUrl = posterImageUrl;
         this.status = status;
         this.startApplyTime = startApplyTime;

@@ -15,19 +15,21 @@ public class FansignResponseDto {
     private String posterImageUrl;
     private Boolean isApplyed;
     private FansignStatus status;
+    private Long artistId;
     private String artistName;
     private LocalDateTime startApplyTime;
     private LocalDateTime endApplyTime;
     private LocalDateTime startFansignTime;
 
     public FansignResponseDto(Long artistfansignId, String title, String posterImageUrl, Boolean isApplyed,
-                              FansignStatus status, String artistName, LocalDateTime startApplyTime,
+                              FansignStatus status, Long artistId, String artistName, LocalDateTime startApplyTime,
                               LocalDateTime endApplyTime, LocalDateTime startFansignTime) {
         this.artistfansignId = artistfansignId;
         this.title = title;
         this.posterImageUrl = posterImageUrl;
         this.isApplyed = isApplyed;
         this.status = status;
+        this.artistId = artistId;
         this.artistName = artistName;
         this.startApplyTime = startApplyTime;
         this.endApplyTime = endApplyTime;
