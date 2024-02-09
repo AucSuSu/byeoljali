@@ -2,15 +2,20 @@ package com.example.be.artist.controller;
 
 import com.example.be.artist.dto.*;
 import com.example.be.artist.service.ArtistService;
+import com.example.be.artistfansign.dto.FansignResponseDto;
+import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/artists")
@@ -19,6 +24,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class ArtistController {
 
     private final ArtistService artistService;
+
+    // 메인페이지 모든 아티스트 리스트 조회
+    @GetMapping("/showall")
+    public ResponseEntity<Message> allArtists() {
+        log.info(" ** 아티스트 리스트 조회 api 입니다.** ");
+        List<ArtistsResponseDto> artistList = artistService.getArtists();
+        Message message = new Message(HttpStatusEnum.OK, "모든 아티스트 리스트", artistList);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody ArtistSignUpDto dto){
