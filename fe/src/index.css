@@ -54,3 +54,18 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.ck-editor {
+  min-height: 8rem;
+  max-height: 8rem;
+  min-width: 30rem;
+  max-width: 30rem;
+}
+
+.ck-editor__editable {
+  min-height: 8rem;
+  max-height: 8rem;
+  min-width: 30rem;
+  max-width: 30rem;
+  margin-bottom: 10px;
+}
