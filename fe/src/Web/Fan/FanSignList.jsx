@@ -17,7 +17,7 @@ function FanSignList({ data }) {
               onClick={toggleModal}
               src={data.posterImageUrl}
               alt="Poster Image"
-              className="object-fill w-full h-full cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-16 mb-4"
+              className="object-fill w-full  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
             />
           </div>
           <div>{data.artistFansignTitle}</div>
