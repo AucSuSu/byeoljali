@@ -5,19 +5,20 @@ import axios from 'axios';
 const homeApplyListSlice = createSlice({
   name: 'applyList',
   initialState: {
-    data: [],
+    beforeData: [],
+    afterData: [],
     status: 'idle', // 'idle === 동작 전
     token: null,
     error: null,
   },
   reducers: {
     beforeApplyList(state, action) {
-      state.data = action.payload;
-      console.log('응모전 데이터 :', state.data);
+      state.beforeData = action.payload;
+      console.log('응모전 데이터 :', state.beforeData);
     },
     afterApplyList(state, action) {
-      state.data = action.payload;
-      console.log('응모중 데이터 : ', state.data);
+      state.afterData = action.payload;
+      console.log('응모중 데이터 : ', state.afterData);
     },
   },
 });

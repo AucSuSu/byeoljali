@@ -455,6 +455,8 @@ class VideoRoomComponent extends Component {
           timeOver={this.props.timeOver}
           orders={this.state.orders}
           toggleChat={this.toggleChat}
+          addCount={this.addCount}
+          removeCount={this.removeCount}
         />
       </div>
     );

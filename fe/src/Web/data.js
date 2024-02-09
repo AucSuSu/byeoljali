@@ -7,6 +7,18 @@ import img6 from '../Web/Assets/우사기.png';
 import img7 from '../Web/Assets/치이카와.png';
 import img8 from '../Web/Assets/하치와레.png';
 
+//Home
+export const carouselImage = [
+  { id: 1, url: img1 },
+  { id: 2, url: img2 },
+  { id: 3, url: img3 },
+  { id: 4, url: img4 },
+  { id: 5, url: img5 },
+  { id: 6, url: img6 },
+  { id: 7, url: img7 },
+  { id: 8, url: img8 },
+];
+
 // ArtistInfo 페이지
 export const artistData = {
   name: '엔믹스',
