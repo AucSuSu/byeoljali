@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ListItem from './HomeApplyListItem';
 
-const HomeApplyList = ({ data }) => {
+const HomeApplyList = ({ data, status }) => {
   const [sliceItems, setSliceItems] = useState(null);
   useEffect(() => {
     const sliceData = Array.isArray(data?.object)
@@ -18,7 +18,9 @@ const HomeApplyList = ({ data }) => {
         className="grid grid-cols-2 md:grid-cols-4 gap-4 h-[950px]"
       >
         {Array.isArray(sliceItems) &&
-          sliceItems.map((item, index) => <ListItem key={index} data={item} />)}
+          sliceItems.map((item, index) => (
+            <ListItem key={index} data={item} status={status} />
+          ))}
       </div>
     </div>
   );
