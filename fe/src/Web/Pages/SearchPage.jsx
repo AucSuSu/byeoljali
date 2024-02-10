@@ -8,6 +8,14 @@ import HomeApplyList from '../Home/HomeApplyList';
 //Navbar
 import Navbar from '../Utils/NavBar';
 
+// 최상위 컨테이너 스타일 정의
+const PageContainer = styled.div`
+  background-color: black;
+  color: white;
+  min-height: 100vh; // 화면 전체 높이
+  font-family: 'Big Shoulders Display', cursive; // 예시 폰트, 실제 프로젝트에 맞게 조정 필요
+`;
+
 // SearchInput 스타일 컴포넌트를 정의합니다. 이 컴포넌트는 검색 입력 필드에 스타일을 적용합니다.
 const SearchInput = styled.input`
   flex: 1; // Flex 아이템이 컨테이너 내에서 가능한 많은 공간을 차지하도록 설정
@@ -71,32 +79,34 @@ function SearchPage() {
   };
 
   return (
-    <div className="bg-black font-big">
-      {/* 1. Navbar */}
-      <Navbar />
-      <SearchInputContainer>
-        <SearchFieldWrapper>
-          <SearchInput
-            type="text"
-            placeholder="좋아하는 아티스트를 입력해보세요!"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <MagnifyingGlassIcon
-            className="w-6 h-6 hover:text-hot-pink cursor-pointer"
-            aria-hidden="true"
-            onClick={handleIconClick}
-          />
-        </SearchFieldWrapper>
-      </SearchInputContainer>
+    <PageContainer>
+      <div className="bg-black font-big">
+        {/* 1. Navbar */}
+        <Navbar />
+        <SearchInputContainer>
+          <SearchFieldWrapper>
+            <SearchInput
+              type="text"
+              placeholder="좋아하는 아티스트를 입력해보세요!"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+            <MagnifyingGlassIcon
+              className="w-6 h-6 hover:text-hot-pink cursor-pointer"
+              aria-hidden="true"
+              onClick={handleIconClick}
+            />
+          </SearchFieldWrapper>
+        </SearchInputContainer>
 
-      {/* 검색 결과 출력 */}
-      <div className="mt-8">
-        {searchData && (
-          <HomeApplyList data={searchData} status="CurrentApply" />
-        )}
+        {/* 검색 결과 출력 */}
+        <div className="mt-8">
+          {searchData && (
+            <HomeApplyList data={searchData} status="CurrentApply" />
+          )}
+        </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 
