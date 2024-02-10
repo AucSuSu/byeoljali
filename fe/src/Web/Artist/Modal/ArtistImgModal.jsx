@@ -66,16 +66,15 @@ function ArtistImgModal({ onClose, artistImageUrl }) {
       onClick={onClose}
     >
       <div
-        className="w-148 h-130 bg-[url('/public/bg.png')] p-6 shadow-lg flex flex-col items-center"
+        className="w-148 h-130 bg-black p-6 shadow-lg flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="self-start text-4xl font-bold mb-6">
-          정보 수정
+          프로필 이미지 수정
           <div className="mt-1 border-b-2"></div>
         </div>
 
-        <div className="flex flex-col items-center">
-          <div className="text-lg self-start">프로필 이미지</div>
+        <div className="flex flex-col items-center mt-3">
           <div className="relative mb-4">
             <img
               src={imageSrc}
@@ -99,7 +98,7 @@ function ArtistImgModal({ onClose, artistImageUrl }) {
         </div>
 
         {/* Buttons */}
-        <div className="flex w-72">
+        <div className="flex w-72 mt-8">
           <button
             onClick={handlePost}
             className="flex-1 py-2 px-4 mr-7 bg-hot-pink text-white font-semibold rounded-md"
