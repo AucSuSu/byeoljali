@@ -7,7 +7,6 @@ import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.fan.entity.Fan;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.*;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import static com.example.be.applicant.entity.QApplicant.applicant;
 import static com.example.be.artistfansign.entity.QArtistFansign.artistFansign;
-import static com.example.be.fan.entity.QFan.fan;
 
 // 여기 물어보기
 import static com.example.be.member.entity.QMember.member;
@@ -98,7 +96,13 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                                 artistFansign.title,
                                 member.name,
                                 artistFansign.startFansignTime,
-                                artistFansign.status
+                                artistFansign.status,
+                                artistFansign.startApplyTime,
+                                artistFansign.endApplyTime,
+                                artistFansign.mode,
+                                artistFansign.artistfansignId,
+                                member.artist.artistId
+
                         )
                 ).from(memberFansign)
                 .join(artistFansign)
@@ -137,7 +141,12 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                                 artistFansign.title,
                                 member.name,
                                 artistFansign.startFansignTime,
-                                artistFansign.status
+                                artistFansign.status,
+                                artistFansign.startApplyTime,
+                                artistFansign.endApplyTime,
+                                artistFansign.mode,
+                                artistFansign.artistfansignId,
+                                member.artist.artistId
                         )
                 ).from(memberFansign)
                 .join(artistFansign)
