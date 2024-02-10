@@ -11,6 +11,7 @@ import ArtistImgModal from '../Modal/ArtistImgModal.jsx';
 export default function ArtistInfo() {
   const location = useLocation();
   const artistData = useSelector((state) => state.artistInfo.artistData);
+  const artistId = useSelector((state) => state.auth.artistId);
   const { propsData } = location.state || {}; // 여기서 artistId를 꺼내쓰자!!
   const isArtist = useSelector((state) => state.auth.isArtist);
   const [artistCountData, setArtistCountData] = useState('');
@@ -45,9 +46,20 @@ export default function ArtistInfo() {
     dispatch(getInfo(response));
   };
 
-  const getArtistCountData = async () => {
+  const getArtistCountData2 = async () => {
     const result = customAxios
-      .get('artists/fansignCount/' + propsData.artistId)
+      .get('artists/fansignCount/' + artistId)
+      .then((res) => {
+        setArtistCountData(res.data.object);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getArtistCountData1 = async () => {
+    const result = customAxios
+      .get('artists/fansignCount/' + -1)
       .then((res) => {
         setArtistCountData(res.data.object);
       })
@@ -58,13 +70,20 @@ export default function ArtistInfo() {
 
   useEffect(() => {
     if (isArtist) {
-      getArtistInfo2(); // isArtist가 true일 때 실행
+      // isArtist가 true일 때 실행
+      getArtistInfo2();
+      getArtistCountData2();
     } else {
       getArtistInfo1(); // isArtist가 false일 때 실행
+      getArtistCountData1();
     }
-    getArtistCountData();
-    calculateDaysSinceDebut();
   }, []);
+
+  // 데뷔일로부터 경과한 일수를 계산하는 함수 실행 부분을 별도의 useEffect로 분리
+  // 이거 분리 안하고 위에 넣어주니까 dispatch 달린곳(getARtistInfo2, 1) 에서는 artistData가 무한 호출됩니다. 그래서 따로 분리해줬어요.
+  useEffect(() => {
+    calculateDaysSinceDebut();
+  }, [artistData]); // artistData가 변경될 때마다 경과 일수를 다시 계산합니다.
 
   // 모달 표시 상태를 관리하는 useState 추가
   const [showArtistImgModal, setShowArtistImgModal] = useState(false);
