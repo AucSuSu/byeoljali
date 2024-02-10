@@ -89,6 +89,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
       height: '850px',
       margin: 'auto',
       padding: 0,
+      zIndex: 2, // z-index 값을 2로 설정
     },
   };
 
