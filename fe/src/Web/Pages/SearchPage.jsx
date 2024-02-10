@@ -11,7 +11,7 @@ import Navbar from '../Utils/NavBar';
 // 최상위 컨테이너 스타일 정의
 const PageContainer = styled.div`
   background-color: black;
-  color: white;
+  color: black;
   min-height: 100vh; // 화면 전체 높이
   font-family: 'Big Shoulders Display', cursive; // 예시 폰트, 실제 프로젝트에 맞게 조정 필요
 `;
