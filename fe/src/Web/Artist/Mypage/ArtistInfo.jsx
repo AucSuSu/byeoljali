@@ -3,11 +3,13 @@ import MemberList from '../Mypage/MemberList.jsx';
 import AddMemberModal from '../Modal/AddMemberModal.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInfo } from '../../Stores/artistInfoReducer.js';
+import { useLocation } from 'react-router-dom';
 import useAxios from '../../axios.js';
 
 import ArtistImgModal from '../Modal/ArtistImgModal.jsx';
 
 export default function ArtistInfo() {
+  const location = useLocation();
   const artistData = useSelector((state) => state.artistInfo.artistData);
   const { propsData } = location.state || {}; // 여기서 artistId를 꺼내쓰자!!
   const isArtist = useSelector((state) => state.auth.isArtist);
