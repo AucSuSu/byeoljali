@@ -105,7 +105,7 @@ function AddMemberModal({ onClose }) {
             value={name}
             onChange={handleNameChange}
             placeholder="이름을 입력해주세요"
-            className="w-full p-2 rounded-md border-2 mb-8 mt-3"
+            className="w-full p-2 rounded-md border-2 mb-8 mt-3 text-black"
           />
         </div>
 

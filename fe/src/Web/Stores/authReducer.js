@@ -20,6 +20,7 @@ const authSlice = createSlice({
     tokenRefresh: null,
     kakaoAuthorization: null,
     isArtist: null,
+    artistId: null,
     status: 'idle', // 'idle === 동작 전
     error: null,
   },
@@ -29,12 +30,14 @@ const authSlice = createSlice({
       state.tokenRefresh = action.payload.tokenRefresh;
       state.kakaoAuthorization = action.payload.kakaoAuthorization;
       state.isArtist = action.payload.isArtist;
+      state.artistId = action.payload.artistId;
     },
     logout(state) {
       state.token = null;
       state.tokenRefresh = null;
       state.isArtist = null;
       state.kakaoAuthorization = null;
+      state.artistId = null;
       console.log('로그아웃 했어용');
     },
   },

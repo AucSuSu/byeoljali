@@ -45,7 +45,6 @@ export default function LoginView() {
     if (extractedCode) {
       getData(extractedCode);
     }
-
   }, []);
 
   const getData = async (code) => {
@@ -63,6 +62,7 @@ export default function LoginView() {
           tokenRefresh: res.headers['authorization-refresh'],
           isArtist: res.headers['isartist'] === 'true',
           kakaoAuthorization: res.headers['kakao-authorization'],
+          artistId: res.headers['artistId'],
         }),
       );
     } catch (error) {
@@ -89,18 +89,23 @@ export default function LoginView() {
 
   return (
     <div>
-      <div className='font-big'
+      <div
+        className="font-big"
         style={{
-        position: 'fixed',
-        top: 0,
-        left: 20,
-        zIndex: 1000
-      }}
-      onClick = {() => window.location.reload()}
+          position: 'fixed',
+          top: 0,
+          left: 20,
+          zIndex: 1000,
+        }}
+        onClick={() => window.location.reload()}
       >
         <div className="mt-4">
-          <h1 className="text-2xl mb-5 text-white"
-          style={{ cursor: 'pointer' }}>별자리</h1>
+          <h1
+            className="text-2xl mb-5 text-white"
+            style={{ cursor: 'pointer' }}
+          >
+            별자리
+          </h1>
         </div>
       </div>
 
@@ -114,10 +119,12 @@ export default function LoginView() {
           <h1 className="text-3xl mb-5 text-white">별자리</h1>
         </div> */}
 
-      
         <div className="login w-full min-h-1/2 p-4 bg-opacity-70 flex flex-col justify-between mb-4">
           <div className="mb-8 flex-grow flex flex-col items-center justify-center text-3xl text-white">
-            <div className="h-full pt-10 mx-auto" style={{lineHeight:'1.8', letterSpacing:'2.2px'}}>
+            <div
+              className="h-full pt-10 mx-auto"
+              style={{ lineHeight: '1.8', letterSpacing: '2.2px' }}
+            >
               {/* 이제 내가 좋아하는 아이돌과의 팬싸인회에 간편하게 참여하고 <br/>
               만남의 기회를 얻을 수 있어요.
               <br /> 여러분의 응원에 보답하는 특별한 순간을 즐기고 <br/>
@@ -150,7 +157,7 @@ export default function LoginView() {
             {showLoginForm && (
               <form onSubmit={handleArtistLogin} className="md-2 mt-2">
                 <div className="flex items-center">
-                  <label className="md:w-1/3 text-white pr-4" >이메일 </label>
+                  <label className="md:w-1/3 text-white pr-4">이메일 </label>
                   <input
                     className="md:w-2/3
                       bg-slate  rounded-md m-2 pl-2"
@@ -183,6 +190,5 @@ export default function LoginView() {
         </div>
       </div>
     </div>
-    
   );
 }

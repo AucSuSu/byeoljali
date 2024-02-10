@@ -111,8 +111,13 @@ public class ArtistFansignService {
     // 아티스트 내가 개설한 멤버팬싸인회 상태별로 개수 가져오기
     public FansignGroupByStatusCountResponseDto getFansignCount(Long artistId){
         FansignGroupByStatusCountResponseDto result = new FansignGroupByStatusCountResponseDto();
-        Artist artist = artistRepository.findById(artistId)
-            .orElseThrow(() -> new IllegalArgumentException("해당 아티스트가 없습니다"));
+        Artist artist = null;
+        if( artistId == -1){
+            artist = getArtist();
+        }else{
+            artist = artistRepository.findById(artistId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 아티스트가 없습니다"));
+        }
         List<FansignGroupByStatusCountDto> list = artistFansignRepository.getCountGroupByStatus(artist);
 
         for(FansignGroupByStatusCountDto dto : list){
