@@ -21,6 +21,18 @@ function FanSignModal({ data, onClose }) {
     return response;
   };
 
+  // fanSign모달에서 artist 정보를 누르면 artistInfo 페이지로 이동합니다.
+  const artistDetail = async () => {
+    navigate('/artist-profile', {
+      state: {
+        propsData: {
+          artistId: fanSignDetail.artistId,
+        },
+      },
+    });
+    onClose();
+  };
+
   const participate = async () => {
     const openviduData = await joinFansign();
     navigate('/fan-fansign', {
@@ -133,7 +145,7 @@ function FanSignModal({ data, onClose }) {
               <div>{applySchedule}</div>
               <div>{fanSignSchedule}</div>
               <div>{memberSchedule}</div>
-              <div>{artistInfo}</div>
+              <div onClick={artistDetail}>{artistInfo}</div>
             </div>
 
             <div className="mt-4">
