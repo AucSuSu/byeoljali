@@ -47,7 +47,7 @@ export default function ArtistInfo() {
 
   const getArtistCountData = async () => {
     const result = customAxios
-      .get('artists/fansignCount')
+      .get('artists/fansignCount/' + propsData.artistId)
       .then((res) => {
         setArtistCountData(res.data.object);
       })
@@ -135,10 +135,10 @@ export default function ArtistInfo() {
           {/* 아티스트 정보 섹션 */}
           <div className="my-4">
             <p className="text-25 font-big">
-              데뷔일: {artistData.object.debutDate} | D+{daysSinceDebut}
+              Debut : {artistData.object.debutDate} | D+{daysSinceDebut}
             </p>
             <p className="text-25 font-big">
-              팬덤명: {artistData.object.fandomName}
+              Fandom : {artistData.object.fandomName}
             </p>
           </div>
           <div className="w-full my-8">
