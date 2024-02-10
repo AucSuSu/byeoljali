@@ -16,6 +16,7 @@ import FanWinView from './Web/Pages/FanWinView.jsx';
 import Capture from './Web/Utils/Capture.jsx';
 import FanView from './Openvidu/View/FanView.jsx';
 import ArtistView from './Openvidu/View/ArtistView.jsx';
+import SearchPage from './Web/Pages/SearchPage.jsx';
 
 export default function AppRoutes() {
   return (
@@ -37,6 +38,7 @@ export default function AppRoutes() {
         <Route path="/capture" element={<Capture />} />
         <Route path="/fan-fansign" element={<FanView />} />
         <Route path="/artist-fansign" element={<ArtistView />} />
+        <Route path="/search" element={<SearchPage />} />
 
         {/* 라우트 여기에 추가하세용 */}
       </Routes>

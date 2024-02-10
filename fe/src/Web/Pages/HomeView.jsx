@@ -57,10 +57,8 @@ const HomeView = () => {
       <div id="main_container" className="flex flex-col bg-black">
         {/* 1. Navbar */}
         <Navbar />
-
         {/* 2. Post Carousel */}
         <TestHome />
-
         {/* 3. Current Apply  */}
         <div>
           <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4">
@@ -69,12 +67,10 @@ const HomeView = () => {
           </div>
           <HomeApplyList data={afterData} status="CurrentApply" />
         </div>
-
         {/* 4. Artist 넣어주세요 ~~~~  */}
         <div className="w-[80%] ml-[10%] text-white mb-10">
           아티스트 올 예정
         </div>
-
         {/* 5. Comming Soon */}
         <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4">
           <h1 className=" bold text-18"> COMMING SOON</h1>

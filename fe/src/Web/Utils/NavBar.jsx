@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
 import { isArtist, logout, kakaoAuthorization } from '../Stores/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../axios';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 const NavbarContainer = styled.nav`
   background-color: #fbe8e1;
@@ -76,8 +77,6 @@ const DropdownItem = styled.div`
 `;
 
 const Navbar = () => {
-  const [showEditModal, setShowEditModal] = useState(false);
-
   const trueArtist = useSelector((state) => state.auth.isArtist);
   const kakaoAuth = useSelector((state) => state.auth.kakaoAuthorization);
   const dispatch = useDispatch();
@@ -136,6 +135,10 @@ const Navbar = () => {
 
   const isArtist = useSelector((state) => state.auth.isArtist);
 
+  const handleSearchIconClick = () => {
+    navigate('/search'); // '/search' 경로로 이동
+  };
+
   return (
     <NavbarContainer className="font-bold font-milk pb-8">
       <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -167,6 +170,14 @@ const Navbar = () => {
         ) : (
           // Fan일 경우
           <>
+            <NavbarItem>
+              <button
+                onClick={handleSearchIconClick} // 수정된 부분: 함수를 호출하지 않고 함수 자체를 전달
+                className="hover:text-hot-pink text-white font-bold py-2 px-4 rounded"
+              >
+                <MagnifyingGlassIcon className="h-6 w-6 border-none" />
+              </button>
+            </NavbarItem>
             <NavbarItem>
               <NavbarLink to="/fan-apply">응모 내역</NavbarLink>
             </NavbarItem>
