@@ -11,7 +11,6 @@ import ArtistImgModal from '../Modal/ArtistImgModal.jsx';
 export default function ArtistInfo() {
   const location = useLocation();
   const artistData = useSelector((state) => state.artistInfo.artistData);
-  const artistId = useSelector((state) => state.auth.artistId);
   const { propsData } = location.state || {}; // 여기서 artistId를 꺼내쓰자!!
   const isArtist = useSelector((state) => state.auth.isArtist);
   const [artistCountData, setArtistCountData] = useState('');
@@ -48,7 +47,7 @@ export default function ArtistInfo() {
 
   const getArtistCountData2 = async () => {
     const result = customAxios
-      .get('artists/fansignCount/' + artistId)
+      .get('artists/fansignCount/' + artistData.object.artistId)
       .then((res) => {
         setArtistCountData(res.data.object);
       })
@@ -72,12 +71,19 @@ export default function ArtistInfo() {
     if (isArtist) {
       // isArtist가 true일 때 실행
       getArtistInfo2();
-      getArtistCountData2();
     } else {
       getArtistInfo1(); // isArtist가 false일 때 실행
-      getArtistCountData1();
     }
   }, []);
+
+  useEffect(() => {
+    if (isArtist) {
+      // isArtist가 true일 때 실행
+      getArtistCountData2();
+    } else {
+      getArtistCountData1();
+    }
+  }, [artistData]);
 
   // 데뷔일로부터 경과한 일수를 계산하는 함수 실행 부분을 별도의 useEffect로 분리
   // 이거 분리 안하고 위에 넣어주니까 dispatch 달린곳(getARtistInfo2, 1) 에서는 artistData가 무한 호출됩니다. 그래서 따로 분리해줬어요.

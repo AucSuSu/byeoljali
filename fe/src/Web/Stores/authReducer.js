@@ -51,6 +51,7 @@ const authSlice = createSlice({
         state.token = action.payload.authorization;
         state.tokenRefresh = action.payload['authorization-refresh'];
         state.isArtist = action.payload.isartist;
+        state.artistId = action.payload.artistId;
         console.log('로그인 데이터 : ', action.payload);
       })
       .addCase(loginUser.rejected, (state, action) => {
