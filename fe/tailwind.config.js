@@ -29,6 +29,8 @@ module.exports = {
         'kakao-yellow': '#FEE500',
         'sky-blue': '#00FFFF',
         red: '#FF0000',
+        green: '#00FF85',
+        'more-dark': '#111111',
       },
       spacing: {
         96: '24rem', // 기존의 값

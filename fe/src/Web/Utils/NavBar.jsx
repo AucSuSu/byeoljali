@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
@@ -76,6 +76,8 @@ const DropdownItem = styled.div`
 `;
 
 const Navbar = () => {
+  const [showEditModal, setShowEditModal] = useState(false);
+
   const trueArtist = useSelector((state) => state.auth.isArtist);
   const kakaoAuth = useSelector((state) => state.auth.kakaoAuthorization);
   const dispatch = useDispatch();
@@ -119,6 +121,7 @@ const Navbar = () => {
 
   const goFanProfile = () => {
     navigate('/fan-profile');
+    // showEditModal(true);
   };
 
   const goArtistProfile = () => {
