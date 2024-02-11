@@ -1,16 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FanSignModal from './FanSignModal';
 
 function FanSignList({ data }) {
   const [isModalVisible, setModalVisible] = useState(false);
+  const [timeLeft, setTimeLeft] = useState('');
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const endTime = new Date(data.endApplyTime);
+      const difference = endTime - now;
+
+      let timeLeft = {};
+
+      if (difference > 0) {
+        timeLeft = {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        };
+      }
+
+      return timeLeft;
+    };
+
+    const updateTimer = () => {
+      const countdown = calculateTimeLeft();
+      setTimeLeft(
+        `${countdown.days}일 ${countdown.hours}시간 ${countdown.minutes}분 ${countdown.seconds}초`,
+      );
+    };
+
+    updateTimer();
+    const timerId = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(timerId);
+  }, []);
+
   return (
     <>
-      {data.fanSignStatus === 'APPLYING' ? (
+      {data.fansignStatus === 'APPLYING' ? (
         // 응모내역
         <div className="text-white bg-slate-900 rounded-md">
           <div className="w-[80%] ml-[10%]">
@@ -29,12 +63,13 @@ function FanSignList({ data }) {
                   RANDOM
                 </div>
               ) : (
-                <div className="border-1 border-rounded-md border-green-900">
+                <div className="border-1 border-rounded-md border-neonGreen">
                   LINE
                 </div>
               )}
             </div>
             <div>{data.artistFansignTitle}</div>
+            <div>마감까지 {timeLeft}</div>
           </div>
 
           {isModalVisible && (
