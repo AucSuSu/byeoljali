@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { handleFansignInfo } from '../../Stores/modalReducer';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import useAxios from '../../axios.js';
 
 export default function FansignModal({ memberFansignId }) {
+  const [stars, setStars] = useState([]);
+
   const detailData = useSelector((state) => state.artistFansign.detail);
 
   const customAxios = useAxios();
@@ -34,6 +36,25 @@ export default function FansignModal({ memberFansignId }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const makeStars = () => {
+      const numStars = 50; // 원하는 별의 개수
+
+      const newStars = Array.from({ length: numStars }, (_, index) => ({
+        id: index,
+        left: Math.random() * 100 + 'vw', // 랜덤한 가로 위치
+        top: Math.random() * 100 + 'vh', // 랜덤한 세로 위치
+        animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
+      }));
+
+      setStars(newStars);
+    };
+
+    makeStars();
+    // 일정 시간마다 별의 위치를 재설정
+    const intervalId = setInterval(() => {
+      makeStars();
+    }, 5000);
+
     getFansignDetail();
   }, []);
 
@@ -60,9 +81,10 @@ export default function FansignModal({ memberFansignId }) {
 
   const customStyle = {
     content: {
-      width: '500px',
-      height: '500px',
+      width: '1200px',
+      height: '700px',
       margin: 'auto',
+      padding: 0,
     },
   };
 
@@ -75,74 +97,105 @@ export default function FansignModal({ memberFansignId }) {
         style={customStyle}
       >
         {detailData && (
-          <div className="font-milk font-bold ml-6 mt-6">
-            <h2 className="bolder text-25 flex justify-center mr-6 bg-pink bg-opacity-50 rounded-xl">
-              [ {detailData.object.title} ]
-            </h2>
-            <div className="flex justify-center items-center">
-              <img
-                src={detailData.object.posterImageUrl}
-                alt="커버 이미지"
-                className="mt-6 rounded-xl w-48 h-48"
-              />
+          <div className="flex font-big bg-black p-6">
+            {stars.map((star) => (
+              <div
+                key={star.id}
+                className="star"
+                style={{
+                  left: star.left,
+                  top: star.top,
+                  animationDuration: star.animationDuration,
+                }}
+              ></div>
+            ))}
+            <div className="w-1/2 ml-3">
+              <h2 className="text-white font-big text-40">FANSIGN</h2>
+              <div className="">
+                <img
+                  src={detailData.object.posterImageUrl}
+                  alt="커버 이미지"
+                  className="mt-7 pr-6"
+                  style={{
+                    height: '90%',
+                  }}
+                />
+              </div>
             </div>
-            <div className="mt-6 flex flex-col items-center">
-              <p className="bolder">공지</p>
-              <p className="mt-2 border-t border-b border-gray-200 py-4">
-                {detailData.object.information}
-              </p>
-            </div>
-            <div className="flex items-center space-x-2 mt-6">
-              <p className="bolder">응모 일정</p>
-              <p>|</p>
-              <p>
-                {detailData.object.startApplyTime.substring(5, 10)} ~{' '}
-                {detailData.object.endApplyTime.substring(5, 10)}
-              </p>
-            </div>
-            <div className="flex items-center space-x-2 mt-2">
-              <p className="bolder">사인회 일정</p>
-              <p>|</p>
-              <p>
-                {detailData.object.startFansignTime.substring(5, 10)} /{' '}
-                {detailData.object.startFansignTime.substring(11, 16)}
-              </p>
-            </div>
-            <div className="flex items-center space-x-2 mt-2">
-              <p className="bolder">개설 멤버</p>
-              <p>|</p>
-              <p>{detailData.object.memberName}</p>
-            </div>
-            <div className="flex items-center space-x-2 mt-2">
-              <p className="bolder">현재 상태</p>
-              <p>|</p>
-              {detailData.object.status == 'READY_APPLYING' && <p>응모 예정</p>}
-              {detailData.object.status == 'APPLYING' && <p>응모 중</p>}
-              {detailData.object.status == 'READY_FANSIGN' && (
-                <p>사인회 예정</p>
-              )}
-              {(detailData.object.status === 'FANSIGN' ||
-                detailData.object.status === 'SESSION_CONNECTED') && (
-                <p>사인회 중</p>
-              )}
-              {detailData.object.status == 'FINISH' && <p>사인회 종료</p>}
-            </div>
-            <div className="flex justify-center mt-4">
-              {(detailData.object.status === 'FANSIGN' ||
-                detailData.object.status === 'SESSION_CONNECTED') && (
-                <button
-                  className="bg-pink text-black px-4 py-3 rounded-xl"
-                  onClick={participate}
+            <div className="w-1/2 text-white mt-20">
+              <div className="font-big">
+                <h2
+                  className="font-big bolder text-40 hot-pink"
+                  style={{
+                    textShadow:
+                      '0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF',
+                  }}
                 >
-                  사인회 참여
-                </button>
-              )}
-              <button
-                className="bg-light-gray text-black px-4 py-3 rounded-xl ml-5"
-                onClick={closeModal}
-              >
-                닫기
-              </button>
+                  [ {detailData.object.title} ]
+                </h2>
+
+                <div className="mt-6 mb-3 flex flex-col ml-3">
+                  <p className="">✉️ 공지</p>
+                  <div className="mt-2 border-t border-b border-gray-200 p-4">
+                    {detailData.object.information}
+                  </div>
+                </div>
+                <div className="mb-3">
+                  <div className="ml-3 ">✉️ 응모 일정</div>
+                  <p className="ml-6">
+                    {detailData.object.startApplyTime.substring(5, 10)} ~{' '}
+                    {detailData.object.endApplyTime.substring(5, 10)}
+                  </p>{' '}
+                </div>
+                <div className="mb-3">
+                  <div className="ml-3">✉️ 사인회 일정</div>
+                  <p className="ml-6">
+                    {detailData.object.startFansignTime.substring(5, 10)} /{' '}
+                    {detailData.object.startFansignTime.substring(11, 16)}
+                  </p>{' '}
+                </div>
+                <div className="mb-3">
+                  <div className="ml-3">✉️ 개설 멤버</div>
+                  <p className="ml-6">{detailData.object.memberName}</p>
+                </div>
+                <div className="mb-3">
+                  <div className="ml-3">✉️ 현재 상태</div>
+                  {detailData.object.status == 'READY_APPLYING' && (
+                    <p className="ml-6">응모 예정</p>
+                  )}
+                  {detailData.object.status == 'APPLYING' && (
+                    <p className="ml-6">응모 중</p>
+                  )}
+                  {detailData.object.status == 'READY_FANSIGN' && (
+                    <p className="ml-6">사인회 예정</p>
+                  )}
+                  {(detailData.object.status === 'FANSIGN' ||
+                    detailData.object.status === 'SESSION_CONNECTED') && (
+                    <p className="ml-6">사인회 중</p>
+                  )}
+                  {detailData.object.status == 'FINISH' && (
+                    <p className="ml-6">사인회 종료</p>
+                  )}
+                </div>
+
+                <div className="flex justify-center mt-4">
+                  {(detailData.object.status === 'FANSIGN' ||
+                    detailData.object.status === 'SESSION_CONNECTED') && (
+                    <button
+                      className="bg-hot-pink text-white px-4 py-3 rounded-xl"
+                      onClick={participate}
+                    >
+                      사인회 참여
+                    </button>
+                  )}
+                  <button
+                    className="bg-light-gray text-black px-4 py-3 rounded-xl ml-5"
+                    onClick={closeModal}
+                  >
+                    닫기
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}
