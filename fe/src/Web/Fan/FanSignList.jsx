@@ -50,7 +50,7 @@ function FanSignList({ data }) {
     <>
       {data.fansignStatus === 'APPLYING' ? (
         // 응모내역
-        <div className="text-white bg-slate-900 rounded-md">
+        <div className="text-white bg-slate-900 rounded-md pb-8">
           <div className="w-[80%] ml-[10%]">
             <img
               onClick={toggleModal}
@@ -58,18 +58,22 @@ function FanSignList({ data }) {
               alt="Poster Image"
               className="w-full h-auto aspect-square  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
             />
-            <div className="flex">
-              <div className="border rounded-md border-kakao-yellow">
+            <div className="flex gap-3">
+              <div className="border rounded-md border-kakao-yellow text-kakao-yellow">
                 APPLYING
               </div>
               {data.mode === 'RANDOM' ? (
-                <div className="border rounded-md border-sky-blue">RANDOM</div>
+                <div className="border rounded-md border-sky-blue text-sky-blue">
+                  RANDOM
+                </div>
               ) : (
-                <div className="border rounded-md border-neonGreen">LINE</div>
+                <div className="border rounded-md border-neonGreen text-neonGreen">
+                  LINE
+                </div>
               )}
             </div>
             <div>{data.artistFansignTitle}</div>
-            <div>마감까지 {timeLeft}</div>
+            <div className="bottom-0">마감까지 {timeLeft}</div>
           </div>
 
           {isModalVisible && (
@@ -86,6 +90,18 @@ function FanSignList({ data }) {
               alt="Poster Image"
               className="w-full h-auto aspect-square  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
             />
+            <div className="flex gap-3">
+              <div className="border rounded-md border-red text-red">LIVE</div>
+              {data.mode === 'RANDOM' ? (
+                <div className="border rounded-md border-sky-blue text-sky-blue">
+                  RANDOM
+                </div>
+              ) : (
+                <div className="border rounded-md border-neonGreen text-neonGreen">
+                  LINE
+                </div>
+              )}
+            </div>
             <div>{data.artistFansignTitle}</div>
           </div>
 
