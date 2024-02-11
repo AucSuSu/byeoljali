@@ -91,9 +91,9 @@ function FanPhotoView() {
   if (Array.isArray(photoData)) {
     return (
       <>
-        <div className="w-[80%] ml-[10%]">
+        <div className="min-h-screen bg-black">
           <NavBar />
-          <div className="mt-12 ml-24 mr-14 font-milk font-bold">
+          <div className="w-[80%] ml-[10%]">
             <div className="flex items-center justify-between mt-6 mb-6">
               <div>
                 <div className="text-3xl bolder mb-2 text-white">내 앨범</div>
@@ -104,11 +104,11 @@ function FanPhotoView() {
                   구매 후 사진 열람 / 다운로드가 가능합니다
                 </div>
               </div>
-              <div className="flex items-center justify-end gap-3">
+              <div className="flex items-center justify-end gap-3 text-white">
                 <input
                   type="text"
                   placeholder="검색 키워드를 입력하세요"
-                  className="input border rounded w-full py-2 px-3"
+                  className="input border border-white rounder-md rounded w-full py-2 px-3"
                   value={searchKeyword}
                   onChange={handleSearchChange}
                   onKeyPress={handleKeyPress}
@@ -133,7 +133,7 @@ function FanPhotoView() {
                   </svg>
                 </button>
                 <select
-                  className="select border rounded py-2 px-3"
+                  className="select border border-white rounder-md rounded py-2 px-3"
                   value={payStatus || ''}
                   onChange={handlePayStatusChange}
                 >
