@@ -50,7 +50,7 @@ function FanSignList({ data }) {
     <>
       {data.fansignStatus === 'APPLYING' ? (
         // 응모내역
-        <div className="text-white bg-slate-900 rounded-md pb-8">
+        <div className="text-white bg-slate-900 rounded-md pb-8 relative">
           <div className="w-[80%] ml-[10%]">
             <img
               onClick={toggleModal}
@@ -59,21 +59,21 @@ function FanSignList({ data }) {
               className="w-full h-auto aspect-square  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
             />
             <div className="flex gap-3">
-              <div className="border rounded-md border-kakao-yellow text-kakao-yellow">
+              <div className="border rounded-md border-kakao-yellow text-kakao-yellow px-1">
                 APPLYING
               </div>
               {data.mode === 'RANDOM' ? (
-                <div className="border rounded-md border-sky-blue text-sky-blue">
+                <div className="border rounded-md border-sky-blue text-sky-blue px-1">
                   RANDOM
                 </div>
               ) : (
-                <div className="border rounded-md border-neonGreen text-neonGreen">
+                <div className="border rounded-md border-neonGreen text-neonGreen px-1">
                   LINE
                 </div>
               )}
             </div>
             <div>{data.artistFansignTitle}</div>
-            <div className="bottom-0">마감까지 {timeLeft}</div>
+            <div className="absolute bottom-0 w-full">마감까지 {timeLeft}</div>
           </div>
 
           {isModalVisible && (
@@ -82,7 +82,7 @@ function FanSignList({ data }) {
         </div>
       ) : (
         // 당첨내역
-        <div className="text-white bg-slate-900 rounded-md">
+        <div className="text-white bg-slate-900 rounded-md pb-8 relative">
           <div className="w-[80%] ml-[10%]">
             <img
               onClick={toggleModal}
@@ -91,13 +91,15 @@ function FanSignList({ data }) {
               className="w-full h-auto aspect-square  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
             />
             <div className="flex gap-3">
-              <div className="border rounded-md border-red text-red">LIVE</div>
+              <div className="border rounded-md border-red text-red px-1">
+                LIVE
+              </div>
               {data.mode === 'RANDOM' ? (
-                <div className="border rounded-md border-sky-blue text-sky-blue">
+                <div className="border rounded-md border-sky-blue text-sky-blue px-1">
                   RANDOM
                 </div>
               ) : (
-                <div className="border rounded-md border-neonGreen text-neonGreen">
+                <div className="border rounded-md border-neonGreen text-neonGreen px-1">
                   LINE
                 </div>
               )}
