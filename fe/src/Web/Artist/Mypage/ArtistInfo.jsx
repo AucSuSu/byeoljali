@@ -46,8 +46,7 @@ export default function ArtistInfo() {
   };
 
   const getArtistCountDataForArtist = async () => {
-    console.log('카운트1');
-    const result = customAxios
+    const result = await customAxios
       .get('artists/fansignCount/-1')
       .then((res) => {
         setArtistCountData(res.data.object);
@@ -58,8 +57,7 @@ export default function ArtistInfo() {
   };
 
   const getArtistCountDataForFan = async () => {
-    console.log('카운트2');
-    const result = customAxios
+    const result = await customAxios
       .get('artists/fansignCount/' + propsData.artistId)
       .then((res) => {
         setArtistCountData(res.data.object);
@@ -109,15 +107,6 @@ export default function ArtistInfo() {
 
   const handleCloseAddMember = () => {
     setShowAddMemberModal(false);
-  };
-
-  // testCode
-  const [socketOpen, setSocketOpen] = useState(false);
-  const [portNumber, setPortNumber] = useState(1);
-  const [name, setName] = useState('susu');
-  const testSocket = (e) => {
-    e.preventDefault();
-    setSocketOpen(!socketOpen);
   };
 
   return (

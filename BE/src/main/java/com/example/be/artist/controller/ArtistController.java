@@ -2,13 +2,10 @@ package com.example.be.artist.controller;
 
 import com.example.be.artist.dto.*;
 import com.example.be.artist.service.ArtistService;
-import com.example.be.artistfansign.dto.FansignResponseDto;
-import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.common.HttpStatusEnum;
 import com.example.be.common.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +76,7 @@ public class ArtistController {
 
     // 아티스트 멤버 수정
     @PutMapping(value = "/members/{memberId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Message> updateMember(@PathVariable("memberId") Long memberId, ArtistMemberRequestDto requestDto, @RequestParam(value = "image") MultipartFile image){
+    public ResponseEntity<Message> updateMember(@PathVariable("memberId") Long memberId, ArtistMemberRequestDto requestDto, @RequestParam(value = "image", required = false) MultipartFile image){
         Long id = artistService.updateMember(memberId, image, requestDto);
         Message message = new Message(HttpStatusEnum.OK, "아티스트 멤버 정보 수정 성공", id);
         return new ResponseEntity<>(message, HttpStatus.OK);
