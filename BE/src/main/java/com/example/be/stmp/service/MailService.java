@@ -42,11 +42,13 @@ public class MailService {
                 + "<p>안녕하세요.</p>"
                 + "<p> <strong>스타와 팬이 만나는 영상 팬싸인회 플랫폼 별자리</strong>입니다.</p>"
                 + "<p>고객님께서 응모하신 <strong>[" + mailInfo.getArtistFansignName() + "]</strong>의 멤버 : <strong>[" + mailInfo.getMembername() + "]</strong> 응모에 관심을 가져주셔서 진심으로 감사드립니다.</p>"
-                + "<p>추첨 결과 <span style='font-size: 18px; color: #1a8cff;'><strong>당첨</strong></span> 되었다는 사실을 안내드립니다.</p>"
-                + "<h2>일정 안내</h2>"
+                + "<p>추첨 결과 고객님은 <span style='font-size: 18px; color: #1a8cff;'><strong>당첨</strong></span> 되었다는 사실을 안내드립니다.</p>"
+                + "<br>"
+                + "<h3>일정 안내</h3>"
                 + "<p>일시: <strong>" + mailInfo.getStartTime() + "</strong></p>"
-                + "<p>자세한 사항은 저희 별자리 플랫폼 웹페이지에 접속하여 확인해 주시기 바랍니다.</p>"
-                + "<p>저희 별자리 플랫폼을 이용해 주셔서 감사드립니다 :)</p>"
+                + "<br>"
+                + "<p>자세한 사항은 <a href='https://i10e104.p.ssafy.io'>별자리</a> 홈페이지에서 확인해 주시기 바랍니다.</p>\n"
+                + "<p>저희 별자리 서비스를 이용해 주셔서 감사드립니다</p>"
 //                + "<img src='" + imagePath + "' alt='Image Description' style='width: 100%; max-width: 600px; height: auto;'>"
                 + "</body></html>";
 
