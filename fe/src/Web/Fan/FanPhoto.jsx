@@ -85,7 +85,7 @@ function FanPhoto({ data }) {
   };
 
   return (
-    <div className="text-white bg-slate-900 rounded-md pb-8 relative">
+    <div className="text-white bg-slate-900 rounded-md">
       <div className="w-[80%] ml-[10%]">
         <img
           src={data.photoUrl}
@@ -121,7 +121,7 @@ function FanPhoto({ data }) {
             </div>
           ) : null}
         </div>
-        <p className="text-18 bolder mt-3">[ {data.artistFansignTitle} ]</p>
+        <div className="text-18 mt-3">[ {data.artistFansignTitle} ]</div>
       </div>
 
       {isModalOpen && (
