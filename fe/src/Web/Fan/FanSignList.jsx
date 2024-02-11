@@ -15,18 +15,22 @@ function FanSignList({ data }) {
       const endTime = new Date(data.endApplyTime);
       const difference = endTime - now;
 
-      let timeLeft = {};
-
       if (difference > 0) {
-        timeLeft = {
+        return {
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
           hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
           minutes: Math.floor((difference / 1000 / 60) % 60),
           seconds: Math.floor((difference / 1000) % 60),
         };
+      } else {
+        // 타이머가 0에 도달했을 때의 기본 값을 설정합니다.
+        return {
+          days: 0,
+          hours: 0,
+          minutes: 0,
+          seconds: 0,
+        };
       }
-
-      return timeLeft;
     };
 
     const updateTimer = () => {
@@ -40,7 +44,7 @@ function FanSignList({ data }) {
     const timerId = setInterval(updateTimer, 1000);
 
     return () => clearInterval(timerId);
-  }, []);
+  }, [data.endApplyTime]);
 
   return (
     <>
@@ -55,17 +59,13 @@ function FanSignList({ data }) {
               className="w-full h-auto aspect-square  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
             />
             <div className="flex">
-              <div className="border-1 border-rounded-md border-kakao-yellow">
+              <div className="border rounded-md border-kakao-yellow">
                 APPLYING
               </div>
               {data.mode === 'RANDOM' ? (
-                <div className="border-1 border-rounded-md border-sky-blue">
-                  RANDOM
-                </div>
+                <div className="border rounded-md border-sky-blue">RANDOM</div>
               ) : (
-                <div className="border-1 border-rounded-md border-neonGreen">
-                  LINE
-                </div>
+                <div className="border rounded-md border-neonGreen">LINE</div>
               )}
             </div>
             <div>{data.artistFansignTitle}</div>
