@@ -50,7 +50,7 @@ function FanSignList({ data }) {
     <>
       {data.fansignStatus === 'APPLYING' ? (
         // 응모내역
-        <div className="text-white bg-slate-900 rounded-md pb-8 relative">
+        <div className="text-white bg-slate-900 rounded-md relative">
           <div className="w-[80%] ml-[10%]">
             <img
               onClick={toggleModal}
@@ -72,7 +72,7 @@ function FanSignList({ data }) {
                 </div>
               )}
             </div>
-            <div>{data.artistFansignTitle}</div>
+            <div className="mb-16">{data.artistFansignTitle}</div>
             <div className="absolute bottom-8 ">마감까지 {timeLeft}</div>
           </div>
 
@@ -82,7 +82,7 @@ function FanSignList({ data }) {
         </div>
       ) : (
         // 당첨내역
-        <div className="text-white bg-slate-900 rounded-md pb-8 relative">
+        <div className="text-white bg-slate-900 rounded-md relative">
           <div className="w-[80%] ml-[10%]">
             <img
               onClick={toggleModal}
@@ -104,7 +104,7 @@ function FanSignList({ data }) {
                 </div>
               )}
             </div>
-            <div>{data.artistFansignTitle}</div>
+            <div className="mb-8">{data.artistFansignTitle}</div>
           </div>
 
           {isModalVisible && (
