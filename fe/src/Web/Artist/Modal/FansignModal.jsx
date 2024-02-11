@@ -85,6 +85,7 @@ export default function FansignModal({ memberFansignId }) {
       height: '700px',
       margin: 'auto',
       padding: 0,
+      borderRadius: '20px',
     },
   };
 

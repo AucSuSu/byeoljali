@@ -134,9 +134,10 @@ export default function CreateFansignModal({}) {
   const customStyle = {
     content: {
       width: '1200px',
-      height: '850px',
+      height: '880px',
       margin: 'auto',
       padding: 0,
+      borderRadius: '20px',
     },
   };
 
@@ -173,16 +174,18 @@ export default function CreateFansignModal({}) {
             <div className="font-big ml-3">
               <form onSubmit={fansignCreate}>
                 <div className="mt-20 flex flex-col ">
-                  <label className="text-hot-pink pb-1">타이틀</label>
+                  <label className="text-hot-pink pb-1 text-25">타이틀</label>
                   <input
                     type="text"
                     value={title}
-                    className="border-b border-gray-300 focus:border-hot-pink outline-none w-100 text-black p-3 rounded-xl"
+                    className="border-b border-gray-300 focus:border-hot-pink outline-none w-120  text-black p-3 rounded-xl"
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="mt-6 flex flex-col">
-                  <label className="text-hot-pink pb-1">공지사항 </label>
+                  <label className="text-hot-pink pb-1 text-25">
+                    공지사항{' '}
+                  </label>
                   <CKEditor
                     editor={ClassicEditor}
                     data={information}
@@ -217,11 +220,11 @@ export default function CreateFansignModal({}) {
                   />
                 </div>
                 <div className="mt-14 flex flex-col">
-                  <label className="text-hot-pink pb-1">앨범명</label>
+                  <label className="text-hot-pink pb-1 ">앨범명</label>
                   <input
                     type="text"
                     value="앨범명"
-                    className="border-b border-gray-300 focus:border-hot-pink outline-none w-100 text-black p-3 rounded-xl p-1"
+                    className="border-b border-gray-300 focus:border-hot-pink outline-none w-120 text-black p-3 rounded-xl p-1"
                     // onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
@@ -270,7 +273,7 @@ export default function CreateFansignModal({}) {
                     />
                   </div>
                 </div>
-                <div className="mt-2 mb-8 flex items-center">
+                <div className="mt-2 mb-5 flex items-center">
                   <label className="text-hot-pink">팬싸인회 시작 시간</label>
                   <input
                     type="date"
@@ -292,7 +295,7 @@ export default function CreateFansignModal({}) {
                   </select>
                 </div>
 
-                <p className="text-18 text-center  text-white">개설 멤버</p>
+                <p className="text-18 text-center text-hot-pink">개설 멤버</p>
                 <div className="text-white bg-pink px-4 py-4 rounded-xl  grid grid-cols-4 gap-4 mt-2 mb-3">
                   {Object.keys(members).map((member) => (
                     <div key={member}>
