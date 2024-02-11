@@ -89,70 +89,70 @@ function FanPhotoView() {
   };
 
   if (Array.isArray(photoData)) {
-    // photoData is an array, safe to use .map()
     return (
-      <div className="min-h-screen bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat">
-        <NavBar />
-        <div className="mt-12 ml-24 mr-14 font-milk font-bold">
-          <div className="flex items-center justify-between pb-12 mb-6">
-            <div>
-              <div className="text-3xl bolder mb-2">내 앨범</div>
-              <div className="border-t-2"></div>
-
-              <div className="pt-2">
-                구매 후 사진 열람 / 다운로드가 가능합니다
+      <>
+        <div className="w-[80%] ml-[10%]">
+          <NavBar />
+          <div className="mt-12 ml-24 mr-14 font-milk font-bold">
+            <div className="flex items-center justify-between mt-6 mb-6">
+              <div>
+                <div className="text-3xl bolder mb-2 text-white">내 앨범</div>
+                <div className="text-dark-gray">
+                  {photoData.length} 개의 당첨 내역을 보유 하고 있습니다.
+                </div>
+                <div className="pt-2 text-dark-gray">
+                  구매 후 사진 열람 / 다운로드가 가능합니다
+                </div>
+              </div>
+              <div className="flex items-center justify-end gap-3">
+                <input
+                  type="text"
+                  placeholder="검색 키워드를 입력하세요"
+                  className="input border rounded w-full py-2 px-3"
+                  value={searchKeyword}
+                  onChange={handleSearchChange}
+                  onKeyPress={handleKeyPress}
+                />
+                <button
+                  className="w-auto btn font-bold pr-2 rounded  "
+                  onClick={handleSearchSubmit}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                    />
+                  </svg>
+                </button>
+                <select
+                  className="select border rounded py-2 px-3"
+                  value={payStatus || ''}
+                  onChange={handlePayStatusChange}
+                >
+                  <option value="">모두 보기</option>
+                  <option value="Y">결제 완료</option>
+                  <option value="N">결제 전</option>
+                </select>
               </div>
             </div>
-            <div className="flex items-center justify-end gap-3">
-              <input
-                type="text"
-                placeholder="검색 키워드를 입력하세요"
-                className="input border rounded w-full py-2 px-3"
-                value={searchKeyword}
-                onChange={handleSearchChange}
-                onKeyPress={handleKeyPress}
-              />
-              <button
-                className="w-auto btn font-bold pr-2 rounded  "
-                onClick={handleSearchSubmit}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                  />
-                </svg>
-              </button>
-              <select
-                className="select border rounded py-2 px-3"
-                value={payStatus || ''}
-                onChange={handlePayStatusChange}
-              >
-                <option value="">모두 보기</option>
-                <option value="Y">결제 완료</option>
-                <option value="N">결제 전</option>
-              </select>
+          </div>
+          <div className="w-[86%] ml-[7%]">
+            <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 border-2 border-dark-gray rounded-md">
+              {data.map((data, index) => (
+                <FanPhoto key={index} data={data} />
+              ))}
             </div>
           </div>
-          <div>
-            {photoData.map((data, index) => (
-              <FanPhoto
-                key={index}
-                data={data}
-                className="flex-auto w-64 h-64"
-              />
-            ))}
-          </div>
         </div>
-      </div>
+      </>
     );
   } else {
     // Handle the case when photoData is not an array
