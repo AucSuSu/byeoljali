@@ -31,7 +31,7 @@ function FanApply() {
             <div className="text-3xl bolder mb-2 text-white">응모 내역</div>
 
             <div className="text-dark-gray">
-              {data.length} 개의 당첨 내역을 보유 하고 있습니다.
+              {data.length} 개의 응모 내역을 보유 하고 있습니다.
             </div>
           </div>
         </div>
