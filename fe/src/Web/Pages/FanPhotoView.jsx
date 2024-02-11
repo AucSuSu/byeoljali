@@ -108,7 +108,7 @@ function FanPhotoView() {
                 <input
                   type="text"
                   placeholder="검색 키워드를 입력하세요"
-                  className="input border border-white rounder-md rounded w-full py-2 px-3"
+                  className="input border border-white text-black rounder-md rounded w-full py-2 px-3"
                   value={searchKeyword}
                   onChange={handleSearchChange}
                   onKeyPress={handleKeyPress}
@@ -133,7 +133,7 @@ function FanPhotoView() {
                   </svg>
                 </button>
                 <select
-                  className="select border border-white rounder-md rounded py-2 px-3"
+                  className="select border border-white rounder-md rounded py-2 px-3 text-black"
                   value={payStatus || ''}
                   onChange={handlePayStatusChange}
                 >
