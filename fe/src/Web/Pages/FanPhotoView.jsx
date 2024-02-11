@@ -146,7 +146,7 @@ function FanPhotoView() {
           </div>
           <div className="w-[86%] ml-[7%]">
             <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 border-2 border-dark-gray rounded-md">
-              {data.map((data, index) => (
+              {photoData.map((data, index) => (
                 <FanPhoto key={index} data={data} />
               ))}
             </div>
