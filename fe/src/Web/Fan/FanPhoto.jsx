@@ -86,13 +86,13 @@ function FanPhoto({ data }) {
 
   return (
     <div className="text-white bg-slate-900 rounded-md">
-      <div className="w-[80%] ml-[10%]">
+      <div className="w-[80%] ml-[10%] relative">
         <img
           src={data.photoUrl}
           alt={`사진 ${data.photoId}`}
           onClick={handleImageClick}
           onContextMenu={(e) => e.preventDefault()}
-          className="w-full h-auto aspect-square relative cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
+          className="w-full h-auto aspect-square cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
         />
         <div>
           {data.pay === 'N' ? (
@@ -121,6 +121,8 @@ function FanPhoto({ data }) {
             </div>
           ) : null}
         </div>
+      </div>
+      <div className="w-[80%] ml-[10%]">
         <div className="text-18 mt-3">[ {data.artistFansignTitle} ]</div>
       </div>
 
