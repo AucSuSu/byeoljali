@@ -4,6 +4,7 @@ import com.example.be.artist.dto.*;
 import com.example.be.artist.entity.Artist;
 import com.example.be.artist.repository.ArtistRepository;
 import com.example.be.config.auth.PrincipalDetails;
+import com.example.be.exception.MemberNotFoundException;
 import com.example.be.member.entity.Member;
 import com.example.be.member.repository.MemberRepository;
 import com.example.be.s3.S3Uploader;
@@ -109,15 +110,28 @@ public class ArtistService {
 
     public Long updateMember(Long memberId, MultipartFile image, ArtistMemberRequestDto dto){
         Artist artist = getArtist();
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 아티스트 멤버 정보가 없습니다."));
-        member.setName(dto.getName());
-        try {
-            String uploadUrl = s3Uploader.upload(image, "artist/" + artist.getName() + "/member", dto.getName());
-            member.setProfileImageUrl(uploadUrl);
-            return memberId;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("해당 아티스트 멤버 정보가 없습니다."));
+
+        // 이름 업데이트 처리
+        // dto에서 이름을 받았고, 그 이름이 null이 아니며 공백이 아닌 경우에만 이름을 업데이트합니다.
+        if (dto.getName() != null && !dto.getName().trim().isEmpty()) {
+            member.setName(dto.getName());
         }
+
+        // 이미지 업데이트 처리
+        // 이미지가 제공되었고, 내용이 있는 경우에만 이미지를 업로드하고 멤버의 프로필 이미지 URL을 업데이트합니다.
+        if (image != null && !image.isEmpty()) {
+            try {
+                String uploadUrl = s3Uploader.upload(image, "artist/" + artist.getName() + "/member", dto.getName());
+                member.setProfileImageUrl(uploadUrl);
+            } catch (IOException e) {
+                throw new RuntimeException("이미지 업로드 중 오류 발생", e);
+            }
+        }
+
+        // 멤버 정보를 저장하고 멤버 ID 반환
+        memberRepository.save(member); // 변경된 멤버 정보를 저장합니다.
+        return memberId; // 변경된 멤버의 ID를 반환합니다.
     }
 
     private Artist getArtist(){
