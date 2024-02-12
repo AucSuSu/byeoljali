@@ -97,7 +97,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const customStyle = {
     content: {
       width: '1200px',
-      height: '800px',
+      height: '850px',
       margin: 'auto',
       padding: 0,
       zIndex: 2, // z-index 값을 2로 설정
@@ -173,7 +173,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 src={data?.object?.posterImageUrl}
                 style={{
                   width: '650px',
-                  height: '700px',
+                  height: '730px',
                 }}
               ></img>
             </div>
@@ -204,6 +204,10 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                     {formatDate(data?.object?.endApplyTime)}
                   </p>
                 </div>
+                <div className="pt-3">
+                  <p className="bolder text-18">🗓️ 아티스트</p>
+                  <p className="mt-2 pl-4 pr-4">{data?.object?.artistName}</p>
+                </div>
 
                 <div className="pt-3">
                   <p className="bolder text-18">🗓️ 사인회 일정</p>
@@ -213,7 +217,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 </div>
 
                 <div>
-                  <h2 className="bolder text-18 text-center item-center mt-8 mb-2">
+                  <h2 className="bolder text-18 text-center item-center mb-2">
                     참여 멤버
                   </h2>
 
@@ -228,7 +232,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   <div>
                     {propData.status === 'APPLYING' ? (
                       <div>
-                        <div className="flex justify-center items-center mt-6 mb-6">
+                        <div className="flex justify-center items-center mb-6">
                           <h3 className="pe-3">앨범</h3>
                           <span className="w-16 border-b underline text-center">
                             {currAlbumNum}

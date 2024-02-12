@@ -52,16 +52,43 @@ const HomeView = () => {
     getUserInfoData();
 
     const container = containerRef.current;
+    let isHovered = false;
 
     const scrollInterval = setInterval(() => {
-      if (container) {
+      if (container && !isHovered) {
         console.log('left');
         container.scrollLeft += 1; // 스크롤 간격 조절 가능
+
+        if (
+          container.scrollLeft >=
+          container.scrollWidth - container.clientWidth
+        ) {
+          // 스크롤이 끝에 도달했을 때 처음으로 돌아가기
+          container.scrollLeft = 0;
+        }
       }
     }, 20); // 스크롤 속도 조절 가능
 
+    // 호버 시 스크롤 멈추기
+    container.addEventListener('mouseenter', () => {
+      isHovered = true;
+    });
+
+    // 호버 해제 시 스크롤 다시 시작
+    container.addEventListener('mouseleave', () => {
+      isHovered = false;
+    });
+
     // 컴포넌트가 언마운트될 때 인터벌을 해제합니다.
-    return () => clearInterval(scrollInterval);
+    return () => {
+      clearInterval(scrollInterval);
+      container.removeEventListener('mouseenter', () => {
+        isHovered = true;
+      });
+      container.removeEventListener('mouseleave', () => {
+        isHovered = false;
+      });
+    };
   }, []);
 
   const getUserInfoData = async () => {
@@ -140,6 +167,15 @@ const HomeView = () => {
                   className="mr-4 inline-block" // inline-block 클래스 추가
                   style={{
                     fontFamily: artist.font,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'font-size 0.3s ease', // 글씨 크기 변경 시 부드러운 애니메이션 효과
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.fontSize = '24px'; // 호버 시 글씨 크기 변경
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.fontSize = '16px'; // 호버 해제 시 글씨 크기 원래대로
                   }}
                 >
                   <div
