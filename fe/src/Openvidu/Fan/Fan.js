@@ -35,6 +35,7 @@ class VideoRoomComponent extends Component {
     this.updateLayout = this.updateLayout.bind(this);
     this.toggleChat = this.toggleChat.bind(this);
     this.checkSize = this.checkSize.bind(this);
+    this.checkChatToggle = this.checkChatToggle.bind(this);
   }
 
   componentDidMount() {
@@ -275,7 +276,11 @@ class VideoRoomComponent extends Component {
     }
   }
 
-  // 인생 네컷 캡쳐 시도
+  // 인생 네컷 캡쳐시 챗토글 관리
+
+  checkChatToggle(callback) {
+    this.setState({ chatDisplay: 'none' }, callback);
+  }
 
   render() {
     const localUser = this.state.localUser;
@@ -332,6 +337,7 @@ class VideoRoomComponent extends Component {
         <Footer
           id="4"
           toggleChat={this.toggleChat}
+          checkChatToggle={this.checkChatToggle}
           memberFansignId={this.props.propsData.memberFansignId}
           artistFansignId={this.props.propsData.artistFansignId}
         />

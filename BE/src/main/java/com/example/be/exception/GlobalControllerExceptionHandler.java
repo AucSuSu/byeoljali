@@ -25,7 +25,6 @@ public class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.PAYLOAD_TOO_LARGE);
     }
 
-    // 이미지
     @ExceptionHandler(value = TokenExpiredException.class)
     public ResponseEntity<Message> tokenExpiredHandler(Exception e){
         log.info(" *** JWT 토큰 만료 핸들러 *** ");
@@ -49,6 +48,23 @@ public class GlobalControllerExceptionHandler {
         Message message = new Message(HttpStatusEnum.SESSION_CLOSED_ERROR, "session이 닫혔습니다.",null);
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
+
+    // 멤버를 못찾았을때
+    @ExceptionHandler(value = MemberNotFoundException.class)
+    public ResponseEntity<Message> MemberNotFoundHandler(Exception e){
+        log.info(" *** 아티스트의 멤버 Not Found 핸들러 *** ");
+        Message message = new Message(HttpStatusEnum.NOT_FOUND, "memberId로 조회한 결과 해당하는 Member가 없습니다.",null);
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    // 아티스트를 못찾았을때
+    @ExceptionHandler(value = ArtistNotFoundException.class)
+    public ResponseEntity<Message> ArtistNotFoundHandler(Exception e){
+        log.info(" *** 아티스트 Not Found 핸들러 *** ");
+        Message message = new Message(HttpStatusEnum.NOT_FOUND, "artistId로 조회한 결과 해당하는 Artist가 없습니다.",null);
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
 
 
 }

@@ -21,6 +21,18 @@ function FanSignModal({ data, onClose }) {
     return response;
   };
 
+  // fanSign모달에서 artist 정보를 누르면 artistInfo 페이지로 이동합니다.
+  const artistDetail = async () => {
+    navigate('/artist-profile', {
+      state: {
+        propsData: {
+          artistId: fanSignDetail.artistId,
+        },
+      },
+    });
+    onClose();
+  };
+
   const participate = async () => {
     const openviduData = await joinFansign();
     navigate('/fan-fansign', {
@@ -101,6 +113,7 @@ function FanSignModal({ data, onClose }) {
   const applySchedule = `응모일정: ${startApplyDateFormatted}~${endApplyDateFormatted}`; // "응모일정: 01/31~02/02"
   const fanSignSchedule = `사인회일정: ${startFansignDateFormatted}`; // 사인회일정
   const memberSchedule = `신청멤버: ${fanSignDetail.memberName}`; // 신청멤버
+  const artistInfo = `아티스트: ${fanSignDetail.artistId}`; // 아티스트 id
 
   return (
     <div>
@@ -110,7 +123,7 @@ function FanSignModal({ data, onClose }) {
           onClick={handleCloseModal}
         >
           <div
-            className="bg-white max-w-120 w-120 h-auto p-5 rounded relative flex flex-col items-center z-50"
+            className="bg-black max-w-120 w-120 h-auto p-5 rounded relative flex flex-col items-center z-50"
             onClick={handleModalContentClick}
           >
             <div className="text-3xl bg-pink mb-4">
@@ -132,6 +145,7 @@ function FanSignModal({ data, onClose }) {
               <div>{applySchedule}</div>
               <div>{fanSignSchedule}</div>
               <div>{memberSchedule}</div>
+              <div onClick={artistDetail}>{artistInfo}</div>
             </div>
 
             <div className="mt-4">

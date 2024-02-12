@@ -69,10 +69,10 @@ public class ArtistFansignController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @GetMapping("/api/artists/fansignCount")
-    public ResponseEntity<Message> getMemberFansignCount(){
+    @GetMapping("/api/artists/fansignCount/{artistId}")
+    public ResponseEntity<Message> getMemberFansignCount(@PathVariable("artistId") Long artistId){
         log.info(" *** 아티스트 마이페이지 팬싸인회 개수 가져오기 api 입니다. *** ");
-        FansignGroupByStatusCountResponseDto result = artistFansignService.getFansignCount();
+        FansignGroupByStatusCountResponseDto result = artistFansignService.getFansignCount(artistId);
         Message message = new Message(HttpStatusEnum.OK, "아티스트 조회 맴버 팬싸인회 개수", result);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

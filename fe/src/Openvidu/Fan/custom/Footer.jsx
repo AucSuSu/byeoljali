@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@material-ui/icons/Chat';
 import PhotoCameraRoundedIcon from '@material-ui/icons/PhotoCameraRounded';
@@ -10,23 +10,30 @@ export default function Footer({
   toggleChat,
   memberFansignId,
   artistFansignId,
+  checkChatToggle,
 }) {
   const customAxios = useAxios();
   const [count, setCount] = useState(4);
   const [captures, setCaptures] = useState([]);
 
+  useEffect(() => {
+    if (count === 0) {
+      sendCaptures();
+      console.log('사진 전송');
+    }
+  }, [count]);
+
   const capture = (id) => {
+    checkChatToggle(() => performCapture(id));
+  };
+
+  const performCapture = async (id) => {
     if (count > 0) {
       setCount(count - 1);
       captureArea();
     }
 
-    if (count === 0) {
-      sendCaptures();
-      console.log('사진 전송');
-    }
-
-    console.log('capture^^', id);
+    console.log('사진 캡쳐 성공!', id);
   };
 
   const captureArea = () => {
@@ -89,7 +96,7 @@ export default function Footer({
     <>
       <div className="bg-pink fixed bottom-0 w-full h-15 font-milk text-black font-bold flex items-center justify-between p-4">
         <div>
-          <p className="mx-2">남은 촬영 횟수 : {count}</p>
+          <p className="mx-2">남은 촬영 횟수 : {count} / 4</p>
         </div>
 
         <IconButton onClick={() => capture(id)}>

@@ -38,7 +38,7 @@ function AddMemberModal({ onClose }) {
 
   const handlePost = () => {
     if (!imageFile || !name.trim()) {
-      alert('Please select an image to upload and enter a name');
+      alert('프로필 사진과 멤버 이름은 필수에요!');
       return;
     }
 
@@ -71,7 +71,7 @@ function AddMemberModal({ onClose }) {
       onClick={onClose}
     >
       <div
-        className="w-148 h-130 bg-[url('/public/bg.png')] p-6 shadow-lg flex flex-col items-center"
+        className="w-148 h-130 bg-black p-6 shadow-lg flex flex-col items-center "
         onClick={(e) => e.stopPropagation()}
       >
         <div className="self-start text-4xl font-bold mb-6">
@@ -105,7 +105,7 @@ function AddMemberModal({ onClose }) {
             value={name}
             onChange={handleNameChange}
             placeholder="이름을 입력해주세요"
-            className="w-full p-2 rounded-md border-2 mb-4"
+            className="w-full p-2 rounded-md border-2 mb-8 mt-3 text-black font-big"
           />
         </div>
 

@@ -1,17 +1,35 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-
+import React, { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserInfo } from '../Stores/fanInfoReducer';
 import useAxios from '../axios';
+import FanAuthModal from '../Fan/FanAuthModal';
 
-function FanInfoModal({ userData, onClose }) {
+function FanInfoModal({ onClose }) {
   const customAxios = useAxios();
+  const userData = useSelector((state) => state.faninfo.data);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getUserInfoData();
+  }, []);
+
+  const getUserInfoData = async () => {
+    const data = await customAxios.get('mypage/').then((res) => {
+      return res.data.object;
+    });
+    dispatch(getUserInfo(data));
+  };
+
   const [localUserData, setLocalUserData] = useState({
     nickname: userData.nickname,
     name: userData.name,
   });
+
   const [profileImage, setProfileImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(userData.profileImageUrl); // 미리보기 URL을 위한 상태
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
   const fileInputRef = useRef(); // 파일 입력을 위한 ref
 
   const handleInputChange = (e) => {
@@ -75,34 +93,29 @@ function FanInfoModal({ userData, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
-      onClick={handleBackgroundClick} // 여기에 클릭 이벤트 핸들러 추가
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      onClick={handleBackgroundClick}
     >
       <div
-        className="font-milk w-148 h-148 bg-[url('/public/bg.png')] p-6  shadow-lg flex flex-col items-center"
-        onClick={handleModalContentClick} // 모달 내부 클릭 시 이벤트 버블링 방지
+        className="font-big text-white w-[1000px] h-[650px] bg-black mt-12 flex flex-col justify-between"
+        onClick={handleModalContentClick}
       >
-        <div className="self-start text-4xl font-bold mb-4">
-          정보 수정
-          <div className="mt-1 border-b-2"></div>
-        </div>
-        {/* Profile Image Upload */}
-        <div>
-          <div className="self-start mb-2 font-bold text-xl">프로필 이미지</div>
-          <div className="relative mb-4">
+        <div className="text-4xl mt-10 mb-4 text-center">Edit Profile</div>
+
+        {/* 이미지와 이름 필드를 가로로 나열하되, 상단 정렬을 위해 별도의 스타일 적용 */}
+        <div className="flex justify-start items-center w-full">
+          <div>
             <img
               src={previewUrl || 'path_to_default_image'}
               alt="Profile"
-              className="w-72 h-60 rounded-lg object-fill"
+              className="w-50 h-50 rounded-full object-fill  ml-28"
             />
-
-            <button
+            <p
               onClick={() => fileInputRef.current.click()}
-              className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
+              className="ml-[175px] text-white cursor-pointer hover:text-hot-pink"
             >
-              {/* Icon or text to indicate upload, hidden by default and only shown on hover/focus */}
-              <span className="text-white text-5xl">+</span>
-            </button>
+              이미지 변경
+            </p>
             <input
               type="file"
               name="profileImage"
@@ -111,52 +124,126 @@ function FanInfoModal({ userData, onClose }) {
               ref={fileInputRef}
             />
           </div>
-        </div>
-
-        <div className="w-72">
-          {/* Input Fields */}
-          <div className="w-full mb-3">
-            <div className="flex">
-              <p className="font-bold text-lg">닉네임 </p>
-              <input
-                type="text"
-                id="nickname"
-                name="nickname"
-                value={localUserData.nickname}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border-b border-b-1 py-2 px-3 bg-transparent focus:outline-none "
-              />
+          <div className="flex flex-col ml-12 mt-8 space-y-4">
+            {/* 이름 필드 */}
+            <div className="flex items-center">
+              <p className="text-lg self-center min-w-[70px] text-[23px]">
+                이름
+              </p>
+              <div className="relative flex-1 ml-2">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={localUserData.name}
+                  onChange={handleInputChange}
+                  className="block w-full py-2 px-3 bg-dark-gray rounded-xl focus:outline-none focus:bg-hot-pink text-18"
+                />
+                <button
+                  onClick={() =>
+                    setLocalUserData({ ...localUserData, name: '' })
+                  }
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer text-white"
+                >
+                  X
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="w-full mb-4">
-            <div className="flex ">
-              <p className="font-bold text-lg w-14 self-center">이름</p>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={localUserData.name}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border-b border-b-1  py-2 px-3 bg-transparent focus:outline-none"
-              />
+            {/* 닉네임 필드 */}
+            <div className="flex items-center">
+              <p className="text-lg self-center min-w-[70px] text-[23px]">
+                닉네임
+              </p>
+              <div className="relative flex-1 ml-2">
+                <input
+                  type="text"
+                  id="nickname"
+                  name="nickname"
+                  value={localUserData.nickname}
+                  onChange={(e) =>
+                    setLocalUserData({
+                      ...localUserData,
+                      nickname: e.target.value,
+                    })
+                  }
+                  className="block w-full py-2 px-3 bg-dark-gray rounded-xl text-18 focus:outline-none focus:bg-hot-pink"
+                />
+                <button
+                  onClick={() =>
+                    setLocalUserData({ ...localUserData, nickname: '' })
+                  }
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer text-white"
+                >
+                  X
+                </button>
+              </div>
             </div>
-          </div>
-          {/* Buttons */}
-          <div className="flex w-full">
+            {/* 안내 필드 */}
+            <div className="text-12 text-dark-gray">
+              <p>닉네임은 최소 2자, 최대 10자까지 입력 가능해요</p>
+              <p>닉네임은 채팅에 사용해요</p>
+            </div>
             <button
               onClick={handleSubmit}
-              className="flex-1 py-2 px-4 mr-7 bg-hot-pink text-white font-semibold rounded-md"
+              className="ml-60 bg-hot-pink rounded-xl py-2 hover:bg-opacity-70"
             >
-              수정
-            </button>
-            <button
-              onClick={onClose}
-              className="flex-1 py-2 px-4 bg-light-gray  font-semibold rounded-md "
-            >
-              닫기
+              변경 저장
             </button>
           </div>
         </div>
+        <div className="mt-4 flex items-start ml-[450px]">
+          {/* 공지 섹션 */}
+          <div className="mr-4 mt-14 text-[20px] text-right">
+            {/* 여기에 마진을 추가하여 이미지와 공지 사이의 간격을 조정할 수 있습니다. */}
+            <p>변경 횟수</p>
+            <p>{userData.changeCount} /4</p>
+            <p className="text-[12px] text-dark-gray mt-6">
+              팬 사인회 입장 시, 본인 인증에 사용돼요 <br />
+              정면을 바라보는 사진(ex. 증명사진)을 추천해요 <br />
+              등록은 최대 4번까지 가능해요
+            </p>
+          </div>
+
+          {/* 인증 사진 이미지 섹션 */}
+          <div>
+            <p className="text-[24px]">인증 사진 등록</p>
+            <img
+              src={userData.certificationImageUrl}
+              alt="Auth img"
+              className="w-[150px] h-auto rounded-md mt-4" // 이미지 크기와 라운드 조정
+            />
+            <p
+              className={`text-15 ml-[35px] mt-4 cursor-pointer hover:text-hot-pink ${userData.changeCount === 4 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={() => {
+                if (userData.changeCount < 4) {
+                  setShowAuthModal(true);
+                } else {
+                  // 최대 변경 횟수에 도달했습니다! 메시지를 띄웁니다.
+                  alert('최대 변경 횟수에 도달했습니다!');
+                }
+              }}
+            >
+              이미지 변경
+            </p>
+
+            <div>
+              {/* 인증사진 수정 모달 */}
+              {showAuthModal && (
+                <FanAuthModal
+                  userData={userData}
+                  onClose={() => setShowAuthModal(false)}
+                  // 필요한 경우 다른 props 전달
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        <button
+          onClick={onClose}
+          className="bg-dark-gray rounded-xl py-2 w-[100px] h-[40px] mx-auto mb-4" // mx-auto로 가로 중앙 정렬, mb-4로 아래쪽 여백을 줍니다.
+        >
+          닫기
+        </button>
       </div>
     </div>
   );
