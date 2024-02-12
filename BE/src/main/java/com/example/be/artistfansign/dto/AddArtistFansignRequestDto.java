@@ -26,4 +26,5 @@ public class AddArtistFansignRequestDto {
     private String startFansignTime;
     private FansignMode mode;
     private List<Long> memberIdList;
+    private String albumName;
 }

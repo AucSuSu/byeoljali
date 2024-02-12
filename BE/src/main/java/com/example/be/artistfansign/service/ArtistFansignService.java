@@ -68,7 +68,7 @@ public class ArtistFansignService {
             }
 
             ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
-                    , endApplyTime, startFansignTime, status, dto.getMode(), artist);
+                    , endApplyTime, startFansignTime, status, dto.getMode(), artist, dto.getAlbumName());
             artistFansignRepository.save(artistFansign);
             Long artisFansignId = artistFansign.getArtistfansignId();
 
