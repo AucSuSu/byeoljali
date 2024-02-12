@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSelector } from 'react-redux';
 import useAxios from '../axios';
+import { useNavigate } from 'react-router-dom';
 
 // css 추가
 import './HomeApplyFormModal.css';
@@ -12,7 +13,7 @@ import ApplyReceiptModal from './ApplyReceiptModal';
 
 const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const [stars, setStars] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const makeStars = () => {
       const numStars = 800; // 원하는 별의 개수
@@ -52,6 +53,17 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
         console.log('form 제출 완료', res.data);
       });
     window.location.reload();
+  };
+
+  const artistDetail = async () => {
+    navigate('/artist-profile', {
+      state: {
+        propsData: {
+          artistId: data.object.artistId,
+        },
+      },
+    });
+    closeModal();
   };
 
   const handleSubmit = () => {
@@ -206,7 +218,15 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 </div>
                 <div className="pt-3">
                   <p className="bolder text-18">🗓️ 아티스트</p>
-                  <p className="mt-2 pl-4 pr-4">{data?.object?.artistName}</p>
+                  <p className="mt-2 pl-4 pr-4">
+                    {data?.object?.artistName} {'  '}{' '}
+                    <button
+                      onClick={artistDetail}
+                      className="text-white hover:text-pink-700"
+                    >
+                      ▶ 상세보기
+                    </button>
+                  </p>
                 </div>
 
                 <div className="pt-3">
