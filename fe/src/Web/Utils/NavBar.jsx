@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from './ProfileImage';
@@ -9,50 +9,44 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 // Navbar 배경 및 밑줄 주석처리 margin-bottom 추가
 const NavbarContainer = styled.nav`
-  // background-color: #fbe8e1;
+  // background-color: black;
   // border-bottom: 2px solid black;
-  margin-bottom: 40px;
+  position: relative;
   height: 70px;
   padding: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 
 const NavbarList = styled.ul`
+  position: absolute;
   list-style: none;
   display: flex;
   gap: 20px;
   justify-content: center;
-  align-items:center;
+  align-items: center;
+  right: 0;
 `;
 
 const NavbarItem = styled.li`
+  display: flex;
   color: #fff;
-  margin-top: 15px;
   position: relative;
   margin: 10px;
   justify-content: center;
+  align-items: center;
 `;
 
 // Logo 및 Title styled 추가
-const NavbarLogo = styled(Link)`
-  color: #fff;
-  margin-top: 15px;
-  position: relative;
-  margin: 10px;
-`;
 const NavbarTitle = styled.p`
   color: #fff;
-  margin-top: 15px;
-  position: relative;
-  margin: 10px;
-  margin-left: 200px;
-  font-size: 30px;
+  font-size: 35px;
 `;
 
 //NavBar 요소
 const NavbarLink = styled(Link)`
+  font-size: 18px;
   text-decoration: none;
   color: inherit;
   font-weight: bold;
@@ -68,6 +62,7 @@ const Dropdown = styled.div`
 `;
 
 const DropdownContent = styled.div`
+  background: gray;
   display: none;
   position: absolute;
   min-width: 160px;
@@ -75,7 +70,8 @@ const DropdownContent = styled.div`
   top: 100%;
   right: 0;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
+  border-radius: 4px;
 
   ${Dropdown}:hover & {
     display: flex;
@@ -84,12 +80,12 @@ const DropdownContent = styled.div`
 `;
 
 const DropdownItem = styled.div`
+  width: 100%;
+  text-align: center;
   padding: 10px;
   color: #000;
-  background-color: #fff;
   cursor: pointer;
-  align-self:center;
-
+  color: #fff;
   &:hover {
     color: #fff;
     background-color: #ff6d79;
@@ -105,6 +101,11 @@ const Navbar = ({ bgStyle }) => {
   const kakaoAuth = useSelector((state) => state.auth.kakaoAuthorization);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isProps, setIsProps] = useState(null);
+
+  useEffect(() => {
+    setIsProps(bgStyle);
+  }, []);
 
   // 로그아웃 API 요청
   const customAxios = useAxios();
@@ -153,19 +154,15 @@ const Navbar = ({ bgStyle }) => {
 
   const goFanPhoto = () => {
     navigate('/fan-photo');
-  }
-
+  };
 
   const goFanApply = () => {
     navigate('/fan-apply');
-  }
-
+  };
 
   const goFanWin = () => {
     navigate('/fan-win');
-  }
-
-
+  };
 
   const fanProfileImageUrl = useSelector(
     (state) => state.faninfo.data.profileImageUrl,
@@ -180,10 +177,9 @@ const Navbar = ({ bgStyle }) => {
   };
 
   return (
-    <NavbarContainer className={`${bgStyle} font-bold font-milk pb-8`}>
-      <NavbarLogo to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <img src="/logo.png" className="w-[45px] h-[45px]" />
-      </NavbarLogo>
+    <NavbarContainer
+      className={`${isProps ? isProps : `bg-black`} font-bold font-milk pb-8`}
+    >
       <NavbarTitle> 별자리 </NavbarTitle>
       <NavbarList>
         {isArtist ? (
@@ -214,17 +210,9 @@ const Navbar = ({ bgStyle }) => {
             <NavbarItem>
               <button
                 onClick={handleSearchIconClick} // 수정된 부분: 함수를 호출하지 않고 함수 자체를 전달
-                className="hover:text-hot-pink text-white font-bold py-2 px-4 rounded"
+                className="hover:text-hot-pink text-white font-bold rounded"
               >
-                <MagnifyingGlassIcon className="h-6 w-6 border-none" />
-              </button>
-            </NavbarItem>
-            <NavbarItem>
-              <button
-                onClick={handleSearchIconClick} // 수정된 부분: 함수를 호출하지 않고 함수 자체를 전달
-                className="hover:text-hot-pink text-white font-bold py-2 px-4 rounded"
-              >
-                <MagnifyingGlassIcon className="h-6 w-6 border-none" />
+                <MagnifyingGlassIcon className="h-[30px] w-[30px] border-none" />
               </button>
             </NavbarItem>
             <NavbarItem>
@@ -232,14 +220,22 @@ const Navbar = ({ bgStyle }) => {
             </NavbarItem>
             <NavbarItem>
               <Dropdown>
-              {/* <ProfileImage imageUrl={fanProfileImageUrl} /> */}
-              <img src='/Hamburger_icon_white.png'
-              style={{
-                width : "30px",
-                height : "30px"
-              }}></img>
+                {/* <ProfileImage imageUrl={fanProfileImageUrl} /> */}
+                <img
+                  src="/Hamburger_icon_white.png"
+                  style={{
+                    width: '30px',
+                    height: '30px',
+                  }}
+                ></img>
                 <DropdownContent>
-                  <DropdownItem onClick={goFanProfile}><ProfileImage imageUrl={fanProfileImageUrl} /></DropdownItem>
+                  <DropdownItem onClick={goFanProfile}>
+                    <img
+                      src={fanProfileImageUrl}
+                      alt="profileImg"
+                      className="rounded-full [h-70%] w-[70%] mx-auto"
+                    />
+                  </DropdownItem>
                   <DropdownItem onClick={goFanApply}>응모 내역</DropdownItem>
                   <DropdownItem onClick={goFanWin}>당첨 내역</DropdownItem>
                   <DropdownItem onClick={goFanPhoto}>내 앨범</DropdownItem>
@@ -247,7 +243,6 @@ const Navbar = ({ bgStyle }) => {
                 </DropdownContent>
               </Dropdown>
             </NavbarItem>
-            
           </>
         )}
       </NavbarList>
