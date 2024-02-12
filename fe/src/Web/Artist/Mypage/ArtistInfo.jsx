@@ -5,16 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getInfo } from '../../Stores/artistInfoReducer.js';
 import { useLocation } from 'react-router-dom';
 import useAxios from '../../axios.js';
-
+import Loading from '../../Home/Loading.jsx';
 import ArtistImgModal from '../Modal/ArtistImgModal.jsx';
 
 export default function ArtistInfo() {
   const location = useLocation();
+
   const artistData = useSelector((state) => state.artistInfo.artistData);
   const { propsData } = location.state || {}; // 여기서 artistId를 꺼내쓰자!!
   const isArtist = useSelector((state) => state.auth.isArtist);
   const [artistCountData, setArtistCountData] = useState('');
   const [daysSinceDebut, setDaysSinceDebut] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const customAxios = useAxios();
   const dispatch = useDispatch();
 
@@ -68,6 +70,19 @@ export default function ArtistInfo() {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true); // 데이터 로딩 시작
+      try {
+        if (isArtist) {
+          await getArtistInfoForArtist();
+        } else {
+          await getArtistInfoForFan();
+        }
+      } finally {
+        setIsLoading(false); // 데이터 로딩 완료
+      }
+    };
+    fetchData();
     if (isArtist) {
       // isArtist가 true일 때 실행
       getArtistInfoForArtist();
@@ -108,6 +123,10 @@ export default function ArtistInfo() {
   const handleCloseAddMember = () => {
     setShowAddMemberModal(false);
   };
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-black text-white w-full">

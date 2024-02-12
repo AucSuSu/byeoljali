@@ -12,7 +12,7 @@ function FanSignModal({ data, onClose }) {
   // 대기방 참가 로직
   // const fanInfo = useSelector((state) => state.faninfo.data);
   // const customAxios = useAxios();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const joinFansign = async () => {
   //   const response = await customAxios
@@ -115,7 +115,7 @@ function FanSignModal({ data, onClose }) {
   const applySchedule = `응모일정: ${startApplyDateFormatted}~${endApplyDateFormatted}`; // "응모일정: 01/31~02/02"
   const fanSignSchedule = `사인회일정: ${startFansignDateFormatted}`; // 사인회일정
   const memberSchedule = `신청멤버: ${fanSignDetail.memberName}`; // 신청멤버
-  const artistInfo = `아티스트: ${fanSignDetail.artistName}`; // 아티스트 이름
+  const artistInfo = fanSignDetail.artistName; // 아티스트 이름
 
   return (
     <div>
@@ -161,7 +161,22 @@ function FanSignModal({ data, onClose }) {
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">👯 아티스트</p>
-                  <div>{artistInfo}</div>
+                  <div>
+                    {artistInfo}
+                    {'  '}
+                    <button
+                      onClick={artistDetail}
+                      className="text-white hover:text-pink-700"
+                    >
+                      ▶ 상세보기
+                    </button>
+                  </div>
+                  {/* <button
+                    onClick={artistDetail}
+                    className="text-white hover:text-pink-700"
+                  >
+                    {artistInfo}
+                  </button> */}
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">🧕 참여 멤버</p>
@@ -207,7 +222,15 @@ function FanSignModal({ data, onClose }) {
               <div>{applySchedule}</div>
               <div>{fanSignSchedule}</div>
               <div>{memberSchedule}</div>
-              <div onClick={artistDetail}>{artistInfo}</div>
+              <div>
+                아티스트 :{' '}
+                <button
+                  onClick={artistDetail}
+                  className="text-pink-500 hover:text-pink-700 font-bold"
+                >
+                  {artistInfo}
+                </button>
+              </div>
             </div>
 
             <div className="mt-4">
