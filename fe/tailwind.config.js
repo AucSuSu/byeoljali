@@ -7,6 +7,7 @@ module.exports = {
         milk: ['TAEBAEKmilkyway', 'sans-serif'], //로드 안 될 때를 대비
         big: ['TAEBAEKfont', 'sans-serif'],
         ridi: ['RIDIBatang', 'sans-serif'],
+        isa: ['GongGothicMedium', 'sans-serif'],
       },
       fontSize: {
         12: '12px',

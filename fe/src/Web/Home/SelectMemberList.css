@@ -7,3 +7,12 @@
   opacity: 0.5; /* 선택되지 않은 이미지에 반투명 필터 적용 */
   filter: grayscale(100%); /* 회색 필터 적용 */
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
