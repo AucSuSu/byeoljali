@@ -37,7 +37,7 @@ const SelectList = ({ dataList }) => {
       </button>
       <div
         ref={containerRef}
-        className="flex flex-wrap-none overflow-x-auto p-1 item-center "
+        className="flex flex-wrap-none overflow-x-auto p-1 item-center hide-scrollbar"
         style={{ width: '450px' }}
       >
         {Array.isArray(dataList) &&
