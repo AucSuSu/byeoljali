@@ -56,7 +56,6 @@ const HomeView = () => {
 
     const scrollInterval = setInterval(() => {
       if (container && !isHovered) {
-        console.log('left');
         container.scrollLeft += 1; // 스크롤 간격 조절 가능
 
         if (
@@ -149,7 +148,7 @@ const HomeView = () => {
         {/* 1. Navbar */}
         <Navbar />
         {/* 2. Post Carousel */}
-        <div className="w-[80%] mx-[8.5%]">
+        <div className="w-[80%] mx-[10%]">
           <NewCarousel datas={carouselImage} />
         </div>
 

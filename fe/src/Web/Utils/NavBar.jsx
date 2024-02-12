@@ -23,6 +23,8 @@ const NavbarList = styled.ul`
   list-style: none;
   display: flex;
   gap: 20px;
+  justify-content: center;
+  align-items:center;
 `;
 
 const NavbarItem = styled.li`
@@ -30,6 +32,7 @@ const NavbarItem = styled.li`
   margin-top: 15px;
   position: relative;
   margin: 10px;
+  justify-content: center;
 `;
 
 // Logo 및 Title styled 추가
@@ -48,7 +51,7 @@ const NavbarTitle = styled.p`
   font-size: 30px;
 `;
 
-//NavBar 요소, color : inherit로 변경하여 NavbarItem의 color 따라가게 함(흰색)
+//NavBar 요소
 const NavbarLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -71,6 +74,8 @@ const DropdownContent = styled.div`
   z-index: 1;
   top: 100%;
   right: 0;
+  flex-direction: column;
+  align-items:center;
 
   ${Dropdown}:hover & {
     display: flex;
@@ -83,6 +88,7 @@ const DropdownItem = styled.div`
   color: #000;
   background-color: #fff;
   cursor: pointer;
+  align-self:center;
 
   &:hover {
     color: #fff;
@@ -145,6 +151,22 @@ const Navbar = ({ bgStyle }) => {
     navigate('/artist-profile');
   };
 
+  const goFanPhoto = () => {
+    navigate('/fan-photo');
+  }
+
+
+  const goFanApply = () => {
+    navigate('/fan-apply');
+  }
+
+
+  const goFanWin = () => {
+    navigate('/fan-win');
+  }
+
+
+
   const fanProfileImageUrl = useSelector(
     (state) => state.faninfo.data.profileImageUrl,
   );
@@ -198,21 +220,34 @@ const Navbar = ({ bgStyle }) => {
               </button>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/fan-apply">응모 내역</NavbarLink>
+              <button
+                onClick={handleSearchIconClick} // 수정된 부분: 함수를 호출하지 않고 함수 자체를 전달
+                className="hover:text-hot-pink text-white font-bold py-2 px-4 rounded"
+              >
+                <MagnifyingGlassIcon className="h-6 w-6 border-none" />
+              </button>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/fan-win">당첨 내역</NavbarLink>
+              <NavbarLink to="/fan-profile">MY PAGE</NavbarLink>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/fan-photo">내 앨범</NavbarLink>
+              <Dropdown>
+              {/* <ProfileImage imageUrl={fanProfileImageUrl} /> */}
+              <img src='/Hamburger_icon_white.png'
+              style={{
+                width : "30px",
+                height : "30px"
+              }}></img>
+                <DropdownContent>
+                  <DropdownItem onClick={goFanProfile}><ProfileImage imageUrl={fanProfileImageUrl} /></DropdownItem>
+                  <DropdownItem onClick={goFanApply}>응모 내역</DropdownItem>
+                  <DropdownItem onClick={goFanWin}>당첨 내역</DropdownItem>
+                  <DropdownItem onClick={goFanPhoto}>내 앨범</DropdownItem>
+                  <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
+                </DropdownContent>
+              </Dropdown>
             </NavbarItem>
-            <Dropdown>
-              <ProfileImage imageUrl={fanProfileImageUrl} />
-              <DropdownContent>
-                <DropdownItem onClick={goFanProfile}>프로필 보기</DropdownItem>
-                <DropdownItem onClick={setLogout}>로그아웃</DropdownItem>
-              </DropdownContent>
-            </Dropdown>
+            
           </>
         )}
       </NavbarList>

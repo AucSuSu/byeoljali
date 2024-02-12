@@ -21,6 +21,7 @@ public class ApplyFormResponseDto { // 응모 폼 생성할 때 프론트에 전
     private String posterImageUrl;
     private String albumName; // 진행 중인 팬싸에서 사야하는 앨범 명
     private String artistName;
+    private Long artistId;
 
     public ApplyFormResponseDto(ArtistFansign entity){
         this.fansignTitle = entity.getTitle();
@@ -35,6 +36,7 @@ public class ApplyFormResponseDto { // 응모 폼 생성할 때 프론트에 전
         this.posterImageUrl = entity.getPosterImageUrl();
         this.albumName = entity.getAlbumName();
         this.artistName = entity.getArtist().getName();
+        this.artistId = entity.getArtist().getArtistId();
     }
 
 

@@ -27,18 +27,20 @@ function FanWin() {
       <div className="w-[80%] ml-[10%]">
         <div className="flex items-center justify-between mt-6 mb-6">
           <div>
-            <div className="text-3xl bolder mb-2 text-white">당첨 내역</div>
-            <div className="text-dark-gray">
+            <div className="font-big text-40 bolder mb-2 text-white">
+              당첨 내역
+            </div>
+            <div className="font-big text-25 text-dark-gray">
               {data.length} 개의 당첨 내역을 보유 하고 있습니다.
             </div>
-            <div className="pt-2 text-dark-gray">
+            <div className="font-big text-25 pt-2 text-dark-gray">
               팬싸인회는 시작 30분 전부터 입장 가능합니다
             </div>
           </div>
         </div>
       </div>
       <div className="w-[86%] ml-[7%]">
-        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 border-2 border-dark-gray rounded-md">
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8 border-4 border-deep-dark rounded-lg">
           {data.map((data, index) => (
             <FanSignList key={index} data={data} />
           ))}

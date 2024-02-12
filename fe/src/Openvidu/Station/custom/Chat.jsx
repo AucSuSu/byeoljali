@@ -16,7 +16,10 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
   return (
     <div id="chat" className="flex flex-col h-full border-2">
       <h2 className="bg-lime-100 border-b-2 p-2 w-full text-center">Chat</h2>
-      <div ref={scrollRef} className="mb-4 h-screen overflow-y-auto p-2">
+      <div
+        ref={scrollRef}
+        className="mb-4 h-screen overflow-y-auto p-2 whitespace-pre-line"
+      >
         {messages.map((messageData, index) =>
           messageData.orders === orders ? (
             <div key={index} className="font-milk flex flex-col">

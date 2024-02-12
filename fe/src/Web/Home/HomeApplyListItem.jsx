@@ -27,10 +27,14 @@ const ListItem = ({ data, status }) => {
   useEffect(() => {
     let time = null;
     if (status === 'CurrentApply') {
-      time = data.endApplyTime;
+      const endApplyDate = new Date(data.endApplyTime);
+      endApplyDate.setHours(23, 59, 59);
+      time = endApplyDate;
       setIsLive(true);
     } else {
-      time = data.startApplyTime;
+      const startApplyDate = new Date(data.startApplyTime);
+      startApplyDate.setHours(0, 0, 1);
+      time = startApplyDate;
     }
 
     setRemainingTime(calculateRemainingTime(time));
@@ -103,12 +107,12 @@ const ListItem = ({ data, status }) => {
       <div className=" mt-2 ml-5 text-hot-pink text-15">
         {status === 'CurrentApply' ? (
           <p>
-            응모 마감까지 {countdown.days}일 {countdown.hours}시간{' '}
+            마감까지 {countdown.days}일 {countdown.hours}시간{' '}
             {countdown.minutes}분 {countdown.seconds}초
           </p>
         ) : (
           <p>
-            응모 시작까지 {countdown.days}일 {countdown.hours}시간{' '}
+            시작까지 {countdown.days}일 {countdown.hours}시간{' '}
             {countdown.minutes}분 {countdown.seconds}초
           </p>
         )}
