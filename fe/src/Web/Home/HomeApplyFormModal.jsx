@@ -15,7 +15,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
 
   useEffect(() => {
     const makeStars = () => {
-      const numStars = 50; // 원하는 별의 개수
+      const numStars = 800; // 원하는 별의 개수
 
       const newStars = Array.from({ length: numStars }, (_, index) => ({
         id: index,
@@ -83,13 +83,25 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     return `${datePart} ${timePart}`; // "MM/DD HH:MM" 형식으로 결합
   };
 
-  const customStyle = {
+  const smallCustomStyle = {
     content: {
-      width: '1200px',
-      height: '850px',
+      width: '500px',
+      height: '250px',
       margin: 'auto',
       padding: 0,
       zIndex: 2, // z-index 값을 2로 설정
+      borderRadius: '20px',
+    },
+  };
+
+  const customStyle = {
+    content: {
+      width: '1200px',
+      height: '800px',
+      margin: 'auto',
+      padding: 0,
+      zIndex: 2, // z-index 값을 2로 설정
+      borderRadius: '20px',
     },
   };
 
@@ -113,16 +125,16 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           isOpen={isModalOpen}
           onRequestClose={closeModal}
           contentLabel={data.title}
-          style={customStyle}
+          style={smallCustomStyle}
         >
-          <div className="flex flex-col items-center justify-center h-full bg-[url('/public/bg.png')] bg-cover bg-center bg-no-repeat font-milk font-bold">
-            <div className="flex flex-col items-center justify-center p-4 overflow-y-auto">
+          <div className="font-big bg-black text-white p-10">
+            <div className="flex flex-col items-center justify-center ">
               <div className="bolder mb-4 text-25">
                 [ {data?.object?.fansignTitle} ]
               </div>
-              <p className="bolder mb-4 text-25">이미 지원한 팬싸인회입니다.</p>
+              <p className="text-25">이미 지원한 팬싸인회입니다.</p>
               <button
-                className="bg-light-gray px-4 py-2 rounded-lg mt-10"
+                className="bg-light-gray text-black px-4 py-2 rounded-lg mt-10"
                 onClick={closeModal}
               >
                 확인
@@ -157,11 +169,11 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
             <div className="w-1/2">
               <div className="text-40 flex-grow p-6">APPLY</div>{' '}
               <img
-                className="pl-5 pr-5 pb-20"
+                className="pl-5 pr-5 pb-10"
                 src={data?.object?.posterImageUrl}
                 style={{
-                  width: '100%',
-                  height: '90%',
+                  width: '650px',
+                  height: '700px',
                 }}
               ></img>
             </div>
@@ -171,7 +183,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   className="font-big bolder text-40 mt-10 hot-pink"
                   style={{
                     textShadow:
-                      '0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF',
+                      '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',
                   }}
                 >
                   [ {data?.object?.fansignTitle} ]

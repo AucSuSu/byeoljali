@@ -15,7 +15,7 @@ export default function CreateFansignModal({}) {
 
   useEffect(() => {
     const makeStars = () => {
-      const numStars = 50; // 원하는 별의 개수
+      const numStars = 800; // 원하는 별의 개수
 
       const newStars = Array.from({ length: numStars }, (_, index) => ({
         id: index,
@@ -108,6 +108,7 @@ export default function CreateFansignModal({}) {
 
   // 데이터 관리
   const [title, setTitle] = useState('');
+  const [albumName, setAlbumName] = useState('');
   const [information, setInformation] = useState('');
   const [startApplyTime, setStartApplyTime] = useState(
     new Date().toISOString().split('T')[0],
@@ -123,6 +124,7 @@ export default function CreateFansignModal({}) {
   const payload = {
     title: title,
     information: information,
+    albumName: albumName,
     startApplyTime: `${startApplyTime} 12:00:00`,
     endApplyTime: `${endApplyTime} 23:59:59`,
     startFansignTime: `${startFansignDate} ${startFansignHour}:00:00`,
@@ -223,9 +225,9 @@ export default function CreateFansignModal({}) {
                   <label className="text-hot-pink pb-1 ">앨범명</label>
                   <input
                     type="text"
-                    value="앨범명"
+                    value={albumName}
                     className="border-b border-gray-300 focus:border-hot-pink outline-none w-120 text-black p-3 rounded-xl p-1"
-                    // onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => setAlbumName(e.target.value)}
                   />
                 </div>
                 <div className="mt-4 flex items-center">
