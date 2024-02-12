@@ -7,14 +7,37 @@ function FanModal({ onClose, onPay, onDelete, data }) {
     }
   };
 
-  const downloadImage = () => {
-    const link = document.createElement('a');
-    link.href = data.photoUrl;
-    // Propose a default filename for the image. You can also extract the filename from data.photoUrl if it contains one.
-    link.download = 'downloadedImage.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  // 바로 다운 안되는 방법
+  // const downloadImage = () => {
+  //   const link = document.createElement('a');
+  //   link.href = data.photoUrl;
+  //   // Propose a default filename for the image. You can also extract the filename from data.photoUrl if it contains one.
+  //   link.download = 'downloadedImage.png';
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
+
+  // 바로 다운 시도
+  const downloadImage = (imageSrc) => {
+    fetch(imageSrc)
+      .then((response) => response.blob()) // 응답을 Blob으로 변환
+      .then((blob) => {
+        // Blob 객체를 이용해 Object URL 생성
+        const url = window.URL.createObjectURL(blob);
+        // Object URL을 사용하여 링크 생성
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'downloadedImage.jpg'); // 다운로드될 파일 이름 설정
+        // 링크를 DOM에 추가하고 클릭 이벤트 강제 실행
+        document.body.appendChild(link);
+        link.click();
+        // 사용 후 링크 제거
+        document.body.removeChild(link);
+        // 브라우저 메모리 해제
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((err) => console.error('이미지 다운로드 중 오류 발생:', err));
   };
 
   return (
@@ -24,7 +47,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
       onClick={handleOverlayClick} // Attach the click event handler here
     >
       <div
-        className="bg-[url('/public/bg.png')] w-80 h-auto p-5 rounded relative flex flex-col z-50"
+        className="bg-black w-80 h-auto p-5 rounded relative flex flex-col z-50"
         onClick={(e) => e.stopPropagation()} // Prevent the modal close function when clicking inside the modal content
       >
         {data.pay === 'N' ? (
@@ -100,7 +123,10 @@ function FanModal({ onClose, onPay, onDelete, data }) {
               alt="팬싸 사진"
               onContextMenu={(e) => e.preventDefault()}
             />
-            <button className="self-end mt-2" onClick={downloadImage}>
+            <button
+              className="self-end mt-2"
+              onClick={downloadImage(data.photoUrl)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
