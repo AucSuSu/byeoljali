@@ -90,83 +90,99 @@ function FanSignList({ data }) {
     <>
       {data.fansignStatus === 'APPLYING' ? (
         // 응모내역
-        <div className="text-white bg-slate-900 rounded-md relative">
-          <div className="w-[80%] ml-[10%]">
-            <img
-              onClick={toggleModal}
-              src={data.posterImageUrl}
-              alt="Poster Image"
-              className="w-full h-auto aspect-square  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
-            />
-            <div className="flex gap-3">
-              <div className="border rounded-md border-kakao-yellow text-kakao-yellow px-1">
-                APPLYING
+        <>
+          <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-big">
+            <div className="w-[80%] ml-[10%]">
+              <img
+                onClick={toggleModal}
+                src={data.posterImageUrl}
+                alt="Poster Image"
+                className="w-full h-auto aspect-square  cursor-pointer  mt-8 mb-2"
+              />
+              <div className="flex flex-col justify-between">
+                <div className="flex gap-3 mt-3 text-15">
+                  <div className="border rounded-md border-kakao-yellow text-kakao-yellow px-1">
+                    APPLYING
+                  </div>
+                  {data.mode === 'RANDOM' ? (
+                    <div className="border rounded-md border-sky-blue text-sky-blue px-1">
+                      RANDOM
+                    </div>
+                  ) : (
+                    <div className="border rounded-md border-neonGreen text-neonGreen px-1">
+                      LINE
+                    </div>
+                  )}
+                </div>
+                <div className="mt-3 text-15">{data.artistFansignTitle}</div>
+                <div className="mt-10 mb-6 text-15 text-hot-pink">
+                  마감까지 {timeLeft}
+                </div>
               </div>
-              {data.mode === 'RANDOM' ? (
-                <div className="border rounded-md border-sky-blue text-sky-blue px-1">
-                  RANDOM
-                </div>
-              ) : (
-                <div className="border rounded-md border-neonGreen text-neonGreen px-1">
-                  LINE
-                </div>
-              )}
             </div>
-            <div className="mb-16">{data.artistFansignTitle}</div>
-            <div className="absolute bottom-8 ">마감까지 {timeLeft}</div>
           </div>
-
           {isModalVisible && (
-            <FanSignModal data={data} onClose={() => setModalVisible(false)} />
+            <>
+              <FanSignModal
+                data={data}
+                onClose={() => setModalVisible(false)}
+              />
+            </>
           )}
-        </div>
+        </>
       ) : (
         // 당첨내역
-        <div className="text-white bg-slate-900 rounded-md relative">
-          <div className="w-[80%] ml-[10%]">
-            <img
-              onClick={toggleModal}
-              src={data.posterImageUrl}
-              alt="Poster Image"
-              className="w-full h-auto aspect-square  cursor-pointer hover:scale-105 transition-transform ease-in-out duration-500 mt-8 mb-2"
-            />
-            <div className="flex gap-3">
-              <div className="border rounded-md border-red text-red px-1">
-                LIVE
+        <>
+          <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-big">
+            <div className="w-[80%] ml-[10%]">
+              <img
+                onClick={toggleModal}
+                src={data.posterImageUrl}
+                alt="Poster Image"
+                className="w-full h-auto aspect-square  cursor-pointer  mt-8 mb-2"
+              />
+              <div className="flex gap-3 mt-3 text-15">
+                <div className="border rounded-md border-red text-red px-1">
+                  LIVE
+                </div>
+                {data.mode === 'RANDOM' ? (
+                  <div className="border rounded-md border-sky-blue text-sky-blue px-1">
+                    RANDOM
+                  </div>
+                ) : (
+                  <div className="border rounded-md border-neonGreen text-neonGreen px-1">
+                    LINE
+                  </div>
+                )}
               </div>
-              {data.mode === 'RANDOM' ? (
-                <div className="border rounded-md border-sky-blue text-sky-blue px-1">
-                  RANDOM
+              <div className="mt-3 text-15">{data.artistFansignTitle}</div>
+              {data.fansignStatus === 'SESSION_CONNECTED' ? (
+                <div className="flex flex-row justify-center mt-3 mb-6 text-15">
+                  <button
+                    className=" px-1 py-1 rounded-md bg-hot-pink text-white"
+                    onClick={participate}
+                  >
+                    입장하기
+                  </button>
                 </div>
               ) : (
-                <div className="border rounded-md border-neonGreen text-neonGreen px-1">
-                  LINE
+                <div className="flex flex-row justify-center mt-3 mb-6 text-15">
+                  <button className="  px-1 py-1 rounded-md bg-light-gray text-white cursor-not-allowed">
+                    입장하기
+                  </button>
                 </div>
               )}
             </div>
-            <div className="mb-16">{data.artistFansignTitle}</div>
-            {data.fansignStatus === 'SESSION_CONNECTED' ? (
-              <div className="flex flex-row items-center">
-                <button
-                  className="absolute bottom-5 left-1/2 -translate-x-1/2 mx-auto  px-1 py-1 rounded-md bg-hot-pink text-white"
-                  onClick={participate}
-                >
-                  입장하기
-                </button>
-              </div>
-            ) : (
-              <div>
-                <button className="absolute bottom-5 left-1/2 -translate-x-1/2 mx-auto  px-1 py-1 rounded-md bg-light-gray text-white cursor-not-allowed">
-                  입장하기
-                </button>
-              </div>
-            )}
           </div>
-
           {isModalVisible && (
-            <FanSignModal data={data} onClose={() => setModalVisible(false)} />
+            <>
+              <FanSignModal
+                data={data}
+                onClose={() => setModalVisible(false)}
+              />
+            </>
           )}
-        </div>
+        </>
       )}
     </>
   );
