@@ -47,7 +47,9 @@ public class ArtistFansign extends BaseEntity { // 아티스트 기준 팬싸인
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
-    public ArtistFansign(String title, String posterImageUrl, String information, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, FansignStatus status, FansignMode mode, Artist artist) {
+    private String albumName;
+
+    public ArtistFansign(String title, String posterImageUrl, String information, LocalDateTime startApplyTime, LocalDateTime endApplyTime, LocalDateTime startFansignTime, FansignStatus status, FansignMode mode, Artist artist, String albumName) {
         this.title = title;
         this.posterImageUrl = posterImageUrl;
         this.information = information;
@@ -57,6 +59,7 @@ public class ArtistFansign extends BaseEntity { // 아티스트 기준 팬싸인
         this.status = status;
         this.mode = mode;
         this.artist = artist;
+        this.albumName = albumName;
     }
 
     // status 변경 update

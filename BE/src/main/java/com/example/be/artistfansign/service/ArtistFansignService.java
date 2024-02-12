@@ -8,6 +8,8 @@ import com.example.be.artistfansign.entity.FansignStatus;
 import com.example.be.artistfansign.repository.ArtistFansignRepository;
 import com.example.be.config.auth.PrincipalDetails;
 import com.example.be.config.oauth.FanPrincipalDetails;
+import com.example.be.exception.ArtistNotFoundException;
+import com.example.be.exception.MemberNotFoundException;
 import com.example.be.fan.entity.Fan;
 import com.example.be.member.entity.Member;
 import com.example.be.member.repository.MemberRepository;
@@ -66,7 +68,7 @@ public class ArtistFansignService {
             }
 
             ArtistFansign artistFansign = new ArtistFansign(dto.getTitle(), imageUrl, dto.getInformation(), startApplyTime
-                    , endApplyTime, startFansignTime, status, dto.getMode(), artist);
+                    , endApplyTime, startFansignTime, status, dto.getMode(), artist, dto.getAlbumName());
             artistFansignRepository.save(artistFansign);
             Long artisFansignId = artistFansign.getArtistfansignId();
 
@@ -74,7 +76,7 @@ public class ArtistFansignService {
             for(Long memberId : dto.getMemberIdList()){
                 // 멤버 조회
                 Member member = memberRepository.findById(memberId).
-                        orElseThrow(() -> new IllegalArgumentException("해당 멤버가 없습니다."));
+                        orElseThrow(() -> new MemberNotFoundException("해당 멤버가 없습니다."));
                 MemberFansign memberFansign = new MemberFansign(artistFansign, member);
                 memberFansignRepository.save(memberFansign);
             }
@@ -116,7 +118,7 @@ public class ArtistFansignService {
             artist = getArtist();
         }else{
             artist = artistRepository.findById(artistId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 아티스트가 없습니다"));
+                .orElseThrow(() -> new ArtistNotFoundException("해당 아티스트가 없습니다"));
         }
         List<FansignGroupByStatusCountDto> list = artistFansignRepository.getCountGroupByStatus(artist);
 

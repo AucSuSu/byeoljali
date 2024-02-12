@@ -37,7 +37,7 @@ export default function FansignModal({ memberFansignId }) {
 
   useEffect(() => {
     const makeStars = () => {
-      const numStars = 50; // 원하는 별의 개수
+      const numStars = 800; // 원하는 별의 개수
 
       const newStars = Array.from({ length: numStars }, (_, index) => ({
         id: index,
@@ -85,6 +85,7 @@ export default function FansignModal({ memberFansignId }) {
       height: '700px',
       margin: 'auto',
       padding: 0,
+      borderRadius: '20px',
     },
   };
 
@@ -128,7 +129,7 @@ export default function FansignModal({ memberFansignId }) {
                   className="font-big bolder text-40 hot-pink"
                   style={{
                     textShadow:
-                      '0 0 10px #FFFFFF, 0 0 20px #FFFFFF, 0 0 30px #FFFFFF',
+                      '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',
                   }}
                 >
                   [ {detailData.object.title} ]

@@ -29,7 +29,7 @@ export default function ArtistInfo() {
     }
   };
 
-  const getArtistInfo1 = async () => {
+  const getArtistInfoForFan = async () => {
     const response = await customAxios
       .get(`artists/` + propsData.artistId)
       .then((res) => {
@@ -38,16 +38,16 @@ export default function ArtistInfo() {
     dispatch(getInfo(response));
   };
 
-  const getArtistInfo2 = async () => {
+  const getArtistInfoForArtist = async () => {
     const response = await customAxios.get(`artists/`).then((res) => {
       return res.data;
     });
     dispatch(getInfo(response));
   };
 
-  const getArtistCountData2 = async () => {
-    const result = customAxios
-      .get('artists/fansignCount/' + artistData.object.artistId)
+  const getArtistCountDataForArtist = async () => {
+    const result = await customAxios
+      .get('artists/fansignCount/-1')
       .then((res) => {
         setArtistCountData(res.data.object);
       })
@@ -56,9 +56,9 @@ export default function ArtistInfo() {
       });
   };
 
-  const getArtistCountData1 = async () => {
-    const result = customAxios
-      .get('artists/fansignCount/' + -1)
+  const getArtistCountDataForFan = async () => {
+    const result = await customAxios
+      .get('artists/fansignCount/' + propsData.artistId)
       .then((res) => {
         setArtistCountData(res.data.object);
       })
@@ -70,24 +70,21 @@ export default function ArtistInfo() {
   useEffect(() => {
     if (isArtist) {
       // isArtist가 true일 때 실행
-      getArtistInfo2();
+      getArtistInfoForArtist();
     } else {
-      getArtistInfo1(); // isArtist가 false일 때 실행
+      getArtistInfoForFan(); // isArtist가 false일 때 실행
     }
   }, []);
 
+  // 데뷔일로부터 경과한 일수를 계산하는 함수 실행 부분을 별도의 useEffect로 분리
+  // 이거 분리 안하고 위에 넣어주니까 dispatch 달린곳(getArtistInfo) 에서는 artistData가 무한 호출됩니다. 그래서 따로 분리해줬어요.
   useEffect(() => {
     if (isArtist) {
       // isArtist가 true일 때 실행
-      getArtistCountData2();
+      getArtistCountDataForArtist();
     } else {
-      getArtistCountData1();
+      getArtistCountDataForFan();
     }
-  }, [artistData]);
-
-  // 데뷔일로부터 경과한 일수를 계산하는 함수 실행 부분을 별도의 useEffect로 분리
-  // 이거 분리 안하고 위에 넣어주니까 dispatch 달린곳(getARtistInfo2, 1) 에서는 artistData가 무한 호출됩니다. 그래서 따로 분리해줬어요.
-  useEffect(() => {
     calculateDaysSinceDebut();
   }, [artistData]); // artistData가 변경될 때마다 경과 일수를 다시 계산합니다.
 
@@ -110,15 +107,6 @@ export default function ArtistInfo() {
 
   const handleCloseAddMember = () => {
     setShowAddMemberModal(false);
-  };
-
-  // testCode
-  const [socketOpen, setSocketOpen] = useState(false);
-  const [portNumber, setPortNumber] = useState(1);
-  const [name, setName] = useState('susu');
-  const testSocket = (e) => {
-    e.preventDefault();
-    setSocketOpen(!socketOpen);
   };
 
   return (
@@ -160,10 +148,10 @@ export default function ArtistInfo() {
           {/* 아티스트 정보 섹션 */}
           <div className="my-4">
             <p className="text-25 font-big">
-              Debut : {artistData.object.debutDate} | D+{daysSinceDebut}
+              데뷔일 : {artistData.object.debutDate} | D+{daysSinceDebut}
             </p>
             <p className="text-25 font-big">
-              Fandom : {artistData.object.fandomName}
+              팬덤명 : {artistData.object.fandomName}
             </p>
           </div>
           <div className="w-full my-8">
