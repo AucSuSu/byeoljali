@@ -2,11 +2,14 @@ import React, { useRef, useState, useEffect } from 'react';
 import useAxios from '../../axios';
 import { useSelector } from 'react-redux';
 
-function ArtistImgModal({ onClose, artistImageUrl }) {
+function ArtistImgModal({ onClose, artistImageUrl, logoImageUrl }) {
   const customAxios = useAxios();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState(artistImageUrl);
-  const fileInputRef = useRef(null);
+  const [logoImageFile, setLogoImageFile] = useState(null);
+  const [logoImageSrc, setlogoImageSrc] = useState(logoImageUrl);
+  const profileInputRef = useRef(null);
+  const logoInputRef = useRef(null);
 
   useEffect(() => {
     if (imageFile) {
@@ -18,28 +21,44 @@ function ArtistImgModal({ onClose, artistImageUrl }) {
     } else {
       setImageSrc(artistImageUrl);
     }
-  }, [imageFile]);
+    if (logoImageFile) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setlogoImageSrc(reader.result);
+      };
+      reader.readAsDataURL(logoImageFile);
+    } else {
+      setlogoImageSrc(logoImageUrl);
+    }
+  }, [imageFile, logoImageFile]);
 
-  const handleFileChange = (event) => {
+  const handleProfileFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log(file);
       setImageFile(file);
     }
   };
-
-  const handleButtonClick = () => {
-    fileInputRef.current.click();
+  const handleLogoFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setLogoImageFile(file);
+    }
   };
-
-  const handlePost = () => {
-    if (!imageFile) {
-      alert('Please select an image to upload');
+  const handleProfileButtonClick = () => {
+    profileInputRef.current.click();
+  };
+  const handleLogoButtonClick = () => {
+    logoInputRef.current.click();
+  };
+  const handlePost = async () => {
+    if (!imageFile && !logoImageFile) {
+      alert('이미지를 선택해주세요');
       return;
     }
 
     const formData = new FormData();
-    formData.append('image', imageFile);
+    if (imageFile) formData.append('profileImage', imageFile);
+    if (logoImageFile) formData.append('logoImage', logoImageFile);
 
     customAxios
       .put(`artists/image`, formData, {
@@ -70,34 +89,55 @@ function ArtistImgModal({ onClose, artistImageUrl }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="self-start text-4xl font-bold mb-6">
-          프로필 이미지 수정
+          이미지 수정
           <div className="mt-1 border-b-2"></div>
         </div>
 
         <div className="flex flex-col items-center mt-3">
+          {/* 프로필 이미지 업로드 섹션 */}
           <div className="relative mb-4">
             <img
               src={imageSrc}
-              alt="Preview"
+              alt="Profile Preview"
               className="w-100 h-80 rounded-lg object-fill"
             />
             <button
-              onClick={handleButtonClick}
+              onClick={handleProfileButtonClick}
               className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
             >
-              {/* Icon or text to indicate upload, hidden by default and only shown on hover/focus */}
               <span className="text-white text-5xl">+</span>
             </button>
-            <input
-              type="file"
-              onChange={handleFileChange}
-              className="hidden"
-              ref={fileInputRef}
-            />
           </div>
+          <input
+            type="file"
+            onChange={handleProfileFileChange}
+            className="hidden"
+            ref={profileInputRef}
+          />
+
+          {/* 로고 이미지 업로드 섹션 */}
+          <div className="relative mb-4">
+            <img
+              src={logoImageSrc}
+              alt="Logo Preview"
+              className="w-100 h-80 rounded-lg object-fill"
+            />
+            <button
+              onClick={handleLogoButtonClick}
+              className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
+            >
+              <span className="text-white text-5xl">+</span>
+            </button>
+          </div>
+          <input
+            type="file"
+            onChange={handleLogoFileChange}
+            className="hidden"
+            ref={logoInputRef}
+          />
         </div>
 
-        {/* Buttons */}
+        {/* 등록 및 닫기 버튼 */}
         <div className="flex w-72 mt-8">
           <button
             onClick={handlePost}
@@ -107,7 +147,7 @@ function ArtistImgModal({ onClose, artistImageUrl }) {
           </button>
           <button
             onClick={onClose}
-            className="flex-1 py-2 px-4 bg-light-gray  font-semibold rounded-md"
+            className="flex-1 py-2 px-4 bg-light-gray font-semibold rounded-md"
           >
             닫기
           </button>

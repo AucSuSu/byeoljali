@@ -69,6 +69,11 @@ class App extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    clearInterval(this.checkVolume);
+  }
+
   setupMicrophone() {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
@@ -107,10 +112,11 @@ class App extends Component {
         console.error('마이크 접근 중 오류 발생:', error);
       });
   }
-
+  // 팬싸인 이동 시 clear 하기.
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload);
     clearInterval(this.timer); // 타이머 클리어
+    clearInterval(this.checkVolume); // 볼륨 클리어
   }
 
   onbeforeunload(event) {
@@ -390,7 +396,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="flex flex-col h-screen font-milk font-bold">
+      <div className="flex flex-col h-screen font-milk font-bold bg-black text-white">
         {/* 헤더 고정 */}
         <div className="mb-8">
           <Header
@@ -417,30 +423,30 @@ class App extends Component {
             </div>
 
             {/* 볼륨 바 컨테이너 */}
-            <div className="h-[10%] bg-lime-100 flex flex-row border-r-2 border-l-2 items-center">
-              <p className="border-r-2 pl-4 pr-4">마이크</p>
+            <div className="h-[10%] bg-gray flex flex-row border-r-2 border-l-2 items-center">
+              <p className="border-r-2 pl-4 pr-4 mx-2 text-18">마이크</p>
               {/* 실제 볼륨 바 */}
               <div id="volume-bar" className="volume-bar pl-4 "></div>
             </div>
 
             {/* 캡처 버튼 */}
-            <div className="flex flex-row h-[10%] border-2 items-center justify-center ">
-              <p className="pr-2">
+            <div className="flex flex-row h-[10%] border-2 items-center justify-between ">
+              <p className="pr-2 ml-10">
                 {this.isSamePerson
                   ? '본인 인증이 완료되었습니다'
                   : '본인 인증이 필요합니다'}
               </p>
-              <div
-                className="bg-pink rounded-md w-40 h-8 flex items-center justify-center text-center "
+              <button
+                className="bg-hot-pink rounded-md w-[20%] h-[50%] flex items-center justify-center mr-10 hover:scale-110 hover:border-2 hover:border-pink-400 hover:opacity-90"
                 onClick={this.captureMainVideo}
               >
                 본인 인증
-              </div>
+              </button>
             </div>
 
             {/* 순서 */}
-            <div className="bg-pink flex flex-row h-[10%] border-l-2 border-r-2 border-b-2 items-center">
-              <p className="border-r-2 pl-4 pr-4">내 순서</p>
+            <div className="bg-gray flex flex-row h-[10%] border-l-2 border-r-2 border-b-2 items-center text-18">
+              <p className="border-r-2 pl-4 pr-4 mx-2">내 순서</p>
               <p className="pl-4">{this.state.orders}번째</p>
             </div>
           </div>
