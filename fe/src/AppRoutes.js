@@ -16,6 +16,8 @@ import FanWinView from './Web/Pages/FanWinView.jsx';
 import Capture from './Web/Utils/Capture.jsx';
 import FanView from './Openvidu/View/FanView.jsx';
 import ArtistView from './Openvidu/View/ArtistView.jsx';
+import CurrentApply from './Web/Home/remake/CurrentApply.jsx';
+import CommingSoon from './Web/Home/remake/CommingSoon.jsx';
 
 export default function AppRoutes() {
   return (
@@ -37,6 +39,8 @@ export default function AppRoutes() {
         <Route path="/capture" element={<Capture />} />
         <Route path="/fan-fansign" element={<FanView />} />
         <Route path="/artist-fansign" element={<ArtistView />} />
+        <Route path="/current-apply" element={<CurrentApply />} />
+        <Route path="/comming-soon" element={<CommingSoon />} />
 
         {/* 라우트 여기에 추가하세용 */}
       </Routes>

@@ -132,10 +132,10 @@ export default function ArtistInfo() {
         {/* 아티스트 정보 섹션 */}
         <div className="my-4">
           <p className="text-25 font-big">
-            데뷔일: {artistData.object.debutDate} | D+{daysSinceDebut}
+            데뷔일: {artistData?.object.debutDate} | D+{daysSinceDebut}
           </p>
           <p className="text-25 font-big">
-            팬덤명: {artistData.object.fandomName}
+            팬덤명: {artistData?.object.fandomName}
           </p>
         </div>
         <div className="w-full my-8">
@@ -167,7 +167,7 @@ export default function ArtistInfo() {
         <div className="w-full my-4">
           <div className="text-30 mb-2 font-big">Member</div>
           <div className="flex flex-wrap justify-center gap-4">
-            {artistData.object.memberList.map((member) => (
+            {artistData?.object.memberList.map((member) => (
               <MemberList key={member.memberId} data={member} />
             ))}
             {/* 멤버 추가 버튼 */}
