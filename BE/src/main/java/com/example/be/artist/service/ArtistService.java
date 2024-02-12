@@ -58,7 +58,7 @@ public class ArtistService {
         String fandomName = dto.getFandomName();
         LocalDate debutDate = dto.getDebutDate();
 
-        Artist artist = Artist.createArtist(email, encodePwd, name, noImageUrl, companyName, fandomName, debutDate);
+        Artist artist = Artist.createArtist(email, encodePwd, name, noImageUrl, noImageUrl, companyName, fandomName, debutDate);
         artistRepository.save(artist);
 
         responseDto.setMsg("회원가입 성공");
@@ -108,6 +108,18 @@ public class ArtistService {
         }
     }
 
+    public String updateLogoImage(MultipartFile image){
+        Artist artist = getArtist();
+        try {
+            String uploadUrl = s3Uploader.upload(image, "artist/" + artist.getName(),"logo" );
+            artist.setLogoImageUrl(uploadUrl);
+            artistRepository.save(artist); // 필터단에서 artist를 가져오는데 이건 트랜잭션 단위가 아니라서 1차 캐시에 저장되지않는다. 그래서 강제적으로 save 호출
+            return "완료";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Long updateMember(Long memberId, MultipartFile image, ArtistMemberRequestDto dto){
         Artist artist = getArtist();
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException("해당 아티스트 멤버 정보가 없습니다."));
@@ -138,5 +150,9 @@ public class ArtistService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
         return principalDetails.getArtist();
+    }
+
+    public List<ArtistLogoResponseDto> mainLogo() {
+        return artistRepository.findAllArtistsLogo();
     }
 }

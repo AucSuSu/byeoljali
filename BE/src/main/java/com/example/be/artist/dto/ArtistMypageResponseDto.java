@@ -16,6 +16,7 @@ public class ArtistMypageResponseDto {
     private Long artistId;
     private String name;
     private String artistImageUrl;
+    private String logoImageUrl;
     private String companyName;
     private LocalDate debutDate;
     private String fandomName;
@@ -25,6 +26,7 @@ public class ArtistMypageResponseDto {
         this.artistId = entity.getArtistId();
         this.name = entity.getName();
         this.artistImageUrl = entity.getArtistImageUrl();
+        this.logoImageUrl = entity.getLogoImageUrl();
         this.companyName = entity.getCompanyName();
         this.debutDate = entity.getDebutDate();
         this.fandomName = entity.getFandomName();

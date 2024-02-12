@@ -30,6 +30,8 @@ public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
     private String name;
     @Setter
     private String artistImageUrl;
+    @Setter
+    private String logoImageUrl;
     private String roles;
 
     private LocalDate debutDate;
@@ -42,12 +44,13 @@ public class Artist extends BaseEntity { // 사실은 그룹을 뜻하는 거임
         return new ArrayList<>();
     }
 
-    public static Artist createArtist(String email, String password, String name, String artistImageUrl, String companyName, String fandomName, LocalDate debutDate){
+    public static Artist createArtist(String email, String password, String name, String artistImageUrl, String logoImageUrl, String companyName, String fandomName, LocalDate debutDate){
         Artist artist = new Artist();
         artist.email = email;
         artist.password = password;
         artist.name = name;
         artist.artistImageUrl = artistImageUrl;
+        artist.logoImageUrl = logoImageUrl;
         artist.roles = "ROLE_ARTIST";
         artist.companyName = companyName;
         artist.fandomName = fandomName;
