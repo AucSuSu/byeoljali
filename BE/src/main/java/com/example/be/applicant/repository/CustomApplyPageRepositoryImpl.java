@@ -101,7 +101,8 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                                 artistFansign.endApplyTime,
                                 artistFansign.mode,
                                 artistFansign.artistfansignId,
-                                member.artist.artistId
+                                member.artist.artistId,
+                                Expressions.constant(-1)
 
                         )
                 ).from(memberFansign)
@@ -146,7 +147,8 @@ public class CustomApplyPageRepositoryImpl implements CustomApplyPageRepository{
                                 artistFansign.endApplyTime,
                                 artistFansign.mode,
                                 artistFansign.artistfansignId,
-                                member.artist.artistId
+                                member.artist.artistId,
+                                winning.orders
                         )
                 ).from(memberFansign)
                 .join(artistFansign)
