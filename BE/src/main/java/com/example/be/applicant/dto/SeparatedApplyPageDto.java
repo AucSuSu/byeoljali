@@ -22,5 +22,6 @@ public class SeparatedApplyPageDto {
     private FansignMode mode; // 추첨방식
     private Long artistFansignId;
     private Long artistId;
+    private int orders;
 
 }
