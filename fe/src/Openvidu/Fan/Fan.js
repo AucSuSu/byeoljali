@@ -279,7 +279,12 @@ class VideoRoomComponent extends Component {
   // 인생 네컷 캡쳐시 챗토글 관리
 
   checkChatToggle(callback) {
-    this.setState({ chatDisplay: 'none' }, callback);
+    this.setState({ chatDisplay: 'none' }, () => {
+      this.updateLayout();
+      if (typeof callback === 'function') {
+        callback();
+      }
+    });
   }
 
   render() {
