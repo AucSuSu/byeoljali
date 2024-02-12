@@ -19,32 +19,30 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
 
   return (
     <>
-      <div className="bg-pink fixed bottom-0 w-full h-15 font-milk text-white font-bold flex justify-center ">
-        <div className="flex justify-center mt-2 mb-2">
-          <div
-            onClick={() => blackList()}
-            className="flex items-center mx-2 bg-slate-400 rounded-md"
-          >
-            <IconButton>
-              <AddIcon />
-            </IconButton>
-            <p className="mx-2">블랙리스트</p>
-          </div>
-
-          <div
-            className="flex items-center mx-2 bg-slate-400 rounded-md"
-            onClick={() => timeOver(orders, false)}
-          >
-            <IconButton>
-              <CloseIcon />
-            </IconButton>
-            <p className="mx-2">강제종료</p>
-          </div>
+      <div className="flex fixed bg-black bottom-0 w-full h-15 font-milk text-white font-bold justify-center p-4 border-t-2">
+        <div
+          onClick={() => blackList()}
+          className="flex items-center bg-slate-400 rounded-md mr-5"
+        >
+          <IconButton>
+            <AddIcon />
+          </IconButton>
+          <p className="pr-4">블랙리스트</p>
         </div>
 
-        <div>
+        <div
+          className="flex items-center bg-slate-400 rounded-md ml-5"
+          onClick={() => timeOver(orders, false)}
+        >
+          <IconButton>
+            <CloseIcon />
+          </IconButton>
+          <p className="pr-4">강제 종료</p>
+        </div>
+
+        <div className="absolute right-[10px]">
           <IconButton onClick={() => toggleChat()}>
-            <ChatIcon />
+            <ChatIcon className="text-hot-pink rounded-full hover:bg-white hover:scale-[130%]" />
           </IconButton>
         </div>
       </div>
