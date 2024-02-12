@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function FanSignModal({ data, onClose }) {
   console.log(data);
-
+  const [stars, setStars] = useState([]);
   const customAxios = useAxios();
 
   // 대기방 참가 로직
@@ -66,7 +66,30 @@ function FanSignModal({ data, onClose }) {
   console.log(fanSignDetail);
 
   useEffect(() => {
+    const makeStars = () => {
+      const numStars = 800; // 원하는 별의 개수
+
+      const newStars = Array.from({ length: numStars }, (_, index) => ({
+        id: index,
+        left: Math.random() * 100 + 'vw', // 랜덤한 가로 위치
+        top: Math.random() * 100 + 'vh', // 랜덤한 세로 위치
+        animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
+      }));
+
+      setStars(newStars);
+    };
+
+    makeStars();
+
+    // 일정 시간마다 별의 위치를 재설정
+    const intervalId = setInterval(() => {
+      makeStars();
+    }, 5000);
+
+    // 컴포넌트가 언마운트되면 interval 제거
     fetchData(fanSignId);
+
+    return () => clearInterval(intervalId);
   }, [fanSignId]);
 
   const fetchData = async (fanSignId) => {
@@ -121,15 +144,35 @@ function FanSignModal({ data, onClose }) {
     <>
       {fanSignDetail ? (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 text-white"
+          className="fixed inset-0 bg-white bg-opacity-50 flex justify-center overflow-hidden items-center z-50 text-white"
           onClick={handleCloseModal}
         >
           <div
-            className="bg-black max-w-300 w-300 max-h-200 h-200 p-6 rounded-md grid grid-cols-2"
+            className="bg-black max-w-300 w-300 max-h-200 h-200 p-6 overflow-hidden rounded-md grid grid-cols-2"
             onClick={handleModalContentClick}
+            style={{
+              borderRadius: '20px',
+            }}
           >
-            <div className="p-3">
+            <div
+              className="p-3"
+              style={{
+                position: 'relative',
+              }}
+            >
+              {stars.map((star) => (
+                <div
+                  key={star.id}
+                  className="star"
+                  style={{
+                    left: star.left,
+                    top: star.top,
+                    animationDuration: star.animationDuration,
+                  }}
+                ></div>
+              ))}
               <div className="font-big bolder text-40 mb-6">MY APPLY</div>
+
               <div className="w-[100%] h-[620px]">
                 <img
                   src={fanSignDetail.posterImageUrl}
@@ -138,11 +181,13 @@ function FanSignModal({ data, onClose }) {
                 />
               </div>
             </div>
+
             <div className="p-3 pt-24 pb-9">
               <div className="flex  h-[100%] flex-col justify-between">
                 <div className="font-big bolder text-40">
                   [ {fanSignDetail.artistFansignTitle} ]
                 </div>
+
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">📌 공지</p>
                   <div
