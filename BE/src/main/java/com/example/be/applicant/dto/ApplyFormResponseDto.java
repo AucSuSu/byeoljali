@@ -20,6 +20,7 @@ public class ApplyFormResponseDto { // 응모 폼 생성할 때 프론트에 전
     private LocalDateTime startFansignTime; // 팬싸 시작 시간
     private String posterImageUrl;
     private String albumName; // 진행 중인 팬싸에서 사야하는 앨범 명
+    private String artistName;
 
     public ApplyFormResponseDto(ArtistFansign entity){
         this.fansignTitle = entity.getTitle();
@@ -33,6 +34,7 @@ public class ApplyFormResponseDto { // 응모 폼 생성할 때 프론트에 전
         this.startFansignTime=entity.getStartFansignTime();
         this.posterImageUrl = entity.getPosterImageUrl();
         this.albumName = entity.getAlbumName();
+        this.artistName = entity.getArtist().getName();
     }
 
 
