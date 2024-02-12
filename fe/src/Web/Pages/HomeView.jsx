@@ -1,5 +1,5 @@
 // HomeView.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getUserInfo } from '../Stores/fanInfoReducer';
@@ -20,12 +20,48 @@ const HomeView = () => {
   const beforeData = useSelector((state) => state.homeapply.beforeData); // 응모 전 데이터 redux에서 꺼내기
   const customAxios = useAxios();
   const dispatch = useDispatch();
+  // 아티스트명
+  const items = [
+    { name: 'Item 1', font: 'Arial, sans-serif' },
+    { name: 'Item 2', font: 'Georgia, serif' },
+    { name: 'Item 3', font: 'Verdana, sans-serif' },
+    { name: 'Item 4', font: 'Courier New, monospace' },
+    { name: 'Item 5', font: 'Impact, sans-serif' },
+    { name: 'Item 1', font: 'Arial, sans-serif' },
+    { name: 'Item 2', font: 'Georgia, serif' },
+    { name: 'Item 3', font: 'Verdana, sans-serif' },
+    { name: 'Item 4', font: 'Courier New, monospace' },
+    { name: 'Item 5', font: 'Impact, sans-serif' },
+    { name: 'Item 1', font: 'Arial, sans-serif' },
+    { name: 'Item 2', font: 'Georgia, serif' },
+    { name: 'Item 3', font: 'Verdana, sans-serif' },
+    { name: 'Item 4', font: 'Courier New, monospace' },
+    { name: 'Item 5', font: 'Impact, sans-serif' },
+    { name: 'Item 1', font: 'Arial, sans-serif' },
+    { name: 'Item 2', font: 'Georgia, serif' },
+    { name: 'Item 3', font: 'Verdana, sans-serif' },
+    { name: 'Item 4', font: 'Courier New, monospace' },
+    { name: 'Item 5', font: 'Impact, sans-serif' },
+  ];
+  const containerRef = useRef(null);
 
   // 최초 렌러딩 시 data 불러오기
   useEffect(() => {
     loadAfterData();
     loadBeforeData();
     getUserInfoData();
+
+    const container = containerRef.current;
+
+    const scrollInterval = setInterval(() => {
+      if (container) {
+        console.log('left');
+        container.scrollLeft += 1; // 스크롤 간격 조절 가능
+      }
+    }, 20); // 스크롤 속도 조절 가능
+
+    // 컴포넌트가 언마운트될 때 인터벌을 해제합니다.
+    return () => clearInterval(scrollInterval);
   }, []);
 
   const getUserInfoData = async () => {
@@ -91,6 +127,38 @@ const HomeView = () => {
         </div>
 
         {/* 3. Current Apply  */}
+        <div className="flex items-center p-4 h-40">
+          <div
+            ref={containerRef}
+            className="flex overflow-x-auto p-1 items-center"
+          >
+            {Array.isArray(items) &&
+              items.map((artist, index) => (
+                <div //하나의 멤버
+                  key={index}
+                  onClick={() => select(index, artist)}
+                  className="mr-4 inline-block" // inline-block 클래스 추가
+                  style={{
+                    fontFamily: artist.font,
+                  }}
+                >
+                  <div
+                    className="mt-2 text-center text-white"
+                    style={{
+                      width: '103px',
+                      height: '103px',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {artist.name}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+
         <div>
           <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
             <p> CURRENT APPLY</p>
