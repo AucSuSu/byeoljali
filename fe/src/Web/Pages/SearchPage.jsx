@@ -16,23 +16,26 @@ const PageContainer = styled.div`
   font-family: 'Big Shoulders Display', cursive; // 예시 폰트, 실제 프로젝트에 맞게 조정 필요
 `;
 
-// SearchInput 스타일 컴포넌트를 정의합니다. 이 컴포넌트는 검색 입력 필드에 스타일을 적용합니다.
 const SearchInput = styled.input`
-  flex: 1; // Flex 아이템이 컨테이너 내에서 가능한 많은 공간을 차지하도록 설정
-  border: none; // 테두리 없음
-  outline: none; // 포커스 아웃라인 제거
-  padding: 8px; // 내부 여백
-  width: 400px;
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  width: 100%; // 너비를 100%로 설정하여 컨테이너를 꽉 채우도록 함
+  background-color: transparent; // 배경색을 투명으로 설정
+  border-radius: 9999px; // 둥근 테두리를 적용하여 SearchFieldWrapper와 일치시킴
 `;
 
 // SearchFieldWrapper 스타일 컴포넌트를 정의합니다. 이 컴포넌트는 검색 필드와 아이콘을 감싸는 역할을 합니다.
 const SearchFieldWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: white; // 배경색 설정
-  border-radius: 9999px; // 둥근 테두리
-  padding: 4px 8px; // 패딩
+  background-color: white;
+  border-radius: 9999px;
+  padding: 4px 8px;
   margin-top: 30px;
+  width: 80%; // 전체 컨테이너의 80% 너비를 차지하도록 설정
+  max-width: 800px; // 최대 너비를 800px로 설정
 `;
 
 // SearchInputContainer 스타일 컴포넌트를 정의합니다.
@@ -41,7 +44,7 @@ const SearchInputContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding-top: 20px;
+  padding-top: 10px;
 `;
 
 function SearchPage() {
@@ -102,7 +105,7 @@ function SearchPage() {
         {/* 검색 결과 출력 */}
         <div className="mt-8">
           {searchData && (
-            <HomeApplyList data={searchData} status="CurrentApply" />
+            <HomeApplyList data={searchData.object} status="CurrentApply" />
           )}
         </div>
       </div>
