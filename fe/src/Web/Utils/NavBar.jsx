@@ -5,16 +5,21 @@ import ProfileImage from './ProfileImage';
 import { isArtist, logout, kakaoAuthorization } from '../Stores/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../axios';
+<<<<<<< HEAD
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
+=======
+// Navbar 배경 및 밑줄 주석처리 margin-bottom 추가
+>>>>>>> fe/more
 const NavbarContainer = styled.nav`
-  background-color: #fbe8e1;
-  height: 50px;
+  // background-color: #fbe8e1;
+  // border-bottom: 2px solid black;
+  margin-bottom: 40px;
+  height: 70px;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid black;
 `;
 
 const NavbarList = styled.ul`
@@ -30,10 +35,26 @@ const NavbarItem = styled.li`
   margin: 10px;
 `;
 
-//NavBar 요소
+// Logo 및 Title styled 추가
+const NavbarLogo = styled(Link)`
+  color: #fff;
+  margin-top: 15px;
+  position: relative;
+  margin: 10px;
+`;
+const NavbarTitle = styled.p`
+  color: #fff;
+  margin-top: 15px;
+  position: relative;
+  margin: 10px;
+  margin-left: 200px;
+  font-size: 30px;
+`;
+
+//NavBar 요소, color : inherit로 변경하여 NavbarItem의 color 따라가게 함(흰색)
 const NavbarLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: inherit;
   font-weight: bold;
 
   &:hover {
@@ -76,7 +97,7 @@ const DropdownItem = styled.div`
   }
 `;
 
-const Navbar = () => {
+const Navbar = ({ bgStyle }) => {
   const trueArtist = useSelector((state) => state.auth.isArtist);
   const kakaoAuth = useSelector((state) => state.auth.kakaoAuthorization);
   const dispatch = useDispatch();
@@ -140,10 +161,11 @@ const Navbar = () => {
   };
 
   return (
-    <NavbarContainer className="font-bold font-milk pb-8">
-      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+    <NavbarContainer className={`${bgStyle} font-bold font-milk pb-8`}>
+      <NavbarLogo to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
         <img src="/logo.png" className="w-[45px] h-[45px]" />
-      </Link>
+      </NavbarLogo>
+      <NavbarTitle> 별자리 </NavbarTitle>
       <NavbarList>
         {isArtist ? (
           // Artist일 경우

@@ -79,28 +79,28 @@ const ListItem = ({ data, status }) => {
   return (
     <div
       id="card_container"
-      className="bg-slate-900 text-white rounded-md m-1 font-sm transition-all"
+      className="bg-blue-gray text-white rounded-md m-1 font-sm transition-all h-[450px] font-big text-15 duration-500 hover:scale-105"
     >
       <img
         src={data.posterImageUrl}
         alt={data.title}
-        className={`mx-auto w-[80%] h-[65%] cursor-pointer rounded-md mt-5 mb-2 transition-all ${status === 'CommingSoon' ? 'opacity-80' : ''} hover:scale-105`}
+        className={`mx-auto w-[85%] h-[60%] cursor-pointer rounded-md mt-4 mb-3 transition-all ${status === 'CommingSoon' ? 'opacity-80' : ''}`}
         onClick={() => openModal()}
       />
-      <div className="flex text-sm ml-5 mb-2">
+      <div className="flex text-12 ml-5 mb-3">
         <p
-          className={`mr-2 border ${isLive ? 'border-red text-red' : 'border-violet text-violet'} rounded-md p-1`}
+          className={`mr-2 border-2  ${isLive ? 'border-red text-red' : 'border-violet text-violet'} rounded-md px-3 p-1`}
         >
           {isLive ? 'LIVE' : 'READY'}
         </p>
         <p
-          className={`mr-2 border ${data?.mode ? 'border-sky-blue text-sky-blue' : 'border-green-500 text-green-500'} rounded-md p-1`}
+          className={`mr-2 border-2  ${data?.mode ? 'border-sky-blue text-sky-blue' : 'border-neonGreen text-neonGreen'} px-3 rounded-md p-1`}
         >
           {data?.mode ? 'RANDOM' : 'LINE'}
         </p>
       </div>
-      <div className="text-sm ml-5 h-[65px]">{data.title}</div>
-      <div className="text-sm ml-5 text-hot-pink">
+      <div className=" ml-5 h-[65px] ">{data.title}</div>
+      <div className=" mt-2 ml-5 text-hot-pink text-15">
         {status === 'CurrentApply' ? (
           <p>
             응모 마감까지 {countdown.days}일 {countdown.hours}시간{' '}

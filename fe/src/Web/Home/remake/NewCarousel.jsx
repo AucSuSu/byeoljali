@@ -1,108 +1,118 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const Carousel = ({ data }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [length, setLength] = useState(data.length);
-  const [isHovered, setIsHovered] = useState(false);
+export default function Carousel({ datas }) {
+  const newDatas = [...datas, ...datas, ...datas];
+  const [imageWidth, setImageWidth] = useState(440);
+  const [datasLength, setDatasLength] = useState(0);
+  const [slideIndex, setSlideIndex] = useState(0);
+  const [slideLeft, setSlideLeft] = useState(0);
+  const [slideCount, setSliceCount] = useState(0);
+  const [isStartTimer, setIsStartTimer] = useState(true);
+  const slideRef = useRef(null);
 
-  // 5초 마다 넘기기
   useEffect(() => {
-    let interval;
+    // 너비 440 설정. 화면에 따라 값 변경해야 함.
+    setImageWidth(440);
+    setDatasLength(datas.length);
+    setSlideIndex(datas.length);
+    setSlideLeft(datas.length * 440);
+  }, []);
 
-    if (!isHovered) {
-      interval = setInterval(() => {
-        next();
-      }, 5000);
-    }
+  // useEffect(() => {
+  //   let timer;
+  //   console.log(isStartTimer);
+  //   if (isStartTimer) {
+  //     timer = setInterval(() => {
+  //       console.log('온클릭 실행');
+  //       onClickRight();
+  //     }, 3000);
+  //   }
 
-    return () => clearInterval(interval);
-  }, [currentIndex, isHovered]);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, [isStartTimer]);
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
+    setIsStartTimer(true);
   };
 
-  //
-  const next = () => {
-    if (currentIndex < length - 3) {
-      setCurrentIndex((prevState) => prevState + 1);
-    } else {
-      setCurrentIndex(0);
+  const handleMouseEnter = () => {
+    setIsStartTimer(false);
+  };
+
+  const Arrow = ({ direct, onClick }) => (
+    <div
+      className={`absolute top-1/2 ${direct === 'left' ? 'left-[23%]' : 'right-[23%]'} translate-y-[-50%] z-20 text-white text-30 cursor-pointer`}
+      onClick={onClick}
+    >
+      {direct === 'left' ? '◀︎' : '▶︎'}
+    </div>
+  );
+
+  const onClickLeft = () => {
+    setSliceCount((prev) => prev - 1);
+    setSlideIndex((prev) => prev - 1);
+    moveSlide(slideIndex - 1, slideCount - 1);
+  };
+
+  const onClickRight = () => {
+    setSliceCount((prev) => prev + 1);
+    setSlideIndex((prev) => prev + 1);
+    moveSlide(slideIndex + 1, slideCount + 1);
+  };
+
+  const moveSlide = (newSlideIndex, newSlideCount) => {
+    setSlideLeft(newSlideIndex * imageWidth);
+    if (datasLength === newSlideCount || datasLength === -newSlideCount) {
+      setTimeout(() => {
+        slideRef.current.style.transition = '';
+        setSlideLeft(datasLength * imageWidth);
+        setSlideIndex(datasLength);
+        setSliceCount(0);
+        setTimeout(() => {
+          slideRef.current.style.transition = 'transform 500ms ease-out';
+        }, 100);
+      }, 600);
     }
   };
 
-  const prev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevState) => prevState - 1);
-    } else {
-      setCurrentIndex(length - 3);
+  const styledImage = (data, index) => {
+    let style = `w-[440px] h-[550px] object-cover rounded-lg mt-10 opacity-40`;
+    // let style = `w-[${imageWidth}px] h-[550px] object-cover rounded-lg mt-10 opacity-40`;
+    if (index === slideIndex + 1) {
+      style = `w-[550px] h-[550px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
+      // style = `w-[${imageWidth * 1.25}px] h-[550px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
     }
+
+    return (
+      <img
+        key={index}
+        src={data.url}
+        alt={`image ${index}`}
+        className={style}
+      />
+    );
   };
 
   return (
     <div
-      className="overflow-hidden relative"
+      className={`relative h-[650px] w-[1270px] m-auto overflow-hidden`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      <Arrow direct="left" onClick={onClickLeft} />
+      <Arrow direct="right" onClick={onClickRight} />
       <div
-        className="flex transition-all ease-out duration-300"
+        ref={slideRef}
+        className="absolute flex left-0 top-0"
         style={{
-          transform: `translateX(-${currentIndex * 33.3 + 66.3}%)`, // 중앙 이미지와 겹치도록 수정
-          marginLeft: '-33.3%', // 가장 좌측 이미지가 가운데 이미지와 겹치도록 수정
+          transition: 'transform 500ms ease-out',
+          transform: `translateX(${-slideLeft}px)`,
         }}
       >
-        {data.map((Thumbnail, idx) => (
-          <img
-            key={idx}
-            src={Thumbnail.url}
-            alt=""
-            className={`w-1/3 h-[400px] flex-shrink-0 flex-grow border-radius-5 ${
-              idx === currentIndex + 1
-                ? 'border-4 border-slate-700'
-                : 'border border-slate-700'
-            } ${
-              idx === currentIndex + 1
-                ? 'opacity-100'
-                : 'opacity-50 hover:opacity-100'
-            } ${
-              idx === currentIndex + 1
-                ? 'transform scale-105'
-                : 'transform scale-100'
-            }`}
-            style={{
-              marginRight: idx === data.length - 1 ? 0 : '2%',
-            }}
-          />
-        ))}
-      </div>
-      <div className="flex items-center">
-        (
-        <button
-          onClick={prev}
-          className={`w-1/2 h-full border-radius-50 ${
-            currentIndex <= 0 ? 'invisible' : ''
-          } bg-yellow-500 border-2 border-black text-white`}
-        >
-          Left
-        </button>
-        ) (
-        <button
-          onClick={next}
-          className={`w-1/2 h-full border-radius-50 ${
-            currentIndex >= length - 3 ? 'invisible' : ''
-          } bg-yellow-500 border-2 border-black text-white`}
-        >
-          Right
-        </button>
-        )
+        {newDatas.map((data, index) => styledImage(data, index))}
       </div>
     </div>
   );
-};
-
-export default Carousel;
+}
