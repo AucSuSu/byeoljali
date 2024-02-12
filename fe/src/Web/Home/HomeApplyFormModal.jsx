@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { useSelector } from 'react-redux';
 import useAxios from '../axios';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 // css 추가
 import './HomeApplyFormModal.css';
@@ -13,7 +14,7 @@ import ApplyReceiptModal from './ApplyReceiptModal';
 
 const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const [stars, setStars] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const makeStars = () => {
       const numStars = 800; // 원하는 별의 개수
@@ -75,7 +76,18 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
       });
       await closeModal();
     }
+
+  const artistDetail = async () => {
+    navigate('/artist-profile', {
+      state: {
+        propsData: {
+          artistId: data.object.artistId,
+        },
+      },
+    });
+    closeModal();
   };
+
 
   // 날짜 계산용
   const formatDate = (dateString) => {
@@ -212,26 +224,23 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   />
                 </div>
 
-                <div className="flex justify-around">
-                  <div className="pt-3">
-                    <p className="text-18">🗓️ 응모 기간</p>
-                    <p className="mt-2 pl-2 pr-4 font-isa">
-                      {formatDate(data?.object?.startApplyTime)} {' ~ '}
-                      {formatDate(data?.object?.endApplyTime)}
-                    </p>
-                  </div>
-                  <div className="pt-3">
-                    <p className="text-18">🗓️ 사인회 일정</p>
-                    <p className="mt-2 pl-2 pr-4 font-isa">
-                      {formatFansignTime(data?.object?.startFansignTime)}
-                    </p>
-                  </div>
-                  <div className="pt-3">
-                    <p className="text-18">🤗 아티스트</p>
-                    <p className="mt-2 pl-2 pr-4 font-isa">
-                      {data?.object?.artistName}
-                    </p>
-                  </div>
+                <div className="pt-3">
+                  <p className="bolder text-18">🗓️ 응모 기간</p>
+                  <p className="mt-2 pl-4 pr-4">
+                    {formatDate(data?.object?.startApplyTime)} {' ~ '}
+                    {formatDate(data?.object?.endApplyTime)}
+                  </p>
+                </div>
+                <div className="pt-3">
+                  <p className="bolder text-18">🗓️ 아티스트</p>
+                  <p className="mt-2 pl-4 pr-4">{data?.object?.artistName}</p>
+                </div>
+
+                <div className="pt-3">
+                  <p className="bolder text-18">🗓️ 사인회 일정</p>
+                  <p className="mt-2 pl-4 pr-4">
+                    {formatFansignTime(data?.object?.startFansignTime)}
+                  </p>
                 </div>
 
                 <div className="mt-4">
