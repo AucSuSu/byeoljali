@@ -39,7 +39,7 @@ const HomeView = () => {
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           <Navbar bgStyle={bgStyle} className="relative z-10" />
           <p
-            className="absolute bottom-2 ml-[5%] text-white text-30 "
+            className="absolute bottom-2 ml-[10%] text-white text-30 "
             style={{ letterSpacing: '3px', wordSpacing: '5px' }}
           >
             CURRENT APPLY

@@ -149,7 +149,7 @@ const HomeView = () => {
         {/* 1. Navbar */}
         <Navbar />
         {/* 2. Post Carousel */}
-        <div className="w-[80%] mx-[8.5%]">
+        <div className="w-[80%] mx-[10%]">
           <NewCarousel datas={carouselImage} />
         </div>
 

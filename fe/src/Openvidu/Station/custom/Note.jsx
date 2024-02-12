@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 export default function Note({ handlePostit, handleScript }) {
@@ -6,6 +6,17 @@ export default function Note({ handlePostit, handleScript }) {
   const [script, setScript] = useState('스크립트를 입력해주세요');
   const [typingPostits, setTypingPostits] = useState([]);
   const [typingScripts, setTypingScripts] = useState([]);
+
+  const postitRef = useRef();
+  const scriptRef = useRef();
+
+  useEffect(() => {
+    postitRef.current.scrollTop = postitRef.current.scrollHeight;
+  }, [typingPostits]);
+
+  useEffect(() => {
+    scriptRef.current.scrollTop = scriptRef.current.scrollHeight;
+  }, [typingScripts]);
 
   useEffect(() => {
     handlePostit(typingPostits);
@@ -35,11 +46,14 @@ export default function Note({ handlePostit, handleScript }) {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <div className="flex flex-col items-center w-full h-full mb-4 ">
+      <div className="flex flex-col items-center w-full h-[50%] mb-4 ">
         <label className="bg-lime-100 border-2 p-2 w-full text-center">
           포스트잇
         </label>
-        <div className="border-l-2 border-r-2 w-full h-full p-2 text-center">
+        <div
+          className="border-l-2 border-r-2 w-[100%] h-full p-2 text-center overflow-y-auto whitespace-pre-line"
+          ref={postitRef}
+        >
           {typingPostits.map((typingPostit, index) => (
             <div
               key={index}
@@ -85,11 +99,14 @@ export default function Note({ handlePostit, handleScript }) {
 
       {/* 공간 띄워줘 */}
 
-      <div className="flex flex-col items-center w-full h-full ">
-        <label className="bg-pink border-2 p-2 w-full text-center">
+      <div className="flex flex-col items-center w-full h-[50%] ">
+        <label className="bg-blue-500 border-2 p-2 w-full text-center">
           스크립트
         </label>
-        <div className="border-l-2 border-r-2 w-full h-full p-2 text-center">
+        <div
+          className="border-l-2 border-r-2 w-[100%] h-full p-2 text-center overflow-y-auto whitespace-pre-line"
+          ref={scriptRef}
+        >
           {typingScripts.map((typingScript, index) => (
             <div
               key={index}
