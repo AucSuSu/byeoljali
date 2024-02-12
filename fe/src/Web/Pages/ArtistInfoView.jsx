@@ -7,8 +7,10 @@ import { isArtist } from '../Stores/authReducer.js';
 export default function ArtistInfoView() {
   return (
     <>
-      <NavBar />
-      <ArtistInfo />
+      <div className="min-h-screen bg-black">
+        <NavBar />
+        <ArtistInfo />
+      </div>
     </>
   );
 }
