@@ -7,11 +7,14 @@ import {
 } from '../../Stores/modalReducer.js';
 
 export default function MemberList({ data }) {
+  const isArtist = useSelector((state) => state.auth.isArtist);
   const dispatch = useDispatch();
   const modifyMember = useSelector((state) => state.modal.modifyMember);
 
   const openModifyMember = () => {
-    dispatch(handleModifyMember(data.memberId));
+    if (isArtist) {
+      dispatch(handleModifyMember(data.memberId));
+    }
   };
 
   const closeModifyMember = () => {
