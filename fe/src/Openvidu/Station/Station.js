@@ -402,7 +402,7 @@ class App extends Component {
 
         {/* 나머지 3등분 */}
         {/* <div onClick={() => this.Meeting()}>Fansing 들어가기</div> */}
-        <div className="flex h-screen w-screen">
+        <div className="flex h-[100%] w-[100%] overflow-hidden">
           {/* 첫번째 덩어리 */}
           <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 ">
             {/* 비디오 출력 화면 */}
@@ -446,14 +446,14 @@ class App extends Component {
           </div>
 
           {/* 두번째 덩어리 */}
-          <div className="flex-grow h-[95%] ml-4 mr-4">
+          <div className="h-[95%] w-[30%] ml-4 mr-4">
             <Note
               handleScript={this.handleMyScript}
               handlePostit={this.handleMyPostit}
             />
           </div>
           {/* 세번쨰 덩어리 */}
-          <div className="flex-grow h-[95%] ml-4 mr-8">
+          <div className=" w-[30%] h-[95%] ml-4 mr-8">
             <Chat
               orders={this.state.orders}
               messages={this.state.messages}

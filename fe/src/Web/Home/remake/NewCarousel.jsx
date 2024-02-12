@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 export default function Carousel({ datas }) {
   const newDatas = [...datas, ...datas, ...datas];
-  const [imageWidth, setImageWidth] = useState(440);
+  const [imageWidth, setImageWidth] = useState(380);
   const [datasLength, setDatasLength] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideLeft, setSlideLeft] = useState(0);
@@ -11,11 +11,11 @@ export default function Carousel({ datas }) {
   const slideRef = useRef(null);
 
   useEffect(() => {
-    // 너비 440 설정. 화면에 따라 값 변경해야 함.
-    setImageWidth(440);
+    // 너비 380 설정. 화면에 따라 값 변경해야 함.
+    setImageWidth(380);
     setDatasLength(datas.length);
     setSlideIndex(datas.length);
-    setSlideLeft(datas.length * 440);
+    setSlideLeft(datas.length * 380);
   }, []);
 
   // useEffect(() => {
@@ -24,7 +24,7 @@ export default function Carousel({ datas }) {
   //   if (isStartTimer) {
   //     timer = setInterval(() => {
   //       console.log('온클릭 실행');
-  //       onClickRight();
+  //       onClickLeft();
   //     }, 3000);
   //   }
 
@@ -73,15 +73,15 @@ export default function Carousel({ datas }) {
         setTimeout(() => {
           slideRef.current.style.transition = 'transform 500ms ease-out';
         }, 100);
-      }, 600);
+      }, 500);
     }
   };
 
   const styledImage = (data, index) => {
-    let style = `w-[440px] h-[550px] object-cover rounded-lg mt-10 opacity-40`;
+    let style = `w-[380px] h-[450px] object-cover rounded-lg mt-10 opacity-40`;
     // let style = `w-[${imageWidth}px] h-[550px] object-cover rounded-lg mt-10 opacity-40`;
     if (index === slideIndex + 1) {
-      style = `w-[550px] h-[550px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
+      style = `w-[420px] h-[450px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
       // style = `w-[${imageWidth * 1.25}px] h-[550px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
     }
 
@@ -97,7 +97,7 @@ export default function Carousel({ datas }) {
 
   return (
     <div
-      className={`relative h-[650px] w-[1270px] m-auto overflow-hidden`}
+      className={`relative h-[550px] w-[1020px] m-auto overflow-hidden`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
