@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import FanSignModal from './FanSignModal';
+import useAxios from '../axios';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 function FanSignList({ data }) {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -45,6 +49,42 @@ function FanSignList({ data }) {
 
     return () => clearInterval(timerId);
   }, [data.endApplyTime]);
+
+  // 대기방 참가 로직
+  const participate = async () => {
+    const openviduData = await joinFansign();
+    navigate('/fan-fansign', {
+      state: {
+        propsData: {
+          fanId: fanInfo.fanId,
+          profileImage: fanInfo.profileImageUrl,
+          orders: fanSignDetail.orders,
+          nickname: fanInfo.nickname,
+          birthday: fanInfo.birth,
+          sessionId: openviduData.object.sessionId,
+          tokenId: openviduData.object.tokenId,
+          memberFansignId: data.memberfansignId,
+          title: data.artistFansignTitle,
+          member: data.memberName,
+          artistFansignId: fanSignDetail.artistfansignId,
+        },
+      },
+    });
+    onClose();
+  };
+
+  const fanInfo = useSelector((state) => state.faninfo.data);
+  const customAxios = useAxios();
+  const navigate = useNavigate();
+
+  const joinFansign = async () => {
+    const response = await customAxios
+      .get(`fan/fansigns/enterwaiting/${fanSignId}`)
+      .then((res) => {
+        return res.data;
+      });
+    return response;
+  };
 
   return (
     <>
@@ -104,7 +144,23 @@ function FanSignList({ data }) {
                 </div>
               )}
             </div>
-            <div className="mb-8">{data.artistFansignTitle}</div>
+            <div className="mb-16">{data.artistFansignTitle}</div>
+            {data.fansignStatus === 'SESSION_CONNECTED' ? (
+              <div className="flex flex-row items-center">
+                <button
+                  className="absolute bottom-5 left-1/2 -translate-x-1/2 mx-auto  px-1 py-1 rounded-md bg-hot-pink text-white"
+                  onClick={participate}
+                >
+                  입장하기
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button className="absolute bottom-5 left-1/2 -translate-x-1/2 mx-auto  px-1 py-1 rounded-md bg-light-gray text-white cursor-not-allowed">
+                  입장하기
+                </button>
+              </div>
+            )}
           </div>
 
           {isModalVisible && (

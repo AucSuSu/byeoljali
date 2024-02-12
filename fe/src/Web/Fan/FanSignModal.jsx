@@ -7,19 +7,21 @@ import { useNavigate } from 'react-router-dom';
 function FanSignModal({ data, onClose }) {
   console.log(data);
 
-  // 대기방 참가 로직
-  const fanInfo = useSelector((state) => state.faninfo.data);
   const customAxios = useAxios();
-  const navigate = useNavigate();
 
-  const joinFansign = async () => {
-    const response = await customAxios
-      .get(`fan/fansigns/enterwaiting/${fanSignId}`)
-      .then((res) => {
-        return res.data;
-      });
-    return response;
-  };
+  // 대기방 참가 로직
+  // const fanInfo = useSelector((state) => state.faninfo.data);
+  // const customAxios = useAxios();
+  // const navigate = useNavigate();
+
+  // const joinFansign = async () => {
+  //   const response = await customAxios
+  //     .get(`fan/fansigns/enterwaiting/${fanSignId}`)
+  //     .then((res) => {
+  //       return res.data;
+  //     });
+  //   return response;
+  // };
 
   // fanSign모달에서 artist 정보를 누르면 artistInfo 페이지로 이동합니다.
   const artistDetail = async () => {
@@ -33,27 +35,27 @@ function FanSignModal({ data, onClose }) {
     onClose();
   };
 
-  const participate = async () => {
-    const openviduData = await joinFansign();
-    navigate('/fan-fansign', {
-      state: {
-        propsData: {
-          fanId: fanInfo.fanId,
-          profileImage: fanInfo.profileImageUrl,
-          orders: fanSignDetail.orders,
-          nickname: fanInfo.nickname,
-          birthday: fanInfo.birth,
-          sessionId: openviduData.object.sessionId,
-          tokenId: openviduData.object.tokenId,
-          memberFansignId: data.memberfansignId,
-          title: data.artistFansignTitle,
-          member: data.memberName,
-          artistFansignId: fanSignDetail.artistfansignId,
-        },
-      },
-    });
-    onClose();
-  };
+  // const participate = async () => {
+  //   const openviduData = await joinFansign();
+  //   navigate('/fan-fansign', {
+  //     state: {
+  //       propsData: {
+  //         fanId: fanInfo.fanId,
+  //         profileImage: fanInfo.profileImageUrl,
+  //         orders: fanSignDetail.orders,
+  //         nickname: fanInfo.nickname,
+  //         birthday: fanInfo.birth,
+  //         sessionId: openviduData.object.sessionId,
+  //         tokenId: openviduData.object.tokenId,
+  //         memberFansignId: data.memberfansignId,
+  //         title: data.artistFansignTitle,
+  //         member: data.memberName,
+  //         artistFansignId: fanSignDetail.artistfansignId,
+  //       },
+  //     },
+  //   });
+  //   onClose();
+  // };
   // 대기방 참가 로직 끝
 
   // css 용 임시 주석
@@ -123,11 +125,71 @@ function FanSignModal({ data, onClose }) {
           onClick={handleCloseModal}
         >
           <div
+            className="bg-black max-w-300 w-300 max-h-200 h-200 p-6 rounded-md grid grid-cols-2"
+            onClick={handleModalContentClick}
+          >
+            <div className="p-3">
+              <div className="font-big bolder text-40 mb-6">MY APPLY</div>
+              <div className="w-[100%] h-[620px]">
+                <img
+                  src={fanSignDetail.posterImageUrl}
+                  alt=""
+                  className="w-full h-full object-fill"
+                />
+              </div>
+            </div>
+            <div className="p-3 pt-24 pb-9">
+              <div className="flex  h-[100%] flex-col justify-between">
+                <div className="font-big bolder text-40">
+                  [ {fanSignDetail.artistFansignTitle} ]
+                </div>
+                <div className="pt-3 font-big">
+                  <p className="bolder text-18 mr-3">📌 공지</p>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: fanSignDetail.information,
+                    }}
+                  />
+                </div>
+                <div className="pt-3 font-big">
+                  <p className="bolder text-18 mr-3">🗓️ 응모 기간</p>
+                  <div>{applySchedule}</div>
+                </div>
+                <div className="pt-3 font-big">
+                  <p className="bolder text-18 mr-3">🗓️ 사인회 일정</p>
+                  <div>{fanSignSchedule}</div>
+                </div>
+                <div className="pt-3 font-big">
+                  <p className="bolder text-18 mr-3">👯 아티스트</p>
+                  <div>{artistInfo}</div>
+                </div>
+                <div className="pt-3 font-big">
+                  <p className="bolder text-18 mr-3">🧕 참여 멤버</p>
+                  <div>{memberSchedule}</div>
+                </div>
+                <div className="pt-3 font-big flex justify-center">
+                  <button
+                    className="px-2 py-1 bg-light-gray rounded-md"
+                    onClick={onClose}
+                  >
+                    닫기
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={handleCloseModal}
+        >
+          <div
             className="bg-black max-w-120 w-120 h-auto p-5 rounded relative flex flex-col items-center z-50"
             onClick={handleModalContentClick}
           >
             <div className="text-3xl bg-pink mb-4">
-              [ {fanSignDetail.artistFansignTitle} ]
+              [{fanSignDetail.artistFansignTitle}]
             </div>
             {/* 여기에 추가적인 모달 컨텐츠 */}
             <img
@@ -152,7 +214,7 @@ function FanSignModal({ data, onClose }) {
               <div>
                 {fanSignDetail.status === 'SESSION_CONNECTED' ? (
                   <div className="flex gap-6">
-                    <button onClick={participate}>입장</button>
+                    <button>입장</button>
                     <button
                       className="bg-light-gray rounded w-16"
                       onClick={() => onClose()}
@@ -173,12 +235,10 @@ function FanSignModal({ data, onClose }) {
               </div>
             </div>
             {/* 모달을 닫는 버튼 */}
-            <button onClick={participate}>TEST</button>
+            <button>TEST</button>
             {/* TEST는 나중에 삭제, 지금 테스트에서 입장하기 버튼이 안보임 */}
           </div>
         </div>
-      ) : (
-        <div></div>
       )}
     </div>
   );
