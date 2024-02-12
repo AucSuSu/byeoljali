@@ -147,16 +147,26 @@ export default function ArtistInfo() {
               onClick={handleOpenArtistImg}
               className="mt-2 py-2 px-4 bg-gray text-white font-bold rounded hover:bg-dark-gray transition duration-300"
             >
-              프로필 이미지 수정
+              이미지 수정
             </button>
           )}
 
           {/* 아티스트 이름 섹션 */}
-          <div className="text-center my-4">
-            <h2 className="text-60 font-big">{artistData.object.name}</h2>
-            <p className="font-ridi font-bold text-25">
-              {artistData.object.companyName} Entertainment
-            </p>
+          <div className="text-center my-4 flex space-x-5 items-center w-full">
+            <div className="flex-grow">
+              <h2 className="text-60 font-big">{artistData.object.name}</h2>
+              <p className="font-ridi font-bold text-25">
+                {artistData.object.companyName} Entertainment
+              </p>
+            </div>
+            <div className="flex-shrink-0">
+              <img
+                className="object-cover rounded-lg"
+                src={artistData.object.logoImageUrl}
+                alt="Logo"
+                style={{ width: '100px', height: '100px' }}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -166,12 +176,14 @@ export default function ArtistInfo() {
         <div className="w-full lg:w-6/12 p-10 flex flex-col items-start">
           {/* 아티스트 정보 섹션 */}
           <div className="my-4">
-            <p className="text-25 font-big">
-              데뷔일 : {artistData.object.debutDate} | D+{daysSinceDebut}
-            </p>
-            <p className="text-25 font-big">
-              팬덤명 : {artistData.object.fandomName}
-            </p>
+            <div>
+              <p className="text-25 font-big">
+                데뷔일 : {artistData.object.debutDate} | D+{daysSinceDebut}
+              </p>
+              <p className="text-25 font-big">
+                팬덤명 : {artistData.object.fandomName}
+              </p>
+            </div>
           </div>
           <div className="w-full my-8">
             <div className="text-2xl font-big mb-4">FANSIGN INFO</div>
@@ -233,6 +245,7 @@ export default function ArtistInfo() {
       {showArtistImgModal && (
         <ArtistImgModal
           artistImageUrl={artistData.object.artistImageUrl}
+          logoImageUrl={artistData.object.logoImageUrl}
           onClose={handleCloseArtistImg}
         />
       )}
