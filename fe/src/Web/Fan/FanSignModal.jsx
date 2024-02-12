@@ -113,7 +113,7 @@ function FanSignModal({ data, onClose }) {
   const applySchedule = `응모일정: ${startApplyDateFormatted}~${endApplyDateFormatted}`; // "응모일정: 01/31~02/02"
   const fanSignSchedule = `사인회일정: ${startFansignDateFormatted}`; // 사인회일정
   const memberSchedule = `신청멤버: ${fanSignDetail.memberName}`; // 신청멤버
-  const artistInfo = `아티스트: ${fanSignDetail.artistId}`; // 아티스트 id
+  const artistInfo = `아티스트: ${fanSignDetail.artistName}`; // 아티스트 이름
 
   return (
     <div>
