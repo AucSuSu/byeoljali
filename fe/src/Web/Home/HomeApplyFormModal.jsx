@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSelector } from 'react-redux';
 import useAxios from '../axios';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 // css 추가
@@ -55,6 +56,28 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     window.location.reload();
   };
 
+  const handleSubmit = async () => {
+    if (currMemberId == null) {
+      Swal.fire({
+        icon: 'warning',
+        title: '맴버를 선택해주세요',
+      });
+    } else {
+      const formData = {
+        memberId: currMemberId,
+        boughtAlbum: currAlbumNum,
+        artistFansignId: currFansignId, // 적절한 ID 값 필요
+      };
+      applyForm({ id: currFansignId, data: formData });
+      Swal.fire({
+        icon: 'success',
+        title: '성공적으로 응모되었습니다.',
+        confirmButtonText: '당첨을 기대하세요', // 버튼 문구 수정
+      });
+      await closeModal();
+    }
+  };
+
   const artistDetail = async () => {
     navigate('/artist-profile', {
       state: {
@@ -63,16 +86,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
         },
       },
     });
-    closeModal();
-  };
-
-  const handleSubmit = () => {
-    const formData = {
-      memberId: currMemberId,
-      boughtAlbum: currAlbumNum,
-      artistFansignId: currFansignId, // 적절한 ID 값 필요
-    };
-    applyForm({ id: currFansignId, data: formData });
     closeModal();
   };
 
@@ -95,6 +108,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     return `${datePart} ${timePart}`; // "MM/DD HH:MM" 형식으로 결합
   };
 
+  //이미 지원한 팬싸
   const smallCustomStyle = {
     content: {
       width: '500px',
@@ -141,7 +155,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           contentLabel={data.title}
           style={smallCustomStyle}
         >
-          <div className="font-big bg-black text-white p-10">
+          <div className="font-big bg-black text-white p-10 h-[100%]">
             <div className="flex flex-col items-center justify-center ">
               <div className="bolder mb-4 text-25">
                 [ {data?.object?.fansignTitle} ]
@@ -211,23 +225,29 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   />
                 </div>
 
-                <div className="pt-3">
-                  <p className="bolder text-18">🗓️ 응모 기간</p>
-                  <p className="mt-2 pl-4 pr-4">
-                    {formatDate(data?.object?.startApplyTime)} {' ~ '}
-                    {formatDate(data?.object?.endApplyTime)}
-                  </p>
-                </div>
-                <div className="pt-3">
-                  <p className="bolder text-18">🗓️ 아티스트</p>
-                  <p className="mt-2 pl-4 pr-4">{data?.object?.artistName}</p>
-                </div>
-
-                <div className="pt-3">
-                  <p className="bolder text-18">🗓️ 사인회 일정</p>
-                  <p className="mt-2 pl-4 pr-4">
-                    {formatFansignTime(data?.object?.startFansignTime)}
-                  </p>
+                <div className="flex justify-around">
+                  <div className="pt-3">
+                    <p className="text-18">🗓️ 응모 기간</p>
+                    <p className="mt-2 pl-2 pr-4 font-isa">
+                      {formatDate(data?.object?.startApplyTime)} {' ~ '}
+                      {formatDate(data?.object?.endApplyTime)}
+                    </p>
+                  </div>
+                  <div className="pt-3">
+                    <p className="text-18">🗓️ 사인회 일정</p>
+                    <p className="mt-2 pl-2 pr-4 font-isa">
+                      {formatFansignTime(data?.object?.startFansignTime)}
+                    </p>
+                  </div>
+                  <div className="pt-3">
+                    <p className="text-18">🤗 아티스트</p>
+                    <p
+                      className="mt-2 pl-2 pr-2 font-isa border-b border-white hover:cursor-pointer hover:text-hot-pink hover:border-hot-pink inline-block"
+                      onClick={artistDetail}
+                    >
+                      {data?.object?.artistName} ▶︎
+                    </p>
+                  </div>
                 </div>
 
                 <div className="mt-4">
@@ -253,7 +273,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                           </span>
                           <span className="ps-3">개 인증 완료</span>
                           <button
-                            className="bg-hot-pink px-4 py-2 ml-10 rounded-xl"
+                            className="bg-hot-pink px-4 py-2 ml-10 rounded-xl hover:bg-opacity-70"
                             onClick={openReceiptModal}
                           >
                             영수증 인증
@@ -267,13 +287,13 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                         </div>
                         <div className="flex justify-center pl-20 pr-20">
                           <button
-                            className="w-3/4 bg-hot-pink text-white px-4 py-2 rounded-xl"
+                            className="w-3/4 bg-hot-pink text-white px-4 py-2 rounded-xl hover:bg-opacity-70"
                             onClick={() => handleSubmit()}
                           >
                             응모하기
                           </button>
                           <button
-                            className="w-1/4 bg-light-gray text-black px-4 py-2 rounded-xl ml-5"
+                            className="w-1/4 bg-dark-gray text-white px-4 py-2 rounded-xl ml-5 hover:bg-opacity-70"
                             onClick={closeModal}
                           >
                             닫기

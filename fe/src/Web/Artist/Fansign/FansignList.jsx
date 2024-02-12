@@ -75,14 +75,12 @@ export default function MemberList({ data, status }) {
     'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4';
 
   return (
-    <div className="text-center ml-14 mb-10 mr-6 inline-block relative">
-      {/* 이미지와 텍스트를 포함할 컨테이너에 `relative` 위치 지정 */}
-      <div className="relative w-[250px] h-[250px] ">
-        {/* 이미지와 오버레이 컨텐츠를 포함하는 컨테이너 */}
+    <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-big">
+      <div className="w-[80%] ml-[10%] relative ">
         <img
           src={data.posterImageUrl}
           alt={data.title}
-          className="w-full h-full" // 이미지 크기를 부모 컨테이너에 맞춤
+          className="w-full h-auto aspect-square  cursor-pointer  mt-8 mb-2"
         />
         {/* 오버레이될 콘텐츠, 이미지 위에 꽉 채우도록 설정 */}
         <div
@@ -92,11 +90,11 @@ export default function MemberList({ data, status }) {
           "
           onClick={openDetail}
         >
-          <p className="text-18">
+          <p className="text-12">
             {timeMessage}
             <br />
             {timeMessage !== '팬싸인회 중' && (
-              <b className="bolder-w">
+              <b className="text-15">
                 {countdown.days}일 {countdown.hours}시간 {countdown.minutes}분{' '}
                 {countdown.seconds}초
               </b>
@@ -104,8 +102,10 @@ export default function MemberList({ data, status }) {
           </p>
         </div>
       </div>
-      <p className="text-18 bolder mt-3">[ {data.title} ]</p>
-      <p className="text-18 bold">{data.memberName}</p>
+      <div className="w-[80%] ml-[10%]">
+        <p className="text-18 mt-3">[ {data.title} ]</p>
+        <p className="text-15 mt-3 mb-3">{data.memberName}</p>
+      </div>
       {fansignInfo === data.memberFansignId && (
         <FansignModal memberFansignId={data.memberFansignId} />
       )}
