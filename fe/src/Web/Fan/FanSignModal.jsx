@@ -113,7 +113,7 @@ function FanSignModal({ data, onClose }) {
   const applySchedule = `응모일정: ${startApplyDateFormatted}~${endApplyDateFormatted}`; // "응모일정: 01/31~02/02"
   const fanSignSchedule = `사인회일정: ${startFansignDateFormatted}`; // 사인회일정
   const memberSchedule = `신청멤버: ${fanSignDetail.memberName}`; // 신청멤버
-  const artistInfo = `아티스트: ${fanSignDetail.artistName}`; // 아티스트 이름
+  const artistInfo = fanSignDetail.artistName; // 아티스트 이름
 
   return (
     <div>
@@ -145,7 +145,15 @@ function FanSignModal({ data, onClose }) {
               <div>{applySchedule}</div>
               <div>{fanSignSchedule}</div>
               <div>{memberSchedule}</div>
-              <div onClick={artistDetail}>{artistInfo}</div>
+              <div>
+                아티스트 :{' '}
+                <button
+                  onClick={artistDetail}
+                  className="text-pink-500 hover:text-pink-700 font-bold"
+                >
+                  {artistInfo}
+                </button>
+              </div>
             </div>
 
             <div className="mt-4">
