@@ -76,6 +76,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
       });
       await closeModal();
     }
+  };
 
   const artistDetail = async () => {
     navigate('/artist-profile', {
@@ -87,7 +88,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     });
     closeModal();
   };
-
 
   // 날짜 계산용
   const formatDate = (dateString) => {
