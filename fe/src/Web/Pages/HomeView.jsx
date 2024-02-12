@@ -56,7 +56,6 @@ const HomeView = () => {
 
     const scrollInterval = setInterval(() => {
       if (container && !isHovered) {
-        console.log('left');
         container.scrollLeft += 1; // 스크롤 간격 조절 가능
 
         if (
