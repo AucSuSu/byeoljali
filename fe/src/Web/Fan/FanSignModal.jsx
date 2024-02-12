@@ -12,7 +12,7 @@ function FanSignModal({ data, onClose }) {
   // 대기방 참가 로직
   // const fanInfo = useSelector((state) => state.faninfo.data);
   // const customAxios = useAxios();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const joinFansign = async () => {
   //   const response = await customAxios
@@ -161,7 +161,22 @@ function FanSignModal({ data, onClose }) {
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">👯 아티스트</p>
-                  <div>{artistInfo}</div>
+                  <div>
+                    {artistInfo}
+                    {'  '}
+                    <button
+                      onClick={artistDetail}
+                      className="text-white hover:text-pink-700"
+                    >
+                      ▶ 상세보기
+                    </button>
+                  </div>
+                  {/* <button
+                    onClick={artistDetail}
+                    className="text-white hover:text-pink-700"
+                  >
+                    {artistInfo}
+                  </button> */}
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">🧕 참여 멤버</p>
