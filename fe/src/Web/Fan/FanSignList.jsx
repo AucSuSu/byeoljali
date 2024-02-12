@@ -73,6 +73,7 @@ function FanSignList({ data }) {
     onClose();
   };
 
+  const fanSignId = data.memberfansignId;
   const fanInfo = useSelector((state) => state.faninfo.data);
   const customAxios = useAxios();
   const navigate = useNavigate();

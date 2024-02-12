@@ -194,81 +194,8 @@ function FanSignModal({ data, onClose }) {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
-      ) : (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-          onClick={handleCloseModal}
-        >
-          <div
-            className="bg-black max-w-120 w-120 h-auto p-5 rounded relative flex flex-col items-center z-50"
-            onClick={handleModalContentClick}
-          >
-            <div className="text-3xl bg-pink mb-4">
-              [{fanSignDetail.artistFansignTitle}]
-            </div>
-            {/* 여기에 추가적인 모달 컨텐츠 */}
-            <img
-              src={fanSignDetail.posterImageUrl}
-              alt=""
-              className="w-1/2 h-auto p-0 aspect-square"
-            />
-            <div className="text-lg font-bold">공지</div>
-            <div className="m-6 my-3 py-2 whitespace-pre-wrap break-words border-y-2">
-              {fanSignDetail.information}
-            </div>
-            {/* 사인회 일정 관련 */}
-
-            <div className="my-2">
-              <div>{applySchedule}</div>
-              <div>{fanSignSchedule}</div>
-              <div>{memberSchedule}</div>
-              <div>
-                아티스트 :{' '}
-                <button
-                  onClick={artistDetail}
-                  className="text-pink-500 hover:text-pink-700 font-bold"
-                >
-                  {artistInfo}
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <div>
-                {fanSignDetail.status === 'SESSION_CONNECTED' ? (
-                  <div className="flex gap-6">
-                    <button>입장</button>
-                    <button
-                      className="bg-light-gray rounded w-16"
-                      onClick={() => onClose()}
-                    >
-                      닫기
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <button
-                      className="bg-light-gray rounded w-16"
-                      onClick={() => onClose()}
-                    >
-                      닫기
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-            {/* 모달을 닫는 버튼 */}
-            <button>TEST</button>
-            {/* TEST는 나중에 삭제, 지금 테스트에서 입장하기 버튼이 안보임 */}
-          </div>
-        </div>
-      )}
-    </div>
-=======
       ) : null}
     </>
->>>>>>> fe/feat/all
   );
 }
 
