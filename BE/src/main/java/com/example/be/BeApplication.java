@@ -1,6 +1,7 @@
 package com.example.be;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.TimeZone;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ import javax.persistence.EntityManager;
 public class BeApplication {
 
     public static void main(String[] args) {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul")); // 시간대 설정
         SpringApplication.run(BeApplication.class, args);
     }
 

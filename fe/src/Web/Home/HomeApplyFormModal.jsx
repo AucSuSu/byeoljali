@@ -86,7 +86,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const smallCustomStyle = {
     content: {
       width: '500px',
-      height: '250px',
+      height: '328px',
       margin: 'auto',
       padding: 0,
       zIndex: 2, // z-index 값을 2로 설정
@@ -96,12 +96,14 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
 
   const customStyle = {
     content: {
-      width: '1200px',
-      height: '850px',
+      width: '80%', // 모달의 너비를 화면의 80%로 조정
+      maxHeight: '90vh', // 모달의 최대 높이를 화면 높이의 90%로 제한
       margin: 'auto',
-      padding: 0,
-      zIndex: 2, // z-index 값을 2로 설정
+      padding: '0px', // 패딩 추가로 내용과 모달 테두리 사이 간격 조정
+      overflow: 'hidden', // 내용이 모달 높이를 초과해도 스크롤바 생성 방지
+      zIndex: 2,
       borderRadius: '20px',
+      position: 'relative', // 모달의 위치를 중앙으로 조정하기 위해 relative 설정
     },
   };
 
@@ -167,20 +169,19 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
               ></div>
             ))}
             <div className="w-1/2">
-              <div className="text-40 flex-grow p-6">APPLY</div>{' '}
               <img
-                className="pl-5 pr-5 pb-10"
+                className="pt-5 pl-5 pr-5 pb-10"
                 src={data?.object?.posterImageUrl}
                 style={{
                   width: '650px',
-                  height: '730px',
+                  height: '630px',
                 }}
               ></img>
             </div>
             <div className="w-1/2 flex-grow p-4">
-              <div className="rounded-md pt-10">
+              <div className="rounded-md">
                 <h2
-                  className="font-big bolder text-40 mt-10 hot-pink"
+                  className="font-big text-[25px] hot-pink"
                   style={{
                     textShadow:
                       '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',
@@ -189,35 +190,39 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   [ {data?.object?.fansignTitle} ]
                 </h2>
                 <div className="pt-3">
-                  <p className="bolder text-18 mr-3">📌 공지</p>
+                  <p className="text-18 mr-3">📌 공지</p>
                   <div
+                    className="border-2 border-deep-dark p-4 rounded-xl font-isa"
                     dangerouslySetInnerHTML={{
                       __html: data?.object?.fansignInfo,
                     }}
                   />
                 </div>
 
-                <div className="pt-3">
-                  <p className="bolder text-18">🗓️ 응모 기간</p>
-                  <p className="mt-2 pl-4 pr-4">
-                    {formatDate(data?.object?.startApplyTime)} {' ~ '}
-                    {formatDate(data?.object?.endApplyTime)}
-                  </p>
-                </div>
-                <div className="pt-3">
-                  <p className="bolder text-18">🗓️ 아티스트</p>
-                  <p className="mt-2 pl-4 pr-4">{data?.object?.artistName}</p>
+                <div className="flex justify-around">
+                  <div className="pt-3">
+                    <p className="text-18">🗓️ 응모 기간</p>
+                    <p className="mt-2 pl-2 pr-4 font-isa">
+                      {formatDate(data?.object?.startApplyTime)} {' ~ '}
+                      {formatDate(data?.object?.endApplyTime)}
+                    </p>
+                  </div>
+                  <div className="pt-3">
+                    <p className="text-18">🗓️ 사인회 일정</p>
+                    <p className="mt-2 pl-2 pr-4 font-isa">
+                      {formatFansignTime(data?.object?.startFansignTime)}
+                    </p>
+                  </div>
+                  <div className="pt-3">
+                    <p className="text-18">🤗 아티스트</p>
+                    <p className="mt-2 pl-2 pr-4 font-isa">
+                      {data?.object?.artistName}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="pt-3">
-                  <p className="bolder text-18">🗓️ 사인회 일정</p>
-                  <p className="mt-2 pl-4 pr-4">
-                    {formatFansignTime(data?.object?.startFansignTime)}
-                  </p>
-                </div>
-
-                <div>
-                  <h2 className="bolder text-18 text-center item-center mb-2">
+                <div className="mt-4">
+                  <h2 className="text-18 text-center item-center mb-2">
                     참여 멤버
                   </h2>
 
@@ -232,7 +237,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   <div>
                     {propData.status === 'APPLYING' ? (
                       <div>
-                        <div className="flex justify-center items-center mb-6">
+                        <div className="flex justify-center items-center mb-4">
                           <h3 className="pe-3">앨범</h3>
                           <span className="w-16 border-b underline text-center">
                             {currAlbumNum}
