@@ -72,22 +72,26 @@ function ApplyReceiptModal({ onClose, title }) {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-150"
+      className="fixed inset-0 bg-opacity-70 bg-white flex items-center justify-center "
       onClick={onClose}
     >
       <div
-        className="w-120 h-auto bg-white flex flex-col items-center "
+        className="w-120 h-auto bg-deep-dark flex flex-col items-center "
         onClick={(e) => e.stopPropagation()}
+        style={{
+          borderRadius: '20px',
+          boxShadow: '0 0 40px rgba(0, 0, 0, 0.2)',
+        }}
       >
         <div>
-          <h1 className="bolder text-2xl mt-2 mb-6">영수증을 등록해주세요!</h1>
+          <h1 className="text-2xl mt-5 mb-6">영수증을 등록해주세요!</h1>
         </div>
         <div>
           <div className="relative mb-4">
             <img
               src={imageSrc}
               alt="Preview"
-              className="w-72 h-80 rounded-lg object-fill"
+              className="w-80 h-80 rounded-lg mb-5 object-fill"
             />
             <button
               onClick={handleButtonClick}

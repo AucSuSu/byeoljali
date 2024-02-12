@@ -6,17 +6,18 @@ import img5 from '../Web/Assets/sampleImg/엔믹스_단체.png';
 import img6 from '../Web/Assets/우사기.png';
 import img7 from '../Web/Assets/치이카와.png';
 import img8 from '../Web/Assets/하치와레.png';
-
+import img9 from '../Web/Assets/sampleImg/1.jpg';
+import img10 from '../Web/Assets/sampleImg/2.jpg';
+import img11 from '../Web/Assets/sampleImg/3.jpg';
+import img12 from '../Web/Assets/sampleImg/4.jpg';
+import img13 from '../Web/Assets/sampleImg/5.jpg';
 //Home
 export const carouselImage = [
-  { id: 1, url: img1 },
-  { id: 2, url: img2 },
-  { id: 3, url: img3 },
-  { id: 4, url: img4 },
-  { id: 5, url: img5 },
-  { id: 6, url: img6 },
-  { id: 7, url: img7 },
-  { id: 8, url: img8 },
+  { id: 1, url: img9 },
+  { id: 2, url: img10 },
+  { id: 3, url: img11 },
+  { id: 4, url: img12 },
+  { id: 5, url: img13 },
 ];
 
 // ArtistInfo 페이지
