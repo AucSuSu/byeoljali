@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 
 export default function Note({ handlePostit, handleScript }) {
-  const [postit, setPostit] = useState('포스트잇을 입력해주세요');
-  const [script, setScript] = useState('스크립트를 입력해주세요');
+  const [postit, setPostit] = useState(null);
+  const [script, setScript] = useState(null);
   const [typingPostits, setTypingPostits] = useState([]);
   const [typingScripts, setTypingScripts] = useState([]);
 
@@ -47,7 +47,7 @@ export default function Note({ handlePostit, handleScript }) {
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex flex-col items-center w-full h-[50%] mb-4 ">
-        <label className="bg-lime-100 border-2 p-2 w-full text-center">
+        <label className="bg-hot-pink border-2 p-2 w-full text-center">
           포스트잇
         </label>
         <div
@@ -55,22 +55,11 @@ export default function Note({ handlePostit, handleScript }) {
           ref={postitRef}
         >
           {typingPostits.map((typingPostit, index) => (
-            <div
-              key={index}
-              style={{
-                backgroundColor: '#FEE500',
-                padding: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <p>{typingPostit}</p>
+            <div key={index} className="flex bg justify-between items-start ">
+              <p className="px-4">{typingPostit}</p>
               <button
                 onClick={() => deletePostit(index)}
-                style={{
-                  color: '#000',
-                }}
+                className="text-white hover:scale-110 hover:text-hot-pink"
               >
                 X
               </button>
@@ -81,6 +70,7 @@ export default function Note({ handlePostit, handleScript }) {
           <input
             type="text"
             value={postit}
+            placeholder="포스트잇을 작성해주세요"
             onChange={(e) => {
               setPostit(e.target.value);
             }}
@@ -89,9 +79,12 @@ export default function Note({ handlePostit, handleScript }) {
                 inputPostit();
               }
             }}
-            className="flex-grow p-2 text-center"
+            className="flex-grow p-2 text-center bg-black"
           />
-          <button className="border-l-2 p-2 bg-lime-100" onClick={inputPostit}>
+          <button
+            className="border-l-2 p-2 bg-hot-pink hover:opacity-80"
+            onClick={inputPostit}
+          >
             <PlayArrowIcon />
           </button>
         </div>
@@ -100,7 +93,7 @@ export default function Note({ handlePostit, handleScript }) {
       {/* 공간 띄워줘 */}
 
       <div className="flex flex-col items-center w-full h-[50%] ">
-        <label className="bg-blue-500 border-2 p-2 w-full text-center">
+        <label className="bg-gray border-2 p-2 w-full text-center">
           스크립트
         </label>
         <div
@@ -108,22 +101,11 @@ export default function Note({ handlePostit, handleScript }) {
           ref={scriptRef}
         >
           {typingScripts.map((typingScript, index) => (
-            <div
-              key={index}
-              style={{
-                backgroundColor: '#FEE500',
-                padding: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <p>{typingScript}</p>
+            <div key={index} className="flex bg justify-between items-start ">
+              <p className="px-4">{typingScript}</p>
               <button
                 onClick={() => deleteScript(index)}
-                style={{
-                  color: '#000',
-                }}
+                className="text-white hover:scale-110 hover:text-hot-pink"
               >
                 X
               </button>
@@ -134,15 +116,19 @@ export default function Note({ handlePostit, handleScript }) {
           <input
             type="text"
             value={script}
+            placeholder="스크립트를 작성해주세요"
             onChange={(e) => setScript(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 inputScript();
               }
             }}
-            className="flex-grow p-2 text-center"
+            className="flex-grow p-2 text-center bg-black"
           />
-          <button className="border-l-2 p-2 bg-pink" onClick={inputScript}>
+          <button
+            className="border-l-2 p-2 bg-gray hover:opacity-80"
+            onClick={inputScript}
+          >
             <PlayArrowIcon />
           </button>
         </div>

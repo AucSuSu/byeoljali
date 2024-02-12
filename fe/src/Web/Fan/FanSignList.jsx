@@ -58,7 +58,7 @@ function FanSignList({ data }) {
         propsData: {
           fanId: fanInfo.fanId,
           profileImage: fanInfo.profileImageUrl,
-          orders: fanSignDetail.orders,
+          orders: data.orders,
           nickname: fanInfo.nickname,
           birthday: fanInfo.birth,
           sessionId: openviduData.object.sessionId,
@@ -66,7 +66,7 @@ function FanSignList({ data }) {
           memberFansignId: data.memberfansignId,
           title: data.artistFansignTitle,
           member: data.memberName,
-          artistFansignId: fanSignDetail.artistfansignId,
+          artistFansignId: data.artistfansignId,
         },
       },
     });

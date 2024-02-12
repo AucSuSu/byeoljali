@@ -15,7 +15,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
 
   return (
     <div id="chat" className="flex flex-col h-full border-2">
-      <h2 className="bg-lime-100 border-b-2 p-2 w-full text-center">Chat</h2>
+      <h2 className="bg-gray border-b-2 p-2 w-full text-center">Chat</h2>
       <div
         ref={scrollRef}
         className="mb-4 h-screen overflow-y-auto p-2 whitespace-pre-line"
@@ -33,7 +33,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                   />
                 </div>
               </div>
-              <p className="bg-pink text-right text-sm w-[70%] ml-auto pr-3 ">
+              <p className="text-right rounded-lg text-sm w-[60%] ml-auto pr-3 ">
                 {messageData.text}
               </p>
             </div>
@@ -49,7 +49,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                 </div>
                 <p className="font-bold">{messageData.nickname}</p>
               </div>
-              <p className="bg-lime-100 text-sm w-[70%] pl -3">
+              <p className="bg-lime-100 text-sm w-[60%] pl -3">
                 {messageData.text}
               </p>
             </div>
@@ -59,7 +59,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
       <div className="flex mt-auto items-center border-t-2">
         <input
           type="text"
-          placeholder="Enter a message"
+          placeholder="메세지를 입력해주세요"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
           onKeyPress={(e) => {
@@ -68,10 +68,10 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
               setInputMessage('');
             }
           }}
-          className="p-2 w-full"
+          className="p-2 w-full bg-black"
         />
         <button
-          className="p-2 bg-lime-100"
+          className="p-2 bg-gray hover:opacity-80"
           onClick={() => handleSendMessage(inputMessage)}
         >
           <PlayArrowIcon />

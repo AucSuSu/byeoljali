@@ -94,17 +94,17 @@ export default function Footer({
 
   return (
     <>
-      <div className="bg-pink fixed bottom-0 w-full h-15 font-milk text-black font-bold flex items-center justify-between p-4">
+      <div className="bg-black fixed bottom-0 w-full h-15 font-milk text-white font-bold flex items-center justify-between p-4 border-t-2">
         <div>
           <p className="mx-2">남은 촬영 횟수 : {count} / 4</p>
         </div>
 
         <IconButton onClick={() => capture(id)}>
-          <PhotoCameraRoundedIcon />
+          <PhotoCameraRoundedIcon className="text-hot-pink rounded-full hover:bg-white hover:scale-[130%]" />
         </IconButton>
 
         <IconButton onClick={() => toggleChat()}>
-          <ChatIcon />
+          <ChatIcon className="text-hot-pink rounded-full hover:bg-white hover:scale-[130%]" />
         </IconButton>
       </div>
     </>

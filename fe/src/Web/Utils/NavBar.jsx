@@ -26,7 +26,7 @@ const NavbarList = styled.ul`
   gap: 20px;
   justify-content: center;
   align-items: center;
-  right: 0;
+  right: 10px;
 `;
 
 const NavbarItem = styled.li`
@@ -191,12 +191,23 @@ const Navbar = ({ bgStyle }) => {
             <NavbarItem>
               <NavbarLink to="/readyfansign">팬싸 관리</NavbarLink>
             </NavbarItem>
+            {/*  */}
             <Dropdown>
-              {artistProfile && (
-                <ProfileImage imageUrl={artistProfile.object.artistImageUrl} />
-              )}
-
+              <img
+                src="/Hamburger_icon_white.png"
+                style={{
+                  width: '30px',
+                  height: '30px',
+                }}
+              />
               <DropdownContent>
+                <DropdownItem onClick={goArtistProfile}>
+                  <img
+                    src={artistProfile?.object.artistImageUrl}
+                    alt="profileImg"
+                    className="rounded-full h-[70px] w-[70px] mx-auto object-cover"
+                  />
+                </DropdownItem>
                 <DropdownItem onClick={goArtistProfile}>
                   프로필 보기
                 </DropdownItem>
@@ -233,7 +244,7 @@ const Navbar = ({ bgStyle }) => {
                     <img
                       src={fanProfileImageUrl}
                       alt="profileImg"
-                      className="rounded-full [h-70%] w-[70%] mx-auto"
+                      className="rounded-full h-[70px] w-[70px] mx-auto object-cover"
                     />
                   </DropdownItem>
                   <DropdownItem onClick={goFanApply}>응모 내역</DropdownItem>
