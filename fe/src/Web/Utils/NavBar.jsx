@@ -5,12 +5,9 @@ import ProfileImage from './ProfileImage';
 import { isArtist, logout, kakaoAuthorization } from '../Stores/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../axios';
-<<<<<<< HEAD
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
-=======
 // Navbar 배경 및 밑줄 주석처리 margin-bottom 추가
->>>>>>> fe/more
 const NavbarContainer = styled.nav`
   // background-color: #fbe8e1;
   // border-bottom: 2px solid black;

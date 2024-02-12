@@ -86,14 +86,10 @@ const HomeView = () => {
         {/* 1. Navbar */}
         <Navbar />
         {/* 2. Post Carousel */}
-<<<<<<< HEAD
-        <TestHome />
-=======
         <div className="w-[80%] mx-[8.5%]">
           <NewCarousel datas={carouselImage} />
         </div>
 
->>>>>>> fe/more
         {/* 3. Current Apply  */}
         <div>
           <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
