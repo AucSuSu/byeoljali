@@ -118,10 +118,10 @@ function FanSignModal({ data, onClose }) {
   const artistInfo = fanSignDetail.artistName; // 아티스트 이름
 
   return (
-    <div>
+    <>
       {fanSignDetail ? (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 text-white"
           onClick={handleCloseModal}
         >
           <div
@@ -194,6 +194,7 @@ function FanSignModal({ data, onClose }) {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
       ) : (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
@@ -264,6 +265,10 @@ function FanSignModal({ data, onClose }) {
         </div>
       )}
     </div>
+=======
+      ) : null}
+    </>
+>>>>>>> fe/feat/all
   );
 }
 
