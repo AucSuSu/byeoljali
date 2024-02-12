@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { useSelector } from 'react-redux';
 import useAxios from '../axios';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 // css 추가
@@ -55,6 +56,27 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     window.location.reload();
   };
 
+  const handleSubmit = async () => {
+    if (currMemberId == null) {
+      Swal.fire({
+        icon: 'warning',
+        title: '맴버를 선택해주세요',
+      });
+    } else {
+      const formData = {
+        memberId: currMemberId,
+        boughtAlbum: currAlbumNum,
+        artistFansignId: currFansignId, // 적절한 ID 값 필요
+      };
+      applyForm({ id: currFansignId, data: formData });
+      Swal.fire({
+        icon: 'success',
+        title: '성공적으로 응모되었습니다.',
+        confirmButtonText: '당첨을 기대하세요', // 버튼 문구 수정
+      });
+      await closeModal();
+    }
+
   const artistDetail = async () => {
     navigate('/artist-profile', {
       state: {
@@ -66,15 +88,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     closeModal();
   };
 
-  const handleSubmit = () => {
-    const formData = {
-      memberId: currMemberId,
-      boughtAlbum: currAlbumNum,
-      artistFansignId: currFansignId, // 적절한 ID 값 필요
-    };
-    applyForm({ id: currFansignId, data: formData });
-    closeModal();
-  };
 
   // 날짜 계산용
   const formatDate = (dateString) => {

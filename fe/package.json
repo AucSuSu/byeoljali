@@ -31,7 +31,8 @@
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "sockjs-client": "^1.6.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "sweetalert2": "^11.10.5"
   },
   "name": "openvidu-call-react",
   "private": true,
