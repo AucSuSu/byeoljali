@@ -15,23 +15,24 @@ export default function MemberList() {
   };
 
   return (
-    <div className="m-2.5 ml-12 text-center inline-block">
-      <img
-        src="/addbutton.webp"
-        alt="addMember"
-        style={{
-          width: '130px',
-          height: '130px',
-          borderRadius: '50%',
-          objectFit: 'cover',
-          cursor: 'pointer',
-        }}
-        onClick={openAddMember}
-      />
-      <p>멤버 추가</p>
-      {modifyMember.open && modifyMember.key === data.memberId && (
-        <ModifyMemberModal data={data} onClose={closeModifyMember} />
-      )}
+    <div className="font-jamsil">
+      <div className="m-2.5 ml-12 text-center inline-block">
+        <img
+          src="/addbutton.webp"
+          alt="addMember"
+          style={{
+            width: '130px',
+            height: '130px',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            cursor: 'pointer',
+          }}
+          onClick={openAddMember}
+        />
+        {modifyMember.open && modifyMember.key === data.memberId && (
+          <ModifyMemberModal data={data} onClose={closeModifyMember} />
+        )}
+      </div>
     </div>
   );
 }

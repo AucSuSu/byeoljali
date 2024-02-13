@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import useAxios from '../../axios.js';
 import Loading from '../../Home/Loading.jsx';
 import ArtistImgModal from '../Modal/ArtistImgModal.jsx';
+import { PlusCircleIcon } from '@heroicons/react/24/solid'; // 솔리드 스타일 아이콘
 
 export default function ArtistInfo() {
   const location = useLocation();
@@ -247,9 +248,13 @@ export default function ArtistInfo() {
             <MemberList key={member.memberId} data={member} />
           ))}
           {/* 멤버 추가 버튼 */}
+          {/* 멤버 추가 버튼 */}
           {isArtist && (
-            <div className="m-2.5 ml-12 text-center inline-block">
-              {/* 멤버 추가 버튼 이미지 및 클릭 이벤트 핸들러 */}
+            <div
+              className="m-2.5 mr-8 text-center inline-block cursor-pointer"
+              onClick={handleOpenAddMember}
+            >
+              <PlusCircleIcon className="h-32 w-32 text-white" />
             </div>
           )}
         </div>
