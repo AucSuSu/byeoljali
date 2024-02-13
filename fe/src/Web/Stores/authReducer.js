@@ -16,7 +16,7 @@ export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3MiLCJleHAiOjE3MDc5MzE1NzksInJvbGUiOiJGQU4iLCJpZCI6M30.6K1nB3i7L9a5x6sLaiClei17KIP4dnHNL7YeMhxYjdE",
+    token: null,
     tokenRefresh: null,
     kakaoAuthorization: null,
     isArtist: null,
@@ -62,8 +62,8 @@ const authSlice = createSlice({
         Swal.fire({
           icon: 'warning',
           title: '로그인 정보가 틀렸습니다.',
-          background : '#222222',
-          confirmButtonColor : 'red'
+          background: '#222222',
+          confirmButtonColor: 'red',
         });
       });
   },
