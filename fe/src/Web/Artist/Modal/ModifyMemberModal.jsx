@@ -81,7 +81,7 @@ function ModifyMemberModal({ onClose, data }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col items-center">
-          <div className="text-[25px] self-start">프로필 이미지</div>
+          <div className="text-[25px] self-start mt-4">프로필 이미지</div>
           <div className="relative mt-3 mb-4">
             <img
               src={imageSrc}
