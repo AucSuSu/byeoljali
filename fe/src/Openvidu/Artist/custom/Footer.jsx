@@ -19,7 +19,7 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
 
   return (
     <>
-      <div className="flex fixed bg-black bottom-0 w-full h-15 font-milk text-white font-bold justify-center p-4 border-t-2">
+      <div className="flex fixed bg-black bottom-0 w-full h-15 font-milk text-white font-bold justify-center p-4 border-t-2 border-dark-gray">
         <div
           onClick={() => blackList()}
           className="flex items-center bg-slate-400 rounded-md mr-5"

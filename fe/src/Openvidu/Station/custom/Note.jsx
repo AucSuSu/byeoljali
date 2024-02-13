@@ -47,26 +47,31 @@ export default function Note({ handlePostit, handleScript }) {
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex flex-col items-center w-full h-[50%] mb-4 ">
-        <label className="bg-hot-pink border-2 p-2 w-full text-center">
+        <label className="bg-hot-pink border-2 border-dark-gray p-2 w-full text-center">
           포스트잇
         </label>
         <div
-          className="border-l-2 border-r-2 w-[100%] h-full p-2 text-center overflow-y-auto whitespace-pre-line"
+          className="border-l-2 border-r-2 border-dark-gray w-[100%] h-full p-2 text-center overflow-y-auto whitespace-pre-line"
           ref={postitRef}
         >
           {typingPostits.map((typingPostit, index) => (
-            <div key={index} className="flex bg justify-between items-start ">
-              <p className="px-4">{typingPostit}</p>
+            <div
+              key={index}
+              className="flex bg justify-between items-start mb-2"
+            >
+              <p className="border-2 border-dark-gray w-full rounded-lg px-4">
+                {typingPostit}
+              </p>
               <button
                 onClick={() => deletePostit(index)}
-                className="text-white hover:scale-110 hover:text-hot-pink"
+                className="text-white ml-4 hover:scale-110 hover:text-hot-pink"
               >
                 X
               </button>
             </div>
           ))}
         </div>
-        <div className="border-2  w-full flex mt-auto">
+        <div className="border-2 border-dark-gray  w-full flex mt-auto">
           <input
             type="text"
             value={postit}
@@ -82,7 +87,7 @@ export default function Note({ handlePostit, handleScript }) {
             className="flex-grow p-2 text-center bg-black"
           />
           <button
-            className="border-l-2 p-2 bg-hot-pink hover:opacity-80"
+            className="border-l-2 border-dark-gray p-2 bg-hot-pink hover:opacity-80"
             onClick={inputPostit}
           >
             <PlayArrowIcon />
@@ -93,26 +98,31 @@ export default function Note({ handlePostit, handleScript }) {
       {/* 공간 띄워줘 */}
 
       <div className="flex flex-col items-center w-full h-[50%] ">
-        <label className="bg-gray border-2 p-2 w-full text-center">
+        <label className="bg-dark-gray border-2 border-dark-gray p-2 w-full text-center">
           스크립트
         </label>
         <div
-          className="border-l-2 border-r-2 w-[100%] h-full p-2 text-center overflow-y-auto whitespace-pre-line"
+          className="border-l-2 border-r-2 border-dark-gray w-[100%] h-full p-2 text-center overflow-y-auto whitespace-pre-line"
           ref={scriptRef}
         >
           {typingScripts.map((typingScript, index) => (
-            <div key={index} className="flex bg justify-between items-start ">
-              <p className="px-4">{typingScript}</p>
+            <div
+              key={index}
+              className="flex bg justify-between items-start mb-2"
+            >
+              <p className="border-2 border-dark-gray w-full rounded-lg px-4">
+                {typingScript}
+              </p>
               <button
                 onClick={() => deleteScript(index)}
-                className="text-white hover:scale-110 hover:text-hot-pink"
+                className="text-white hover:scale-110 hover:text-hot-pink ml-4"
               >
                 X
               </button>
             </div>
           ))}
         </div>
-        <div className="border-2  w-full flex mt-auto">
+        <div className="border-2 border-dark-gray  w-full flex mt-auto">
           <input
             type="text"
             value={script}
