@@ -42,17 +42,22 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
 
 
     @Override
-    public List<RecentFansignResponseDto> findTop3ByOrderByCreatedDateDesc() {
+    public List<FansignResponseDto> findTop6ByOrderByCreatedDateDesc() {
         queryFactory = new JPAQueryFactory(em);
         Date currentDate = new java.util.Date();
 
         return queryFactory.select(
                         Projections.constructor(
-                                RecentFansignResponseDto.class,
+                                FansignResponseDto.class,
                                 artistFansign.artistfansignId,
-                                artistFansign.artist.artistId,
+                                artistFansign.title,
                                 artistFansign.posterImageUrl,
-                                artistFansign.status
+                                artistFansign.status,
+                                artist.artistId,
+                                artist.name,
+                                artistFansign.startApplyTime,
+                                artistFansign.endApplyTime,
+                                artistFansign.startFansignTime
                         )
                 )
                 .from(artistFansign)
@@ -62,7 +67,7 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                         "function('timestampdiff', second, {0}, {1})",
                         artistFansign.createdDate,
                         currentDate).asc())
-                .limit(3)
+                .limit(5)
                 .fetch();
     }
 

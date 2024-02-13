@@ -86,10 +86,10 @@ public class ArtistFansignService {
         }
     }
 
-    // 팬싸인회 최근 3개 리스트 가져오기
-    public List<RecentFansignResponseDto> getRecent3Fansign(){
-        List<RecentFansignResponseDto> list =
-        artistFansignRepository.findTop3ByOrderByCreatedDateDesc();
+    // 팬싸인회 최근 5개 리스트 가져오기
+    public List<FansignResponseDto> getRecent6Fansign(){
+        List<FansignResponseDto> list =
+        artistFansignRepository.findTop6ByOrderByCreatedDateDesc();
 
         return list;
     }

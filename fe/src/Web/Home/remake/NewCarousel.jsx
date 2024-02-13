@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ApplyFormModal from '../HomeApplyFormModal';
 
 export default function Carousel({ datas }) {
   const newDatas = [...datas, ...datas, ...datas];
@@ -8,30 +9,21 @@ export default function Carousel({ datas }) {
   const [slideLeft, setSlideLeft] = useState(0);
   const [slideCount, setSliceCount] = useState(0);
   const [isStartTimer, setIsStartTimer] = useState(true);
+  const [selectedData, setSelectedData] = useState(null); // 모달에 전달할 선택된 데이터를 관리하는 상태
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const slideRef = useRef(null);
+
 
   useEffect(() => {
     // 너비 380 설정. 화면에 따라 값 변경해야 함.
     setImageWidth(380);
+    console.log(datas.length);
     setDatasLength(datas.length);
     setSlideIndex(datas.length);
     setSlideLeft(datas.length * 380);
   }, []);
 
-  // useEffect(() => {
-  //   let timer;
-  //   console.log(isStartTimer);
-  //   if (isStartTimer) {
-  //     timer = setInterval(() => {
-  //       console.log('온클릭 실행');
-  //       onClickLeft();
-  //     }, 3000);
-  //   }
-
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, [isStartTimer]);
 
   const handleMouseLeave = () => {
     setIsStartTimer(true);
@@ -72,9 +64,20 @@ export default function Carousel({ datas }) {
         setSliceCount(0);
         setTimeout(() => {
           slideRef.current.style.transition = 'transform 500ms ease-out';
-        }, 100);
+        }, 0);
       }, 500);
     }
+  };
+
+  // 모달 열기 함수
+  const openModal = (data) => {
+    setSelectedData(data); // 선택된 데이터를 상태에 저장
+    setIsModalOpen(true); // 모달 열기
+  };
+
+  const closeModal = () => {
+    dispatch(clearData()); // data를 빈 배열로 초기화하는 액션을 디스패치
+    setIsModalOpen(false);
   };
 
   const styledImage = (data, index) => {
@@ -88,12 +91,30 @@ export default function Carousel({ datas }) {
     return (
       <img
         key={index}
-        src={data.url}
+        src={data.posterImageUrl}
         alt={`image ${index}`}
         className={style}
+        onClick={() => openModal(data)} // 이미지 클릭 시 openModal 호출, 선택된 데이터 전달
       />
     );
   };
+
+  useEffect(() => {
+    setImageWidth(380); // 화면에 따라 값 변경 가능
+    // 자동 슬라이드 기능
+    let timer;
+    if (isStartTimer) {
+      timer = setInterval(() => {
+        onClickRight();
+      }, 5000); // 5초마다 오른쪽으로 이동
+    }
+
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [isStartTimer, onClickRight]); // 의존성 배열에 onClickRight 추가
 
   return (
     <div
@@ -111,8 +132,21 @@ export default function Carousel({ datas }) {
           transform: `translateX(${-slideLeft}px)`,
         }}
       >
-        {newDatas.map((data, index) => styledImage(data, index))}
+        {newDatas.map((data, index) => (
+          styledImage(data, index)
+
+        ))}
+        
       </div>
+      {isModalOpen && (
+        <ApplyFormModal
+          fansignId={selectedData.artistfansignId}
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          propData={selectedData} // 모달에 선택된 데이터 전달
+        />
+      )}
+      
     </div>
   );
 }
