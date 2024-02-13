@@ -108,7 +108,8 @@ public class ArtistFansignRepositoryImpl implements CustomArtistFansignRepositor
                                         artist.name,
                                         artistFansign.startApplyTime,
                                         artistFansign.endApplyTime,
-                                        artistFansign.startFansignTime
+                                        artistFansign.startFansignTime,
+                                        artistFansign.mode
                                 )
                         ).from(applicant)
                         .rightJoin(applicant.artistFansign, artistFansign)
