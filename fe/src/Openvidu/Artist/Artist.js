@@ -26,7 +26,7 @@ class VideoRoomComponent extends Component {
       chatDisplay: 'block',
       currentVideoDevice: undefined,
       count: 0, // 참여인원 수
-      signTime: 30, // 팬싸인 시간
+      signTime: 600, // 팬싸인 시간
       orders: 1,
       countTime: 10,
       remainingTime: 10,
