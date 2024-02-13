@@ -6,7 +6,7 @@ import ImgUpload from './ImgUpload';
 import useAxios from '../../axios.js';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import Swal from 'sweetalert2';
 export default function CreateFansignModal({}) {
   const [stars, setStars] = useState([]);
   const artistData = useSelector((state) => state.artistInfo.artistData);
@@ -58,6 +58,11 @@ export default function CreateFansignModal({}) {
       })
       .then((res) => {
         console.log(res.data);
+        Swal.fire({
+          icon: 'success',
+          title: '성공적으로 개설되었습니다.',
+          background : '#5f85bb'
+        });
         return res.data;
       });
   };
@@ -135,11 +140,14 @@ export default function CreateFansignModal({}) {
 
   const customStyle = {
     content: {
-      width: '1200px',
-      height: '880px',
+      width: '80%', // 모달의 너비를 화면의 80%로 조정
+      maxHeight: '90vh', // 모달의 최대 높이를 화면 높이의 90%로 제한
       margin: 'auto',
-      padding: 0,
+      padding: '0px', // 패딩 추가로 내용과 모달 테두리 사이 간격 조정
+      overflow: 'hidden', // 내용이 모달 높이를 초과해도 스크롤바 생성 방지
+      zIndex: 2,
       borderRadius: '20px',
+      position: 'relative', // 모달의 위치를 중앙으로 조정하기 위해 relative 설정
     },
   };
 
@@ -152,10 +160,7 @@ export default function CreateFansignModal({}) {
         style={customStyle}
       >
         <div
-          className="flex font-big bg-black overflow-hidden p-3"
-          style={{
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          }}
+          className="flex font-jamsil bg-black overflow-hidden ps-3 pt-10"
         >
           {stars.map((star) => (
             <div
@@ -168,23 +173,22 @@ export default function CreateFansignModal({}) {
               }}
             ></div>
           ))}
-          <div className="w-1/2">
-            <h2 className="text-40 text-white mb-6 ms-10">FANSIGN</h2>
+          <div className="w-1/2 pt-10">
             <ImgUpload img={null} uploadImg={uploadImg} />
           </div>
           <div className="w-1/2">
-            <div className="font-big ml-3">
+            <div className="font-jamsil pl-3">
               <form onSubmit={fansignCreate}>
-                <div className="mt-20 flex flex-col ">
+                <div className="flex flex-col ">
                   <label className="text-hot-pink pb-1 text-25">타이틀</label>
                   <input
                     type="text"
                     value={title}
-                    className="border-b border-gray-300 focus:border-hot-pink outline-none w-120  text-black p-3 rounded-xl"
+                    className="border-b  focus:border-hot-pink outline-none w-120 text-black p-1 rounded-xl"
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
-                <div className="mt-6 flex flex-col">
+                <div className="pt-6 flex flex-col">
                   <label className="text-hot-pink pb-1 text-25">
                     공지사항{' '}
                   </label>
@@ -226,7 +230,7 @@ export default function CreateFansignModal({}) {
                   <input
                     type="text"
                     value={albumName}
-                    className="border-b border-gray-300 focus:border-hot-pink outline-none w-120 text-black p-3 rounded-xl p-1"
+                    className="border-b border-gray-300 focus:border-hot-pink outline-none w-120 text-black p-1  rounded-xl p-1"
                     onChange={(e) => setAlbumName(e.target.value)}
                   />
                 </div>
@@ -298,7 +302,7 @@ export default function CreateFansignModal({}) {
                 </div>
 
                 <p className="text-18 text-center text-hot-pink">개설 멤버</p>
-                <div className="text-white bg-pink px-4 py-4 rounded-xl  grid grid-cols-4 gap-4 mt-2 mb-3">
+                <div className="text-white bg-pink px-4 py-4 rounded-xl  grid grid-cols-4 gap-4 mt-2">
                   {Object.keys(members).map((member) => (
                     <div key={member}>
                       <input
@@ -311,7 +315,7 @@ export default function CreateFansignModal({}) {
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center pb-3">
                   <button
                     type="submit"
                     className="bg-hot-pink text-black px-4 py-2 rounded-xl"

@@ -90,7 +90,7 @@ export default function LoginView() {
   return (
     <div>
       <div
-        className="font-big"
+        className="font-jamsil"
         style={{
           position: 'fixed',
           top: 0,
@@ -109,7 +109,7 @@ export default function LoginView() {
         </div>
       </div>
 
-      <div className="content flex flex-col justify-center items-center font-big bg-black">
+      <div className="content flex flex-col justify-center items-center font-jamsil bg-black">
         {/* <img
           src="/susu.jpg"
           alt="로고"

@@ -75,7 +75,7 @@ export default function MemberList({ data, status }) {
     'absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4';
 
   return (
-    <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-big">
+    <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-jamsil">
       <div className="w-[80%] ml-[10%] relative ">
         <img
           src={data.posterImageUrl}

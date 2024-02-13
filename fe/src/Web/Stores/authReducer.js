@@ -16,8 +16,7 @@ export const loginUser = createAsyncThunk('axios/loginUser', async (data) => {
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    token: null,
-    tokenRefresh: null,
+    token : null, tokenRefresh: null,
     kakaoAuthorization: null,
     isArtist: null,
     artistId: null,

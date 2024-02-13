@@ -44,12 +44,12 @@ export default function ImgUpload({ img, uploadImg }) {
         {imageSrc ? (
           <img
             id="image-preview"
-            className="w-[500px] h-[670px] object-cover rounded-xl border-2 border-pink"
+            className="w-[500px] h-[600px] object-cover rounded-xl border-2 border-pink"
             src={imageSrc}
             alt="Preview"
           />
         ) : (
-          <div className="w-[500px] h-[670px] bg-gray rounded-xl border-2 border-pink">
+          <div className="w-[500px] h-[600px] bg-gray rounded-xl border-2 border-pink">
             {' '}
           </div>
         )}

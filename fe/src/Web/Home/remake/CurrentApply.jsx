@@ -29,7 +29,7 @@ const HomeView = () => {
   const bgStyle = 'bg-white bg-opacity-80';
   return (
     <>
-      <div id="main_container" className="flex flex-col font-big">
+      <div id="main_container" className="flex flex-col font-jamsil">
         {/* 1. Navbar */}
         <div
           className=" relative h-[400px] bg-cover "

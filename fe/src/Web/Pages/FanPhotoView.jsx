@@ -96,7 +96,7 @@ function FanPhotoView() {
   if (Array.isArray(photoData)) {
     return (
       <>
-        <div className="min-h-screen bg-black font-big">
+        <div className="min-h-screen bg-black font-jamsil">
           <NavBar />
           <div className="w-[80%] ml-[10%]">
             <div className="flex items-center justify-between mt-6 mb-6">
@@ -152,7 +152,7 @@ function FanPhotoView() {
 
           <div className="w-[86%] ml-[7%]">
             {photoData.length === 0 ? (
-              <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-big text-35">
+              <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-jamsil text-35">
                 <div>사진 내역이 없습니다</div>
                 <div
                   className="text-25 text-hot-pink cursor-pointer hover:scale-110 transition-transform ease-in-out duration-500"
