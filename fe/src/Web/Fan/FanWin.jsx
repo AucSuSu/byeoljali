@@ -30,22 +30,23 @@ function FanWin() {
 
   return (
     <>
-      <div className="w-[80%] ml-[10%]">
-        <div className="flex items-center justify-between mt-6 mb-6">
+    <div  className="w-[85%] h-[100%] ml-[9%] ">
+      <div>
+        <div className="flex items-center justify-between my-4">
           <div>
-            <div className="font-jamsil text-40 bolder mb-2 text-white">
+            <div className="font-jamsil text-35 bolder mb-2 text-white">
               당첨 내역
             </div>
-            <div className="font-jamsil text-25 text-dark-gray">
-              {data.length} 개의 당첨 내역을 보유 하고 있습니다.
+            <div className="font-jamsil text-18 text-dark-gray">
+              {data.length} 개의 당첨 내역을 보유 하고 있습니다
             </div>
-            <div className="font-jamsil text-25 pt-2 text-dark-gray">
+            <div className="font-jamsil text-18 pt-2 text-dark-gray">
               팬싸인회는 시작 30분 전부터 입장 가능합니다
             </div>
           </div>
         </div>
       </div>
-      <div className="w-[86%] ml-[7%]">
+      <div className="w-[85%] ml-[5%] mb-5">
         {data.length === 0 ? (
           <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-jamsil text-35">
             <div>당첨 내역이 없습니다</div>
@@ -57,12 +58,13 @@ function FanWin() {
             </div>
           </div>
         ) : (
-          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8 border-4 border-deep-dark rounded-lg">
+          <div className="w-full max-h-[100%] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4 border-4 border-deep-dark rounded-lg">
             {data.map((data, index) => (
               <FanSignList key={index} data={data} />
             ))}
           </div>
         )}
+      </div>
       </div>
     </>
   );
