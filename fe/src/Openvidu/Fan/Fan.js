@@ -303,7 +303,7 @@ class VideoRoomComponent extends Component {
             {localUser !== undefined &&
               localUser.getStreamManager() !== undefined && (
                 <div
-                  className="OT_root OT_publisher custom-class"
+                  className="h-[100%] border-r-2 border-dark-gary"
                   id="localUser"
                 >
                   <Video user={localUser} />
@@ -312,11 +312,7 @@ class VideoRoomComponent extends Component {
           </div>
           <div>
             {this.state.subscribers.map((sub, i) => (
-              <div
-                key={i}
-                className="OT_root OT_publisher custom-class"
-                id="remoteUsers"
-              >
+              <div key={i} className="h-[100%]" id="remoteUsers">
                 <Video
                   user={sub}
                   streamId={sub.streamManager.stream.streamId}
@@ -327,10 +323,7 @@ class VideoRoomComponent extends Component {
 
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
-              <div
-                className="OT_root OT_publisher custom-class"
-                style={chatDisplay}
-              >
+              <div className="border-l-2 border-dark-gray" style={chatDisplay}>
                 <Script
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}

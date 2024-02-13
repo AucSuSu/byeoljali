@@ -197,7 +197,12 @@ const HomeView = () => {
         <div>
           <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
             <p> CURRENT APPLY</p>
-            <button onClick={moveCurrentApplyView}>더보기 ▶</button>
+            <button
+              onClick={moveCurrentApplyView}
+              className="hover:scale-110 hover:text-hot-pink"
+            >
+              더보기 ▶
+            </button>
           </div>
           <HomeApplyList data={sliceAfterItems} status="CurrentApply" />
         </div>
@@ -208,7 +213,12 @@ const HomeView = () => {
         {/* 5. Comming Soon */}
         <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
           <p> COMMING SOON</p>
-          <button onClick={moveCommingSoonView}>더보기 ▶</button>
+          <button
+            onClick={moveCommingSoonView}
+            className="hover:scale-110 hover:text-hot-pink"
+          >
+            더보기 ▶
+          </button>
         </div>
         <HomeApplyList data={sliceBeforeItems} status="CommingSoon" />
       </div>

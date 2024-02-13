@@ -14,8 +14,10 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
   const [inputMessage, setInputMessage] = useState('');
 
   return (
-    <div id="chat" className="flex flex-col h-full border-2">
-      <h2 className="bg-gray border-b-2 p-2 w-full text-center">Chat</h2>
+    <div id="chat" className="flex flex-col h-full border-2 border-dark-gray">
+      <h2 className="bg-dark-gray border-b-2 border-dark-gray p-2 w-full text-center">
+        Chat
+      </h2>
       <div
         ref={scrollRef}
         className="mb-4 h-screen overflow-y-auto p-2 whitespace-pre-line"
@@ -33,7 +35,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                   />
                 </div>
               </div>
-              <p className="text-right rounded-lg text-sm w-[60%] ml-auto pr-3 ">
+              <p className="border-1 border-dark-gray text-right rounded-lg text-sm w-[60%] ml-auto pr-3 ">
                 {messageData.text}
               </p>
             </div>
@@ -49,14 +51,14 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                 </div>
                 <p className="font-bold">{messageData.nickname}</p>
               </div>
-              <p className="bg-lime-100 text-sm w-[60%] pl -3">
+              <p className=" border-1 border-dark-gray text-sm w-[60%] pl -3">
                 {messageData.text}
               </p>
             </div>
           ),
         )}
       </div>
-      <div className="flex mt-auto items-center border-t-2">
+      <div className="flex mt-auto items-center border-t-2 border-dark-gray">
         <input
           type="text"
           placeholder="메세지를 입력해주세요"

@@ -43,7 +43,7 @@ export default function Carousel({ datas }) {
 
   const Arrow = ({ direct, onClick }) => (
     <div
-      className={`absolute top-1/2 ${direct === 'left' ? 'left-[23%]' : 'right-[23%]'} translate-y-[-50%] z-20 text-white text-30 cursor-pointer`}
+      className={`absolute top-1/2 ${direct === 'left' ? 'left-[23%]' : 'right-[23%]'} translate-y-[-50%] z-20 text-white text-30 cursor-pointer hover:text-35 hover:text-hot-pink`}
       onClick={onClick}
     >
       {direct === 'left' ? '◀︎' : '▶︎'}

@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import Note from './custom/Note.jsx';
 import Header from './custom/Header.jsx';
 import Chat from './custom/Chat.jsx';
+import Star from './custom/Star.jsx';
 
 const mapStateToProps = (state) => ({
   authToken: selectToken(state),
@@ -396,75 +397,80 @@ class App extends Component {
 
   render() {
     return (
-      <div className="flex flex-col h-screen font-milk font-bold bg-black text-white">
-        {/* 헤더 고정 */}
-        <div className="mb-8">
-          <Header
-            title={this.props.propsData.title}
-            member={this.props.propsData.member}
-            timer={this.state.remainingTime}
-          />
-        </div>
+      <div className="relative">
+        <Star />
+        <div className="flex flex-col h-screen font-milk font-bold bg-black text-white">
+          {/* 헤더 고정 */}
+          <div className="mb-8 z-10">
+            <Header
+              title={this.props.propsData.title}
+              member={this.props.propsData.member}
+              timer={this.state.remainingTime}
+            />
+          </div>
 
-        {/* 나머지 3등분 */}
-        {/* <div onClick={() => this.Meeting()}>Fansing 들어가기</div> */}
-        <div className="flex h-[100%] w-[100%] overflow-hidden">
-          {/* 첫번째 덩어리 */}
-          <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 ">
-            {/* 비디오 출력 화면 */}
-            <div
-              className="h-[70%] border-2 overflow-hidden"
-              ref={this.mainVideoRef}
-            >
-              <UserVideoComponent
-                streamManager={this.state.mainStreamManager}
-                className="w-full h-full object-cover"
+          {/* 나머지 3등분 */}
+          <div className="z-10" onClick={() => this.Meeting()}>
+            Fansing 들어가기
+          </div>
+          <div className="flex h-[100%] w-[100%] overflow-hidden">
+            {/* 첫번째 덩어리 */}
+            <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 z-10 ">
+              {/* 비디오 출력 화면 */}
+              <div
+                className="h-[70%] border-2 border-dark-gray overflow-hidden"
+                ref={this.mainVideoRef}
+              >
+                <UserVideoComponent
+                  streamManager={this.state.mainStreamManager}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* 볼륨 바 컨테이너 */}
+              <div className="h-[10%] bg-dark-gray flex flex-row border-r-2 border-l-2 border-dark-gray items-center">
+                <p className="pl-4 pr-4 mx-2 text-18">마이크</p>
+                {/* 실제 볼륨 바 */}
+                <div id="volume-bar" className="volume-bar pl-4 "></div>
+              </div>
+
+              {/* 캡처 버튼 */}
+              <div className="flex flex-row h-[10%] border-2 border-dark-gray items-center justify-between ">
+                <p className="pr-2 ml-10">
+                  {this.isSamePerson
+                    ? '본인 인증이 완료되었습니다'
+                    : '본인 인증이 필요합니다'}
+                </p>
+                <button
+                  className="bg-hot-pink rounded-md w-[20%] h-[50%] flex items-center justify-center mr-10 hover:scale-110 hover:border-2 hover:border-pink-400 hover:opacity-90"
+                  onClick={this.captureMainVideo}
+                >
+                  본인 인증
+                </button>
+              </div>
+
+              {/* 순서 */}
+              <div className="bg-dark-gray flex flex-row h-[10%] border-l-2 border-r-2 border-b-2 border-dark-gray items-center text-18">
+                <p className="border-r-2 pl-4 pr-4 mx-2">내 순서</p>
+                <p className="pl-4">{this.state.orders}번째</p>
+              </div>
+            </div>
+
+            {/* 두번째 덩어리 */}
+            <div className="h-[95%] w-[30%] ml-4 mr-4 z-10">
+              <Note
+                handleScript={this.handleMyScript}
+                handlePostit={this.handleMyPostit}
               />
             </div>
-
-            {/* 볼륨 바 컨테이너 */}
-            <div className="h-[10%] bg-gray flex flex-row border-r-2 border-l-2 items-center">
-              <p className="border-r-2 pl-4 pr-4 mx-2 text-18">마이크</p>
-              {/* 실제 볼륨 바 */}
-              <div id="volume-bar" className="volume-bar pl-4 "></div>
+            {/* 세번쨰 덩어리 */}
+            <div className=" w-[30%] h-[95%] ml-4 mr-8 z-10">
+              <Chat
+                orders={this.state.orders}
+                messages={this.state.messages}
+                handleSendMessage={this.sendMessage}
+              />
             </div>
-
-            {/* 캡처 버튼 */}
-            <div className="flex flex-row h-[10%] border-2 items-center justify-between ">
-              <p className="pr-2 ml-10">
-                {this.isSamePerson
-                  ? '본인 인증이 완료되었습니다'
-                  : '본인 인증이 필요합니다'}
-              </p>
-              <button
-                className="bg-hot-pink rounded-md w-[20%] h-[50%] flex items-center justify-center mr-10 hover:scale-110 hover:border-2 hover:border-pink-400 hover:opacity-90"
-                onClick={this.captureMainVideo}
-              >
-                본인 인증
-              </button>
-            </div>
-
-            {/* 순서 */}
-            <div className="bg-gray flex flex-row h-[10%] border-l-2 border-r-2 border-b-2 items-center text-18">
-              <p className="border-r-2 pl-4 pr-4 mx-2">내 순서</p>
-              <p className="pl-4">{this.state.orders}번째</p>
-            </div>
-          </div>
-
-          {/* 두번째 덩어리 */}
-          <div className="h-[95%] w-[30%] ml-4 mr-4">
-            <Note
-              handleScript={this.handleMyScript}
-              handlePostit={this.handleMyPostit}
-            />
-          </div>
-          {/* 세번쨰 덩어리 */}
-          <div className=" w-[30%] h-[95%] ml-4 mr-8">
-            <Chat
-              orders={this.state.orders}
-              messages={this.state.messages}
-              handleSendMessage={this.sendMessage}
-            />
           </div>
         </div>
       </div>
