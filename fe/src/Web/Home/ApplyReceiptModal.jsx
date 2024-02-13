@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { setAlbumNum } from '../Stores/homeDetailListReducer';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 function ApplyReceiptModal({ onClose, title }) {
   const dispatch = useDispatch();
@@ -59,12 +60,36 @@ function ApplyReceiptModal({ onClose, title }) {
       .then((response) => {
         console.log(response.data);
         dispatch(setAlbumNum(response.data.boughtAlbum));
-        alert('영수증 인증 성공');
-        onClose(); // 모달 닫기
+        Swal.fire({
+          icon: 'success',
+          title: '영수증 인증 성공',
+          background : '#222222',
+          confirmButtonColor: "#FF2990",   
+          confirmButtonText: "OK",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            closeModal();
+           }
+        });
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
-          alert('이미지의 용량을 1MB 이하로 낮춰주세요');
+          Swal.fire({
+            icon: 'warning',
+            title: '이미지 크기를 1mb 보다 낮춰주세요',
+            background : '#222222',
+            confirmButtonColor: "#FF2990",   
+            confirmButtonText: "OK",
+          })
+        }else{
+          Swal.fire({
+            icon: 'warning',
+            title: '영수증 인증 실패',
+            text: "영수증이 인식되지 않습니다. 선명하게 올려주세요",
+            background : '#222222',
+            confirmButtonColor: "#FF2990",   
+            confirmButtonText: "OK",
+          })
         }
         console.error('Error uploading the image: ', error);
       });
