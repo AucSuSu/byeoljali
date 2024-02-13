@@ -29,8 +29,8 @@ export default function Footer({
 
   const performCapture = async (id) => {
     if (count > 0) {
-      setCount(count - 1);
       captureArea();
+      setCount(count - 1);
     }
 
     console.log('사진 캡쳐 성공!', id);

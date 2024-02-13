@@ -282,7 +282,9 @@ class VideoRoomComponent extends Component {
     this.setState({ chatDisplay: 'none' }, () => {
       this.updateLayout();
       if (typeof callback === 'function') {
-        callback();
+        setTimeout(() => {
+          callback();
+        }, 1000);
       }
     });
   }
