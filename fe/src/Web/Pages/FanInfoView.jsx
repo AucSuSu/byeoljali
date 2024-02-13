@@ -95,7 +95,7 @@ function FanInfoView() {
         className="font-isa text-white min-h-screen bg-black flex flex-col items-center"
         onClick={handleModalContentClick}
       >
-        <div className="self-start ml-[150px] w-full">
+        <div className="self-start ml-[150px]">
           <div className="text-[30px] mb-4">[ 프로필 수정 ]</div>
         </div>
 
