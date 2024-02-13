@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
-import './FanSignModal.css';
 
 function FanSignModal({ data, onClose }) {
   console.log(data);
@@ -156,7 +155,7 @@ function FanSignModal({ data, onClose }) {
             }}
           >
             <div
-              className="p-3 justify-center items-align flex"
+              className="p-3 justify-center items-center flex"
               style={{
                 position: 'relative',
               }}
@@ -169,33 +168,35 @@ function FanSignModal({ data, onClose }) {
                     left: star.left,
                     top: star.top,
                     animationDuration: star.animationDuration,
-                    
                   }}
                 ></div>
               ))}
-              <div className=""
-              style={{
-                zIndex : '999'
-              }}>
+              <div
+                className="w-[90%] h-[85%] self-center"
+                style={{
+                  zIndex: '999',
+                }}
+              >
                 <img
                   src={fanSignDetail.posterImageUrl}
                   alt=""
-                  className="object-cover justify-center items-align flex w-[500px] h-[550px]"
+                  className="object-cover w-full h-full"
                   style={{
-                    boxShadow:
-                      '0 0 10px white, 0 0 20px white, 0 0 30px white',
+                    boxShadow: '0 0 10px white, 0 0 20px white, 0 0 30px white',
                   }}
                 />
               </div>
             </div>
 
-            <div className="p-3 overflow-y-auto custom-scrollbar">
-              <div className="flex  flex-col">
-                <div className="font-jamsil bolder text-40"
-                style={{
-                  textShadow:
-                    '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',
-                }}>
+            <div className="p-3 flex">
+              <div className="h-[85%] self-center flex  flex-col justify-between">
+                <div
+                  className="font-jamsil bolder text-40"
+                  style={{
+                    textShadow:
+                      '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',
+                  }}
+                >
                   [ {fanSignDetail.artistFansignTitle} ]
                 </div>
 
@@ -207,26 +208,24 @@ function FanSignModal({ data, onClose }) {
                     }}
                   />
                 </div>
-                <div className='flex pt-6'>
-
-                <div className="font-jamsil">
-                  <p className="bolder text-18 mr-3">🗓️ 응모 기간</p>
-                  <div className="text-15">{applySchedule}</div>
-                </div>
-                <div className="font-jamsil ps-6">
-                  <p className="bolder text-18 mr-3">🗓️ 사인회 일정</p>
-                  <div className="text-15">{fanSignSchedule}</div>
-                </div>
+                <div className="flex pt-6">
+                  <div className="font-jamsil">
+                    <p className="bolder text-18 mr-3">🗓️ 응모 기간</p>
+                    <div className="text-15">{applySchedule}</div>
+                  </div>
+                  <div className="font-jamsil ps-6">
+                    <p className="bolder text-18 mr-3">🗓️ 사인회 일정</p>
+                    <div className="text-15">{fanSignSchedule}</div>
+                  </div>
                 </div>
                 <div className="font-jamsil pt-6">
                   <p className="bolder text-18 ">👯 아티스트</p>
-                    <p
-                      className="mt-2 pl-2 pr-2 font-isa border-b border-white hover:cursor-pointer hover:text-hot-pink hover:border-hot-pink hover:scale-110 inline-block"
-                      onClick={artistDetail}
-                    >
-                      {artistInfo} ▶︎
-                    </p>
-                  </div>
+                  <p
+                    className="mt-2 pl-2 pr-2 font-isa border-b border-white hover:cursor-pointer hover:text-hot-pink hover:border-hot-pink hover:scale-110 inline-block"
+                    onClick={artistDetail}
+                  >
+                    {artistInfo} ▶︎
+                  </p>
                 </div>
                 <div className="font-jamsil pt-6">
                   <p className="bolder text-18 mr-3">🧕 신청 멤버</p>
@@ -243,6 +242,7 @@ function FanSignModal({ data, onClose }) {
               </div>
             </div>
           </div>
+        </div>
       ) : null}
     </>
   );

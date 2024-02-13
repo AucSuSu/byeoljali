@@ -17,7 +17,6 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: null,
-
     tokenRefresh: null,
     kakaoAuthorization: null,
     isArtist: null,
@@ -63,8 +62,8 @@ const authSlice = createSlice({
         Swal.fire({
           icon: 'warning',
           title: '로그인 정보가 틀렸습니다.',
-          background : '#222222',
-          confirmButtonColor : 'red'
+          background: '#222222',
+          confirmButtonColor: 'red',
         });
       });
   },

@@ -10,7 +10,7 @@ function FanWinView() {
 
   return (
     <>
-      <div className="h-screen bg-black overflow-hidden relative z-[11]">
+      <div className="min-h-screen bg-black overflow-hidden relative z-[11]">
         <NavBar />
         <div className="night z-10 absolute top-0 left-0 right-0 bottom-0 ;">
           {[...Array(20)].map((_, index) => (
@@ -25,7 +25,7 @@ function FanWinView() {
             ></div>
           ))}
         </div>
-        <div className='h-[100%]'>
+        <div className="h-[100%]">
           <FanWin />
         </div>
       </div>
