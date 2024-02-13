@@ -426,7 +426,7 @@ class VideoRoomComponent extends Component {
             {this.state.subscribers.map((sub, i) => (
               <div
                 key={i}
-                className="OT_root OT_publisher custom-class"
+                className="h-[100%] border-r-2 border-dark-gary"
                 id="remoteUsers"
               >
                 <Video
@@ -438,10 +438,7 @@ class VideoRoomComponent extends Component {
           </div>
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
-              <div
-                className="OT_root OT_publisher custom-class"
-                style={chatDisplay}
-              >
+              <div className="border-l-2 border-dark-gray" style={chatDisplay}>
                 <Postit
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}

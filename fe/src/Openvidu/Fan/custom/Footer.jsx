@@ -29,8 +29,8 @@ export default function Footer({
 
   const performCapture = async (id) => {
     if (count > 0) {
-      setCount(count - 1);
       captureArea();
+      setCount(count - 1);
     }
 
     console.log('사진 캡쳐 성공!', id);
@@ -94,7 +94,7 @@ export default function Footer({
 
   return (
     <>
-      <div className="bg-black fixed bottom-0 w-full h-15 font-milk text-white font-bold flex items-center justify-between p-4 border-t-2">
+      <div className="bg-black fixed bottom-0 w-full h-15 font-milk text-white font-bold flex items-center justify-between p-4 border-t-2 border-dark-gray">
         <div>
           <p className="mx-2">남은 촬영 횟수 : {count} / 4</p>
         </div>

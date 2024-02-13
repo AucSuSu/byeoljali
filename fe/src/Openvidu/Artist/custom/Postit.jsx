@@ -23,7 +23,7 @@ export default function Postit({ chatDisplay, close, fanData }) {
       <div className="flex items-center justify-center bg-hot-pink h-[10%]">
         <p className="tex-25">포스트잇</p>
       </div>
-      <div className="flex flex-col m-2 p-2">
+      <div className="flex flex-col m-2 p-2 whitespace-pre-line">
         {fanData
           ? fanData.postit.map((messageData, index) => (
               <p key={index}> {messageData}</p>

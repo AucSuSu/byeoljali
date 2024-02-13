@@ -81,11 +81,15 @@ export default function FansignModal({ memberFansignId }) {
 
   const customStyle = {
     content: {
-      width: '1200px',
+      width: '1100px',
       height: '700px',
-      margin: 'auto',
+      // margin: 'auto',
       padding: 0,
       borderRadius: '20px',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      position: 'absolute',
     },
   };
 
@@ -96,6 +100,7 @@ export default function FansignModal({ memberFansignId }) {
         onRequestClose={closeModal}
         contentLabel="테스트입니다"
         style={customStyle}
+        // className="overflow-hidden"
       >
         {detailData && (
           <div className="flex font-jamsil bg-black p-6">

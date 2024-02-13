@@ -7,7 +7,7 @@ export default function Header({ title, member, timer, remainingTime }) {
 
   return (
     <AppBar>
-      <div className="bg-black fixed top-0 w-full p-4 flex justify-between items-center font-jamsil tracking-wide border-b-2 text-white">
+      <div className="bg-black fixed top-0 w-full p-4 flex justify-between items-center font-big tracking-wide border-b-2 border-dark-gray text-white">
         <div className="flex items-center">
           <p className="border-r pr-4 text-18 font-bold">{title} 팬 싸인회</p>
           <p className="pl-4">{member}</p>

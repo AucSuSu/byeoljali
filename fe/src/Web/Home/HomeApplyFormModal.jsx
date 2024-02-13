@@ -251,7 +251,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                   <div className="pt-3">
                     <p className="text-18">🤗 아티스트</p>
                     <p
-                      className="mt-2 pl-2 pr-2 font-isa border-b border-white hover:cursor-pointer hover:text-hot-pink hover:border-hot-pink inline-block"
+                      className="mt-2 pl-2 pr-2 font-isa border-b border-white hover:cursor-pointer hover:text-hot-pink hover:border-hot-pink hover:scale-110 inline-block"
                       onClick={artistDetail}
                     >
                       {data?.object?.artistName} ▶︎
