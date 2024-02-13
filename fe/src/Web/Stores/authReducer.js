@@ -17,7 +17,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: null,
-
+    token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3MiLCJleHAiOjE3MDc5MjQ3NTcsInJvbGUiOiJGQU4iLCJpZCI6Nn0.txK5tgsm7SmiuF45QCVvmiWvk2C7kOGROfFo0Ayw63g",
     tokenRefresh: null,
     kakaoAuthorization: null,
     isArtist: null,
