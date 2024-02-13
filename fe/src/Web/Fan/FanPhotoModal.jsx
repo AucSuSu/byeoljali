@@ -110,10 +110,10 @@ function FanModal({ onClose, onPay, onDelete, data }) {
               </div>
             </div>
             <button
-              className="w-14 bg-dark-gray text-white border rounded"
+              className="w-14 bg-dark-gray py-1 rounded"
               onClick={onClose}
             >
-              <div className="text-black">닫기</div>
+              <div className="text-white">닫기</div>
             </button>
           </div>
         ) : (
