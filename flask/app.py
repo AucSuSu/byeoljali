@@ -130,6 +130,7 @@ def upload_receipt():
             image_file = request.files['image'].read()
             albumName = request.form.get("albumName")
             print(type(image_file))
+            print("요청 앨범 이름 : " , albumName)
 
             request_json = {
                 'images': [
@@ -202,7 +203,8 @@ def upload_receipt():
 
                 })
 
-            # 데이터 리스트 출력 -> 항목 리스트 
+            # 데이터 리스트 출력 -> 항목 리스트
+            result_count = 0; 
             for data in data_list:
                 # 받아온 팬싸인회 이름과 구매항목 앨범 이름 대조 
                 # 같은게 있다면 개수를 return 해줌 -> 없으면 0 
@@ -210,7 +212,7 @@ def upload_receipt():
                     print(data['name'])
                     print(data['count'])
                     print(SequenceMatcher(None, data['name'], albumName).ratio())
-                    result_count = data['count']
+                    result_count = max(result_count, data['count'])
                 print(data)
 
 
