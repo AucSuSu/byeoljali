@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
+import './FanSignModal.css';
 
 function FanSignModal({ data, onClose }) {
   console.log(data);
@@ -148,7 +149,7 @@ function FanSignModal({ data, onClose }) {
           onClick={handleCloseModal}
         >
           <div
-            className="bg-black max-w-300 w-300 max-h-200 h-200 p-6 overflow-hidden rounded-md grid grid-cols-2"
+            className="bg-black  w-240  h-160 p-6 overflow-hidden rounded-md grid grid-cols-2"
             onClick={handleModalContentClick}
             style={{
               borderRadius: '20px',
@@ -173,22 +174,22 @@ function FanSignModal({ data, onClose }) {
               ))}
               <div className="font-big bolder text-40 mb-6">MY APPLY</div>
 
-              <div className="w-[100%] h-[620px]">
+              <div className="w-[100%] h-[80%]">
                 <img
                   src={fanSignDetail.posterImageUrl}
                   alt=""
-                  className="w-full h-full object-fill"
+                  className="w-full h-[450px] object-cover"
                 />
               </div>
             </div>
 
-            <div className="p-3 pt-24 pb-9">
+            <div className="p-3 pt-24 pb-9 overflow-y-auto custom-scrollbar">
               <div className="flex  h-[100%] flex-col justify-between">
-                <div className="font-big bolder text-40">
-                  [ {fanSignDetail.artistFansignTitle} ]
+                <div className="font-big bolder text-25">
+                  [{fanSignDetail.artistFansignTitle}]
                 </div>
 
-                <div className="pt-3 font-big">
+                <div className="pt-3 font-big text-15">
                   <p className="bolder text-18 mr-3">📌 공지</p>
                   <div
                     dangerouslySetInnerHTML={{
@@ -198,20 +199,20 @@ function FanSignModal({ data, onClose }) {
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">🗓️ 응모 기간</p>
-                  <div>{applySchedule}</div>
+                  <div className="text-15">{applySchedule}</div>
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">🗓️ 사인회 일정</p>
-                  <div>{fanSignSchedule}</div>
+                  <div className="text-15">{fanSignSchedule}</div>
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">👯 아티스트</p>
-                  <div>
+                  <div className="text-15">
                     {artistInfo}
                     {'  '}
                     <button
                       onClick={artistDetail}
-                      className="text-white hover:text-pink-700"
+                      className="text-white hover:text-pink-700 hover:scale-110"
                     >
                       ▶ 상세보기
                     </button>
@@ -225,14 +226,14 @@ function FanSignModal({ data, onClose }) {
                 </div>
                 <div className="pt-3 font-big">
                   <p className="bolder text-18 mr-3">🧕 참여 멤버</p>
-                  <div>{memberSchedule}</div>
+                  <div className="text-15">{memberSchedule}</div>
                 </div>
                 <div className="pt-3 font-big flex justify-center">
                   <button
                     className="px-2 py-1 bg-light-gray rounded-md"
                     onClick={onClose}
                   >
-                    닫기
+                    <div className="text-black">닫기</div>
                   </button>
                 </div>
               </div>

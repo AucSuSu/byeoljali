@@ -42,6 +42,7 @@ const NavbarItem = styled.li`
 const NavbarTitle = styled.p`
   color: #fff;
   font-size: 35px;
+  cursor: pointer;
 `;
 
 //NavBar 요소
@@ -163,6 +164,9 @@ const Navbar = ({ bgStyle }) => {
   const goFanWin = () => {
     navigate('/fan-win');
   };
+  const goHome = () => {
+    navigate('/home');
+  };
 
   const fanProfileImageUrl = useSelector(
     (state) => state.faninfo.data.profileImageUrl,
@@ -180,8 +184,8 @@ const Navbar = ({ bgStyle }) => {
     <NavbarContainer
       className={`${isProps ? isProps : `bg-black`} font-bold font-milk pb-8`}
     >
-      <NavbarTitle> 
-        <Link to ="/">별자리</Link>
+      <NavbarTitle>
+        <Link to="/">별자리</Link>
       </NavbarTitle>
       <NavbarList>
         {isArtist ? (

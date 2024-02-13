@@ -14,15 +14,12 @@ import {
   beforeApplyList,
   afterApplyList,
 } from '../Stores/homeApplyListReducer';
-import {
-  getArtistLogo
-}from '../Stores/homeArtistLogoReducer';
+import { getArtistLogo } from '../Stores/homeArtistLogoReducer';
 
 const HomeView = () => {
   const afterData = useSelector((state) => state.homeapply.afterData); // 응모 중 데이터 redux에서 꺼내기
   const beforeData = useSelector((state) => state.homeapply.beforeData); // 응모 전 데이터 redux에서 꺼내기
   const items = useSelector((state) => state.artistLogo.artistLogo); // 로고 꺼내기
-
 
   const customAxios = useAxios();
   const dispatch = useDispatch();
@@ -101,13 +98,13 @@ const HomeView = () => {
     dispatch(beforeApplyList(data));
   };
 
-  // 로고 가져오기 
+  // 로고 가져오기
   const getLogoData = async () => {
     const data = await customAxios.get('artists/logo/').then((res) => {
       return res.data.object;
     });
-    console.log("데이터 받아오기 : ", data)
-    dispatch(getArtistLogo(data))
+    console.log('데이터 받아오기 : ', data);
+    dispatch(getArtistLogo(data));
   };
 
   // 가져온 data 앞에서 8개만 선택하기
@@ -161,7 +158,7 @@ const HomeView = () => {
           <div
             ref={containerRef}
             className="flex overflow-x-auto p-1 justify-center items-center"
-            style={{ width: "100%" }} // 부모 컨테이너의 너비를 100%로 설정
+            style={{ width: '100%' }} // 부모 컨테이너의 너비를 100%로 설정
           >
             {Array.isArray(items) &&
               items.map((artist, index) => (
@@ -173,10 +170,10 @@ const HomeView = () => {
                     fontFamily: artist.font,
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = "scale(1.2)";
+                    e.target.style.transform = 'scale(1.2)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = "scale(1)";
+                    e.target.style.transform = 'scale(1)';
                   }}
                 >
                   <div
@@ -187,17 +184,18 @@ const HomeView = () => {
                       borderRadius: '50%',
                       objectFit: 'cover',
                       cursor: 'pointer',
-                      flexDirection: "column", // 이미지를 세로로 정렬하기 위해 컨테이너의 방향을 column으로 설정
-                      display: "flex", // 이미지 컨테이너를 flex로 설정
-                      justifyContent: "center"
-
+                      flexDirection: 'column', // 이미지를 세로로 정렬하기 위해 컨테이너의 방향을 column으로 설정
+                      display: 'flex', // 이미지 컨테이너를 flex로 설정
+                      justifyContent: 'center',
                     }}
                   >
-                    <img src={artist.logoImageUrl}
-                    style={{
-                      width : '70%',
-                      height : '70%'
-                    }}></img>
+                    <img
+                      src={artist.logoImageUrl}
+                      style={{
+                        width: '70%',
+                        height: '70%',
+                      }}
+                    ></img>
                   </div>
                 </div>
               ))}
@@ -206,8 +204,13 @@ const HomeView = () => {
 
         <div>
           <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
-            <p> CURRENT APPLYING</p>
-            <button onClick={moveCurrentApplyView}>더보기 ▶</button>
+            <p> CURRENT APPLY</p>
+            <button
+              onClick={moveCurrentApplyView}
+              className="hover:scale-110 hover:text-hot-pink"
+            >
+              더보기 ▶
+            </button>
           </div>
           <HomeApplyList data={sliceAfterItems} status="CurrentApply" />
         </div>
@@ -218,13 +221,17 @@ const HomeView = () => {
         {/* 5. Comming Soon */}
         <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
           <p> COMMING SOON</p>
-          <button onClick={moveCommingSoonView}>더보기 ▶</button>
+          <button
+            onClick={moveCommingSoonView}
+            className="hover:scale-110 hover:text-hot-pink"
+          >
+            더보기 ▶
+          </button>
         </div>
         <HomeApplyList data={sliceBeforeItems} status="CommingSoon" />
       </div>
     </>
   );
 };
-
 
 export default HomeView;

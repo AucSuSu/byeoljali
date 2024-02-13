@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../axios';
 import styled from 'styled-components';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { searchApplyList } from '../Stores/homeApplyListReducer';
 import HomeApplyList from '../Home/HomeApplyList';
 //Navbar
@@ -36,6 +36,7 @@ const SearchFieldWrapper = styled.div`
   margin-top: 30px;
   width: 80%; // 전체 컨테이너의 80% 너비를 차지하도록 설정
   max-width: 800px; // 최대 너비를 800px로 설정
+  position: relative; // 여기에 추가
 `;
 
 // SearchInputContainer 스타일 컴포넌트를 정의합니다.
@@ -45,6 +46,24 @@ const SearchInputContainer = styled.div`
   align-items: center;
   width: 100%;
   padding-top: 10px;
+`;
+
+// "X" 버튼을 위한 스타일 컴포넌트
+const ClearSearchButton = styled.div`
+  position: absolute;
+  right: 40px; // MagnifyingGlassIcon과 겹치지 않도록 적절한 값으로 조절
+  cursor: pointer;
+  color: gray; // 아이콘 색상 조절
+`;
+
+// SearchResultsContainer 스타일 컴포넌트 정의
+const SearchResultsContainer = styled.div`
+  width: 80%;
+  margin: 0 auto; // 중앙 정렬
+  border: 4px solid #333; // 예시 border 색상
+  border-radius: 10px;
+  padding: 20px; // 내부 여백
+  margin-top: 30px; // 상단 여백
 `;
 
 function SearchPage() {
@@ -58,16 +77,19 @@ function SearchPage() {
   };
 
   useEffect(() => {
-    searchAfterData();
-  }, []);
+    // SearchPage 컴포넌트가 마운트될 때 검색 결과를 빈 배열로 초기화
+    dispatch(searchApplyList([]));
+
+    // 여기에 다른 마운트 시 필요한 로직 추가 가능
+  }, [dispatch]);
 
   const searchAfterData = async () => {
     if (!searchTerm) return; // 검색어가 비어있으면 검색하지 않음
     const data = await customAxios
       .get(
-        'mainpage?searchKeyword=' +
-          searchTerm +
-          '&order=register&status=APPLYING',
+        `mainpage?searchKeyword=${encodeURIComponent(
+          searchTerm,
+        )}&order=register&status=APPLYING`,
       )
       .then((res) => {
         return res.data;
@@ -76,15 +98,22 @@ function SearchPage() {
     dispatch(searchApplyList(data));
   };
 
-  // 아이콘 클릭 이벤트 핸들러 수정
+  // 아이콘 클릭 이벤트 핸들러
   const handleIconClick = () => {
     searchAfterData(); // 검색 함수 호출
+  };
+
+  // 엔터 키 입력 이벤트 핸들러
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // 폼 제출 등의 기본 이벤트 방지
+      searchAfterData(); // 검색 함수 호출
+    }
   };
 
   return (
     <PageContainer>
       <div className="bg-black font-big">
-        {/* 1. Navbar */}
         <Navbar />
         <SearchInputContainer>
           <SearchFieldWrapper>
@@ -93,7 +122,13 @@ function SearchPage() {
               placeholder="좋아하는 아티스트를 입력해보세요!"
               value={searchTerm}
               onChange={handleSearchChange}
+              onKeyDown={handleKeyDown}
             />
+            {searchTerm && (
+              <ClearSearchButton onClick={() => setSearchTerm('')}>
+                <XCircleIcon className="w-5 h-5 hover:text-hot-pink" />
+              </ClearSearchButton>
+            )}
             <MagnifyingGlassIcon
               className="w-6 h-6 hover:text-hot-pink cursor-pointer"
               aria-hidden="true"
@@ -102,12 +137,21 @@ function SearchPage() {
           </SearchFieldWrapper>
         </SearchInputContainer>
 
-        {/* 검색 결과 출력 */}
-        <div className="mt-8">
-          {searchData && (
-            <HomeApplyList data={searchData.object} status="CurrentApply" />
-          )}
-        </div>
+        {searchData && searchData.object && searchData.object.length > 0 ? (
+          <HomeApplyList
+            data={searchData.object}
+            status="CurrentApply"
+            style="border-4 border-dark-gray rounded-xl mt-[30px] p-[20px]"
+          />
+        ) : (
+          <SearchResultsContainer>
+            (
+            <div className="text-white text-[30px] text-center pt-[170px] pb-[170px]">
+              검색 결과가 없습니다.
+            </div>
+            )
+          </SearchResultsContainer>
+        )}
       </div>
     </PageContainer>
   );
