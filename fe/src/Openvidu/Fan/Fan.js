@@ -26,7 +26,7 @@ class VideoRoomComponent extends Component {
       subscribers: [],
       chatDisplay: 'block',
       currentVideoDevice: undefined,
-      signTime: 30, // 팬싸인회 시간
+      signTime: 600, // 팬싸인회 시간
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -308,7 +308,7 @@ class VideoRoomComponent extends Component {
                   className="h-[100%] border-r-2 border-dark-gary"
                   id="localUser"
                 >
-                  <Video user={localUser} />
+                  <Video user={localUser} className="fan-photo-area" />
                 </div>
               )}
           </div>

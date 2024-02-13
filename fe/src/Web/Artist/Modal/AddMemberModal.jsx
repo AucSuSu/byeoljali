@@ -67,7 +67,7 @@ function AddMemberModal({ onClose }) {
 
   return (
     <div
-      className="font-milk fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
+      className="font-jamsil fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
       onClick={onClose}
     >
       <div

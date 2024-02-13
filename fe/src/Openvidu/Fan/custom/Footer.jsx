@@ -17,33 +17,34 @@ export default function Footer({
   const [captures, setCaptures] = useState([]);
 
   useEffect(() => {
-    if (count === 0) {
+    if (captures.length === 4) {
       sendCaptures();
-      console.log('사진 전송');
     }
-  }, [count]);
+  }, [captures]);
 
   const capture = (id) => {
     checkChatToggle(() => performCapture(id));
   };
 
-  const performCapture = async (id) => {
+  const performCapture = async () => {
     if (count > 0) {
       captureArea();
       setCount(count - 1);
     }
 
-    console.log('사진 캡쳐 성공!', id);
+    console.log('사진 캡쳐 성공!', count);
   };
 
   const captureArea = () => {
     if (captures.length < 4) {
+      const localVideoElement = document.getElementById('localUser');
+      localVideoElement.style.transform = 'rotateY(180deg)';
+
       html2canvas(document.querySelector('.bounds')).then((canvas) => {
         const dataUrl = canvas.toDataURL('image/jpeg');
         setCaptures((prevState) => [...prevState, dataUrl]);
       });
-    } else {
-      alert('사진 4장 다 찍었음');
+      localVideoElement.style.transform = 'rotateY(0deg)';
     }
   };
 

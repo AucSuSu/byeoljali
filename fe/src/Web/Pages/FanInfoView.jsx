@@ -4,6 +4,7 @@ import { getUserInfo } from '../Stores/fanInfoReducer';
 import useAxios from '../axios';
 import FanAuthModal from '../Fan/FanAuthModal';
 import NavBar from '../Utils/NavBar';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 function FanInfoView() {
   const customAxios = useAxios();
@@ -17,6 +18,7 @@ function FanInfoView() {
 
   const getUserInfoData = async () => {
     const data = await customAxios.get('mypage/').then((res) => {
+      console.log(res.data.object);
       return res.data.object;
     });
     dispatch(getUserInfo(data));
@@ -65,7 +67,7 @@ function FanInfoView() {
       })
       .then((response) => {
         console.log('업로드 성공', response.data);
-        onClose(); // 모달 닫기
+        // onClose(); // 모달 닫기
         window.location.reload();
       })
       .catch((error) => {
@@ -92,7 +94,7 @@ function FanInfoView() {
     <div>
       <NavBar />
       <div
-        className="font-isa text-white min-h-screen bg-black flex flex-col items-center"
+        className="font-jamsil text-white min-h-screen bg-black flex flex-col items-center"
         onClick={handleModalContentClick}
       >
         <div className="self-start ml-[150px]">
@@ -144,9 +146,9 @@ function FanInfoView() {
                     onClick={() =>
                       setLocalUserData({ ...localUserData, name: '' })
                     }
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer text-white"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer hover:text-red"
                   >
-                    X
+                    <XMarkIcon className="h-4 w-4" /> {/* 아이콘 크기 조정 */}
                   </button>
                 </div>
               </div>
@@ -173,9 +175,9 @@ function FanInfoView() {
                     onClick={() =>
                       setLocalUserData({ ...localUserData, nickname: '' })
                     }
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer text-white"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer hover:text-red"
                   >
-                    X
+                    <XMarkIcon className="h-4 w-4" /> {/* 아이콘 크기 조정 */}
                   </button>
                 </div>
               </div>

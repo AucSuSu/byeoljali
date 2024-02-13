@@ -22,7 +22,7 @@ export default function MemberList({ data }) {
   };
 
   return (
-    <div className="m-2.5 ml-12 text-center inline-block">
+    <div className="font-jamsil m-2.5 ml-12 text-center inline-block">
       <img
         src={data.profileImageUrl}
         alt={data.name}
