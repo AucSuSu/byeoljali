@@ -211,7 +211,7 @@ function FanSignModal({ data, onClose }) {
                     {'  '}
                     <button
                       onClick={artistDetail}
-                      className="text-white hover:text-pink-700"
+                      className="text-white hover:text-pink-700 hover:scale-110"
                     >
                       ▶ 상세보기
                     </button>
