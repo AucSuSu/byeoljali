@@ -17,6 +17,7 @@ function FanInfoView() {
 
   const getUserInfoData = async () => {
     const data = await customAxios.get('mypage/').then((res) => {
+      console.log(res.data.object);
       return res.data.object;
     });
     dispatch(getUserInfo(data));
@@ -65,7 +66,7 @@ function FanInfoView() {
       })
       .then((response) => {
         console.log('업로드 성공', response.data);
-        onClose(); // 모달 닫기
+        // onClose(); // 모달 닫기
         window.location.reload();
       })
       .catch((error) => {
