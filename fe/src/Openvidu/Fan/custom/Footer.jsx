@@ -26,17 +26,19 @@ export default function Footer({
     checkChatToggle(() => performCapture(id));
   };
 
-  const performCapture = async (id) => {
+  const performCapture = async () => {
     if (count > 0) {
       captureArea();
       setCount(count - 1);
     }
 
-    console.log('사진 캡쳐 성공!', id);
+    console.log('사진 캡쳐 성공!', count);
   };
 
   const captureArea = () => {
     if (captures.length < 4) {
+      const video = document.querySelector('video');
+      video.style.transform = 'rotateY(0deg)';
       html2canvas(document.querySelector('.bounds')).then((canvas) => {
         const dataUrl = canvas.toDataURL('image/jpeg');
         setCaptures((prevState) => [...prevState, dataUrl]);
