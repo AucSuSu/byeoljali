@@ -19,7 +19,7 @@ from werkzeug.serving import run_simple
 api_url = 'https://igq83o9rcc.apigw.ntruss.com/custom/v1/28107/eab1aa4e0a50a7fbaf9304aaaac1ba04a63c2600bbbd373b1334daa2120c0d76/document/receipt'
 secret_key = 'c3lXZlpEbkFmZU5yYW1sbnZteEdzS0lLTU1yZm9BQ3U='
 image_file = './data1.jpg' # server로 받은 영수증 이미지 
-fansign_title = ""
+albumName = ""
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # tensorflow의 로깅레벨 설정: error만 보이도록
 app = Flask(__name__)
 # CORS(app) # 웹 애플리케이션이 다른 도메인에서 호스팅된 API에 접근할 때 필요
@@ -128,7 +128,7 @@ def upload_receipt():
             result_count = 0; 
             #이미지 가져오기 
             image_file = request.files['image'].read()
-            fansign_title = request.form.get("fansignTitle")
+            albumName = request.form.get("albumName")
             print(type(image_file))
 
             request_json = {
@@ -206,10 +206,10 @@ def upload_receipt():
             for data in data_list:
                 # 받아온 팬싸인회 이름과 구매항목 앨범 이름 대조 
                 # 같은게 있다면 개수를 return 해줌 -> 없으면 0 
-                if SequenceMatcher(None, data['name'], fansign_title).ratio() > 0.2 : 
+                if SequenceMatcher(None, data['name'], albumName).ratio() > 0.2 : 
                     print(data['name'])
                     print(data['count'])
-                    print(SequenceMatcher(None, data['name'], fansign_title).ratio())
+                    print(SequenceMatcher(None, data['name'], albumName).ratio())
                     result_count = data['count']
                 print(data)
 
