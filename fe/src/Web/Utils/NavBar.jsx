@@ -6,6 +6,7 @@ import { isArtist, logout, kakaoAuthorization } from '../Stores/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../axios';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import BlinkingText from './BlinkingText';
 
 // Navbar 배경 및 밑줄 주석처리 margin-bottom 추가
 const NavbarContainer = styled.nav`
@@ -178,10 +179,15 @@ const Navbar = ({ bgStyle }) => {
 
   return (
     <NavbarContainer
-      className={`${isProps ? isProps : `bg-black`} font-bold font-milk pb-8`}
+      className={`${isProps ? isProps : `bg-black`}  font-milk pb-8`}
     >
-      <NavbarTitle> 
-        <Link to ="/">별자리</Link>
+      <NavbarTitle 
+      className='flex justify-center items-center'
+      > 
+      <Link to ="/" className='font-hambuguer'> 별자리
+        </Link>
+        <BlinkingText></BlinkingText>
+
       </NavbarTitle>
       <NavbarList>
         {isArtist ? (

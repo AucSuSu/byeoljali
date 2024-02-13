@@ -171,7 +171,7 @@ function FanSignModal({ data, onClose }) {
                   }}
                 ></div>
               ))}
-              <div className="font-big bolder text-40 mb-6">MY APPLY</div>
+              <div className="font-jamsil bolder text-40 mb-6">MY APPLY</div>
 
               <div className="w-[100%] h-[620px]">
                 <img
@@ -184,11 +184,11 @@ function FanSignModal({ data, onClose }) {
 
             <div className="p-3 pt-24 pb-9">
               <div className="flex  h-[100%] flex-col justify-between">
-                <div className="font-big bolder text-40">
+                <div className="font-jamsil bolder text-40">
                   [ {fanSignDetail.artistFansignTitle} ]
                 </div>
 
-                <div className="pt-3 font-big">
+                <div className="pt-3 font-jamsil">
                   <p className="bolder text-18 mr-3">📌 공지</p>
                   <div
                     dangerouslySetInnerHTML={{
@@ -196,15 +196,15 @@ function FanSignModal({ data, onClose }) {
                     }}
                   />
                 </div>
-                <div className="pt-3 font-big">
+                <div className="pt-3 font-jamsil">
                   <p className="bolder text-18 mr-3">🗓️ 응모 기간</p>
                   <div>{applySchedule}</div>
                 </div>
-                <div className="pt-3 font-big">
+                <div className="pt-3 font-jamsil">
                   <p className="bolder text-18 mr-3">🗓️ 사인회 일정</p>
                   <div>{fanSignSchedule}</div>
                 </div>
-                <div className="pt-3 font-big">
+                <div className="pt-3 font-jamsil">
                   <p className="bolder text-18 mr-3">👯 아티스트</p>
                   <div>
                     {artistInfo}
@@ -223,11 +223,11 @@ function FanSignModal({ data, onClose }) {
                     {artistInfo}
                   </button> */}
                 </div>
-                <div className="pt-3 font-big">
+                <div className="pt-3 font-jamsil">
                   <p className="bolder text-18 mr-3">🧕 참여 멤버</p>
                   <div>{memberSchedule}</div>
                 </div>
-                <div className="pt-3 font-big flex justify-center">
+                <div className="pt-3 font-jamsil flex justify-center">
                   <button
                     className="px-2 py-1 bg-light-gray rounded-md"
                     onClick={onClose}

@@ -154,7 +154,7 @@ export default function ArtistInfo() {
           {/* 아티스트 이름 섹션 */}
           <div className="text-center my-4 flex space-x-5 items-center w-full">
             <div className="flex-grow">
-              <h2 className="text-60 font-big">{artistData.object.name}</h2>
+              <h2 className="text-60 font-jamsil">{artistData.object.name}</h2>
               <p className="font-ridi font-bold text-25">
                 {artistData.object.companyName} Entertainment
               </p>
@@ -177,17 +177,17 @@ export default function ArtistInfo() {
           {/* 아티스트 정보 섹션 */}
           <div className="my-4">
             <div>
-              <p className="text-25 font-big">
+              <p className="text-25 font-jamsil">
                 데뷔일 : {artistData.object.debutDate} | D+{daysSinceDebut}
               </p>
-              <p className="text-25 font-big">
+              <p className="text-25 font-jamsil">
                 팬덤명 : {artistData.object.fandomName}
               </p>
             </div>
           </div>
           <div className="w-full my-8">
-            <div className="text-2xl font-big mb-4">FANSIGN INFO</div>
-            <div className="font-big bg-gray h-auto rounded-lg shadow-lg p-5 flex justify-between items-center space-x-4">
+            <div className="text-2xl font-jamsil mb-4">FANSIGN INFO</div>
+            <div className="font-jamsil bg-gray h-auto rounded-lg shadow-lg p-5 flex justify-between items-center space-x-4">
               {/* 팬싸인회 정보 세부 내용 */}
               <div className="flex-1 text-center">
                 <div className="py-2 rounded-lg text-xl">응모전</div>
@@ -212,7 +212,7 @@ export default function ArtistInfo() {
 
           {/* 멤버 박스 섹션 */}
           <div className="w-full my-4">
-            <div className="text-30 mb-2 font-big">Member</div>
+            <div className="text-30 mb-2 font-jamsil">Member</div>
             <div className="flex flex-wrap justify-center gap-4">
               {artistData.object.memberList.map((member) => (
                 <MemberList key={member.memberId} data={member} />

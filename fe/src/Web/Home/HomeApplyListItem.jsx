@@ -83,7 +83,7 @@ const ListItem = ({ data, status }) => {
   return (
     <div
       id="card_container"
-      className="bg-blue-gray text-white rounded-md m-1 font-sm transition-all h-[450px] font-big text-15 duration-500 hover:scale-105"
+      className="bg-blue-gray text-white rounded-md m-1 font-sm transition-all h-[450px] font-jamsil text-15 duration-500 hover:scale-105"
     >
       <img
         src={data.posterImageUrl}

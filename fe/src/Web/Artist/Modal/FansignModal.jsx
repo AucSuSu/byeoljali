@@ -98,7 +98,7 @@ export default function FansignModal({ memberFansignId }) {
         style={customStyle}
       >
         {detailData && (
-          <div className="flex font-big bg-black p-6">
+          <div className="flex font-jamsil bg-black p-6">
             {stars.map((star) => (
               <div
                 key={star.id}
@@ -111,7 +111,7 @@ export default function FansignModal({ memberFansignId }) {
               ></div>
             ))}
             <div className="w-1/2 ml-3">
-              <h2 className="text-white font-big text-40">FANSIGN</h2>
+              <h2 className="text-white font-jamsil text-40">FANSIGN</h2>
               <div className="">
                 <img
                   src={detailData.object.posterImageUrl}
@@ -124,9 +124,9 @@ export default function FansignModal({ memberFansignId }) {
               </div>
             </div>
             <div className="w-1/2 text-white mt-20">
-              <div className="font-big">
+              <div className="font-jamsil">
                 <h2
-                  className="font-big bolder text-40 hot-pink"
+                  className="font-jamsil bolder text-40 hot-pink"
                   style={{
                     textShadow:
                       '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',

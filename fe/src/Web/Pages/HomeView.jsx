@@ -148,7 +148,7 @@ const HomeView = () => {
   };
   return (
     <>
-      <div id="main_container" className="flex flex-col bg-black font-big">
+      <div id="main_container" className="flex flex-col bg-black font-jamsil">
         {/* 1. Navbar */}
         <Navbar />
         {/* 2. Post Carousel */}
