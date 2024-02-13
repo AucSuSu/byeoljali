@@ -151,10 +151,10 @@ export default function ArtistInfo() {
             {/* 아티스트 이름 섹션 */}
             <div className="mt-2 flex space-x-5 items-center">
               <div className="flex-grow">
-                <h2 className="text-[50px] font-jamsil">
+                <h2 className="text-[40px] font-jamsil">
                   {artistData.object.name}
                 </h2>
-                <p className="text-[30px]">
+                <p className="text-[25px]">
                   {artistData.object.companyName} Entertainment
                 </p>
               </div>
@@ -171,7 +171,7 @@ export default function ArtistInfo() {
             {/* 팬싸인회 정보 세부 내용 */}
             <div className="w-full">
               {/* 이미지 수정 버튼을 오른쪽에 배치하기 위한 컨테이너 */}
-              <div className="flex justify-end">
+              <div className="flex justify-end mt-4">
                 {isArtist && (
                   <button
                     onClick={handleOpenArtistImg}
@@ -181,21 +181,21 @@ export default function ArtistInfo() {
                   </button>
                 )}
               </div>
-              <div className="h-auto border-4 border-dark-gray rounded-xl py-7 pl-10 pr-10 flex justify-between items-center space-x-4 text-[25px]">
+              <div className="h-auto border-4 border-blue-gray rounded-xl py-7 pl-10 pr-10 flex justify-between items-center space-x-4 text-[25px]">
                 <div className="flex text-center">
                   <div className="">응모전</div>
                   <div className="font-light ml-4">
                     {artistCountData.ready_COUNT}
                   </div>
                 </div>
-                <div className="text-dark-gray"> | </div>
+                <div className="text-blue-gray"> | </div>
                 <div className="flex text-center">
                   <div className="">응모중</div>
                   <div className="font-light ml-4">
                     {artistCountData.applying_COUNT}
                   </div>
                 </div>
-                <div className="text-dark-gray"> | </div>
+                <div className="text-blue-gray"> | </div>
                 <div className="flex text-center">
                   <div className="">진행중</div>
                   <div className="font-light ml-4">
@@ -207,7 +207,7 @@ export default function ArtistInfo() {
 
             {/* 아티스트 정보 섹션 */}
             <div className="my-4 mt-8">
-              <div className="text-25">
+              <div className="text-25 text-gray">
                 <div className="flex">
                   <p>데뷔일 : </p>
                   <p className="pl-2 font-light">
@@ -241,7 +241,7 @@ export default function ArtistInfo() {
         )}
       </div>
       {/* 멤버 리스트 섹션 */}
-      <div className="max-w-full mx-auto my-4 text-center border-2 border-dark-gray rounded-xl">
+      <div className="max-w-full mx-auto my-4 text-center border-2 border-blue-gray rounded-xl">
         <div className="text-30 mt-2 mb-2 font-jamsil text-white">Members</div>
         <div className="flex flex-wrap justify-center gap-4">
           {artistData.object.memberList.map((member) => (
