@@ -125,7 +125,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
             />
             <button
               className="self-end mt-2"
-              onClick={downloadImage(data.photoUrl)}
+              onClick={() => downloadImage(data.photoUrl)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

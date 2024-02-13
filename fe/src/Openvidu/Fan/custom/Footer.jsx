@@ -37,8 +37,9 @@ export default function Footer({
 
   const captureArea = () => {
     if (captures.length < 4) {
-      const video = document.querySelector('video');
-      video.style.transform = 'rotateY(0deg)';
+      const localVideoElement = document.getElementById('localUser');
+      localVideoElement.style.transform = 'rotateY(180deg)';
+
       html2canvas(document.querySelector('.bounds')).then((canvas) => {
         const dataUrl = canvas.toDataURL('image/jpeg');
         setCaptures((prevState) => [...prevState, dataUrl]);
