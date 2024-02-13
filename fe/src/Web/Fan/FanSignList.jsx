@@ -141,7 +141,7 @@ function FanSignList({ data }) {
                 className="w-full h-auto aspect-square  cursor-pointer mt-8 "
               />
               <div className="flex flex-col justify-center items-center mb-4">
-                <div className="my-3 text-18 h-full text-center">
+                <div className="my-3 text-15 h-full text-center">
                   {data.artistFansignTitle}
                 </div>
                 <div className="text-15">{data.memberName}</div>
