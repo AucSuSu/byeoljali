@@ -16,6 +16,10 @@ import {
 } from '../Stores/homeApplyListReducer';
 import { getArtistLogo } from '../Stores/homeArtistLogoReducer';
 
+const getRandomNumber = (min, max) => {
+  return Math.random() * (max - min) + min;
+};
+
 const HomeView = () => {
   const afterData = useSelector((state) => state.homeapply.afterData); // 응모 중 데이터 redux에서 꺼내기
   const beforeData = useSelector((state) => state.homeapply.beforeData); // 응모 전 데이터 redux에서 꺼내기
@@ -111,6 +115,20 @@ const HomeView = () => {
   const [sliceAfterItems, setSliceAfterItems] = useState(null);
   const [sliceBeforeItems, setSliceBeforeItems] = useState(null);
   useEffect(() => {
+
+    const makeStars = () => {
+      const numStars = 800; // 원하는 별의 개수
+    
+      const newStars = Array.from({ length: numStars }, (_, index) => ({
+        id: index,
+        animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
+        left : `${Math.random() * 100}vw`,
+        top :`${Math.random() * 100}vh`
+      }));
+    };
+    
+    makeStars();
+
     const sliceData = Array.isArray(afterData?.object)
       ? afterData.object.slice(0, 8)
       : [];
@@ -145,16 +163,28 @@ const HomeView = () => {
   };
   return (
     <>
-      <div id="main_container" className="flex flex-col bg-black font-jamsil">
+      <div id="main_container" className="relative flex flex-col bg-black font-jamsil">
         {/* 1. Navbar */}
         <Navbar />
+        <div className="night"
+          >
+            {[...Array(20)].map((_, index) => (
+              <div className="shooting_star" key={index}
+              style={{
+                top: `${getRandomNumber(0, 100)}%`,
+                left: `${getRandomNumber(0, 100)}%`,
+                animationDelay: `-${getRandomNumber(0, 3000)}ms`,
+              }}></div>
+            ))}
+          </div>
         {/* 2. Post Carousel */}
         <div className="w-[80%] mx-[10%]">
           <NewCarousel datas={carouselImage} />
         </div>
-
+        
         {/* 3. Current Apply  */}
         <div className="flex items-center justify-center p-4 h-40">
+        
           <div
             ref={containerRef}
             className="flex overflow-x-auto p-1 justify-center items-center"

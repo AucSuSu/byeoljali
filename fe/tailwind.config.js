@@ -8,7 +8,7 @@ module.exports = {
         big: ['TAEBAEKfont', 'sans-serif'],
         ridi: ['RIDIBatang', 'sans-serif'],
         isa: ['GongGothicMedium', 'sans-serif'],
-        hambuguer : ['LOTTERIACHAB', 'sans-serif'],
+        hambuger : ['LOTTERIACHAB', 'sans-serif'],
         pre : ['Pretendard-Regular', 'sans-serif' ],
         jamsil : ['TheJamsil5Bold', 'sans-serif']
       },
