@@ -9,6 +9,8 @@ module.exports = {
         ridi: ['RIDIBatang', 'sans-serif'],
         isa: ['GongGothicMedium', 'sans-serif'],
         hambuguer : ['LOTTERIACHAB', 'sans-serif'],
+        pre : ['Pretendard-Regular', 'sans-serif' ],
+        jamsil : ['TheJamsil5Bold', 'sans-serif']
       },
       fontSize: {
         12: '12px',

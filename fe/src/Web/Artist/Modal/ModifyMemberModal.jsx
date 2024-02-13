@@ -111,7 +111,7 @@ function ModifyMemberModal({ onClose, data }) {
             type="text"
             value={name}
             onChange={handleNameChange}
-            className="w-full p-2 rounded-md border-2 mb-8 mt-3 text-black font-big"
+            className="w-full p-2 rounded-md border-2 mb-8 mt-3 text-black font-jamsil"
           />
         </div>
 

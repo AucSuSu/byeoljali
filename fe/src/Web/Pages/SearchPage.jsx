@@ -113,7 +113,8 @@ function SearchPage() {
 
   return (
     <PageContainer>
-      <div className="bg-black font-big">
+      <div className="bg-black font-jamsil">
+        {/* 1. Navbar */}
         <Navbar />
         <SearchInputContainer>
           <SearchFieldWrapper>

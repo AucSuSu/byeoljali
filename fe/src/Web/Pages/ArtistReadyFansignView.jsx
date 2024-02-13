@@ -38,7 +38,7 @@ export default function ArtistFanSignView() {
   // TEST
 
   return (
-    <div className="min-h-screen bg-black text-white font-big">
+    <div className="min-h-screen bg-black text-white font-jamsil">
       <Navbar />
       <div className="w-[80%] ml-[10%]">
         <div className="flex items-center justify-between pb-12 mb-6">

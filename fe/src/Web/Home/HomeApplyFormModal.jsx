@@ -56,7 +56,8 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     window.location.reload();
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit =  () => {
+    console.log("memberId : " + currMemberId)
     if (currMemberId == null) {
       Swal.fire({
         icon: 'warning',
@@ -73,8 +74,16 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
         icon: 'success',
         title: '성공적으로 응모되었습니다.',
         confirmButtonText: '당첨을 기대하세요', // 버튼 문구 수정
+        timer: 3000,
+        confirmButtonText : "OK!",
+        background : 'dark-gray',
+       
+      }).then((result) => {
+        if (result.isConfirmed) {
+          closeModal();
+         }
       });
-      await closeModal();
+     
     }
   };
 
@@ -155,7 +164,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           contentLabel={data.title}
           style={smallCustomStyle}
         >
-          <div className="font-big bg-black text-white p-10 h-[100%]">
+          <div className="font-jamsil bg-black text-white p-10 h-[100%]">
             <div className="flex flex-col items-center justify-center ">
               <div className="bolder mb-4 text-25">
                 [ {data?.object?.fansignTitle} ]
@@ -178,7 +187,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
           style={customStyle}
         >
           <div
-            className="flex font-big bg-black text-white overflow-hidden p-3 "
+            className="flex font-jamsil font-bold bg-black text-white overflow-hidden p-3 "
             style={{
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             }}
@@ -207,7 +216,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
             <div className="w-1/2 flex-grow p-4">
               <div className="rounded-md">
                 <h2
-                  className="font-big text-[25px] hot-pink"
+                  className="font-jamsil text-[25px] hot-pink"
                   style={{
                     textShadow:
                       '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',

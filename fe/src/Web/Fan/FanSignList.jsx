@@ -91,7 +91,7 @@ function FanSignList({ data }) {
       {data.fansignStatus === 'APPLYING' ? (
         // 응모내역
         <>
-          <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-big">
+          <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-jamsil">
             <div className="w-[80%] ml-[10%]">
               <img
                 onClick={toggleModal}
@@ -133,7 +133,7 @@ function FanSignList({ data }) {
       ) : (
         // 당첨내역
         <>
-          <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-big">
+          <div className="text-white bg-blue-gray rounded-md relative hover:scale-105 transition-transform ease-in-out duration-500 font-jamsil">
             <div className="w-[80%] ml-[10%]">
               <img
                 onClick={toggleModal}
