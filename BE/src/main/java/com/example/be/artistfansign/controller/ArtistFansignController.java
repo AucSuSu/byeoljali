@@ -44,7 +44,7 @@ public class ArtistFansignController {
     @GetMapping("/api/mainpage/recent")
     public ResponseEntity<Message> recentFansign() {
         log.info(" ** 최근 팬싸인회 리스트 api 입니다.** ");
-        List<FansignResponseDto> recentFansign = artistFansignService.getRecent6Fansign();
+        List<RecentFansignResponseDto> recentFansign = artistFansignService.getRecent6Fansign();
         Message message = new Message(HttpStatusEnum.OK, "최근 개설된 팬싸인회 top 6 ", recentFansign);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

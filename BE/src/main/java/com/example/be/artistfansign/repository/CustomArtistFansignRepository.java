@@ -12,7 +12,7 @@ import com.example.be.fan.entity.Fan;
 import java.util.List;
 
 public interface CustomArtistFansignRepository {
-    List<FansignResponseDto> findTop6ByOrderByCreatedDateDesc();
+    List<RecentFansignResponseDto> findTop6ByOrderByCreatedDateDesc();
     List<FansignResponseDto> findArtistFansignAndApplyInfo(Fan fan, String keyword, String orderCondition, FansignStatus status);
     List<ArtistsMyFansignResponseDto> findArtistsMyFansign(Artist artist, FansignStatus status);
     List<FansignGroupByStatusCountDto> getCountGroupByStatus(Artist artist);

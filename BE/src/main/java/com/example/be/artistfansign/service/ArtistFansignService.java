@@ -87,8 +87,8 @@ public class ArtistFansignService {
     }
 
     // 팬싸인회 최근 5개 리스트 가져오기
-    public List<FansignResponseDto> getRecent6Fansign(){
-        List<FansignResponseDto> list =
+    public List<RecentFansignResponseDto> getRecent6Fansign(){
+        List<RecentFansignResponseDto> list =
         artistFansignRepository.findTop6ByOrderByCreatedDateDesc();
 
         return list;

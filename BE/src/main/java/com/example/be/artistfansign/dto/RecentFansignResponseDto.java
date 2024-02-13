@@ -8,10 +8,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RecentFansignResponseDto {
-
-    private Long artistfansignId;
-    private Long artistId;
     private String posterImageUrl;
-    private FansignStatus status;
 
 }

@@ -16,6 +16,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const [stars, setStars] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    console.log(propData);
     const makeStars = () => {
       const numStars = 800; // 원하는 별의 개수
 
@@ -41,8 +42,8 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   }, []);
 
   const customAxios = useAxios();
-  // console.log(propData);
   const data = useSelector((state) => state.homedetail.data);
+
   const currAlbumNum = useSelector((state) => state.homedetail.albumNum);
   const currFansignId = useSelector((state) => state.homedetail.fansignId);
   const currMemberId = useSelector((state) => state.homedetail.memberId);
@@ -56,8 +57,8 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
     window.location.reload();
   };
 
-  const handleSubmit =  () => {
-    console.log("memberId : " + currMemberId)
+  const handleSubmit = () => {
+    console.log('memberId : ' + currMemberId);
     if (currMemberId == null) {
       Swal.fire({
         icon: 'warning',
@@ -75,15 +76,13 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
         title: '성공적으로 응모되었습니다.',
         confirmButtonText: '당첨을 기대하세요', // 버튼 문구 수정
         timer: 3000,
-        confirmButtonText : "OK!",
-        background : 'dark-gray',
-       
+        confirmButtonText: 'OK!',
+        background: 'dark-gray',
       }).then((result) => {
         if (result.isConfirmed) {
           closeModal();
-         }
+        }
       });
-     
     }
   };
 

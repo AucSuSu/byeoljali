@@ -147,11 +147,9 @@ const HomeView = () => {
 
   // 캐러셀 데이터 가져오기.
   const getCarouselData = async () => {
-    const data = await customAxios
-      .get('mainpage/recent')
-      .then((res) => {
-        return res.data;
-      });
+    const data = await customAxios.get('mainpage/recent').then((res) => {
+      return res.data;
+    });
     console.log('캐러셀 데이터', data);
     setCarouselData(data.object);
   };
@@ -162,7 +160,7 @@ const HomeView = () => {
         {/* 1. Navbar */}
         <Navbar />
         {/* 2. Post Carousel */}
-        <div className="w-[80%] mx-[10%]">
+        <div className="w-[70%] mx-[15%]">
           <NewCarousel datas={carouselData} />
         </div>
 
