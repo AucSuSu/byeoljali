@@ -196,7 +196,7 @@ const HomeView = () => {
 
         <div>
           <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
-            <p> CURRENT APPLY</p>
+            <p> CURRENT APPLYING</p>
             <button onClick={moveCurrentApplyView}>더보기 ▶</button>
           </div>
           <HomeApplyList data={sliceAfterItems} status="CurrentApply" />
