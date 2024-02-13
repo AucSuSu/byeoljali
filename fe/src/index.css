@@ -26,6 +26,12 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'LOTTERIACHAB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 .bolder {
   -webkit-text-stroke: 1px black; /* 테두리 두께와 색상 */
 }
