@@ -173,7 +173,7 @@ export default function CreateFansignModal({}) {
               }}
             ></div>
           ))}
-          <div className="w-1/2 pt-10">
+          <div className="w-1/2 p-4">
             <ImgUpload img={null} uploadImg={uploadImg} />
           </div>
           <div className="w-1/2">
