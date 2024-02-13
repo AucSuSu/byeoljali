@@ -10,7 +10,7 @@ export const detailList = createAsyncThunk('axios/detailList', async (data) => {
     const response = await axios.get(
       process.env.REACT_APP_BASE_URL + 'mainpage/makeApplyForm/' + data,
     );
-
+    console.log(response.data)
     return response.data;
   } catch (error) {
     console.error('팬 사인회 정보 로드 실패: ', error);

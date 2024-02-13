@@ -5,7 +5,7 @@ import { setAlbumNum } from '../Stores/homeDetailListReducer';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 
-function ApplyReceiptModal({ onClose, title }) {
+function ApplyReceiptModal({ onClose, albumName }) {
   const dispatch = useDispatch();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState(
@@ -47,7 +47,7 @@ function ApplyReceiptModal({ onClose, title }) {
 
     const formData = new FormData();
     formData.append('image', imageFile);
-    formData.append('fansignTitle', title);
+    formData.append('albumName', albumName);
 
     console.log(formData);
 
