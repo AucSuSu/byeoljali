@@ -61,7 +61,10 @@ export default function CreateFansignModal({}) {
         Swal.fire({
           icon: 'success',
           title: '성공적으로 개설되었습니다.',
-          background : '#5f85bb'
+          background : '#222222',
+          confirmButtonColor: "#FF2990",   
+          confirmButtonText: "OK",
+          borderRadius : "30px"
         });
         return res.data;
       });
@@ -141,7 +144,7 @@ export default function CreateFansignModal({}) {
   const customStyle = {
     content: {
       width: '80%', // 모달의 너비를 화면의 80%로 조정
-      maxHeight: '90vh', // 모달의 최대 높이를 화면 높이의 90%로 제한
+      maxHeight: '90%', // 모달의 최대 높이를 화면 높이의 90%로 제한
       margin: 'auto',
       padding: '0px', // 패딩 추가로 내용과 모달 테두리 사이 간격 조정
       overflow: 'hidden', // 내용이 모달 높이를 초과해도 스크롤바 생성 방지
@@ -160,7 +163,7 @@ export default function CreateFansignModal({}) {
         style={customStyle}
       >
         <div
-          className="flex font-jamsil bg-black overflow-hidden ps-3 pt-10"
+          className="flex font-jamsil bg-black overflow-hidden ps-3 pt-5"
         >
           {stars.map((star) => (
             <div
@@ -173,22 +176,27 @@ export default function CreateFansignModal({}) {
               }}
             ></div>
           ))}
-          <div className="w-1/2 p-4">
-            <ImgUpload img={null} uploadImg={uploadImg} />
-          </div>
-          <div className="w-1/2">
-            <div className="font-jamsil pl-3">
-              <form onSubmit={fansignCreate}>
-                <div className="flex flex-col ">
-                  <label className="text-hot-pink pb-1 text-25">타이틀</label>
+          
+          <div className="w-1/2 flex flex-col justify-center items-align">
+          <div className="flex  justify-center items-align">
                   <input
                     type="text"
                     value={title}
-                    className="border-b  focus:border-hot-pink outline-none w-120 text-black p-1 rounded-xl"
+                    placeholder='팬싸인회 타이틀'
+                    className="placeholder-hot-pink border-b focus:border-hot-pink outline-none w-120 text-black p-3 rounded-xl mb-3"
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
-                <div className="pt-6 flex flex-col">
+            <ImgUpload img={null} uploadImg={uploadImg} 
+            className ="ml-10"/>
+          </div>
+          <div className="w-1/2"
+          style={{
+            position : 'relative'
+          }}>
+            <div className="font-jamsil pl-3">
+                
+                <div className="pt-5 flex flex-col">
                   <label className="text-hot-pink pb-1 text-25">
                     공지사항{' '}
                   </label>
@@ -302,7 +310,7 @@ export default function CreateFansignModal({}) {
                 </div>
 
                 <p className="text-18 text-center text-hot-pink">개설 멤버</p>
-                <div className="text-white bg-pink px-4 py-4 rounded-xl  grid grid-cols-4 gap-4 mt-2">
+                <div className="text-white bg-pink px-4 py-4 rounded-xl  grid grid-cols-4 gap-4">
                   {Object.keys(members).map((member) => (
                     <div key={member}>
                       <input
@@ -315,10 +323,19 @@ export default function CreateFansignModal({}) {
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-center pb-3">
+                <div className="flex justify-center pb-3"
+                style={
+                  { 
+                  position : 'absolute', 
+                  bottom : '0',
+                  left: '50%',
+                  transform: 'translateX(-50%)'
+              }
+                }>
                   <button
                     type="submit"
                     className="bg-hot-pink text-black px-4 py-2 rounded-xl"
+                    onClick={fansignCreate}
                   >
                     개설하기
                   </button>
@@ -329,7 +346,6 @@ export default function CreateFansignModal({}) {
                     닫기
                   </button>
                 </div>
-              </form>
             </div>
           </div>
         </div>

@@ -119,7 +119,10 @@ export default function FansignModal({ memberFansignId }) {
                 <img
                   src={detailData.object.posterImageUrl}
                   alt="커버 이미지"
-                  className='h-[580px] pl-4 pt-3 pr-2'
+                  className='h-[550px] w-[500px] mr-11 ml-6 mt-3 mr-2 mb-20'
+                  style={{
+                    boxShadow: '0 0 10px white, 0 0 20px white, 0 0 30px white',
+                  }}
                 />
               </div>
             </div>

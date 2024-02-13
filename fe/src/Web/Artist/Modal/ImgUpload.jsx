@@ -40,16 +40,16 @@ export default function ImgUpload({ img, uploadImg }) {
 
   return (
     <>
-      <div className="flex justify-center">
+      <div className="flex justify-center text-align ">
         {imageSrc ? (
           <img
             id="image-preview"
-            className="w-[500px] h-[550px] object-cover rounded-xl border-2 border-pink"
+            className="w-[500px] h-[450px] object-cover rounded-xl border-2 border-pink"
             src={imageSrc}
             alt="Preview"
           />
         ) : (
-          <div className="w-[500px] h-[550px] bg-gray rounded-xl border-2 border-pink">
+          <div className="w-[500px] h-[450px] bg-gray rounded-xl border-2 border-pink">
             {' '}
           </div>
         )}
@@ -61,7 +61,7 @@ export default function ImgUpload({ img, uploadImg }) {
         />
       </div>
       <button
-        className="bg-pink text-white px-4 py-3 rounded-xl mx-auto block mt-4"
+        className="bg-pink text-white px-4 py-3 rounded-xl mx-auto block "
         onClick={handleButtonClick}
       >
         이미지 업로드하기
