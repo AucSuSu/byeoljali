@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import Navbar from '../Utils/NavBar';
 
 function FanPhotoPayResult() {
   const SERVICE_APP_ADMIN_KEY = '51198a6f76318c2194379fc0ae87c499';
@@ -60,21 +61,28 @@ function FanPhotoPayResult() {
   };
 
   return (
-    <div className="bg-white font-milk flex flex-col items-center justify-center m-12">
-      <h1 className="text-4xl font-bold mb-6 border-b-2">카카오페이 결제</h1>
-      <div className="rounded-full bg-gray-200 w-24 h-24 flex items-center justify-center mb-4">
-        <span className="text-gray-500 font-semibold">Logo 들어감</span>
+    <div className="w-[100%] h-[92.7vh]">
+      <Navbar />
+      <div className="w-full h-full bg-black text-white font-jamsil flex flex-col items-center justify-center">
+        <div className="bg-deep-dark w-1/3 h-1/2 flex flex-col items-center justify-between">
+          <h1 className="text-4xl font-bold mb-6 border-b-2 mt-8">
+            카카오페이 결제
+          </h1>
+          <div className="rounded-full bg-gray-200 w-24 h-24 flex items-center justify-center mb-4">
+            <img src="/image.png" alt="" />
+          </div>
+          <p className="mb-2 text-xl font-bold">카카오페이 결제 완료 후</p>
+          <p className="mb-12 text-xl font-bold">
+            브라우저에서 결제 완료 버튼을 눌러주세요!
+          </p>
+          <button
+            onClick={handleApprove}
+            className="mb-8 text-black bg-kakao-yellow  hover:scale-105 transition-transform ease-in-out duration-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:"
+          >
+            결제 완료
+          </button>
+        </div>
       </div>
-      <p className="mb-2 text-xl font-bold">카카오페이 결제 완료 후</p>
-      <p className="mb-12 text-xl font-bold">
-        브라우저에서 결제 완료 버튼을 눌러주세요!
-      </p>
-      <button
-        onClick={handleApprove}
-        className="bg-kakao-yellow  active:bg-yellow-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
-      >
-        결제 완료
-      </button>
     </div>
   );
 }
