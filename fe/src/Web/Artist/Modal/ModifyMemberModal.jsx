@@ -73,20 +73,15 @@ function ModifyMemberModal({ onClose, data }) {
 
   return (
     <div
-      className="font-milk fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
+      className="font-jamsil fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
       onClick={onClose}
     >
       <div
         className="w-148 h-130 bg-black p-6 shadow-lg flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="self-start text-4xl font-bold mb-6">
-          멤버 정보 수정
-          <div className="mt-1 border-b-2"></div>
-        </div>
-
         <div className="flex flex-col items-center">
-          <div className="text-lg self-start">프로필 이미지</div>
+          <div className="text-[25px] self-start mt-4">프로필 이미지</div>
           <div className="relative mt-3 mb-4">
             <img
               src={imageSrc}
@@ -125,7 +120,7 @@ function ModifyMemberModal({ onClose, data }) {
           </button>
           <button
             onClick={onClose}
-            className="flex-1 py-2 px-4 bg-light-gray  font-semibold rounded-md"
+            className="flex-1 py-2 px-4 bg-dark-gray  font-semibold rounded-md"
           >
             닫기
           </button>

@@ -17,6 +17,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     token: null,
+
     tokenRefresh: null,
     kakaoAuthorization: null,
     isArtist: null,
@@ -48,7 +49,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        console.log("success")
+        console.log('success');
         state.token = action.payload.authorization;
         state.tokenRefresh = action.payload['authorization-refresh'];
         state.isArtist = action.payload.isartist;
@@ -58,7 +59,7 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-        console.log("failed")
+        console.log('failed');
         Swal.fire({
           icon: 'warning',
           title: '로그인 정보가 틀렸습니다.',

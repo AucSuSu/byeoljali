@@ -56,12 +56,12 @@ function FanModal({ onClose, onPay, onDelete, data }) {
               <div className="text-xl  mb-1">사진 결제</div>
               <div className="border-t-2"></div>
             </div>
-            <div className="self-start mb-6">11,000원이 결제됩니다.</div>
-            <div className="flex mb-7">
+            <div className="self-start mb-6">11,000원이 결제됩니다</div>
+            <div className="flex mb-7 gap-3">
               <div className="mr-3">
                 <div>결제</div>
                 <button
-                  className="mx-2 bg-kakao-yellow font-bold py-2 px-4 rounded border border-dark-gray"
+                  className=" bg-kakao-yellow font-bold py-2 px-4 rounded border border-dark-gray"
                   onClick={onPay}
                 >
                   <div className="flex">
@@ -86,7 +86,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
               <div>
                 <div>삭제</div>
                 <button
-                  className="mx-2 bg-red text font-bold py-2 px-4 rounded border border-dark-gray"
+                  className=" bg-red text font-bold py-2 px-4 rounded border border-dark-gray"
                   onClick={onDelete}
                 >
                   <div className="flex">
