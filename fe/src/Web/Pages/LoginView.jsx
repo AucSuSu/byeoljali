@@ -7,8 +7,13 @@ import axios from 'axios';
 import './LoginView.css';
 
 export default function LoginView() {
+  const [stars, setStars] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const isArtist = useSelector((state) => state.auth.isArtist);
+  const isFailed = useSelector((state) => state.auth.status);
+  const getRandomNumber = (min, max) => {
+    return Math.random() * (max - min) + min;
+  };
 
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -35,6 +40,7 @@ export default function LoginView() {
   const [code, setCode] = useState(null);
 
   useEffect(() => {
+
     // 페이지 로딩 시 인가 코드 추출
     const extractedCode = new URL(window.location.href).searchParams.get(
       'code',
@@ -80,6 +86,8 @@ export default function LoginView() {
   const handleArtistLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(data));
+
+   
   };
 
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -89,6 +97,7 @@ export default function LoginView() {
 
   return (
     <div>
+      
       <div
         className="font-jamsil"
         style={{
@@ -99,9 +108,10 @@ export default function LoginView() {
         }}
         onClick={() => window.location.reload()}
       >
+       
         <div className="mt-4">
           <h1
-            className="text-2xl mb-5 text-white"
+            className="text-2xl mb-5 text-white font-hambuger"
             style={{ cursor: 'pointer' }}
           >
             별자리
@@ -118,13 +128,26 @@ export default function LoginView() {
         {/* <div className="mt-4">
           <h1 className="text-3xl mb-5 text-white">별자리</h1>
         </div> */}
-
-        <div className="login w-full min-h-1/2 p-4 bg-opacity-70 flex flex-col justify-between mb-4">
-          <div className="mb-8 flex-grow flex flex-col items-center justify-center text-3xl text-white">
+          <div className="night"
+          >
+            {[...Array(20)].map((_, index) => (
+              <div className="shooting_star" key={index}
+              style={{
+                top: `${getRandomNumber(0, 100)}%`,
+                left: `${getRandomNumber(0, 100)}%`,
+                animationDelay: `-${getRandomNumber(0, 3000)}ms`,
+              }}></div>
+            ))}
+          </div>
+        <div className="login w-full min-h-1/2 p-4 bg-opacity-70 flex flex-col  mb-4">
+       
+          <div className="mb-8 flex-grow items-center justify-center text-3xl text-white">
             <div
               className="h-full pt-10 mx-auto"
               style={{ lineHeight: '1.8', letterSpacing: '2.2px' }}
             >
+              
+              
               {/* 이제 내가 좋아하는 아이돌과의 팬싸인회에 간편하게 참여하고 <br/>
               만남의 기회를 얻을 수 있어요.
               <br /> 여러분의 응원에 보답하는 특별한 순간을 즐기고 <br/>

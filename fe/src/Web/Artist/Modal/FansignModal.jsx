@@ -81,15 +81,14 @@ export default function FansignModal({ memberFansignId }) {
 
   const customStyle = {
     content: {
-      width: '1100px',
-      height: '700px',
-      // margin: 'auto',
-      padding: 0,
+      width: '80%', // 모달의 너비를 화면의 80%로 조정
+      maxHeight: '90vh', // 모달의 최대 높이를 화면 높이의 90%로 제한
+      margin: 'auto',
+      padding: '0px', // 패딩 추가로 내용과 모달 테두리 사이 간격 조정
+      overflow: 'hidden', // 내용이 모달 높이를 초과해도 스크롤바 생성 방지
+      zIndex: 2,
       borderRadius: '20px',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      position: 'absolute',
+      position: 'relative', // 모달의 위치를 중앙으로 조정하기 위해 relative 설정
     },
   };
 
@@ -115,20 +114,16 @@ export default function FansignModal({ memberFansignId }) {
                 }}
               ></div>
             ))}
-            <div className="w-1/2 ml-3">
-              <h2 className="text-white font-jamsil text-40">FANSIGN</h2>
-              <div className="">
+            <div className="w-1/2">
+              <div>
                 <img
                   src={detailData.object.posterImageUrl}
                   alt="커버 이미지"
-                  className="mt-7 pr-6"
-                  style={{
-                    height: '90%',
-                  }}
+                  className='h-[580px] pl-4 pt-3 pr-2'
                 />
               </div>
             </div>
-            <div className="w-1/2 text-white mt-20">
+            <div className="w-1/2 text-white pt-2 pl-2">
               <div className="font-jamsil">
                 <h2
                   className="font-jamsil bolder text-40 hot-pink"
@@ -140,32 +135,35 @@ export default function FansignModal({ memberFansignId }) {
                   [ {detailData.object.title} ]
                 </h2>
 
-                <div className="mt-6 mb-3 flex flex-col ml-3">
-                  <p className="">✉️ 공지</p>
-                  <div className="mt-2 border-t border-b border-gray-200 p-4">
-                    {detailData.object.information}
-                  </div>
+                <div className="mt-6 mb-3 flex flex-col pl-2">
+                  <p className="">📌 공지</p>
+                  <div
+                    className="border-2 border-deep-dark p-4 rounded-xl font-isa"
+                    dangerouslySetInnerHTML={{
+                      __html: detailData.object.information,
+                    }}
+                  />
                 </div>
                 <div className="mb-3">
-                  <div className="ml-3 ">✉️ 응모 일정</div>
+                  <div className="ml-3 ">🗓️ 응모 일정</div>
                   <p className="ml-6">
                     {detailData.object.startApplyTime.substring(5, 10)} ~{' '}
                     {detailData.object.endApplyTime.substring(5, 10)}
                   </p>{' '}
                 </div>
                 <div className="mb-3">
-                  <div className="ml-3">✉️ 사인회 일정</div>
+                  <div className="ml-3">🗓️ 사인회 일정</div>
                   <p className="ml-6">
                     {detailData.object.startFansignTime.substring(5, 10)} /{' '}
                     {detailData.object.startFansignTime.substring(11, 16)}
                   </p>{' '}
                 </div>
                 <div className="mb-3">
-                  <div className="ml-3">✉️ 개설 멤버</div>
+                  <div className="ml-3">🤗 개설 멤버</div>
                   <p className="ml-6">{detailData.object.memberName}</p>
                 </div>
                 <div className="mb-3">
-                  <div className="ml-3">✉️ 현재 상태</div>
+                  <div className="ml-3"> ✔ 현재 상태</div>
                   {detailData.object.status == 'READY_APPLYING' && (
                     <p className="ml-6">응모 예정</p>
                   )}
