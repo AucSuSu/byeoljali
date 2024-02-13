@@ -16,13 +16,6 @@ export default function Footer({
   const [count, setCount] = useState(4);
   const [captures, setCaptures] = useState([]);
 
-  useEffect(() => {
-    if (count === 0) {
-      sendCaptures();
-      console.log('사진 전송');
-    }
-  }, [count]);
-
   const capture = (id) => {
     checkChatToggle(() => performCapture(id));
   };
@@ -42,8 +35,10 @@ export default function Footer({
         const dataUrl = canvas.toDataURL('image/jpeg');
         setCaptures((prevState) => [...prevState, dataUrl]);
       });
-    } else {
-      alert('사진 4장 다 찍었음');
+    }
+
+    if (captures.length === 4) {
+      sendCaptures();
     }
   };
 
