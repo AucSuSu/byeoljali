@@ -18,7 +18,7 @@ function FanInfoView() {
 
   const getUserInfoData = async () => {
     const data = await customAxios.get('mypage/').then((res) => {
-      console.log(res.data.object);
+      console.log('데이터 왔어요~', res.data.object);
       return res.data.object;
     });
     dispatch(getUserInfo(data));
@@ -78,7 +78,7 @@ function FanInfoView() {
       });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData();
     Object.keys(localUserData).forEach((key) => {
       formData.append(key, localUserData[key]);
@@ -87,22 +87,20 @@ function FanInfoView() {
       formData.append('profileImage', profileImage);
     }
     console.log(formData);
-    editUserInfoData(formData); // 서버에 데이터 전송
+    await editUserInfoData(formData); // 서버에 데이터 전송
+    getUserInfoData()
   };
 
   return (
-    <div>
+    <div className='min-h-screen bg-black overflow-hidden'>
       <NavBar />
       <div
-        className="font-jamsil text-white min-h-screen bg-black flex flex-col items-center"
+        className="font-jamsil text-white  flex flex-col items-center"
         onClick={handleModalContentClick}
       >
-        <div className="self-start ml-[150px]">
-          <div className="text-[30px] mb-4">[ 프로필 수정 ]</div>
-        </div>
 
         {/* 프로필 내용 */}
-        <div className="border-4 border-dark-gray rounded-xl pl-20 pr-20 pt-2 pb-2">
+        <div className="border-4 border-dark-gray rounded-xl pl-20 pr-20 pt-2 pb-2 mt-20">
           {/* 이미지와 이름 필드를 가로로 나열하되, 상단 정렬을 위해 별도의 스타일 적용 */}
           <div className="flex items-start justify-start space-x-12">
             {/* 이미지 필드 */}
@@ -110,7 +108,7 @@ function FanInfoView() {
               <img
                 src={previewUrl || 'path_to_default_image'}
                 alt="Profile"
-                className="h-[250px] rounded-full object-fill"
+                className="h-[250px] w-[250px] rounded-full object-cover"
               />
               <p
                 onClick={() => fileInputRef.current.click()}
