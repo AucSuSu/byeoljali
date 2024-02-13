@@ -203,13 +203,13 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 }}
               ></div>
             ))}
-            <div className="w-1/2">
+            <div className="w-1/2 p-6 flex justify-center items-align">
               <img
-                className="pt-5 pl-5 pr-5 pb-10"
+                className="w-[500px] h-[550px]"
                 src={data?.object?.posterImageUrl}
                 style={{
-                  width: '650px',
-                  height: '630px',
+                  boxShadow: '0 0 10px white, 0 0 20px white, 0 0 30px white',
+                 
                 }}
               ></img>
             </div>

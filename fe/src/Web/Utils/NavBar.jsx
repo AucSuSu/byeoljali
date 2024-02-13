@@ -188,7 +188,7 @@ const Navbar = ({ bgStyle }) => {
       <NavbarTitle 
       className='flex justify-center items-center'
       > 
-      <Link to ="/" className='font-hambuguer'> 별자리
+      <Link to ="/" className='font-hambuger'> 별자리
         </Link>
         <BlinkingText></BlinkingText>
 

@@ -138,7 +138,7 @@ function FanSignModal({ data, onClose }) {
 
   const applySchedule = `응모일정: ${startApplyDateFormatted}~${endApplyDateFormatted}`; // "응모일정: 01/31~02/02"
   const fanSignSchedule = `사인회일정: ${startFansignDateFormatted}`; // 사인회일정
-  const memberSchedule = `신청멤버: ${fanSignDetail.memberName}`; // 신청멤버
+  const memberSchedule = ` ${fanSignDetail.memberName}`; // 신청멤버
   const artistInfo = fanSignDetail.artistName; // 아티스트 이름
 
   return (
@@ -149,14 +149,14 @@ function FanSignModal({ data, onClose }) {
           onClick={handleCloseModal}
         >
           <div
-            className="bg-black  w-240  h-160 p-6 overflow-hidden rounded-md grid grid-cols-2"
+            className="bg-black w-[80%] h-[90vh] p-10 overflow-hidden rounded-md grid grid-cols-2"
             onClick={handleModalContentClick}
             style={{
               borderRadius: '20px',
             }}
           >
             <div
-              className="p-3"
+              className="p-3 justify-center items-align flex"
               style={{
                 position: 'relative',
               }}
@@ -169,63 +169,67 @@ function FanSignModal({ data, onClose }) {
                     left: star.left,
                     top: star.top,
                     animationDuration: star.animationDuration,
+                    
                   }}
                 ></div>
               ))}
-              <div className="font-jamsil bolder text-40 mb-6">MY APPLY</div>
-
-              <div className="w-[100%] h-[80%]">
+              <div className=""
+              style={{
+                zIndex : '999'
+              }}>
                 <img
                   src={fanSignDetail.posterImageUrl}
                   alt=""
-                  className="w-full h-[450px] object-cover"
+                  className="object-cover justify-center items-align flex w-[500px] h-[550px]"
+                  style={{
+                    boxShadow:
+                      '0 0 10px white, 0 0 20px white, 0 0 30px white',
+                  }}
                 />
               </div>
             </div>
 
-            <div className="p-3 pt-24 pb-9 overflow-y-auto custom-scrollbar">
-              <div className="flex  h-[100%] flex-col justify-between">
-                <div className="font-jamsil bolder text-40">
+            <div className="p-3 overflow-y-auto custom-scrollbar">
+              <div className="flex  flex-col">
+                <div className="font-jamsil bolder text-40"
+                style={{
+                  textShadow:
+                    '0 0 10px #FF2990, 0 0 20px #FF2990, 0 0 30px #FF2990',
+                }}>
                   [ {fanSignDetail.artistFansignTitle} ]
                 </div>
 
-                <div className="pt-3 font-jamsil">
-                  <p className="bolder text-18 mr-3">📌 공지</p>
+                <div className="font-jamsil pt-3">
+                  <p className="text-18 mr-3">📌 공지</p>
                   <div
                     dangerouslySetInnerHTML={{
                       __html: fanSignDetail.information,
                     }}
                   />
                 </div>
-                <div className="pt-3 font-jamsil">
+                <div className='flex pt-6'>
+
+                <div className="font-jamsil">
                   <p className="bolder text-18 mr-3">🗓️ 응모 기간</p>
                   <div className="text-15">{applySchedule}</div>
                 </div>
-                <div className="pt-3 font-jamsil">
+                <div className="font-jamsil ps-6">
                   <p className="bolder text-18 mr-3">🗓️ 사인회 일정</p>
                   <div className="text-15">{fanSignSchedule}</div>
                 </div>
-                <div className="pt-3 font-jamsil">
-                  <p className="bolder text-18 mr-3">👯 아티스트</p>
-                  <div className="text-15">
-                    {artistInfo}
-                    {'  '}
-                    <button
-                      onClick={artistDetail}
-                      className="text-white hover:text-pink-700 hover:scale-110"
-                    >
-                      ▶ 상세보기
-                    </button>
-                  </div>
-                  {/* <button
-                    onClick={artistDetail}
-                    className="text-white hover:text-pink-700"
-                  >
-                    {artistInfo}
-                  </button> */}
                 </div>
-                <div className="pt-3 font-jamsil">
-                  <p className="bolder text-18 mr-3">🧕 참여 멤버</p>
+                <div className="font-jamsil pt-6">
+                  <p className="bolder text-18 ">👯 아티스트</p>
+                    <p
+                      className="mt-2 pl-2 pr-2 font-isa border-b border-white hover:cursor-pointer hover:text-hot-pink hover:border-hot-pink hover:scale-110 inline-block"
+                      onClick={artistDetail}
+                    >
+                      {artistInfo} ▶︎
+                    </p>
+                  </div>
+                </div>
+                <div className="font-jamsil pt-6">
+                  <p className="bolder text-18 mr-3">🧕 신청 멤버</p>
                   <div className="text-15">{memberSchedule}</div>
                 </div>
                 <div className="pt-3 font-jamsil flex justify-center">
@@ -239,7 +243,6 @@ function FanSignModal({ data, onClose }) {
               </div>
             </div>
           </div>
-        </div>
       ) : null}
     </>
   );
