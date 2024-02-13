@@ -83,16 +83,22 @@ body {
   width: 100%;
 }
 
+/* modal css */
+.swal2-popup {
+  color: white;
+  font-family: 'TheJamsil5Bold', serif;
+}
+/* ck editor */
 .ck-editor {
-  min-height: 8rem;
-  max-height: 8rem;
+  min-height: 6rem;
+  max-height: 6rem;
   min-width: 30rem;
   max-width: 30rem;
 }
 
 .ck-editor__editable {
-  min-height: 8rem;
-  max-height: 8rem;
+  min-height: 6rem;
+  max-height: 6rem;
   min-width: 30rem;
   max-width: 30rem;
   margin-bottom: 10px;
