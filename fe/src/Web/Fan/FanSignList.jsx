@@ -138,14 +138,16 @@ function FanSignList({ data }) {
                 onClick={toggleModal}
                 src={data.posterImageUrl}
                 alt="Poster Image"
-                className="w-full h-auto aspect-square  cursor-pointer mt-4 "
+                className="w-full h-auto aspect-square  cursor-pointer mt-8 "
               />
               <div className="flex flex-col justify-center items-center mb-4">
-                <div className="my-2 text-15 h-full text-center">[ {data.artistFansignTitle} ]</div>
-                <div className='text-12'>{data.memberName}</div>
+                <div className="my-3 text-18 h-full text-center">
+                  {data.artistFansignTitle}
+                </div>
+                <div className="text-15">{data.memberName}</div>
               </div>
               {data.fansignStatus === 'SESSION_CONNECTED' ? (
-                <div className="flex justify-center my-3 text-15">
+                <div className="flex justify-center my-3 text-15 mb-6">
                   <button
                     className=" px-3 py-1 rounded-md bg-hot-pink text-white"
                     onClick={participate}
