@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ApplyFormModal from './HomeApplyFormModal';
-
+import { setMemberId } from '../Stores/homeDetailListReducer';
 // Reducer 추가
 import { useDispatch } from 'react-redux';
 import {
@@ -12,6 +12,7 @@ import {
 const ListItem = ({ data, status }) => {
   const [remainingTime, setRemainingTime] = useState(null);
   const [isLive, setIsLive] = useState(false);
+
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -72,11 +73,13 @@ const ListItem = ({ data, status }) => {
     // dispatch를 사용하여 detailList 액션을 호출
     dispatch(setFansignId(data.artistfansignId));
     dispatch(detailList(data.artistfansignId));
+    dispatch(setMemberId(null));
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     dispatch(clearData()); // data를 빈 배열로 초기화하는 액션을 디스패치
+    dispatch(setMemberId(null));
     setIsModalOpen(false);
   };
 
