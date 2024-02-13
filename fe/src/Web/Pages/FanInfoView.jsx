@@ -4,6 +4,7 @@ import { getUserInfo } from '../Stores/fanInfoReducer';
 import useAxios from '../axios';
 import FanAuthModal from '../Fan/FanAuthModal';
 import NavBar from '../Utils/NavBar';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 
 function FanInfoView() {
   const customAxios = useAxios();
@@ -144,9 +145,9 @@ function FanInfoView() {
                     onClick={() =>
                       setLocalUserData({ ...localUserData, name: '' })
                     }
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer text-white"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer hover:text-red"
                   >
-                    X
+                    <XMarkIcon className="h-4 w-4" /> {/* 아이콘 크기 조정 */}
                   </button>
                 </div>
               </div>
@@ -173,9 +174,9 @@ function FanInfoView() {
                     onClick={() =>
                       setLocalUserData({ ...localUserData, nickname: '' })
                     }
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer text-white"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-dark-gray rounded-full h-6 w-6 flex items-center justify-center cursor-pointer hover:text-red"
                   >
-                    X
+                    <XMarkIcon className="h-4 w-4" /> {/* 아이콘 크기 조정 */}
                   </button>
                 </div>
               </div>
