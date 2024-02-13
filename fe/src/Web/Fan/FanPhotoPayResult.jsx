@@ -64,8 +64,8 @@ function FanPhotoPayResult() {
     <div className="w-[100%] h-[92.7vh]">
       <Navbar />
       <div className="w-full h-full bg-black text-white font-jamsil flex flex-col items-center justify-center">
-        <div className="bg-deep-dark w-1/3 h-1/2 flex flex-col items-center justify-between">
-          <h1 className="text-4xl font-bold mb-6 border-b-2 mt-8">
+        <div className="flex flex-col items-center justify-between">
+          <h1 className="text-4xl font-bold mb-6 border-b-2 mt-6">
             카카오페이 결제
           </h1>
           <div className="rounded-full bg-gray-200 w-24 h-24 flex items-center justify-center mb-4">
