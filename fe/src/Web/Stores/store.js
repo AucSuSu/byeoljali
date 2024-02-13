@@ -12,7 +12,7 @@ import fanInfoReducer from './fanInfoReducer.js';
 import fanPhotoReducer from './fanPhotoReducer.js';
 import artistFansignReducer from './artistFansignReducer.js';
 import tokenReducer from './tokenReducer.js';
-
+import artistLogo from './homeArtistLogoReducer.js'
 // 추가 리듀서
 
 // Persist 구성 정의
@@ -23,6 +23,7 @@ import tokenReducer from './tokenReducer.js';
 //session storage 사용
 import sessionStorage from 'redux-persist/lib/storage/session';
 import { persistReducer, persistStore } from 'redux-persist';
+import homeArtistLogoReducer from './homeArtistLogoReducer.js';
 const persistConfig = {
   key: 'root',
   storage: sessionStorage,
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   fanphoto: fanPhotoReducer,
   artistFansign: artistFansignReducer,
   token: tokenReducer,
+  artistLogo : homeArtistLogoReducer
   // 추가 리듀서 추가
 });
 

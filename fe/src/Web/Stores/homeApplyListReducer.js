@@ -27,6 +27,8 @@ const homeApplyListSlice = createSlice({
   },
 });
 
+
+
 export const { beforeApplyList, afterApplyList, searchApplyList } =
   homeApplyListSlice.actions;
 export default homeApplyListSlice.reducer;

@@ -14,35 +14,18 @@ import {
   beforeApplyList,
   afterApplyList,
 } from '../Stores/homeApplyListReducer';
+import {
+  getArtistLogo
+}from '../Stores/homeArtistLogoReducer';
 
 const HomeView = () => {
   const afterData = useSelector((state) => state.homeapply.afterData); // 응모 중 데이터 redux에서 꺼내기
   const beforeData = useSelector((state) => state.homeapply.beforeData); // 응모 전 데이터 redux에서 꺼내기
+  const items = useSelector((state) => state.artistLogo.artistLogo); // 로고 꺼내기
+
+
   const customAxios = useAxios();
   const dispatch = useDispatch();
-  // 아티스트명
-  const items = [
-    { name: 'Item 1', font: 'Arial, sans-serif' },
-    { name: 'Item 2', font: 'Georgia, serif' },
-    { name: 'Item 3', font: 'Verdana, sans-serif' },
-    { name: 'Item 4', font: 'Courier New, monospace' },
-    { name: 'Item 5', font: 'Impact, sans-serif' },
-    { name: 'Item 1', font: 'Arial, sans-serif' },
-    { name: 'Item 2', font: 'Georgia, serif' },
-    { name: 'Item 3', font: 'Verdana, sans-serif' },
-    { name: 'Item 4', font: 'Courier New, monospace' },
-    { name: 'Item 5', font: 'Impact, sans-serif' },
-    { name: 'Item 1', font: 'Arial, sans-serif' },
-    { name: 'Item 2', font: 'Georgia, serif' },
-    { name: 'Item 3', font: 'Verdana, sans-serif' },
-    { name: 'Item 4', font: 'Courier New, monospace' },
-    { name: 'Item 5', font: 'Impact, sans-serif' },
-    { name: 'Item 1', font: 'Arial, sans-serif' },
-    { name: 'Item 2', font: 'Georgia, serif' },
-    { name: 'Item 3', font: 'Verdana, sans-serif' },
-    { name: 'Item 4', font: 'Courier New, monospace' },
-    { name: 'Item 5', font: 'Impact, sans-serif' },
-  ];
   const containerRef = useRef(null);
 
   // 최초 렌러딩 시 data 불러오기
@@ -50,6 +33,7 @@ const HomeView = () => {
     loadAfterData();
     loadBeforeData();
     getUserInfoData();
+    getLogoData();
 
     const container = containerRef.current;
     let isHovered = false;
@@ -117,6 +101,15 @@ const HomeView = () => {
     dispatch(beforeApplyList(data));
   };
 
+  // 로고 가져오기 
+  const getLogoData = async () => {
+    const data = await customAxios.get('artists/logo/').then((res) => {
+      return res.data.object;
+    });
+    console.log("데이터 받아오기 : ", data)
+    dispatch(getArtistLogo(data))
+  };
+
   // 가져온 data 앞에서 8개만 선택하기
   const [sliceAfterItems, setSliceAfterItems] = useState(null);
   const [sliceBeforeItems, setSliceBeforeItems] = useState(null);
@@ -142,6 +135,17 @@ const HomeView = () => {
   const moveCommingSoonView = () => {
     navigate('/comming-soon');
   };
+
+  // 아티스트 상세보기로 이동
+  const artistDetail = async (artistId) => {
+    navigate('/artist-profile', {
+      state: {
+        propsData: {
+          artistId: artistId,
+        },
+      },
+    });
+  };
   return (
     <>
       <div id="main_container" className="flex flex-col bg-black font-big">
@@ -153,28 +157,26 @@ const HomeView = () => {
         </div>
 
         {/* 3. Current Apply  */}
-        <div className="flex items-center p-4 h-40">
+        <div className="flex items-center justify-center p-4 h-40">
           <div
             ref={containerRef}
-            className="flex overflow-x-auto p-1 items-center"
+            className="flex overflow-x-auto p-1 justify-center items-center"
+            style={{ width: "100%" }} // 부모 컨테이너의 너비를 100%로 설정
           >
             {Array.isArray(items) &&
               items.map((artist, index) => (
                 <div //하나의 멤버
-                  key={index}
-                  onClick={() => select(index, artist)}
-                  className="mr-4 inline-block" // inline-block 클래스 추가
+                  key={artist.artistId}
+                  onClick={() => artistDetail(artist.artistId)}
+                  className="mr-4 inline-block justify-center transition-transform transform-gpu" // inline-block 클래스 추가
                   style={{
                     fontFamily: artist.font,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'font-size 0.3s ease', // 글씨 크기 변경 시 부드러운 애니메이션 효과
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.fontSize = '24px'; // 호버 시 글씨 크기 변경
+                    e.target.style.transform = "scale(1.2)";
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.fontSize = '16px'; // 호버 해제 시 글씨 크기 원래대로
+                    e.target.style.transform = "scale(1)";
                   }}
                 >
                   <div
@@ -185,9 +187,17 @@ const HomeView = () => {
                       borderRadius: '50%',
                       objectFit: 'cover',
                       cursor: 'pointer',
+                      flexDirection: "column", // 이미지를 세로로 정렬하기 위해 컨테이너의 방향을 column으로 설정
+                      display: "flex", // 이미지 컨테이너를 flex로 설정
+                      justifyContent: "center"
+
                     }}
                   >
-                    {artist.name}
+                    <img src={artist.logoImageUrl}
+                    style={{
+                      width : '70%',
+                      height : '70%'
+                    }}></img>
                   </div>
                 </div>
               ))}
@@ -196,7 +206,7 @@ const HomeView = () => {
 
         <div>
           <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
-            <p> CURRENT APPLY</p>
+            <p> CURRENT APPLYING</p>
             <button onClick={moveCurrentApplyView}>더보기 ▶</button>
           </div>
           <HomeApplyList data={sliceAfterItems} status="CurrentApply" />
@@ -215,5 +225,6 @@ const HomeView = () => {
     </>
   );
 };
+
 
 export default HomeView;
