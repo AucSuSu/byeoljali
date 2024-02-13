@@ -24,7 +24,7 @@ const HomeView = () => {
   const afterData = useSelector((state) => state.homeapply.afterData); // 응모 중 데이터 redux에서 꺼내기
   const beforeData = useSelector((state) => state.homeapply.beforeData); // 응모 전 데이터 redux에서 꺼내기
   const items = useSelector((state) => state.artistLogo.artistLogo); // 로고 꺼내기
-
+  const [carouselData, setCarouselData] = useState([]); // 캐러셀에 들어갈 데이터를 저장할 곳
   const customAxios = useAxios();
   const dispatch = useDispatch();
   const containerRef = useRef(null);
@@ -35,6 +35,7 @@ const HomeView = () => {
     loadBeforeData();
     getUserInfoData();
     getLogoData();
+    getCarouselData();
 
     const container = containerRef.current;
     let isHovered = false;
@@ -161,6 +162,16 @@ const HomeView = () => {
       },
     });
   };
+
+  // 캐러셀 데이터 가져오기.
+  const getCarouselData = async () => {
+    const data = await customAxios.get('mainpage/recent').then((res) => {
+      return res.data;
+    });
+    console.log('캐러셀 데이터', data);
+    setCarouselData(data.object);
+  };
+
   return (
     <>
       <div id="main_container" className="relative flex flex-col bg-black font-jamsil">
@@ -178,8 +189,8 @@ const HomeView = () => {
             ))}
           </div>
         {/* 2. Post Carousel */}
-        <div className="w-[80%] mx-[10%]">
-          <NewCarousel datas={carouselImage} />
+        <div className="w-[70%] mx-[15%]">
+          <NewCarousel datas={carouselData} />
         </div>
         
         {/* 3. Current Apply  */}
