@@ -99,7 +99,7 @@ function FanSignList({ data }) {
                 alt="Poster Image"
                 className="w-full h-auto aspect-square  cursor-pointer  mt-8 mb-2"
               />
-              <div className="flex flex-col justify-between">
+              <div className="flex flex-col justify-between mb-20">
                 <div className="flex gap-3 mt-3 text-15">
                   <div className="border rounded-md border-kakao-yellow text-kakao-yellow px-1">
                     APPLYING
@@ -115,9 +115,9 @@ function FanSignList({ data }) {
                   )}
                 </div>
                 <div className="mt-3 text-15">{data.artistFansignTitle}</div>
-                <div className="mt-10 mb-6 text-15 text-hot-pink">
-                  마감까지 {timeLeft}
-                </div>
+              </div>
+              <div className="absolute bottom-0 mt-10 mb-6 text-15 text-hot-pink">
+                마감까지 {timeLeft}
               </div>
             </div>
           </div>
@@ -141,21 +141,23 @@ function FanSignList({ data }) {
                 alt="Poster Image"
                 className="w-full h-auto aspect-square  cursor-pointer  mt-8 mb-2"
               />
-              <div className="flex gap-3 mt-3 text-15">
-                <div className="border rounded-md border-red text-red px-1">
-                  LIVE
+              <div className="flex flex-col justify-between mb-10">
+                <div className="flex gap-3 mt-3 text-15">
+                  <div className="border rounded-md border-red text-red px-1">
+                    LIVE
+                  </div>
+                  {data.mode === 'RANDOM' ? (
+                    <div className="border rounded-md border-sky-blue text-sky-blue px-1">
+                      RANDOM
+                    </div>
+                  ) : (
+                    <div className="border rounded-md border-neonGreen text-neonGreen px-1">
+                      LINE
+                    </div>
+                  )}
                 </div>
-                {data.mode === 'RANDOM' ? (
-                  <div className="border rounded-md border-sky-blue text-sky-blue px-1">
-                    RANDOM
-                  </div>
-                ) : (
-                  <div className="border rounded-md border-neonGreen text-neonGreen px-1">
-                    LINE
-                  </div>
-                )}
+                <div className="mt-3 text-15">{data.artistFansignTitle}</div>
               </div>
-              <div className="mt-3 text-15">{data.artistFansignTitle}</div>
               {data.fansignStatus === 'SESSION_CONNECTED' ? (
                 <div className="flex flex-row justify-center mt-3 mb-6 text-15">
                   <button

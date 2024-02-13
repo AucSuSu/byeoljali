@@ -61,7 +61,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
               <div className="mr-3">
                 <div>결제</div>
                 <button
-                  className="mx-2 bg-kakao-yellow font-bold py-2 px-4 rounded border"
+                  className="mx-2 bg-kakao-yellow font-bold py-2 px-4 rounded border border-dark-gray"
                   onClick={onPay}
                 >
                   <div className="flex">
@@ -70,7 +70,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
-                      stroke="currentColor"
+                      stroke="black"
                       className="w-6 h-6"
                     >
                       <path
@@ -79,14 +79,14 @@ function FanModal({ onClose, onPay, onDelete, data }) {
                         d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"
                       />
                     </svg>
-                    <div>pay</div>
+                    <div className="text-black">pay</div>
                   </div>
                 </button>
               </div>
               <div>
                 <div>삭제</div>
                 <button
-                  className="mx-2 bg-red-500 text font-bold py-2 px-4 rounded border"
+                  className="mx-2 bg-red text font-bold py-2 px-4 rounded border border-dark-gray"
                   onClick={onDelete}
                 >
                   <div className="flex">
@@ -95,7 +95,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
-                      stroke="currentColor"
+                      stroke="black"
                       className="w-6 h-6"
                     >
                       <path
@@ -104,7 +104,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
                         d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
                       />
                     </svg>
-                    <div>삭제</div>
+                    <div className="text-black">삭제</div>
                   </div>
                 </button>
               </div>
@@ -113,7 +113,7 @@ function FanModal({ onClose, onPay, onDelete, data }) {
               className="w-14 bg-light-gray border rounded"
               onClick={onClose}
             >
-              닫기
+              <div className="text-black">닫기</div>
             </button>
           </div>
         ) : (

@@ -91,7 +91,7 @@ function FanPhotoView() {
   if (Array.isArray(photoData)) {
     return (
       <>
-        <div className="min-h-screen bg-black">
+        <div className="min-h-screen bg-black font-big">
           <NavBar />
           <div className="w-[80%] ml-[10%]">
             <div className="flex items-center justify-between mt-6 mb-6">
