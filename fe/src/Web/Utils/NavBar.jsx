@@ -183,7 +183,7 @@ const Navbar = ({ bgStyle }) => {
 
   return (
     <NavbarContainer
-      className={`${isProps ? isProps : `bg-black`}  font-milk pb-8`}
+      className={`${isProps ? isProps : `bg-black`}  font-jamsil pb-8`}
     >
       <NavbarTitle 
       className='flex justify-center items-center'

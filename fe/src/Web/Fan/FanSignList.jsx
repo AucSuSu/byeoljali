@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import FanSignModal from './FanSignModal';
 import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@material-ui/core';
 
 function FanSignList({ data }) {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -139,37 +138,24 @@ function FanSignList({ data }) {
                 onClick={toggleModal}
                 src={data.posterImageUrl}
                 alt="Poster Image"
-                className="w-full h-auto aspect-square  cursor-pointer  mt-8 mb-2"
+                className="w-full h-auto aspect-square  cursor-pointer mt-4 "
               />
-              <div className="flex flex-col justify-between mb-10">
-                <div className="flex gap-3 mt-3 text-15">
-                  <div className="border rounded-md border-red text-red px-1">
-                    LIVE
-                  </div>
-                  {data.mode === 'RANDOM' ? (
-                    <div className="border rounded-md border-sky-blue text-sky-blue px-1">
-                      RANDOM
-                    </div>
-                  ) : (
-                    <div className="border rounded-md border-neonGreen text-neonGreen px-1">
-                      LINE
-                    </div>
-                  )}
-                </div>
-                <div className="mt-3 text-15">{data.artistFansignTitle}</div>
+              <div className="flex flex-col justify-center items-center mb-4">
+                <div className="my-2 text-15 h-full text-center">[ {data.artistFansignTitle} ]</div>
+                <div className='text-12'>{data.memberName}</div>
               </div>
               {data.fansignStatus === 'SESSION_CONNECTED' ? (
-                <div className="flex flex-row justify-center mt-3 mb-6 text-15">
+                <div className="flex justify-center my-3 text-15">
                   <button
-                    className=" px-1 py-1 rounded-md bg-hot-pink text-white"
+                    className=" px-3 py-1 rounded-md bg-hot-pink text-white"
                     onClick={participate}
                   >
                     입장하기
                   </button>
                 </div>
               ) : (
-                <div className="flex flex-row justify-center mt-3 mb-6 text-15">
-                  <button className="  px-1 py-1 rounded-md bg-light-gray text-white cursor-not-allowed">
+                <div className="flex justify-center items-center text-15">
+                  <button className="  px-3 py-1 rounded-md bg-light-gray text-white cursor-not-allowed">
                     입장하기
                   </button>
                 </div>
