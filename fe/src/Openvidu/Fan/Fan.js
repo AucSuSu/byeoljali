@@ -308,7 +308,7 @@ class VideoRoomComponent extends Component {
                   className="h-[100%] border-r-2 border-dark-gary"
                   id="localUser"
                 >
-                  <Video user={localUser} />
+                  <Video user={localUser} id="fan-photo-video" />
                 </div>
               )}
           </div>
