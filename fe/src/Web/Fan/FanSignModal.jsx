@@ -189,7 +189,7 @@ function FanSignModal({ data, onClose }) {
             </div>
 
             <div className="p-3 flex">
-              <div className="h-[85%] self-center flex  flex-col justify-between">
+              <div className="h-[95%] self-center flex  flex-col justify-between">
                 <div
                   className="font-jamsil bolder text-40"
                   style={{
