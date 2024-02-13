@@ -44,6 +44,7 @@ export default function Footer({
         const dataUrl = canvas.toDataURL('image/jpeg');
         setCaptures((prevState) => [...prevState, dataUrl]);
       });
+      localVideoElement.style.transform = 'rotateY(0deg)';
     }
   };
 
