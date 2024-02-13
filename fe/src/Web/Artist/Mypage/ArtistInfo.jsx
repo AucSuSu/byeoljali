@@ -129,127 +129,122 @@ export default function ArtistInfo() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-black text-white w-full">
-      {artistData && (
-        <div className="w-full lg:w-6/12 p-10 flex flex-col items-center">
-          {/* 이미지 섹션 */}
-          <div className="flex justify-center my-4">
-            <img
-              className="object-cover rounded-lg"
-              src={artistData.object.artistImageUrl}
-              alt="Artist"
-            />
-          </div>
-
-          {/* 프로필 이미지 수정 버튼 */}
-          {isArtist && (
-            <button
-              onClick={handleOpenArtistImg}
-              className="mt-2 py-2 px-4 bg-gray text-white font-bold rounded hover:bg-dark-gray transition duration-300"
-            >
-              이미지 수정
-            </button>
-          )}
-
-          {/* 아티스트 이름 섹션 */}
-          <div className="text-center my-4 flex space-x-5 items-center w-full">
-            <div className="flex-grow">
-              <h2 className="text-60 font-jamsil">{artistData.object.name}</h2>
-              <p className="font-ridi font-bold text-25">
-                {artistData.object.companyName} Entertainment
-              </p>
-            </div>
-            <div className="flex-shrink-0">
+    <div className="flex flex-col justify-center min-h-screen bg-black text-white w-full">
+      <div className="flex justify-between">
+        {/* 왼쪽 섹션: 아티스트 이미지 */}
+        {artistData && (
+          <div className="w-full flex flex-col items-center">
+            <div className="flex justify-center my-4">
               <img
-                className="object-cover rounded-lg"
-                src={artistData.object.logoImageUrl}
-                alt="Logo"
-                style={{ width: '100px', height: '100px' }}
+                className="object-cover rounded-lg w-[600px] h-[380px]"
+                src={artistData.object.artistImageUrl}
+                alt="Artist"
               />
             </div>
           </div>
+        )}
+
+        {/* 오른쪽 섹션: 아티스트 정보*/}
+        {artistData && (
+          <div className="w-full flex flex-col items-start mr-16 font-jamsil">
+            {/* 아티스트 이름 섹션 */}
+            <div className="mt-2 flex space-x-5 items-center">
+              <div className="flex-grow">
+                <h2 className="text-[50px] font-jamsil">
+                  {artistData.object.name}
+                </h2>
+                <p className="text-[30px]">
+                  {artistData.object.companyName} Entertainment
+                </p>
+              </div>
+              <div className="flex-shrink-0">
+                <img
+                  className="object-cover rounded-lg"
+                  src={artistData.object.logoImageUrl}
+                  alt="Logo"
+                  style={{ width: '100px', height: '100px' }}
+                />
+              </div>
+            </div>
+
+            {/* 팬싸인회 정보 세부 내용 */}
+            <div className="w-full">
+              {/* 이미지 수정 버튼을 오른쪽에 배치하기 위한 컨테이너 */}
+              <div className="flex justify-end">
+                {isArtist && (
+                  <button
+                    onClick={handleOpenArtistImg}
+                    className="text-white font-bold rounded hover:bg-gray-700 transition duration-300 hover:text-hot-pink"
+                  >
+                    Edit Image ▶
+                  </button>
+                )}
+              </div>
+              <div className="h-auto border-4 border-dark-gray rounded-xl py-7 pl-10 pr-10 flex justify-between items-center space-x-4 text-[25px]">
+                <div className="flex text-center">
+                  <div className="">응모전</div>
+                  <div className="font-light ml-4">
+                    {artistCountData.ready_COUNT}
+                  </div>
+                </div>
+                <div className="text-dark-gray"> | </div>
+                <div className="flex text-center">
+                  <div className="">응모중</div>
+                  <div className="font-light ml-4">
+                    {artistCountData.applying_COUNT}
+                  </div>
+                </div>
+                <div className="text-dark-gray"> | </div>
+                <div className="flex text-center">
+                  <div className="">진행중</div>
+                  <div className="font-light ml-4">
+                    {artistCountData.fansign_COUNT}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 아티스트 정보 섹션 */}
+            <div className="my-4 mt-8">
+              <div>
+                <p className="text-25 font-jamsil">
+                  데뷔일 : {artistData.object.debutDate} | D+{daysSinceDebut}
+                </p>
+                <p className="text-25 font-jamsil">
+                  팬덤명 : {artistData.object.fandomName}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 아티스트 이미지 수정 모달 띄웠다 껐다 하려고 */}
+        {showArtistImgModal && (
+          <ArtistImgModal
+            artistImageUrl={artistData.object.artistImageUrl}
+            logoImageUrl={artistData.object.logoImageUrl}
+            onClose={handleCloseArtistImg}
+          />
+        )}
+        {showAddMemberModal && (
+          <AddMemberModal onClose={handleCloseAddMember} />
+        )}
+      </div>
+      {/* 멤버 리스트 섹션 */}
+      <div className="max-w-full mx-auto my-4 text-center border-2 border-dark-gray rounded-xl">
+        <div className="text-30 mt-2 mb-2 font-jamsil text-white">Members</div>
+        <div className="flex flex-wrap justify-center gap-4">
+          {artistData.object.memberList.map((member) => (
+            <MemberList key={member.memberId} data={member} />
+          ))}
+          {/* 멤버 추가 버튼 */}
+          {isArtist && (
+            <div className="m-2.5 ml-12 text-center inline-block">
+              {/* 멤버 추가 버튼 이미지 및 클릭 이벤트 핸들러 */}
+            </div>
+          )}
         </div>
-      )}
-
-      {/* 오른쪽 섹션: 팬싸인회 정보, 멤버 목록 */}
-      {artistData && (
-        <div className="w-full lg:w-6/12 p-10 flex flex-col items-start">
-          {/* 아티스트 정보 섹션 */}
-          <div className="my-4">
-            <div>
-              <p className="text-25 font-jamsil">
-                데뷔일 : {artistData.object.debutDate} | D+{daysSinceDebut}
-              </p>
-              <p className="text-25 font-jamsil">
-                팬덤명 : {artistData.object.fandomName}
-              </p>
-            </div>
-          </div>
-          <div className="w-full my-8">
-            <div className="text-2xl font-jamsil mb-4">FANSIGN INFO</div>
-            <div className="font-jamsil bg-gray h-auto rounded-lg shadow-lg p-5 flex justify-between items-center space-x-4">
-              {/* 팬싸인회 정보 세부 내용 */}
-              <div className="flex-1 text-center">
-                <div className="py-2 rounded-lg text-xl">응모전</div>
-                <div className="text-lg text-gray-800 mt-2">
-                  {artistCountData.ready_COUNT}
-                </div>
-              </div>
-              <div className="flex-1 text-center">
-                <div className="py-2 rounded-lg text-xl ">응모중</div>
-                <div className="text-lg text-gray-800 mt-2">
-                  {artistCountData.applying_COUNT}
-                </div>
-              </div>
-              <div className="flex-1 text-center">
-                <div className="py-2 rounded-lg text-xl">진행중</div>
-                <div className="text-lg text-gray-800 mt-2">
-                  {artistCountData.fansign_COUNT}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 멤버 박스 섹션 */}
-          <div className="w-full my-4">
-            <div className="text-30 mb-2 font-jamsil">Member</div>
-            <div className="flex flex-wrap justify-center gap-4">
-              {artistData.object.memberList.map((member) => (
-                <MemberList key={member.memberId} data={member} />
-              ))}
-              {/* 멤버 추가 버튼 */}
-              {isArtist && (
-                <div className="m-2.5 ml-12 text-center inline-block">
-                  <img
-                    src="/addbutton.png"
-                    alt="addMember"
-                    style={{
-                      width: '130px',
-                      height: '130px',
-                      borderRadius: '50%',
-                      border: '2px solid white',
-                      objectFit: 'cover',
-                      cursor: 'pointer',
-                      marginBottom: '7px',
-                    }}
-                    onClick={handleOpenAddMember}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 아티스트 이미지 수정 모달 띄웠다 껐다 하려고 */}
-      {showArtistImgModal && (
-        <ArtistImgModal
-          artistImageUrl={artistData.object.artistImageUrl}
-          logoImageUrl={artistData.object.logoImageUrl}
-          onClose={handleCloseArtistImg}
-        />
-      )}
-      {showAddMemberModal && <AddMemberModal onClose={handleCloseAddMember} />}
+      </div>
     </div>
   );
 }

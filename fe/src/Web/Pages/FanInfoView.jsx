@@ -92,7 +92,7 @@ function FanInfoView() {
     <div>
       <NavBar />
       <div
-        className="font-isa text-white min-h-screen bg-black flex flex-col items-center"
+        className="font-jamsil text-white min-h-screen bg-black flex flex-col items-center"
         onClick={handleModalContentClick}
       >
         <div className="self-start ml-[150px]">
