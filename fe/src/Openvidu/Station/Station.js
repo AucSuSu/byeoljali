@@ -418,8 +418,9 @@ class App extends Component {
             <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 z-10 ">
               {/* 비디오 출력 화면 */}
               <div
-                className="h-[70%] border-2 border-dark-gray overflow-hidden rotate-y-180"
+                className="h-[70%] border-2 border-dark-gray overflow-hidden"
                 ref={this.mainVideoRef}
+                style={{ transform: 'rotateY(180deg)' }}
               >
                 <UserVideoComponent
                   streamManager={this.state.mainStreamManager}

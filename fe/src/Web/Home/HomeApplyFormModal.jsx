@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import useAxios from '../axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { setMemberId } from '../Stores/homeDetailListReducer';
 // css 추가
 import './HomeApplyFormModal.css';
 
@@ -13,6 +14,7 @@ import SelectList from './SelectMemberList';
 import ApplyReceiptModal from './ApplyReceiptModal';
 
 const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
+  const dispatch = useDispatch(); // 여기에서 useDispatch 호출
   const [stars, setStars] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -49,12 +51,37 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const currMemberId = useSelector((state) => state.homedetail.memberId);
 
   const applyForm = async ({ id, data }) => {
-    const resData = await customAxios
-      .post(`mainpage/apply/${id}`, data)
-      .then((res) => {
-        console.log('form 제출 완료', res.data);
+    try {
+      const resData = await customAxios.post(`mainpage/apply/${id}`, data);
+      console.log('form 제출 완료', resData.data);
+      Swal.fire({
+        icon: 'success',
+        title: '성공적으로 응모되었습니다.',
+        confirmButtonText: 'OK!',
+        timer: 3000,
+        background: '#222222',
+        confirmButtonColor: '#FF2990',
+        confirmButtonText: 'OK',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(setMemberId(null)); // dispatch 함수 사용
+          closeModal();
+          window.location.reload();
+        }
       });
-    window.location.reload();
+    } catch (error) {
+      console.error('응모 실패', error);
+      // 에러 처리를 위한 Swal 호출
+      dispatch(setMemberId(null)); // dispatch 함수 사용
+      Swal.fire({
+        icon: 'error',
+        title: '응모에 실패했습니다.',
+        text: '다시 시도해주세요.',
+        background: '#222222',
+        confirmButtonColor: '#FF2990',
+        confirmButtonText: 'OK',
+      });
+    }
   };
 
   const handleSubmit = () => {
@@ -63,6 +90,9 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
       Swal.fire({
         icon: 'warning',
         title: '맴버를 선택해주세요',
+        background: '#222222',
+        confirmButtonColor: '#FF2990',
+        confirmButtonText: 'OK',
       });
     } else {
       const formData = {
@@ -71,18 +101,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
         artistFansignId: currFansignId, // 적절한 ID 값 필요
       };
       applyForm({ id: currFansignId, data: formData });
-      Swal.fire({
-        icon: 'success',
-        title: '성공적으로 응모되었습니다.',
-        confirmButtonText: '당첨을 기대하세요', // 버튼 문구 수정
-        timer: 3000,
-        confirmButtonText: 'OK!',
-        background: 'dark-gray',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          closeModal();
-        }
-      });
     }
   };
 
@@ -208,7 +226,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                 src={data?.object?.posterImageUrl}
                 style={{
                   boxShadow: '0 0 10px white, 0 0 20px white, 0 0 30px white',
-                 
                 }}
               ></img>
             </div>
@@ -289,7 +306,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                           {isReceiptModalOpen && (
                             <ApplyReceiptModal
                               onClose={closeReceiptModal}
-                              title={propData.albumName}
+                              albumName={propData.albumName}
                             />
                           )}
                         </div>

@@ -140,28 +140,28 @@ function FanSignList({ data }) {
                 alt="Poster Image"
                 className="w-full h-auto aspect-square  cursor-pointer mt-8 "
               />
-              <div className="flex flex-col justify-center items-center mb-4">
-                <div className="my-3 text-18 h-full text-center">
+              <div className="flex flex-col h-[25%] justify-between items-center mb-4">
+                <div className="my-3 text-15 h-full text-center">
                   {data.artistFansignTitle}
                 </div>
                 <div className="text-15">{data.memberName}</div>
+                {data.fansignStatus === 'SESSION_CONNECTED' ? (
+                  <div className="flex justify-center  my-3 text-15 mb-6">
+                    <button
+                      className=" px-3 py-1 rounded-md bg-hot-pink  absolute bottom-4 text-white"
+                      onClick={participate}
+                    >
+                      입장하기
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center my-3 text-15 mb-6">
+                    <button className="  px-3 py-1 rounded-md bg-light-gray absolute bottom-4 text-white cursor-not-allowed">
+                      입장하기
+                    </button>
+                  </div>
+                )}
               </div>
-              {data.fansignStatus === 'SESSION_CONNECTED' ? (
-                <div className="flex justify-center my-3 text-15 mb-6">
-                  <button
-                    className=" px-3 py-1 rounded-md bg-hot-pink text-white"
-                    onClick={participate}
-                  >
-                    입장하기
-                  </button>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center text-15">
-                  <button className="  px-3 py-1 rounded-md bg-light-gray text-white cursor-not-allowed">
-                    입장하기
-                  </button>
-                </div>
-              )}
             </div>
           </div>
           {isModalVisible && (
