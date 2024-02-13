@@ -81,60 +81,61 @@ function ArtistImgModal({ onClose, artistImageUrl, logoImageUrl }) {
 
   return (
     <div
-      className="font-milk fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
+      className="font-jamsil fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 py-6 z-50"
       onClick={onClose}
     >
       <div
-        className="w-148 h-130 bg-black p-6 shadow-lg flex flex-col items-center"
+        className="w-250 h-130 bg-deep-dark p-10 shadow-lg flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="self-start text-4xl font-bold mb-6">
-          이미지 수정
-          <div className="mt-1 border-b-2"></div>
-        </div>
-
-        <div className="flex flex-col items-center mt-3">
+        <div className="flex items-center mt-3">
           {/* 프로필 이미지 업로드 섹션 */}
-          <div className="relative mb-4">
-            <img
-              src={imageSrc}
-              alt="Profile Preview"
-              className="w-100 h-80 rounded-lg object-fill"
+          <div>
+            <h2 className="text-[24px]">프로필 이미지 등록</h2>
+            <div className="relative mb-4">
+              <img
+                src={imageSrc}
+                alt="Profile Preview"
+                className="w-100 h-80 rounded-lg object-fill"
+              />
+              <button
+                onClick={handleProfileButtonClick}
+                className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
+              >
+                <span className="text-white text-5xl">+</span>
+              </button>
+            </div>
+            <input
+              type="file"
+              onChange={handleProfileFileChange}
+              className="hidden"
+              ref={profileInputRef}
             />
-            <button
-              onClick={handleProfileButtonClick}
-              className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
-            >
-              <span className="text-white text-5xl">+</span>
-            </button>
           </div>
-          <input
-            type="file"
-            onChange={handleProfileFileChange}
-            className="hidden"
-            ref={profileInputRef}
-          />
 
           {/* 로고 이미지 업로드 섹션 */}
-          <div className="relative mb-4">
-            <img
-              src={logoImageSrc}
-              alt="Logo Preview"
-              className="w-100 h-80 rounded-lg object-fill"
+          <div className="ml-8">
+            <h2 className="text-[24px]">로고 이미지 등록</h2>
+            <div className="relative mb-4">
+              <img
+                src={logoImageSrc}
+                alt="Logo Preview"
+                className="w-100 h-80 rounded-lg object-fill"
+              />
+              <button
+                onClick={handleLogoButtonClick}
+                className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
+              >
+                <span className="text-white text-5xl">+</span>
+              </button>
+            </div>
+            <input
+              type="file"
+              onChange={handleLogoFileChange}
+              className="hidden"
+              ref={logoInputRef}
             />
-            <button
-              onClick={handleLogoButtonClick}
-              className="absolute inset-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 rounded-lg"
-            >
-              <span className="text-white text-5xl">+</span>
-            </button>
           </div>
-          <input
-            type="file"
-            onChange={handleLogoFileChange}
-            className="hidden"
-            ref={logoInputRef}
-          />
         </div>
 
         {/* 등록 및 닫기 버튼 */}
