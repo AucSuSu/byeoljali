@@ -206,13 +206,22 @@ export default function ArtistInfo() {
 
             {/* 아티스트 정보 섹션 */}
             <div className="my-4 mt-8">
-              <div>
-                <p className="text-25 font-jamsil">
-                  데뷔일 : {artistData.object.debutDate} | D+{daysSinceDebut}
-                </p>
-                <p className="text-25 font-jamsil">
-                  팬덤명 : {artistData.object.fandomName}
-                </p>
+              <div className="text-25">
+                <div className="flex">
+                  <p>데뷔일 : </p>
+                  <p className="pl-2 font-light">
+                    {artistData.object.debutDate}
+                  </p>
+                  <p className="pl-4">| </p>
+                  <p className="pl-4">D+</p>
+                  <p className="font-light">{daysSinceDebut}</p>
+                </div>
+                <div className="flex">
+                  <p>팬덤명 : </p>
+                  <p className="pl-2 font-light">
+                    {artistData.object.fandomName}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
