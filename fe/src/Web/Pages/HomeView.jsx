@@ -41,7 +41,7 @@ const HomeView = () => {
 
         if (
           container.scrollLeft >=
-          container.scrollWidth - container.clientWidth
+          container.scrollWidth - container.clientWidth + -0.3
         ) {
           // 스크롤이 끝에 도달했을 때 처음으로 돌아가기
           container.scrollLeft = 0;
@@ -153,11 +153,11 @@ const HomeView = () => {
           <NewCarousel datas={carouselImage} />
         </div>
 
-        {/* 3. Current Apply  */}
+        {/* 3. Artist  */}
         <div className="flex items-center justify-center p-4 h-40">
           <div
             ref={containerRef}
-            className="flex overflow-x-auto p-1 justify-center items-center"
+            className="flex overflow-hidden p-1 justify-center items-center"
             style={{ width: '100%' }} // 부모 컨테이너의 너비를 100%로 설정
           >
             {Array.isArray(items) &&
@@ -201,33 +201,31 @@ const HomeView = () => {
               ))}
           </div>
         </div>
-
+        {/* 4.Current Apply  */}
         <div>
-          <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
-            <p> CURRENT APPLY</p>
-            <button
-              onClick={moveCurrentApplyView}
-              className="hover:scale-110 hover:text-hot-pink"
-            >
-              더보기 ▶
-            </button>
-          </div>
-          <HomeApplyList data={sliceAfterItems} status="CurrentApply" />
-        </div>
-        {/* 4. Artist 넣어주세요 ~~~~  */}
-        <div className="w-[80%] ml-[10%] text-white mb-10">
-          아티스트 올 예정
-        </div>
-        {/* 5. Comming Soon */}
-        <div className="w-[80%] ml-[10%] text-white flex justify-between mb-4 text-18">
-          <p> COMMING SOON</p>
+          <p className="w-[80%] ml-[10%] text-white mt-3 text-35">
+            CURRENT APPLY
+          </p>
           <button
-            onClick={moveCommingSoonView}
-            className="hover:scale-110 hover:text-hot-pink"
+            onClick={moveCurrentApplyView}
+            className=" text-white w-[80%] ml-[10%] mb-2 text-right hover:scale-110 hover:text-hot-pink hover:ml-[6%] "
           >
             더보기 ▶
           </button>
+          <HomeApplyList data={sliceAfterItems} status="CurrentApply" />
         </div>
+
+        {/* 5. Comming Soon */}
+        <p className="w-[80%] ml-[10%] text-white mt-3 text-35">
+          {' '}
+          COMMING SOON
+        </p>
+        <button
+          onClick={moveCommingSoonView}
+          className=" text-white w-[80%] ml-[10%] mb-2 text-right hover:scale-110 hover:text-hot-pink hover:ml-[6%] "
+        >
+          더보기 ▶
+        </button>
         <HomeApplyList data={sliceBeforeItems} status="CommingSoon" />
       </div>
     </>

@@ -83,7 +83,7 @@ const ListItem = ({ data, status }) => {
   return (
     <div
       id="card_container"
-      className="bg-blue-gray text-white rounded-md m-1 font-sm transition-all h-[450px] font-jamsil text-15 duration-500 hover:scale-105"
+      className="bg-blue-gray text-white rounded-md  font-sm transition-all h-[450px] font-jamsil text-15 duration-500 mb-6 mx-2 hover:scale-105"
     >
       <img
         src={data.posterImageUrl}
@@ -95,7 +95,7 @@ const ListItem = ({ data, status }) => {
         <p
           className={`mr-2 border-2  ${isLive ? 'border-red text-red' : 'border-violet text-violet'} rounded-md px-3 p-1`}
         >
-          {isLive ? 'LIVE' : 'READY'}
+          {isLive ? 'APPLYING' : 'READY'}
         </p>
         <p
           className={`mr-2 border-2  ${data?.mode ? 'border-sky-blue text-sky-blue' : 'border-neonGreen text-neonGreen'} px-3 rounded-md p-1`}
@@ -103,7 +103,7 @@ const ListItem = ({ data, status }) => {
           {data?.mode ? 'RANDOM' : 'LINE'}
         </p>
       </div>
-      <div className=" ml-5 h-[65px] ">{data.title}</div>
+      <div className=" ml-5 h-[65px] mx-2">{data.title}</div>
       <div className=" mt-2 ml-5 text-hot-pink text-15">
         {status === 'CurrentApply' ? (
           <p>
