@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useAxios from '../axios';
 import styled from 'styled-components';
-import { MagnifyingGlassIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import {
+  MagnifyingGlassIcon,
+  XCircleIcon,
+  ArrowLeftIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
 import { searchApplyList } from '../Stores/homeApplyListReducer';
 import HomeApplyList from '../Home/HomeApplyList';
 //Navbar
@@ -68,6 +73,7 @@ const SearchResultsContainer = styled.div`
 
 function SearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const searchData = useSelector((state) => state.homeapply.searchData);
   const customAxios = useAxios();
   const dispatch = useDispatch();
@@ -116,6 +122,12 @@ function SearchPage() {
       <div className="bg-black font-jamsil">
         {/* 1. Navbar */}
         <Navbar />
+        <button
+          onClick={() => window.history.back()}
+          className="ml-20 text-white text-bold hover:text-hot-pink"
+        >
+          <ArrowLeftIcon className="w-6 h-6" />
+        </button>
         <SearchInputContainer>
           <SearchFieldWrapper>
             <SearchInput
@@ -147,8 +159,21 @@ function SearchPage() {
         ) : (
           <SearchResultsContainer>
             (
-            <div className="text-white text-[30px] text-center pt-[170px] pb-[170px]">
-              검색 결과가 없습니다.
+            <div className="flex items-center justify-center text-white text-[30px] pt-[170px] pb-[170px] relative">
+              <span>검색 결과가 없습니다.</span>
+              <div className="relative ml-4 hover:text-hot-pink mt-2">
+                <button
+                  onMouseEnter={() => setIsTooltipVisible(true)}
+                  onMouseLeave={() => setIsTooltipVisible(false)}
+                >
+                  <QuestionMarkCircleIcon className="w-8 h-8" />
+                </button>
+                {isTooltipVisible && (
+                  <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-hot-pink text-white text-sm rounded-lg min-w-max whitespace-nowrap">
+                    현재 응모 중인 팬 사인회만 보여집니다!
+                  </div>
+                )}
+              </div>
             </div>
             )
           </SearchResultsContainer>
