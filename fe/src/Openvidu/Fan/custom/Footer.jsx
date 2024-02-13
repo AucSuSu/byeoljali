@@ -16,6 +16,12 @@ export default function Footer({
   const [count, setCount] = useState(4);
   const [captures, setCaptures] = useState([]);
 
+  useEffect(() => {
+    if (captures.length === 4) {
+      sendCaptures();
+    }
+  }, [captures]);
+
   const capture = (id) => {
     checkChatToggle(() => performCapture(id));
   };
@@ -35,10 +41,6 @@ export default function Footer({
         const dataUrl = canvas.toDataURL('image/jpeg');
         setCaptures((prevState) => [...prevState, dataUrl]);
       });
-    }
-
-    if (captures.length === 4) {
-      sendCaptures();
     }
   };
 
