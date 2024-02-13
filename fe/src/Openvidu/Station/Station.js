@@ -418,7 +418,7 @@ class App extends Component {
             <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 z-10 ">
               {/* 비디오 출력 화면 */}
               <div
-                className="h-[70%] border-2 border-dark-gray overflow-hidden transform rotate-y-180"
+                className="h-[70%] border-2 border-dark-gray overflow-hidden rotate-y-180"
                 ref={this.mainVideoRef}
               >
                 <UserVideoComponent
