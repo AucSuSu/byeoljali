@@ -123,7 +123,7 @@ function FanPhoto({ data }) {
         </div>
       </div>
       <div className="w-[80%] ml-[10%]">
-        <div className="text-18 mt-3">[ {data.artistFansignTitle} ]</div>
+        <div className="text-18 mt-5 mb-10">[ {data.artistFansignTitle} ]</div>
       </div>
 
       {isModalOpen && (

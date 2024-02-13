@@ -180,7 +180,9 @@ const Navbar = ({ bgStyle }) => {
     <NavbarContainer
       className={`${isProps ? isProps : `bg-black`} font-bold font-milk pb-8`}
     >
-      <NavbarTitle> 별자리 </NavbarTitle>
+      <NavbarTitle> 
+        <Link to ="/">별자리</Link>
+      </NavbarTitle>
       <NavbarList>
         {isArtist ? (
           // Artist일 경우
