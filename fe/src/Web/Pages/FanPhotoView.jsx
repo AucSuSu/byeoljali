@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 
 import FanPhoto from '../Fan/FanPhoto';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { useNavigate } from 'react-router-dom';
 import { getUserPhoto } from '../Stores/fanPhotoReducer';
 import useAxios from '../axios';
 import NavBar from '../Utils/NavBar';
 
 function FanPhotoView() {
   const customAxios = useAxios();
+  const navigate = useNavigate();
   // axios.get으로 유저의 인생네컷을 모두 받았다고 가정\
   const photoData = useSelector((state) => state.fanphoto.data);
   const dispatch = useDispatch();
@@ -88,6 +89,10 @@ function FanPhotoView() {
     }
   };
 
+  const goToHome = () => {
+    navigate('/home');
+  };
+
   if (Array.isArray(photoData)) {
     return (
       <>
@@ -98,7 +103,7 @@ function FanPhotoView() {
               <div>
                 <div className="text-3xl bolder mb-2 text-white">내 앨범</div>
                 <div className="text-dark-gray">
-                  {photoData.length} 개의 당첨 내역을 보유 하고 있습니다.
+                  {photoData.length} 개의 사진을 보유 하고 있습니다.
                 </div>
                 <div className="pt-2 text-dark-gray">
                   구매 후 사진 열람 / 다운로드가 가능합니다
@@ -144,12 +149,25 @@ function FanPhotoView() {
               </div>
             </div>
           </div>
+
           <div className="w-[86%] ml-[7%]">
-            <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-4 border-2 border-dark-gray rounded-md">
-              {photoData.map((data, index) => (
-                <FanPhoto key={index} data={data} />
-              ))}
-            </div>
+            {photoData.length === 0 ? (
+              <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-big text-35">
+                <div>사진 내역이 없습니다</div>
+                <div
+                  className="text-25 text-hot-pink cursor-pointer hover:scale-110 transition-transform ease-in-out duration-500"
+                  onClick={goToHome}
+                >
+                  응모 하러 가기
+                </div>
+              </div>
+            ) : (
+              <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8 border-4 border-deep-dark rounded-lg">
+                {photoData.map((data, index) => (
+                  <FanPhoto key={index} data={data} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </>

@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadApply } from '../Stores/fanApplyListReducer';
 import useAxios from '../axios';
+import { useNavigate } from 'react-router-dom';
 
 import FanSignList from '../Fan/FanSignList';
 
 function FanApply() {
   const customAxios = useAxios();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const data = useSelector((state) => state.fanapply.data);
   console.log(data);
 
@@ -21,6 +23,10 @@ function FanApply() {
     });
     console.log('내가 응모한 리스트 : ', data);
     dispatch(loadApply(data));
+  };
+
+  const goToHome = () => {
+    navigate('/home');
   };
 
   return (
@@ -39,11 +45,23 @@ function FanApply() {
         </div>
       </div>
       <div className="w-[86%] ml-[7%]">
-        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8 border-4 border-deep-dark rounded-lg">
-          {data.map((data, index) => (
-            <FanSignList key={index} data={data} />
-          ))}
-        </div>
+        {data.length === 0 ? (
+          <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-big text-35">
+            <div>응모 내역이 없습니다</div>
+            <div
+              className="text-25 text-hot-pink cursor-pointer hover:scale-110 transition-transform ease-in-out duration-500"
+              onClick={goToHome}
+            >
+              응모 하러 가기
+            </div>
+          </div>
+        ) : (
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8 border-4 border-deep-dark rounded-lg">
+            {data.map((data, index) => (
+              <FanSignList key={index} data={data} />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
