@@ -24,7 +24,7 @@ export default function FanSocket({
         fanId: propsData.fanId,
       });
     }
-  }, [propsData]);
+  }, []);
 
   useEffect(() => {
     // WebSocket 서버에 연결
