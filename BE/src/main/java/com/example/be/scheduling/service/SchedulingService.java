@@ -113,4 +113,15 @@ public class SchedulingService {
         schedulingRepository.updateStatusToFansign(formattedDate);
 
     }
+
+    @Transactional
+    public void endFansign() {
+
+        LocalDateTime date = LocalDateTime.now().minusHours(2);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH");
+        String formattedDate = date.format(formatter);
+        log.info(" 비교 시간 : " + formattedDate);
+        schedulingRepository.endFansign(formattedDate);
+
+    }
 }
