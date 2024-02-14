@@ -34,7 +34,7 @@ const HomeView = () => {
         {/* 1. Navbar */}
         <div
           className=" relative h-[400px] bg-cover "
-          style={{ backgroundImage: "url('/bgImg.png')" }}
+          style={{ backgroundImage: "url('/bg_2.png')" }}
         >
           {/* inset-0 부모 요소 기준으로 위치 설정(영역전체) */}
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
