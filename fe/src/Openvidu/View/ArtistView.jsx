@@ -6,14 +6,14 @@ import { useLocation } from 'react-router-dom';
 export default function ArtistView() {
   const location = useLocation();
   const { propsData } = location.state || {};
-  const [autoData, setAutoData] = useState({orders : null, state : null})
+  const [autoData, setAutoData] = useState({ orders: null, state: null });
   const [fanData, setFanData] = useState(null);
 
   const timeOver = (e, s) => {
-    setAutoData({orders : e, state : s});
+    setAutoData({ orders: e, state: s });
   };
   const inviteFan = (e, s) => {
-    setAutoData({orders : e, state : s});
+    setAutoData({ orders: e, state: s });
   };
 
   const getFanData = (data) => {

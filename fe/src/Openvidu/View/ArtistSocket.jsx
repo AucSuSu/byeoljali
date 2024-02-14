@@ -35,6 +35,10 @@ export default function ArtistSocket({
       console.log('CLOSE Artist 나갔어요~', event);
     };
 
+    newSocket.onerror = (error) => {
+      console.error('WebSocket Error:', error);
+    };
+
     setSocket(newSocket);
 
     return () => {
