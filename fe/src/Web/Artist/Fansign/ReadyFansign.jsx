@@ -6,7 +6,6 @@ import useAxios from '../../axios.js';
 
 export default function ReadyFansign({ handleAddFansign }) {
   const fansignList = useSelector((state) => state.artistFansign.data);
-  const [stars, setStars] = useState([]);
 
   const customAxios = useAxios();
   const dispatch = useDispatch();
@@ -19,26 +18,9 @@ export default function ReadyFansign({ handleAddFansign }) {
     dispatch(getFansignInfo(response));
   };
 
-  const getRandomNumber = (min, max) => {
-    return Math.random() * (max - min) + min;
-  };
-
   const status = 'READY_FANSIGN';
 
   useEffect(() => {
-    const makeStars = () => {
-      const numStars = 50; // 원하는 별의 개수
-
-      const newStars = Array.from({ length: numStars }, (_, index) => ({
-        id: index,
-        left: Math.random() * 100 + 'vw', // 랜덤한 가로 위치
-        top: Math.random() * 100 + 'vh', // 랜덤한 세로 위치
-      }));
-
-      setStars(newStars);
-    };
-
-    makeStars();
     getFansign();
   }, []);
 
@@ -46,31 +28,6 @@ export default function ReadyFansign({ handleAddFansign }) {
     <>
       {fansignList.object.length === 0 ? (
         <>
-          <div className="night z-10 absolute top-0 left-0 right-0 bottom-0 ;">
-            {[...Array(5)].map((_, index) => (
-              <div
-                className="shooting_star"
-                key={index}
-                style={{
-                  top: `${getRandomNumber(0, 100)}%`,
-                  left: `${getRandomNumber(0, 100)}%`,
-                  animationDelay: `-${getRandomNumber(0, 100)}ms`,
-                }}
-              ></div>
-            ))}
-          </div>
-          <div>
-            {stars.map((star) => (
-              <div
-                key={star.id}
-                className="star"
-                style={{
-                  left: star.left,
-                  top: star.top,
-                }}
-              ></div>
-            ))}
-          </div>
           <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-jamsil text-35">
             <div>팬싸 내역이 없습니다</div>
             <div
