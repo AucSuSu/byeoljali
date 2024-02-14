@@ -120,6 +120,26 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
     }
 
     @Override
+    public void endFansign(String date) {
+        log.info(" *** repository : fansign finish status 변경 *** ");
+
+        // 팬싸인인 것을 바꾸기
+
+        jpaQueryFactory
+                .update(artistFansign)
+                .set(artistFansign.status, FansignStatus.FINISH)
+                .where(Expressions.
+                                dateTemplate(String.class, "DATE_FORMAT({0}, {1})",
+                                        artistFansign.startFansignTime,
+                                        "%Y-%m-%d %H").eq(date),
+                        artistFansign.status.eq(FansignStatus.FANSIGN))
+                .execute();
+
+        em.flush();
+        em.clear();
+    }
+
+    @Override
     public void updateStatusToSessionConnected(Long artistFansignId) {
 
         log.info(" *** repository : session 발급한 팬싸인회 status 변경 *** " + artistFansignId);
@@ -172,7 +192,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 .join(memberFansign.member, member)
                 .where(memberFansign.memberfansignId.eq(memberFansignId))
                 .orderBy(orderByExpression)
-                .limit(100)
+                .limit(10)
                 .fetch();
 
     }
