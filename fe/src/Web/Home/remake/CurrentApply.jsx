@@ -13,29 +13,19 @@ const HomeView = () => {
   const dispatch = useDispatch();
   const currentRef = useRef();
 
-  const handleScroll = () => {    console.log(
-    '스크롤 위치:', currentRef.current.scrollTop,
-    '전체 높이:', currentRef.current.scrollHeight
-  );
-  currentRef.current.scrollTop = 0;
-}
-
-
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 스크롤 이벤트 리스너를 추가합니다.
-    console.log('데이터 : ', currentRef.current)
-    currentRef.current.addEventListener('scroll', () => {
-      console.log('스크롤 이벤트 발생');
-    });
-
-    // 컴포넌트가 언마운트될 때 메모리 누수를 방지하기 위해 이벤트 리스너를 제거합니다.
-    return () => {
-      currentRef.current.removeEventListener('scroll', handleScroll);
-    };
-  }, [afterData])
+  const handleScroll = () => {
+    console.log(
+      '스크롤 위치:',
+      currentRef.current.scrollTop,
+      '전체 높이:',
+      currentRef.current.scrollHeight,
+    );
+    currentRef.current.scrollTop = 0;
+  };
 
   useEffect(() => {
     loadAfterData();
+    window.scrollTo(0, 0); // 컴포넌트가 마운트될 때 스크롤을 최상단으로 이동
   }, []);
 
   const loadAfterData = async () => {
@@ -73,7 +63,7 @@ const HomeView = () => {
         </div>
         {/* 2. Current Apply  */}
         <div className="bg-black py-10">
-          <HomeApplyList  data={afterData.object} status="CurrentApply" />
+          <HomeApplyList data={afterData.object} status="CurrentApply" />
         </div>
       </div>
     </>

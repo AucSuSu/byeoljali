@@ -252,13 +252,12 @@ export default function ArtistInfo() {
               <MemberList key={member.memberId} data={member} />
             ))}
             {/* 멤버 추가 버튼 */}
-            {/* 멤버 추가 버튼 */}
             {isArtist && (
               <div
-                className="m-2.5 mr-8 text-center inline-block cursor-pointer"
+                className="font-jamsil m-2.5 ml-12 text-center inline-block cursor-pointer"
                 onClick={handleOpenAddMember}
               >
-                <PlusCircleIcon className="h-32 w-32 text-white" />
+                <PlusCircleIcon className="h-[130px] w-[130px] text-gray hover:text-hot-pink"></PlusCircleIcon>
               </div>
             )}
           </div>
