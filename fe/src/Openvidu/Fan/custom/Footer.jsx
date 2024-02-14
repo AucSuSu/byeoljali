@@ -12,7 +12,7 @@ export default function Footer({
   artistFansignId,
   checkChatToggle,
 }) {
-  let audio = new Audio("camera.mp3")
+  let audio = new Audio('camera.mp3');
   const customAxios = useAxios();
   const [count, setCount] = useState(4);
   const [captures, setCaptures] = useState([]);
@@ -32,8 +32,15 @@ export default function Footer({
       captureArea();
       setCount(count - 1);
     }
-    audio.play();
-    console.log('사진 캡쳐 성공!', count);
+    const captureBounds = document.querySelector('.bounds');
+    captureBounds.style.border = '2px solid white';
+
+    setTimeout(() => {
+      captureBounds.style.border = '';
+
+      audio.play();
+      console.log('사진 캡쳐 성공!', count);
+    }, 500);
   };
 
   const captureArea = () => {
