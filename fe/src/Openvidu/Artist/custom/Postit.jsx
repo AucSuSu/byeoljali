@@ -3,6 +3,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
 export default function Postit({ chatDisplay, close, fanData }) {
+
+  console.log('props fanData 확인 : ', fanData)
   return (
     <div
       className="font-jamsil text-white font-bold flex flex-col text-center bg-black h-screen mt-3 "
