@@ -18,7 +18,6 @@ export default function ArtistView() {
 
   const getFanData = (data) => {
     setFanData(data);
-    console.log('setFanData 확인 : ', data)
   };
 
   return (
