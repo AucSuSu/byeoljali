@@ -15,13 +15,13 @@ export default function ArtistSocket({
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
       console.log('아티스트가 메세지 전달받음 : ', message);
-      if (message.type === 'TALK') {
+      if (message.type === 'TALK' && message.message.nickname !== 'Artist') {
         getFanData(message.message);
       } else if (
         message.type === 'ENTER' &&
         message.message.nickname !== 'Artist'
       ) {
-        sendMessage('ENTER');
+        sendMessage('TALK');
       }
     };
 
@@ -31,6 +31,7 @@ export default function ArtistSocket({
     };
 
     newSocket.onclose = (event) => {
+      enterMessage(newSocket);
       console.log('CLOSE Artist 나갔어요~', event);
     };
 
