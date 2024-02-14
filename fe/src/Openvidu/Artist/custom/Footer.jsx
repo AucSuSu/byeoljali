@@ -20,9 +20,6 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
     return response;
   };
 
-  useEffect(()=>{
-    console.log('props 받은 fanData : ', fanData)
-  },[fanData])
 
 
   const finishFansign = () => {
