@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
@@ -19,6 +19,11 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
       .catch((err) => console.log('블랙리스트 실패 : ', err));
     return response;
   };
+
+  useEffect(()=>{
+    console.log('props 받은 fanData : ', fanData)
+  },[fanData])
+
 
   const finishFansign = () => {
     Swal.fire({
