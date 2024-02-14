@@ -50,7 +50,6 @@ public class WebSockChatHandler extends TextWebSocketHandler {
                 chatMessage.setMessage(chatMessage.getMessage());
                 log.info("*** 입장 확인 완료 *** ");
                 sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-                log.info("*** 입장 확인 메세지 전송*** ");
             }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
                 sessions.remove(session);
                 log.info("*** QUIT CODE *** ");
@@ -70,6 +69,7 @@ public class WebSockChatHandler extends TextWebSocketHandler {
                 sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
             }
         }catch (IllegalStateException e) {
+            e.printStackTrace();
             throw new SessionClosedException("session이 닫혔습니다.");
         }
     }
@@ -79,6 +79,7 @@ public class WebSockChatHandler extends TextWebSocketHandler {
                 System.out.println(message);
                 roomSession.sendMessage(message);
             } catch (IOException e) {
+                e.printStackTrace();
                 throw new SessionClosedException("session이 닫혔습니다.");
             }
         });
