@@ -82,7 +82,7 @@ export default function FansignModal({ memberFansignId }) {
   const customStyle = {
     content: {
       width: '80%', // 모달의 너비를 화면의 80%로 조정
-      maxHeight: '90vh', // 모달의 최대 높이를 화면 높이의 90%로 제한
+      geight: '90vh', // 모달의 최대 높이를 화면 높이의 90%로 제한
       margin: 'auto',
       padding: '0px', // 패딩 추가로 내용과 모달 테두리 사이 간격 조정
       overflow: 'hidden', // 내용이 모달 높이를 초과해도 스크롤바 생성 방지
@@ -102,7 +102,7 @@ export default function FansignModal({ memberFansignId }) {
         // className="overflow-hidden"
       >
         {detailData && (
-          <div className="flex font-jamsil bg-black p-6">
+          <div className="flex h-[100%] font-jamsil bg-black p-6">
             {stars.map((star) => (
               <div
                 key={star.id}
@@ -114,20 +114,20 @@ export default function FansignModal({ memberFansignId }) {
                 }}
               ></div>
             ))}
-            <div className="w-1/2">
+            <div className="w-1/2 h-auto flex items-center justify-center ">
               <div>
                 <img
                   src={detailData.object.posterImageUrl}
                   alt="커버 이미지"
-                  className='h-[550px] w-[500px] mr-11 ml-6 mt-3 mr-2 mb-20'
+                  className="h-[480px] w-[90%] ml-5 "
                   style={{
                     boxShadow: '0 0 10px white, 0 0 20px white, 0 0 30px white',
                   }}
                 />
               </div>
             </div>
-            <div className="w-1/2 text-white pt-2 pl-2">
-              <div className="font-jamsil">
+            <div className="w-1/2 h-full text-white pt-2 pl-2 flex flex-col justify-center">
+              <div className="font-jamsil flex flex-col justify-between h-[90%]">
                 <h2
                   className="font-jamsil bolder text-40 hot-pink"
                   style={{
