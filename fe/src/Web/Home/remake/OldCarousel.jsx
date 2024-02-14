@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function Carousel({ datas }) {
+  console.log('캐러셀 데이터 : ', datas);
   const newDatas = [...datas, ...datas, ...datas];
   const [imageWidth, setImageWidth] = useState(380);
   const [datasLength, setDatasLength] = useState(0);
@@ -13,12 +14,13 @@ export default function Carousel({ datas }) {
 
   useEffect(() => {
     // 너비 380 설정. 화면에 따라 값 변경해야 함.
-    setImageWidth(380);
-    console.log(datas.length);
+    setImageWidth(400);
     setDatasLength(datas.length);
     setSlideIndex(datas.length);
-    setSlideLeft(datas.length * 380);
-  }, []);
+    setSlideLeft(datas.length * 400);
+
+    // return set;
+  }, [datas]);
 
   const handleMouseLeave = () => {
     setIsStartTimer(true);
@@ -38,28 +40,26 @@ export default function Carousel({ datas }) {
   );
 
   const onClickLeft = () => {
-    if (slideIndex === 0) {
-      // 맨 앞에 도달했을 때, 맨 끝으로 점프
-      setSlideIndex(newDatas.length - 1);
-      setSlideLeft((newDatas.length - 1) * imageWidth);
-    } else {
-      setSlideIndex((prev) => prev - 1);
-      setSlideLeft((prev) => prev - imageWidth);
-    }
+    setSlideIndex((prev) => prev - 1);
+    setSliceCount((prev) => prev - 1);
+    moveSlide(slideIndex - 1, slideCount - 1);
   };
 
   const onClickRight = () => {
-    if (slideIndex === newDatas.length - 1) {
-      // 맨 끝에 도달했을 때, 맨 앞으로 점프
-      setSlideIndex(0);
-      setSlideLeft(0);
-    } else {
-      setSlideIndex((prev) => prev + 1);
-      setSlideLeft((prev) => prev + imageWidth);
-    }
+    setSlideIndex((prev) => prev + 1);
+    setSliceCount((prev) => prev + 1);
+    moveSlide(slideIndex + 1, slideCount + 1);
   };
 
   const moveSlide = (newSlideIndex, newSlideCount) => {
+    console.log(
+      '인덱스 : ',
+      newSlideIndex,
+      '카운트 : ',
+      newSlideCount,
+      '현재 길이 : ',
+      slideLeft,
+    );
     setSlideLeft(newSlideIndex * imageWidth);
     if (datasLength === newSlideCount || datasLength === -newSlideCount) {
       setTimeout(() => {
@@ -75,10 +75,10 @@ export default function Carousel({ datas }) {
   };
 
   const styledImage = (data, index) => {
-    let style = `w-[380px] h-[450px] object-cover rounded-lg mt-10 opacity-40`;
+    let style = `w-[150px] h-[200px] object-cover rounded-lg mt-10 opacity-40`;
     // let style = `w-[${imageWidth}px] h-[550px] object-cover rounded-lg mt-10 opacity-40`;
-    if (index === slideIndex + 1) {
-      style = `w-[420px] h-[450px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
+    if (index === slideIndex + 2) {
+      style = `w-[150px] h-[200px] object-cover rounded-lg  mt-10 z-99`;
       // style = `w-[${imageWidth * 1.25}px] h-[550px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
     }
 
@@ -92,26 +92,26 @@ export default function Carousel({ datas }) {
     );
   };
 
-  useEffect(() => {
-    setImageWidth(380); // 화면에 따라 값 변경 가능
-    // 자동 슬라이드 기능
-    let timer;
-    if (isStartTimer) {
-      timer = setInterval(() => {
-        onClickRight();
-      }, 5000); // 5초마다 오른쪽으로 이동
-    }
+  // useEffect(() => {
+  //   setImageWidth(400); // 화면에 따라 값 변경 가능
+  //   // 자동 슬라이드 기능
+  //   let timer;
+  //   if (isStartTimer) {
+  //     timer = setInterval(() => {
+  //       onClickRight();
+  //     }, 5000); // 5초마다 오른쪽으로 이동
+  //   }
 
-    return () => {
-      if (timer) {
-        clearInterval(timer);
-      }
-    };
-  }, [isStartTimer, onClickRight]); // 의존성 배열에 onClickRight 추가
+  //   return () => {
+  //     if (timer) {
+  //       clearInterval(timer);
+  //     }
+  //   };
+  // }, [isStartTimer, onClickRight]); // 의존성 배열에 onClickRight 추가
 
   return (
     <div
-      className={`relative h-[550px] w-[1020px] m-auto overflow-hidden`}
+      className={`relative h-[550px] w-[450px] m-auto overflow-hidden `}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
