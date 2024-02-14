@@ -14,6 +14,7 @@ const HomeView = () => {
 
   useEffect(() => {
     loadBeforeData();
+    window.scrollTo(0, 0); // 컴포넌트가 마운트될 때 스크롤을 최상단으로 이동
   }, []);
 
   const loadBeforeData = async () => {

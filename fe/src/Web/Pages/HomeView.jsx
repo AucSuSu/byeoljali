@@ -7,7 +7,6 @@ import useAxios from '../axios';
 import Navbar from '../Utils/NavBar';
 import HomeApplyList from '../Home/HomeApplyList';
 import NewCarousel from '../Home/remake/NewCarousel';
-import { carouselImage } from '../data';
 
 // Reducer 추가
 import {
@@ -15,10 +14,6 @@ import {
   afterApplyList,
 } from '../Stores/homeApplyListReducer';
 import { getArtistLogo } from '../Stores/homeArtistLogoReducer';
-
-const getRandomNumber = (min, max) => {
-  return Math.random() * (max - min) + min;
-};
 
 const HomeView = () => {
   const [stars, setStars] = useState([]);
@@ -38,7 +33,7 @@ const HomeView = () => {
     getLogoData();
     getCarouselData();
 
-    // 별 가루 
+    // 별 가루
     const makeStars = () => {
       const numStars = 200; // 원하는 별의 개수
 
@@ -47,7 +42,7 @@ const HomeView = () => {
         left: Math.random() * 100 + 'vw', // 랜덤한 가로 위치
         top: Math.random() * 100 + 'vh', // 랜덤한 세로 위치
         animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
-        textColor : 'yellow'
+        textColor: 'yellow',
       }));
 
       setStars(newStars);
@@ -59,8 +54,6 @@ const HomeView = () => {
     const intervalId = setInterval(() => {
       makeStars();
     }, 5000);
-
-
 
     const container = containerRef.current;
     let isHovered = false;
@@ -141,18 +134,17 @@ const HomeView = () => {
   const [sliceAfterItems, setSliceAfterItems] = useState(null);
   const [sliceBeforeItems, setSliceBeforeItems] = useState(null);
   useEffect(() => {
-
     const makeStars = () => {
       const numStars = 800; // 원하는 별의 개수
-    
+
       const newStars = Array.from({ length: numStars }, (_, index) => ({
         id: index,
         animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
-        left : `${Math.random() * 100}vw`,
-        top :`${Math.random() * 100}vh`
+        left: `${Math.random() * 100}vw`,
+        top: `${Math.random() * 100}vh`,
       }));
     };
-    
+
     makeStars();
 
     const sliceData = Array.isArray(afterData?.object)
@@ -199,30 +191,32 @@ const HomeView = () => {
 
   return (
     <>
-      <div id="main_container" className="relative flex flex-col bg-black font-jamsil ">
+      <div
+        id="main_container"
+        className="relative flex flex-col bg-black font-jamsil "
+      >
         {/* 1. Navbar */}
         {stars.map((star) => (
-            <div
-              key={star.id}
-              className="star"
-              style={{
-                left: star.left,
-                top: star.top,
-                animationDuration: star.animationDuration,
-                zIndex : '0'
-              }}
-            ></div>
-          ))}
+          <div
+            key={star.id}
+            className="star"
+            style={{
+              left: star.left,
+              top: star.top,
+              animationDuration: star.animationDuration,
+              zIndex: '0',
+            }}
+          ></div>
+        ))}
         <Navbar />
-        
+
         {/* 2. Post Carousel */}
         <div className="w-[70%] mx-[15%]">
           <NewCarousel datas={carouselData} />
         </div>
-        
+
         {/* 3. Current Apply  */}
         <div className="flex items-center justify-center p-4 h-40">
-        
           <div
             ref={containerRef}
             className="flex overflow-hidden p-1 justify-center items-center"
