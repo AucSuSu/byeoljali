@@ -67,6 +67,16 @@ export default function CreateFansignModal({}) {
           borderRadius : "30px"
         });
         return res.data;
+      }).catch((error) => {
+        if (error.response && error.response.status === 413) {
+          Swal.fire({
+            icon: 'warning',
+            title: '이미지 크기를 1mb 보다 낮춰주세요',
+            background : '#222222',
+            confirmButtonColor: "#FF2990",   
+            confirmButtonText: "OK",
+          })
+        }
       });
   };
 

@@ -12,6 +12,7 @@ import Note from './custom/Note.jsx';
 import Header from './custom/Header.jsx';
 import Chat from './custom/Chat.jsx';
 import Star from './custom/Star.jsx';
+import Swal from 'sweetalert2';
 
 const mapStateToProps = (state) => ({
   authToken: selectToken(state),
@@ -379,10 +380,23 @@ class App extends Component {
             if (response.data.isSamePerson) {
               console.log('얼굴 인증 완료');
               this.isSamePerson = true;
-              alert('얼굴 인증 성공!!');
+              Swal.fire({
+                icon: 'success',
+                title: '얼굴 인증 성공!!',
+                background : '#222222',
+                confirmButtonColor: "#FF2990",   
+                confirmButtonText: "OK",
+              })
             } else {
               console.log('얼굴 인증 실패!');
-              alert('얼굴 인증 실패!!');
+              Swal.fire({
+                icon: 'warning',
+                title: '얼굴 인증 실패!',
+                text: '다시 시도해주세요',
+                background : '#222222',
+                confirmButtonColor: "#FF2990",   
+                confirmButtonText: "OK",
+              })
             }
           })
           .catch((error) => {
