@@ -12,6 +12,7 @@ export default function Footer({
   artistFansignId,
   checkChatToggle,
 }) {
+  let audio = new Audio("camera.mp3")
   const customAxios = useAxios();
   const [count, setCount] = useState(4);
   const [captures, setCaptures] = useState([]);
@@ -32,6 +33,8 @@ export default function Footer({
       setCount(count - 1);
     }
 
+    const audio = new Audio(cameraSound);
+    audio.play();
     console.log('사진 캡쳐 성공!', count);
   };
 
