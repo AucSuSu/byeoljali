@@ -7,17 +7,38 @@ import { useNavigate } from 'react-router-dom';
 function FanSignList({ data }) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [timeLeft, setTimeLeft] = useState('');
+  const [isEnterButtonActive, setIsEnterButtonActive] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  const fanSignId = data.memberfansignId;
+  const fanInfo = useSelector((state) => state.faninfo.data);
+  const customAxios = useAxios();
+  const navigate = useNavigate();
+
+  // 현재 시간을 가져옵니다.
+  const now = new Date();
+
+  // startFansignTime을 Date 객체로 변환합니다.
+  const startFansignTimeDate = new Date(data.startFansignTime);
+
+
+  // 현재 시간과 startFansignTime 사이의 차이(밀리초 단위)를 계산합니다.
+  const difference = startFansignTimeDate.getTime() - now.getTime();
+
+
+  // 입장하기 버튼
+  // 차이가 -30분일 때 버튼 활성화 (시작 시간 30분 전에만 입장 가능하다고 가정)
+
+    
 
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date();
       const endTime = new Date(data.endApplyTime);
       const difference = endTime - now;
-
       if (difference > 0) {
         return {
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -49,6 +70,23 @@ function FanSignList({ data }) {
     return () => clearInterval(timerId);
   }, [data.endApplyTime]);
 
+  useEffect(() => {
+    // "입장하기" 버튼 활성화 상태를 계산하는 로직
+    const checkEnterButtonActive = () => {
+      const now = new Date();
+      const startFansignTimeDate = new Date(data.startFansignTime);
+      const difference = startFansignTimeDate.getTime() - now.getTime();
+      const minutesDifference = Math.floor(difference / (1000 * 60));
+
+      setIsEnterButtonActive(minutesDifference <= 29);
+    };
+
+    checkEnterButtonActive();
+    const intervalId = setInterval(checkEnterButtonActive, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [data.startFansignTime]);
+
   // 대기방 참가 로직
   const participate = async () => {
     const openviduData = await joinFansign();
@@ -70,11 +108,6 @@ function FanSignList({ data }) {
       },
     });
   };
-
-  const fanSignId = data.memberfansignId;
-  const fanInfo = useSelector((state) => state.faninfo.data);
-  const customAxios = useAxios();
-  const navigate = useNavigate();
 
   const joinFansign = async () => {
     const response = await customAxios
@@ -145,7 +178,7 @@ function FanSignList({ data }) {
                   {data.artistFansignTitle}
                 </div>
                 <div className="text-15">{data.memberName}</div>
-                {data.fansignStatus === 'SESSION_CONNECTED' ? (
+                {isEnterButtonActive ? (
                   <div className="flex justify-center  my-3 text-15 mb-6">
                     <button
                       className=" px-3 py-1 rounded-md bg-hot-pink  absolute bottom-4 text-white"
