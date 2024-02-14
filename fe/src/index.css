@@ -204,3 +204,50 @@ body {
     transform: rotate(45 + 360deg);
   }
 }
+
+/* 마법봉 */
+*{
+  cursor: url('/public/favicon.ico') 2 2, auto
+}
+.starry-cursor {
+  cursor: url('/public/favicon.ico') 16 16, auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.starry-bar {
+  position: relative;
+  width: 1px;
+  height: 30px;
+  background-color: #fff;
+  margin-left: 14px;
+}
+
+.starry-star {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  transform: rotate(45deg);
+  animation: starryEffect 0.5s linear infinite;
+  transform-origin: 50% 0; /* 추가된 부분: 회전 중심 설정 */
+}
+
+@keyframes starryEffect {
+  0% {
+    transform: rotate(45deg) translateY(0) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(45deg) translateY(-10px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(45deg) translateY(0) scale(0);
+    opacity: 0;
+  }
+}
