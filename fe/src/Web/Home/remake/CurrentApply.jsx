@@ -7,21 +7,11 @@ import HomeApplyList from '../HomeApplyList';
 // Reducer 추가
 import { afterApplyList } from '../../Stores/homeApplyListReducer';
 
-const HomeView = () => {
+const CurrentApply = () => {
   const afterData = useSelector((state) => state.homeapply.afterData);
   const customAxios = useAxios();
   const dispatch = useDispatch();
   const currentRef = useRef();
-
-  const handleScroll = () => {
-    console.log(
-      '스크롤 위치:',
-      currentRef.current.scrollTop,
-      '전체 높이:',
-      currentRef.current.scrollHeight,
-    );
-    currentRef.current.scrollTop = 0;
-  };
 
   useEffect(() => {
     loadAfterData();
@@ -44,7 +34,7 @@ const HomeView = () => {
       <div
         ref={currentRef}
         id="main_container"
-        className="flex flex-col font-jamsil overflow-y-auto h-full"
+        className="flex flex-col font-jamsil h-full"
       >
         {/* 1. Navbar */}
         <div
@@ -70,4 +60,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default CurrentApply;

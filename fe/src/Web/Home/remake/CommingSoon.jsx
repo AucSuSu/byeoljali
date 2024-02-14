@@ -7,7 +7,7 @@ import HomeApplyList from '../HomeApplyList';
 // Reducer 추가
 import { beforeApplyList } from '../../Stores/homeApplyListReducer';
 
-const HomeView = () => {
+const CommingSoon = () => {
   const beforeData = useSelector((state) => state.homeapply.beforeData);
   const customAxios = useAxios();
   const dispatch = useDispatch();
@@ -27,14 +27,14 @@ const HomeView = () => {
     dispatch(beforeApplyList(data));
   };
 
-  const bgStyle = 'bg-white bg-opacity-80';
+  const bgStyle = 'bg-white bg-opacity-20 h-full';
   return (
     <>
       <div id="main_container" className="flex flex-col font-jamsil">
         {/* 1. Navbar */}
         <div
           className=" relative h-[400px] bg-cover "
-          style={{ backgroundImage: "url('/bgImg.png')" }}
+          style={{ backgroundImage: "url('/bg3.png')" }}
         >
           {/* inset-0 부모 요소 기준으로 위치 설정(영역전체) */}
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -55,4 +55,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default CommingSoon;

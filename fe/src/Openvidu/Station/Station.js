@@ -413,7 +413,7 @@ class App extends Component {
     return (
       <div className="relative">
         <Star />
-        <div className="flex flex-col h-screen font-milk font-bold bg-black text-white">
+        <div className="flex flex-col h-screen font-jamsil bg-black text-white">
           {/* 헤더 고정 */}
           <div className="mb-8 z-10">
             <Header
@@ -424,9 +424,9 @@ class App extends Component {
           </div>
 
           {/* 나머지 3등분 */}
-          <div className="z-10" onClick={() => this.Meeting()}>
+          {/* <div className="z-10" onClick={() => this.Meeting()}>
             Fansing 들어가기
-          </div>
+          </div> */}
           <div className="flex h-[100%] w-[100%] overflow-hidden">
             {/* 첫번째 덩어리 */}
             <div className="flex flex-col h-[95%] flex-grow ml-8 mr-4 z-10 ">

@@ -19,28 +19,35 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
 
   return (
     <>
-      <div className="flex fixed bg-black bottom-0 w-full h-15 font-milk text-white font-bold justify-center p-4 border-t-2 border-dark-gray">
-        <div
-          onClick={() => blackList()}
-          className="flex items-center bg-slate-400 rounded-md mr-5"
-        >
-          <IconButton>
-            <AddIcon />
-          </IconButton>
-          <p className="pr-4">블랙리스트</p>
+      <div className="flex fixed bg-black bottom-0 w-full h-15 font-milk text-white font-bold justify-between p-4 border-t-2 border-dark-gray">
+        {/* 좌측 끝 */}
+        <div className="flex items-center bg-dark-gray rounded-md px-4 ml-5">
+          팬 싸인회 종료
         </div>
+        {/* 중앙 */}
+        <div className="flex">
+          <div
+            onClick={() => blackList()}
+            className="flex items-center bg-dark-gray rounded-md mr-5"
+          >
+            <IconButton>
+              <AddIcon />
+            </IconButton>
+            <p className="pr-4">블랙리스트</p>
+          </div>
 
-        <div
-          className="flex items-center bg-slate-400 rounded-md ml-5"
-          onClick={() => timeOver(orders, false)}
-        >
-          <IconButton>
-            <CloseIcon />
-          </IconButton>
-          <p className="pr-4">강제 종료</p>
+          <div
+            className="flex items-center bg-dark-gray rounded-md ml-5"
+            onClick={() => timeOver(orders, false)}
+          >
+            <IconButton>
+              <CloseIcon />
+            </IconButton>
+            <p className="pr-4">강제 종료</p>
+          </div>
         </div>
-
-        <div className="absolute right-[10px]">
+        {/* 우측 끝 */}
+        <div className="mr-5">
           <IconButton onClick={() => toggleChat()}>
             <ChatIcon className="text-hot-pink rounded-full hover:bg-white hover:scale-[130%]" />
           </IconButton>

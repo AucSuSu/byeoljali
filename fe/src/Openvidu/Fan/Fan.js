@@ -26,7 +26,7 @@ class VideoRoomComponent extends Component {
       subscribers: [],
       chatDisplay: 'block',
       currentVideoDevice: undefined,
-      signTime: 600, // 팬싸인회 시간
+      signTime: 30, // 팬싸인회 시간
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -294,13 +294,13 @@ class VideoRoomComponent extends Component {
     var chatDisplay = { display: this.state.chatDisplay };
 
     return (
-      <div className="container" id="container">
+      <div className="container font-jamsil" id="container">
         <Header
           title={this.props.propsData.title}
           member={this.props.propsData.member}
           timer={this.state.signTime}
         />
-        <div id="layout" className="bounds">
+        <div id="layout" className="bounds relative">
           <div>
             {localUser !== undefined &&
               localUser.getStreamManager() !== undefined && (
@@ -325,7 +325,10 @@ class VideoRoomComponent extends Component {
 
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (
-              <div className="border-l-2 border-dark-gray" style={chatDisplay}>
+              <div
+                className="absolute bottom-0 h-[85%] border-l-2 border-dark-gray"
+                style={chatDisplay}
+              >
                 <Script
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}

@@ -35,7 +35,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                   />
                 </div>
               </div>
-              <p className="border-1 border-dark-gray text-right rounded-lg text-sm w-[60%] ml-auto pr-3 ">
+              <p className="border-1 border-dark-gray text-right rounded-lg text-sm w-[60%] ml-auto pr-3 mb-3 ">
                 {messageData.text}
               </p>
             </div>
@@ -51,7 +51,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                 </div>
                 <p className="font-bold">{messageData.nickname}</p>
               </div>
-              <p className=" border-1 border-dark-gray text-sm w-[60%] pl -3">
+              <p className=" border-1 border-dark-gray text-sm w-[60%] pl-3">
                 {messageData.text}
               </p>
             </div>
@@ -74,7 +74,10 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
         />
         <button
           className="p-2 bg-gray hover:opacity-80"
-          onClick={() => handleSendMessage(inputMessage)}
+          onClick={() => {
+            handleSendMessage(inputMessage);
+            setInputMessage('');
+          }}
         >
           <PlayArrowIcon />
         </button>
