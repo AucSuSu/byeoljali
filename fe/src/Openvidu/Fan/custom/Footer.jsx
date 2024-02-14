@@ -32,8 +32,6 @@ export default function Footer({
       captureArea();
       setCount(count - 1);
     }
-
-    const audio = new Audio(cameraSound);
     audio.play();
     console.log('사진 캡쳐 성공!', count);
   };

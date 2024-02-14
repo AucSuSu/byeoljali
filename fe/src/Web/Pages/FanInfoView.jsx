@@ -127,7 +127,7 @@ function FanInfoView() {
         onClick={handleModalContentClick}
       >
         {/* 프로필 내용 */}
-        <div className="border-4 border-dark-gray rounded-xl pl-20 pr-20 pt-2 pb-2 mt-20 mb-16">
+        <div className="border-4 border-dark-gray rounded-xl pl-20 pr-20 pt-2 pb-2 mt-6 mb-8">
           {/* 이미지와 이름 필드를 가로로 나열하되, 상단 정렬을 위해 별도의 스타일 적용 */}
           <div className="flex items-start justify-start space-x-12">
             {/* 이미지 필드 */}

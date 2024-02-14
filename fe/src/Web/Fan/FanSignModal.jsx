@@ -172,7 +172,7 @@ function FanSignModal({ data, onClose }) {
                 ></div>
               ))}
               <div
-                className="w-[90%] h-[85%] self-center"
+                className="w-[90%] h-[480px] self-center"
                 style={{
                   zIndex: '999',
                 }}
