@@ -5,6 +5,7 @@ import useAxios from '../axios';
 import FanAuthModal from '../Fan/FanAuthModal';
 import NavBar from '../Utils/NavBar';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import Swal from 'sweetalert2';
 
 function FanInfoView() {
   const customAxios = useAxios();
@@ -21,17 +22,21 @@ function FanInfoView() {
       console.log('데이터 왔어요~', res.data.object);
       return res.data.object;
     });
+    setLocalUserData({ nickname: data.nickname, name: data.name });
+    setPreviewUrl(data.profileImageUrl);
+    setAuthImageUrl(data.certificationImageUrl);
     dispatch(getUserInfo(data));
   };
 
   const [localUserData, setLocalUserData] = useState({
-    nickname: userData.nickname,
-    name: userData.name,
+    nickname: '',
+    name: '',
   });
 
   const [profileImage, setProfileImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(userData.profileImageUrl); // 미리보기 URL을 위한 상태
+  const [previewUrl, setPreviewUrl] = useState(''); // 미리보기 URL을 위한 상태
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authImageUrl, setAuthImageUrl] = useState('');
 
   const fileInputRef = useRef(); // 파일 입력을 위한 ref
 
@@ -67,14 +72,38 @@ function FanInfoView() {
       })
       .then((response) => {
         console.log('업로드 성공', response.data);
-        // onClose(); // 모달 닫기
-        window.location.reload();
+        Swal.fire({
+          icon: 'success',
+          title: '성공적으로 수정되었습니다',
+          background: '#222222',
+          showConfirmButton: false,
+          // confirmButtonColor: '#FF2990',
+          // confirmButtonText: 'OK',
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
-          alert('이미지의 용량을 1MB 이하로 낮춰주세요');
+          Swal.fire({
+            icon: 'warning',
+            title: '이미지 크기를 1mb 보다 낮춰주세요',
+            background: '#222222',
+            confirmButtonColor: '#FF2990',
+            confirmButtonText: 'OK',
+          });
+        } else {
+          console.error('Error uploading the image: ', error);
+          Swal.fire({
+            icon: 'warning',
+            title: '프로필 수정 실패',
+            text: '프로필 수정에 실패했습니다',
+            background: '#222222',
+            confirmButtonColor: '#FF2990',
+            confirmButtonText: 'OK',
+          });
         }
-        console.error('Error uploading the image: ', error);
       });
   };
 
@@ -88,25 +117,23 @@ function FanInfoView() {
     }
     console.log(formData);
     await editUserInfoData(formData); // 서버에 데이터 전송
-    getUserInfoData()
   };
 
   return (
-    <div className='min-h-screen bg-black overflow-hidden'>
+    <div className="min-h-screen bg-black overflow-hidden">
       <NavBar />
       <div
         className="font-jamsil text-white  flex flex-col items-center"
         onClick={handleModalContentClick}
       >
-
         {/* 프로필 내용 */}
-        <div className="border-4 border-dark-gray rounded-xl pl-20 pr-20 pt-2 pb-2 mt-20">
+        <div className="border-4 border-dark-gray rounded-xl pl-20 pr-20 pt-2 pb-2 mt-20 mb-16">
           {/* 이미지와 이름 필드를 가로로 나열하되, 상단 정렬을 위해 별도의 스타일 적용 */}
           <div className="flex items-start justify-start space-x-12">
             {/* 이미지 필드 */}
             <div className="text-center">
               <img
-                src={previewUrl || 'path_to_default_image'}
+                src={previewUrl}
                 alt="Profile"
                 className="h-[250px] w-[250px] rounded-full object-cover"
               />
@@ -210,9 +237,9 @@ function FanInfoView() {
             <div>
               <p className="text-[24px]">인증 사진 등록</p>
               <img
-                src={userData.certificationImageUrl}
+                src={authImageUrl}
                 alt="Auth img"
-                className="w-[150px] h-auto rounded-md mt-4" // 이미지 크기와 라운드 조정
+                className="w-[150px] h-[180px] rounded-md mt-4" // 이미지 크기와 라운드 조정
               />
               <p
                 className={`text-15 ml-[35px] mt-4 cursor-pointer hover:text-hot-pink ${userData.changeCount === 4 ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -221,7 +248,13 @@ function FanInfoView() {
                     setShowAuthModal(true);
                   } else {
                     // 최대 변경 횟수에 도달했습니다! 메시지를 띄웁니다.
-                    alert('최대 변경 횟수에 도달했습니다!');
+                    Swal.fire({
+                      icon: 'warning',
+                      title: '최대 변경 횟수에 도달했습니다',
+                      background: '#222222',
+                      confirmButtonColor: '#FF2990',
+                      confirmButtonText: 'OK',
+                    });
                   }
                 }}
               >
