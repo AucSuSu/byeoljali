@@ -44,6 +44,7 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         ChatRoom room = chatService.findRoomById(chatMessage.getRoomId());
         Set<WebSocketSession> sessions = room.getSessions();   //방에 있는 현재 사용자 한명이 WebsocketSession
         log.info("payload -> "+ payload);
+        log.info("sessionId ->" + session.getId());
         try {
             if(session.isOpen()) {
                 if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
@@ -89,12 +90,13 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         });
     }
 
+
+
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         //javascript에서  session.close해서 연결 끊음. 그리고 이 메소드 실행.
         //session은 연결 끊긴 session을 매개변수로 이거갖고 뭐 하세요.... 하고 제공해주는 것 뿐
+        log.info("session connected 내에서 정보 확인 : " + session.getId() + " / " + status);
         log.info("connection closed");
     }
-
-
 }

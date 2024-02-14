@@ -60,6 +60,7 @@ export default function FanSocket({
         message.type === 'TALK' &&
         message.message.nickname === 'Artist'
       ) {
+        console.log('Fan이 아티스트가 보맨 TALk를 받았어요');
         updateCurUser(message.orders);
       }
     };

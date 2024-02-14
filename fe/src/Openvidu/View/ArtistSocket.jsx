@@ -15,12 +15,23 @@ export default function ArtistSocket({
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
       console.log('아티스트가 메세지 전달받음 : ', message);
+      console.log(
+        '아티스트 메세지 확인 -> message.type : ',
+        message.type,
+        'message.message.nickname : ',
+        message.message.nickname,
+        'ture & false 여부 : ',
+        message.type === 'TALK',
+        message.message.nickname !== 'Artist',
+      );
       if (message.type === 'TALK' && message.message.nickname !== 'Artist') {
+        console.log('Artist가 getFanData 실행됬어요.');
         getFanData(message.message);
       } else if (
         message.type === 'ENTER' &&
         message.message.nickname !== 'Artist'
       ) {
+        console.log('Artist가 SendMessage 실행했어요');
         sendMessage('TALK');
       }
     };
