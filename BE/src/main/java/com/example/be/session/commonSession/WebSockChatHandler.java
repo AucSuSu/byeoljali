@@ -45,28 +45,32 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         Set<WebSocketSession> sessions = room.getSessions();   //방에 있는 현재 사용자 한명이 WebsocketSession
         log.info("payload -> "+ payload);
         try {
-            if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
-                sessions.add(session);
-                chatMessage.setMessage(chatMessage.getMessage());
-                log.info("*** 입장 확인 완료 *** ");
-                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-            }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
-                sessions.remove(session);
-                log.info("*** QUIT CODE *** ");
-                chatMessage.setMessage(chatMessage.getMessage());
-                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-            }else if (chatMessage.getType().equals(ChatMessage.MessageType.CLOSE)) {
-                log.info("*** CLOSE CODE *** ");
-                chatMessage.setMessage(chatMessage.getMessage());
-                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-            }else if (chatMessage.getType().equals(ChatMessage.MessageType.JOIN)) {
-                log.info("*** JOIN CODE *** ");
-                chatMessage.setMessage(chatMessage.getMessage());
-                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+            if(session.isOpen()) {
+                if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
+                    sessions.add(session);
+                    chatMessage.setMessage(chatMessage.getMessage());
+                    log.info("*** 입장 확인 완료 *** ");
+                    sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
+                    sessions.remove(session);
+                    log.info("*** QUIT CODE *** ");
+                    chatMessage.setMessage(chatMessage.getMessage());
+                    sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                }else if (chatMessage.getType().equals(ChatMessage.MessageType.CLOSE)) {
+                    log.info("*** CLOSE CODE *** ");
+                    chatMessage.setMessage(chatMessage.getMessage());
+                    sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                }else if (chatMessage.getType().equals(ChatMessage.MessageType.JOIN)) {
+                    log.info("*** JOIN CODE *** ");
+                    chatMessage.setMessage(chatMessage.getMessage());
+                    sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                }else {
+                    // TALK
+                    chatMessage.setMessage(chatMessage.getMessage());
+                    sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                }
             }else {
-                // TALK
-                chatMessage.setMessage(chatMessage.getMessage());
-                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                log.info("websocket 닫힘");
             }
         }catch (IllegalStateException e) {
             e.printStackTrace();
