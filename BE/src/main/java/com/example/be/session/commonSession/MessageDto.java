@@ -10,7 +10,7 @@ public class MessageDto {
     int fanId;
     String nickname;
     int orders; // JOIN, CLOSE 호출
-    List<String>  postit; // TALK 포스트잇
+    List<String> postit; // TALK 포스트잇
 }
 
 

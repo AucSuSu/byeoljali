@@ -73,6 +73,10 @@ export default function FanSocket({
       console.log(' CLOSE Fan 나갔어요~', event);
     };
 
+    newSocket.onerror = (error) => {
+      console.error('WebSocket Error:', error);
+    };
+
     setSocket(newSocket);
     // 컴포넌트 언마운트 시 소켓 연결 해제
     // return () => {
