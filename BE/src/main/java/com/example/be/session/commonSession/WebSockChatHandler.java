@@ -43,8 +43,7 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
         ChatRoom room = chatService.findRoomById(chatMessage.getRoomId());
         Set<WebSocketSession> sessions = room.getSessions();   //방에 있는 현재 사용자 한명이 WebsocketSession
-        log.info("payload -> "+ payload);
-        log.info("sessionId ->" + session.getId());
+
         try {
             if(session.isOpen()) {
                 if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
@@ -52,23 +51,34 @@ public class WebSockChatHandler extends TextWebSocketHandler {
                     chatMessage.setMessage(chatMessage.getMessage());
                     log.info("*** 입장 확인 완료 *** ");
                     sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                    log.info("payload -> "+ payload);
+                    log.info("sessionId ->" + session.getId());
                 }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
                     sessions.remove(session);
                     log.info("*** QUIT CODE *** ");
                     chatMessage.setMessage(chatMessage.getMessage());
                     sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                    log.info("payload -> "+ payload);
+                    log.info("sessionId ->" + session.getId());
                 }else if (chatMessage.getType().equals(ChatMessage.MessageType.CLOSE)) {
                     log.info("*** CLOSE CODE *** ");
                     chatMessage.setMessage(chatMessage.getMessage());
                     sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                    log.info("payload -> "+ payload);
+                    log.info("sessionId ->" + session.getId());
                 }else if (chatMessage.getType().equals(ChatMessage.MessageType.JOIN)) {
                     log.info("*** JOIN CODE *** ");
                     chatMessage.setMessage(chatMessage.getMessage());
                     sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                    log.info("payload -> "+ payload);
+                    log.info("sessionId ->" + session.getId());
                 }else {
                     // TALK
+                    log.info("*** TALK CODE *** ");
                     chatMessage.setMessage(chatMessage.getMessage());
                     sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+                    log.info("payload -> "+ payload);
+                    log.info("sessionId ->" + session.getId());
                 }
             }else {
                 log.info("websocket 닫힘");
