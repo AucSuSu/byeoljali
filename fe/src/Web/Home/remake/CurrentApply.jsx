@@ -7,24 +7,32 @@ import HomeApplyList from '../HomeApplyList';
 // Reducer 추가
 import { afterApplyList } from '../../Stores/homeApplyListReducer';
 
-const HomeView = () => {
+const CurrentApply = () => {
   const afterData = useSelector((state) => state.homeapply.afterData);
   const customAxios = useAxios();
   const dispatch = useDispatch();
   const currentRef = useRef();
 
-  const handleScroll = () => {    console.log(
-    '스크롤 위치:', currentRef.current.scrollTop,
-    '전체 높이:', currentRef.current.scrollHeight
-  );
-  currentRef.current.scrollTop = 0;
-}
-
+  const handleScroll = () => {
+    console.log(
+      '스크롤 위치:',
+      currentRef.current.scrollTop,
+      '전체 높이:',
+      currentRef.current.scrollHeight,
+    );
+    currentRef.current.scrollTop = 0;
+  };
 
   useEffect(() => {
+    handleScroll();
     // 컴포넌트가 마운트될 때 스크롤 이벤트 리스너를 추가합니다.
-    console.log('데이터 : ', currentRef.current)
+    console.log(
+      '데이터 : ',
+      currentRef.current.scrollTop,
+      currentRef.current.scrollHeight,
+    );
     currentRef.current.addEventListener('scroll', () => {
+      handleScroll;
       console.log('스크롤 이벤트 발생');
     });
 
@@ -32,7 +40,7 @@ const HomeView = () => {
     return () => {
       currentRef.current.removeEventListener('scroll', handleScroll);
     };
-  }, [afterData])
+  }, [afterData]);
 
   useEffect(() => {
     loadAfterData();
@@ -54,7 +62,7 @@ const HomeView = () => {
       <div
         ref={currentRef}
         id="main_container"
-        className="flex flex-col font-jamsil overflow-y-auto h-full"
+        className="flex flex-col font-jamsil h-full"
       >
         {/* 1. Navbar */}
         <div
@@ -73,11 +81,11 @@ const HomeView = () => {
         </div>
         {/* 2. Current Apply  */}
         <div className="bg-black py-10">
-          <HomeApplyList  data={afterData.object} status="CurrentApply" />
+          <HomeApplyList data={afterData.object} status="CurrentApply" />
         </div>
       </div>
     </>
   );
 };
 
-export default HomeView;
+export default CurrentApply;
