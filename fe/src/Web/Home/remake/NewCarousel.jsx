@@ -45,15 +45,15 @@ export default function CustomSlider({ datas }) {
 
   const getSlideStyle = (index) => {
     if (index === currentSlide) {
-      return 'w-[500px] h-[500px] object-cover scale-110 rounded-xl z-10';
+      return 'w-[500px] h-[400px] object-cover scale-110 rounded-xl z-10 my-3';
     } else {
-      return 'w-[400px] h-[400px] object-cover rounded-xl mt-10 opacity-40';
+      return 'w-[400px] h-[400px] object-cover rounded-xl mt-3 opacity-40';
     }
   };
 
   return (
     <div className="mt-10">
-      <Slider {...settings}>
+      <Slider style={{ height: '450px' }} {...settings}>
         {datas.map((data, index) => (
           <div key={index} className="px-5 py-2">
             <img

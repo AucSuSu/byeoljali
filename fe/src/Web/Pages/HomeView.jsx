@@ -7,6 +7,7 @@ import useAxios from '../axios';
 import Navbar from '../Utils/NavBar';
 import HomeApplyList from '../Home/HomeApplyList';
 import NewCarousel from '../Home/remake/NewCarousel';
+// import OldCarousel from '../Home/remake/OldCarousel';
 
 // Reducer 추가
 import {
@@ -193,7 +194,7 @@ const HomeView = () => {
     <>
       <div
         id="main_container"
-        className="relative flex flex-col bg-black font-jamsil "
+        className="relative flex flex-col bg-black font-jamsil overflow-hidden "
       >
         {/* 1. Navbar */}
         {stars.map((star) => (
@@ -213,6 +214,7 @@ const HomeView = () => {
         {/* 2. Post Carousel */}
         <div className="w-[70%] mx-[15%]">
           <NewCarousel datas={carouselData} />
+          {/* <OldCarousel datas={carouselData} /> */}
         </div>
 
         {/* 3. Current Apply  */}
