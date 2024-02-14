@@ -119,7 +119,7 @@ function AddMemberModal({ onClose }) {
           </button>
           <button
             onClick={onClose}
-            className="flex-1 py-2 px-4 bg-light-gray  font-semibold rounded-md"
+            className="flex-1 py-2 px-4 bg-dark-gray font-semibold rounded-md"
           >
             닫기
           </button>

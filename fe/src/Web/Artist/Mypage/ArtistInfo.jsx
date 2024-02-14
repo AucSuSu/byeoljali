@@ -252,13 +252,25 @@ export default function ArtistInfo() {
               <MemberList key={member.memberId} data={member} />
             ))}
             {/* 멤버 추가 버튼 */}
-            {/* 멤버 추가 버튼 */}
             {isArtist && (
               <div
-                className="m-2.5 mr-8 text-center inline-block cursor-pointer"
+                className="font-jamsil m-2.5 ml-12 text-center inline-block cursor-pointer"
                 onClick={handleOpenAddMember}
               >
-                <PlusCircleIcon className="h-32 w-32 text-white" />
+                {/* <img
+                  src="/addbutton.png" // 이 경로는 실제 추가 버튼 이미지 경로로 변경해주세요.
+                  alt="Add member"
+                  style={{
+                    width: '130px',
+                    height: '130px',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                    cursor: 'pointer',
+                    marginBottom: '7px',
+                    border: '3px solid white', // 여기에 테두리 스타일 추가
+                  }}
+                /> */}
+                <PlusCircleIcon className="h-[130px] w-[130px] text-gray hover:text-hot-pink"></PlusCircleIcon>
               </div>
             )}
           </div>
