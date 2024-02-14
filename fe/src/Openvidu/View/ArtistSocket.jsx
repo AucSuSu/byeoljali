@@ -53,7 +53,8 @@ export default function ArtistSocket({
     setSocket(newSocket);
 
     return () => {
-      newSocket.close();
+      // newSocket.close();
+      sendMessage('QUIT');
     };
   }, []);
 

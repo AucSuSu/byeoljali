@@ -80,9 +80,15 @@ export default function FanSocket({
 
     setSocket(newSocket);
     // 컴포넌트 언마운트 시 소켓 연결 해제
-    // return () => {
-    //   newSocket.close();
-    // };
+    return () => {
+      sendMessage('QUIT', {
+        orders: null,
+        postit: null,
+        birthday: null,
+        nickname: null,
+        fanId: null,
+      });
+    };
   }, []);
 
   // 메시지 전송 함수
