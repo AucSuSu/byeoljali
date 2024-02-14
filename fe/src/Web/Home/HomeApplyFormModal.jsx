@@ -18,7 +18,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const [stars, setStars] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(propData);
+    // console.log(propData);
     const makeStars = () => {
       const numStars = 800; // 원하는 별의 개수
 
