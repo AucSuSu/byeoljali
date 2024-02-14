@@ -8,6 +8,7 @@ const SelectList = ({ dataList }) => {
   const dispatch = useDispatch(); // 여기에서 useDispatch 호출
 
   const select = (index, id) => {
+    console.log('데이터 확인 : ', id)
     setSelectedImage(index);
     dispatch(setMemberId(id)); // dispatch 함수 사용
   };
