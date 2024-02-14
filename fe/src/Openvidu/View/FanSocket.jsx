@@ -15,7 +15,7 @@ export default function FanSocket({
     console.log('useEffect()');
     console.log(propsData);
     if (propsData) {
-      console.log(propsDatas);
+      console.log(propsData);
       sendMessage('TALK', {
         orders: null,
         postit: propsData.postit,
