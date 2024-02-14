@@ -11,6 +11,17 @@ export default function FanSocket({
 }) {
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    if (stationData) {
+      sendMessage('TALK', {
+        orders: null,
+        postit: stationData.postit,
+        birthday: stationData.birthday,
+        nickname: stationData.nickname,
+        fanId: propsData.fanId,
+      });
+    }
+  }, [stationData]);
 
   useEffect(() => {
     // WebSocket 서버에 연결
@@ -56,22 +67,7 @@ export default function FanSocket({
 
     newSocket.onopen = async () => {
       await enterMessage(newSocket);
-
       console.log('OPEN Fan 들어왔어요~');
-      await (() => {
-        console.log('useEffect()');
-        console.log(propsData);
-        if (propsData) {
-          console.log(propsData);
-          sendMessage('TALK', {
-            orders: null,
-            postit: propsData.postit,
-            birthday: propsData.birthday,
-            nickname: propsData.nickname,
-            fanId: propsData.fanId,
-          });
-        }
-      });
     };
 
     newSocket.onclose = (event) => {
@@ -84,7 +80,6 @@ export default function FanSocket({
 
     setSocket(newSocket);
     // 컴포넌트 언마운트 시 소켓 연결 해제
-
     return () => {
       sendMessage('QUIT', {
         orders: null,
@@ -98,7 +93,6 @@ export default function FanSocket({
 
   // 메시지 전송 함수
   const sendMessage = (messageType, msg) => {
-    console.log('message 보내기 시도 -> ', socket);
     if (socket) {
       const myMessage = {
         type: messageType,
