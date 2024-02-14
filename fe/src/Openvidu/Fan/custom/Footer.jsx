@@ -31,7 +31,9 @@ export default function Footer({
     if (count > 0) {
       captureArea();
       const captureBounds = document.querySelector('.bounds');
-      captureBounds.style.border = '2px solid white';
+      captureBounds.style.borderStyle = 'solid';
+      captureBounds.style.borderWidth = '10px 5px';
+      captureBounds.style.borderColor = 'white';
 
       setTimeout(() => {
         captureBounds.style.border = '';
