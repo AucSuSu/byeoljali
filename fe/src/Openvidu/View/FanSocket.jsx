@@ -12,7 +12,10 @@ export default function FanSocket({
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
+    console.log('useEffect()');
+    console.log(propsData);
     if (propsData) {
+      console.log(propsDatas);
       sendMessage('TALK', {
         orders: null,
         postit: propsData.postit,
