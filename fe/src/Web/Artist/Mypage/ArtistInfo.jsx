@@ -11,6 +11,7 @@ import { PlusCircleIcon } from '@heroicons/react/24/solid'; // 솔리드 스타�
 
 export default function ArtistInfo() {
   const location = useLocation();
+  const [stars, setStars] = useState([]);
 
   const artistData = useSelector((state) => state.artistInfo.artistData);
   const { propsData } = location.state || {}; // 여기서 artistId를 꺼내쓰자!!
@@ -90,6 +91,27 @@ export default function ArtistInfo() {
     } else {
       getArtistInfoForFan(); // isArtist가 false일 때 실행
     }
+
+    const makeStars = () => {
+      const numStars = 100; // 원하는 별의 개수
+
+      const newStars = Array.from({ length: numStars }, (_, index) => ({
+        id: index,
+        left: Math.random() * 100 + 'vw', // 랜덤한 가로 위치
+        top: Math.random() * 100 + 'vh', // 랜덤한 세로 위치
+        animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
+      }));
+
+      setStars(newStars);
+    };
+
+    makeStars();
+
+    // 일정 시간마다 별의 위치를 재설정
+    const intervalId = setInterval(() => {
+      makeStars();
+    }, 5000);
+
   }, []);
 
   // 데뷔일로부터 경과한 일수를 계산하는 함수 실행 부분을 별도의 useEffect로 분리
@@ -132,6 +154,17 @@ export default function ArtistInfo() {
   return (
     <div className="flex flex-col justify-center min-h-screen bg-black text-white mt-8">
       <div className="w-[70%] mx-auto">
+      {stars.map((star) => (
+              <div
+                key={star.id}
+                className="star"
+                style={{
+                  left: star.left,
+                  top: star.top,
+                  animationDuration: star.animationDuration,
+                }}
+              ></div>
+            ))}
         <div className="flex justify-between">
           {/* 왼쪽 섹션: 아티스트 이미지 */}
           {artistData && (
