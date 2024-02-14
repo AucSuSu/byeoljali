@@ -65,8 +65,9 @@ public class WebSockChatHandler extends TextWebSocketHandler {
                 chatMessage.setMessage(chatMessage.getMessage());
                 sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
             }else {
-                log.info("메세지 도착" + message);
-                sendToEachSocket(sessions,message); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
+                // TALK
+                chatMessage.setMessage(chatMessage.getMessage());
+                sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
             }
         }catch (IllegalStateException e) {
             throw new SessionClosedException("session이 닫혔습니다.");
