@@ -209,7 +209,7 @@ export default function ArtistInfo() {
 
               {/* 아티스트 정보 섹션 */}
               <div className="my-4 mt-8">
-                <div className="text-25 text-gray">
+                <div className="text-[20px] text-gray">
                   <div className="flex">
                     <p>데뷔일 : </p>
                     <p className="pl-2 font-light">
