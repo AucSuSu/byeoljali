@@ -35,7 +35,9 @@ export default function ArtistFanSignView() {
     setIsApplying(!isApplying);
   };
 
-  // TEST
+  const handleOpenFanSignModal = () => {
+    openAddFansignModal();
+  };
 
   return (
     <div className="min-h-screen bg-black text-white font-jamsil">
@@ -58,9 +60,13 @@ export default function ArtistFanSignView() {
           />
         </div>
       </div>
-      {addFansign && <CreateFansignModal />}
-      {isApplying && <Applying />}
-      {!isApplying && <ReadyApply />}
+      <div className="w-[86%] ml-[7%]">
+        {addFansign && <CreateFansignModal />}
+        {isApplying && <Applying handleAddFansign={handleOpenFanSignModal} />}
+        {!isApplying && (
+          <ReadyApply handleAddFansign={handleOpenFanSignModal} />
+        )}
+      </div>
     </div>
   );
 }
