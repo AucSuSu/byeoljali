@@ -57,8 +57,8 @@ export default function FanSocket({
           navigate('/fan-photo');
         }, 1000);
       } else if (
-        message.type === 'ENTER' &&
-        message.nickname === 'ArupdateCurUsertist'
+        message.type === 'TALK' &&
+        message.message.nickname === 'Artist'
       ) {
         updateCurUser(message.orders);
       }

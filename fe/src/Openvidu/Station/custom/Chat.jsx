@@ -27,9 +27,11 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
       >
         {messages.map((messageData, index) =>
           messageData.orders === orders ? (
-            <div key={index} className="font-milk flex flex-col">
+            <div key={index} className="font-jamsil flex flex-col">
               <div className="flex justify-end">
-                <p className="font-bold text-base">{messageData.nickname}</p>
+                <p className=" font-jamsil font-bold text-base">
+                  {messageData.nickname}
+                </p>
                 <div className="text-center inline-block">
                   <img
                     src={messageData.profileImage}
@@ -43,7 +45,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
               </p>
             </div>
           ) : (
-            <div key={index} className="font-milk flex flex-col text-left">
+            <div key={index} className="font-jamsil flex flex-col text-left">
               <div className="flex">
                 <div className="text-center inline-block">
                   <img
@@ -52,9 +54,9 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                     className="w-7 h-7 rounded-full object-cover"
                   />
                 </div>
-                <p className="font-bold">{messageData.nickname}</p>
+                <p className="font-jamsil font-bold">{messageData.nickname}</p>
               </div>
-              <p className="border-1 border-dark-gray text-left rounded-lg font-jamsil text-sm w-[60%] ml-auto pl-3 mb-3 ">
+              <p className="border-1 border-dark-gray text-left rounded-lg font-jamsil text-sm w-[60%] pl-3 mb-3 ">
                 {messageData.text}
               </p>
             </div>
