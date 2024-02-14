@@ -30,7 +30,6 @@ class VideoRoomComponent extends Component {
       orders: 1,
       countTime: 10,
       remainingTime: 10,
-      fanData: this.props.fanData
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -444,13 +443,13 @@ class VideoRoomComponent extends Component {
                 <Postit
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
-                  fanData={this.state.fanData}
+                  fanData={this.props.fanData}
                 />
               </div>
             )}
         </div>
         <Footer
-          fanData={this.state.fanData}
+          fanData={this.props.fanData}
           timeOver={this.props.timeOver}
           orders={this.state.orders}
           toggleChat={this.toggleChat}
