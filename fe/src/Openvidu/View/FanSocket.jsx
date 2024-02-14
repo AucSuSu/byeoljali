@@ -3,7 +3,12 @@ import SockJs from 'sockjs-client';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
-export default function FanSocket({ propsData, stationData, joinSignal }) {
+export default function FanSocket({
+  propsData,
+  stationData,
+  joinSignal,
+  updateCurUser,
+}) {
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
@@ -38,16 +43,24 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
           icon: 'warning',
           title: '팬싸인회가 종료되었습니다.',
           text: '내 앨범 페이지로 이동합니다',
-          background : '#222222',
-          confirmButtonColor: "#FF2990",   
-          confirmButtonText: "OK",
+          background: '#222222',
+          confirmButtonColor: '#FF2990',
+          confirmButtonText: 'OK',
         }).then((result) => {
           if (result.isConfirmed) {
             navigate('/fan-photo');
-           }
+          }
         });
-        
-      } else if (message.type === 'ENTER' && message.nickname === 'Artist') {
+        // 2초 후에 확인 버튼을 자동으로 누르기
+        setTimeout(() => {
+          Swal.close();
+          navigate('/fan-photo');
+        }, 1000);
+      } else if (
+        message.type === 'ENTER' &&
+        message.nickname === 'ArupdateCurUsertist'
+      ) {
+        updateCurUser(message.orders);
       }
     };
 
@@ -84,7 +97,13 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${propsData.memberFansignId}`,
-      message: { orders: null, postit: null, birthday: null, nickname: null, fanId: null },
+      message: {
+        orders: null,
+        postit: null,
+        birthday: null,
+        nickname: null,
+        fanId: null,
+      },
     };
     newSocket.send(JSON.stringify(myMessage));
   };

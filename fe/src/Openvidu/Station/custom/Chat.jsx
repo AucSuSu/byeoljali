@@ -14,7 +14,10 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
   const [inputMessage, setInputMessage] = useState('');
 
   return (
-    <div id="chat" className="flex flex-col h-full border-2 border-dark-gray">
+    <div
+      id="chat"
+      className="flex flex-col h-full border-2 border-dark-gray font-jamsil"
+    >
       <h2 className="bg-dark-gray border-b-2 border-dark-gray p-2 w-full text-center">
         Chat
       </h2>
@@ -35,7 +38,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                   />
                 </div>
               </div>
-              <p className="border-1 border-dark-gray text-right rounded-lg text-sm w-[60%] ml-auto pr-3 mb-3 ">
+              <p className="border-1 border-dark-gray text-right rounded-lg font-jamsil text-sm w-[60%] ml-auto pr-3 mb-3 ">
                 {messageData.text}
               </p>
             </div>
@@ -51,7 +54,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                 </div>
                 <p className="font-bold">{messageData.nickname}</p>
               </div>
-              <p className=" border-1 border-dark-gray text-sm w-[60%] pl-3">
+              <p className="border-1 border-dark-gray text-right rounded-lg font-jamsil text-sm w-[60%] ml-auto pl-3 mb-3 ">
                 {messageData.text}
               </p>
             </div>

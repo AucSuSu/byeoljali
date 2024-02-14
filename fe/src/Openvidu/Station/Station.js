@@ -33,8 +33,8 @@ class App extends Component {
       subscribers: [],
       messages: [], // 채팅 메시지 저장
       remainingTime: 600, // 대기 시간 임시 개발
-      myScript: '스크립트를 작성해주세요', // 스크립트 작성 내용
-      myPostit: '포스트잇을 작성해주세요', // 포스트잇 작성 내용
+      myScript: [], // 스크립트 작성 내용
+      myPostit: [], // 포스트잇 작성 내용
       orders: this.props.propsData.orders, // 대기번호
       joinFansign: this.props.joinFansign, // 팬싸인방 입장 트리거
       isSamePerson: false, // 같은 사람인지 판단
@@ -326,7 +326,7 @@ class App extends Component {
   }*/
   updateWaitTime() {
     const remainingUsers = Math.max(this.state.orders - this.state.curUser, 0);
-    const newRemainingTime = remainingUsers * 120;
+    const newRemainingTime = remainingUsers * 30;
     // 현재 remainingTime 상태와 새로 계산된 값이 다를 때만 setState 호출
     if (this.state.remainingTime !== newRemainingTime) {
       this.setState({ remainingTime: newRemainingTime });
@@ -383,20 +383,20 @@ class App extends Component {
               Swal.fire({
                 icon: 'success',
                 title: '얼굴 인증 성공!!',
-                background : '#222222',
-                confirmButtonColor: "#FF2990",   
-                confirmButtonText: "OK",
-              })
+                background: '#222222',
+                confirmButtonColor: '#FF2990',
+                confirmButtonText: 'OK',
+              });
             } else {
               console.log('얼굴 인증 실패!');
               Swal.fire({
                 icon: 'warning',
                 title: '얼굴 인증 실패!',
                 text: '다시 시도해주세요',
-                background : '#222222',
-                confirmButtonColor: "#FF2990",   
-                confirmButtonText: "OK",
-              })
+                background: '#222222',
+                confirmButtonColor: '#FF2990',
+                confirmButtonText: 'OK',
+              });
             }
           })
           .catch((error) => {
