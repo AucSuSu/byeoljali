@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SockJs from 'sockjs-client';
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 export default function FanSocket({ propsData, stationData, joinSignal }) {
@@ -33,7 +34,19 @@ export default function FanSocket({ propsData, stationData, joinSignal }) {
         message.type === 'CLOSE' &&
         message.message.orders === propsData.orders
       ) {
-        navigate('/home');
+        Swal.fire({
+          icon: 'warning',
+          title: '팬싸인회가 종료되었습니다.',
+          text: '내 앨범 페이지로 이동합니다',
+          background : '#222222',
+          confirmButtonColor: "#FF2990",   
+          confirmButtonText: "OK",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/fan-photo');
+           }
+        });
+        
       } else if (message.type === 'ENTER' && message.nickname === 'Artist') {
       }
     };
