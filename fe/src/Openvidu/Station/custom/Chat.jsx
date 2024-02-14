@@ -54,7 +54,7 @@ const Chat = ({ messages, handleSendMessage, orders }) => {
                 </div>
                 <p className="font-bold">{messageData.nickname}</p>
               </div>
-              <p className="border-1 border-dark-gray text-right rounded-lg font-jamsil text-sm w-[60%] ml-auto pl-3 mb-3 ">
+              <p className="border-1 border-dark-gray text-left rounded-lg font-jamsil text-sm w-[60%] ml-auto pl-3 mb-3 ">
                 {messageData.text}
               </p>
             </div>
