@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useAxios from '../axios';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 function FanAuthModal({ onClose, userData }) {
   const customAxios = useAxios();
@@ -49,14 +50,39 @@ function FanAuthModal({ onClose, userData }) {
       })
       .then((response) => {
         console.log('업로드 성공', response.data);
-        onClose(); // 모달 닫기
-        window.location.reload();
+        Swal.fire({
+          icon: 'success',
+          title: '성공적으로 수정되었습니다',
+          background: '#222222',
+          showConfirmButton: false,
+          // confirmButtonColor: '#FF2990',
+          // confirmButtonText: 'OK',
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+        // onClose(); // 모달 닫기
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
-          alert('이미지의 용량을 1MB 이하로 낮춰주세요');
+          Swal.fire({
+            icon: 'warning',
+            title: '이미지 크기를 1mb 보다 낮춰주세요',
+            background: '#222222',
+            confirmButtonColor: '#FF2990',
+            confirmButtonText: 'OK',
+          });
+        } else {
+          console.error('Error uploading the image: ', error);
+          Swal.fire({
+            icon: 'warning',
+            title: '인증 사진 수정 실패',
+            text: '인증 사진 수정에 실패했습니다',
+            background: '#222222',
+            confirmButtonColor: '#FF2990',
+            confirmButtonText: 'OK',
+          });
         }
-        console.error('Error uploading the image: ', error);
       });
   };
 
@@ -66,7 +92,7 @@ function FanAuthModal({ onClose, userData }) {
       onClick={onClose}
     >
       <div
-        className="w-148 h-130 bg-more-dark p-6 flex flex-col items-center"
+        className="w-148 h-130 bg-deep-dark p-6 flex flex-col items-center"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="text-[30px] mb-6">
