@@ -30,6 +30,7 @@ class VideoRoomComponent extends Component {
       orders: 1,
       countTime: 10,
       remainingTime: 10,
+      fanData : this.props.fanData
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -76,6 +77,14 @@ class VideoRoomComponent extends Component {
     window.removeEventListener('resize', this.updateLayout);
     window.removeEventListener('resize', this.checkSize);
     this.leaveSession();
+  }
+
+   // joinFansign값이 업데이트 되면 이동 CheckPoint
+   componentDidUpdate(prevProps) {
+    if (this.props.fanData !== prevProps.fanData) {
+      console.log('DidUpdate 확인 : ', this.props.fanData)
+      this.setState({fanData : this.props.fanData})
+    }
   }
 
   onbeforeunload(event) {
@@ -444,6 +453,7 @@ class VideoRoomComponent extends Component {
                   chatDisplay={this.state.chatDisplay}
                   close={this.toggleChat}
                   fanData={this.props.fanData}
+                  testFanData={this.state.fanData}
                 />
               </div>
             )}
