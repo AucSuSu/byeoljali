@@ -21,6 +21,7 @@ const getRandomNumber = (min, max) => {
 };
 
 const HomeView = () => {
+  const [stars, setStars] = useState([]);
   const afterData = useSelector((state) => state.homeapply.afterData); // 응모 중 데이터 redux에서 꺼내기
   const beforeData = useSelector((state) => state.homeapply.beforeData); // 응모 전 데이터 redux에서 꺼내기
   const items = useSelector((state) => state.artistLogo.artistLogo); // 로고 꺼내기
@@ -36,6 +37,30 @@ const HomeView = () => {
     getUserInfoData();
     getLogoData();
     getCarouselData();
+
+    // 별 가루 
+    const makeStars = () => {
+      const numStars = 200; // 원하는 별의 개수
+
+      const newStars = Array.from({ length: numStars }, (_, index) => ({
+        id: index,
+        left: Math.random() * 100 + 'vw', // 랜덤한 가로 위치
+        top: Math.random() * 100 + 'vh', // 랜덤한 세로 위치
+        animationDuration: Math.random() * 1 + 0.5 + 's', // 랜덤한 애니메이션 속도
+        textColor : 'yellow'
+      }));
+
+      setStars(newStars);
+    };
+
+    makeStars();
+
+    // 일정 시간마다 별의 위치를 재설정
+    const intervalId = setInterval(() => {
+      makeStars();
+    }, 5000);
+
+
 
     const container = containerRef.current;
     let isHovered = false;
@@ -174,20 +199,22 @@ const HomeView = () => {
 
   return (
     <>
-      <div id="main_container" className="relative flex flex-col bg-black font-jamsil">
+      <div id="main_container" className="relative flex flex-col bg-black font-jamsil ">
         {/* 1. Navbar */}
-        <Navbar />
-        <div className="night"
-          >
-            {[...Array(20)].map((_, index) => (
-              <div className="shooting_star" key={index}
+        {stars.map((star) => (
+            <div
+              key={star.id}
+              className="star"
               style={{
-                top: `${getRandomNumber(0, 100)}%`,
-                left: `${getRandomNumber(0, 100)}%`,
-                animationDelay: `-${getRandomNumber(0, 3000)}ms`,
-              }}></div>
-            ))}
-          </div>
+                left: star.left,
+                top: star.top,
+                animationDuration: star.animationDuration,
+                zIndex : '0'
+              }}
+            ></div>
+          ))}
+        <Navbar />
+        
         {/* 2. Post Carousel */}
         <div className="w-[70%] mx-[15%]">
           <NewCarousel datas={carouselData} />
