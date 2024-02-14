@@ -12,16 +12,16 @@ export default function FanSocket({
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
   useEffect(() => {
-    if (stationData) {
+    if (propsData) {
       sendMessage('TALK', {
         orders: null,
-        postit: stationData.postit,
-        birthday: stationData.birthday,
-        nickname: stationData.nickname,
+        postit: propsData.postit,
+        birthday: propsData.birthday,
+        nickname: propsData.nickname,
         fanId: propsData.fanId,
       });
     }
-  }, [stationData]);
+  }, [propsData]);
 
   useEffect(() => {
     // WebSocket 서버에 연결
