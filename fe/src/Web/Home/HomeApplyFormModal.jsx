@@ -66,7 +66,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
         if (result.isConfirmed) {
           dispatch(setMemberId(null)); // dispatch 함수 사용
           closeModal();
-          window.location.reload();
         }
       });
     } catch (error) {
