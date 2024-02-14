@@ -16,4 +16,22 @@ public class ChatMessage {
     private MessageType type; // 메시지 타입
     private String roomId; // 방번호
     private MessageDto message; // 메시지
+
+    /**
+     * birthday
+     * :
+     * null
+     * fanId
+     * :
+     * 0
+     * nickname
+     * :
+     * "Artist"
+     * orders
+     * :
+     * 3
+     * postit
+     * :
+     * null
+     */
 }
