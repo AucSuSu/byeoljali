@@ -69,18 +69,7 @@ export default function FanSocket({
 
     setSocket(newSocket);
     // 컴포넌트 언마운트 시 소켓 연결 해제
-    return () => {
-      sendMessage('QUIT', {
-        orders: null,
-        postit: null,
-        birthday: null,
-        nickname: null,
-        fanId: null,
-      });
-    };
-  }, []);
 
-  useEffect(() => {
     console.log('useEffect()');
     console.log(propsData);
     if (propsData) {
@@ -93,6 +82,15 @@ export default function FanSocket({
         fanId: propsData.fanId,
       });
     }
+    return () => {
+      sendMessage('QUIT', {
+        orders: null,
+        postit: null,
+        birthday: null,
+        nickname: null,
+        fanId: null,
+      });
+    };
   }, []);
 
   // 메시지 전송 함수
