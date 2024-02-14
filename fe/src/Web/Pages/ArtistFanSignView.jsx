@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Fansign from '../Artist/Fansign/Fansign.jsx';
+import { handleAddFansign } from '../Stores/modalReducer.js';
 import ReadyFansign from '../Artist/Fansign/ReadyFansign.jsx';
+import CreateFansignModal from '../Artist/Modal/CreateFansignModal.jsx';
 import Navbar from '../Utils/NavBar.jsx';
 import { isArtist } from '../Stores/authReducer.js';
 import Toggle from '../Utils/ToggleButton.jsx';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function ArtistFanSignView() {
   useEffect(() => {
@@ -19,11 +21,22 @@ export default function ArtistFanSignView() {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const addFansign = useSelector((state) => state.modal.addFansign);
 
   const [isFansign, setIsFansign] = useState(true);
 
+  const openAddFansignModal = () => {
+    dispatch(handleAddFansign());
+  };
+
   const handleToggle = () => {
     setIsFansign(!isFansign);
+  };
+
+  const handleOpenFanSignModal = () => {
+    openAddFansignModal();
   };
 
   return (
@@ -44,8 +57,13 @@ export default function ArtistFanSignView() {
           />
         </div>
       </div>
-      {isFansign && <Fansign />}
-      {!isFansign && <ReadyFansign />}
+      <div className="w-[86%] ml-[7%]">
+        {addFansign && <CreateFansignModal />}
+        {isFansign && <Fansign handleAddFansign={handleOpenFanSignModal} />}
+        {!isFansign && (
+          <ReadyFansign handleAddFansign={handleOpenFanSignModal} />
+        )}
+      </div>
     </div>
   );
 }
