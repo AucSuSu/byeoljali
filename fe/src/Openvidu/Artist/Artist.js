@@ -30,7 +30,7 @@ class VideoRoomComponent extends Component {
       orders: 1,
       countTime: 10,
       remainingTime: 10,
-      fanData: this.props.fanData.message,
+      fanData: this.props.fanData ? this.props.fanData.message : null,
     };
 
     this.joinSession = this.joinSession.bind(this);
