@@ -30,17 +30,17 @@ export default function Footer({
   const performCapture = async () => {
     if (count > 0) {
       captureArea();
+      const captureBounds = document.querySelector('.bounds');
+      captureBounds.style.border = '2px solid white';
+
+      setTimeout(() => {
+        captureBounds.style.border = '';
+
+        audio.play();
+        console.log('사진 캡쳐 성공!', count);
+      }, 500);
       setCount(count - 1);
     }
-    const captureBounds = document.querySelector('.bounds');
-    captureBounds.style.border = '2px solid white';
-
-    setTimeout(() => {
-      captureBounds.style.border = '';
-
-      audio.play();
-      console.log('사진 캡쳐 성공!', count);
-    }, 500);
   };
 
   const captureArea = () => {
