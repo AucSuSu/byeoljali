@@ -212,7 +212,7 @@ def upload_receipt():
                     print(data['name'])
                     print(data['count'])
                     print(SequenceMatcher(None, data['name'], albumName).ratio())
-                    result_count = max(result_count, data['count'])
+                    result_count = max(result_count, int(data['count']))
                 print(data)
 
 
