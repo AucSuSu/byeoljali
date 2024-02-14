@@ -65,7 +65,12 @@ export default function CreateFansignModal({}) {
           confirmButtonColor: "#FF2990",   
           confirmButtonText: "OK",
           borderRadius : "30px"
-        });
+        }).then((result) => {
+          if( result.isConfirmed){
+            closeModal();
+          }
+        }
+        );
         return res.data;
       }).catch((error) => {
         if (error.response && error.response.status === 413) {
@@ -95,7 +100,6 @@ export default function CreateFansignModal({}) {
     }
     joinFansign(formData);
     console.log('팬싸인회 개설 요청');
-    closeModal();
   };
 
   const uploadImg = (img) => {
