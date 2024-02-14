@@ -11,9 +11,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
   redis:
     host: i10e104.p.ssafy.io
     port: 6379
@@ -36,9 +33,6 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: html
-logging.level:
-  org.hibernate.SQL: debug
-  org.hibernate.type.descriptor.sql: trace
 
 cloud:
   aws:
