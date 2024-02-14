@@ -37,10 +37,10 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
 
   return (
     <>
-      <div className="flex fixed bg-black bottom-0 w-full h-15 font-milk text-white font-bold justify-between p-4 border-t-2 border-dark-gray">
+      <div className="flex fixed bg-black bottom-0 w-full h-15 font-jamsil text-white font-bold justify-between p-4 border-t-2 border-dark-gray">
         {/* 좌측 끝 */}
         <div
-          className="flex items-center bg-dark-gray rounded-md px-4 ml-5"
+          className="flex items-center bg-dark-gray rounded-md font-jamsil px-4 ml-5 cursor-pointer"
           onClick={() => finishFansign()}
         >
           팬 싸인회 종료
@@ -49,12 +49,12 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
         <div className="flex">
           <div
             onClick={() => blackList()}
-            className="flex items-center bg-dark-gray rounded-md mr-5"
+            className="flex items-center bg-dark-gray  rounded-md mr-5"
           >
             <IconButton>
               <AddIcon />
             </IconButton>
-            <p className="pr-4">블랙리스트</p>
+            <p className="pr-4 font-jamsil">블랙리스트</p>
           </div>
 
           <div
@@ -64,7 +64,7 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
             <IconButton>
               <CloseIcon />
             </IconButton>
-            <p className="pr-4">강제 종료</p>
+            <p className="pr-4 font-jamsil">강제 종료</p>
           </div>
         </div>
         {/* 우측 끝 */}
