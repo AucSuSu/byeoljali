@@ -13,6 +13,7 @@ export default function FanSocket({
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     console.log(stationData);
+    console.log(socket);
     if (stationData) {
       sendMessage('TALK', {
         orders: null,
