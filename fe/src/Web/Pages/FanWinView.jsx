@@ -13,7 +13,7 @@ function FanWinView() {
       <div className="min-h-screen bg-black overflow-hidden relative z-[11]">
         <NavBar />
         <div className="night z-10 absolute top-0 left-0 right-0 bottom-0 ;">
-          {[...Array(20)].map((_, index) => (
+          {/* {[...Array(20)].map((_, index) => (
             <div
               className="shooting_star"
               key={index}
@@ -23,7 +23,7 @@ function FanWinView() {
                 animationDelay: `-${getRandomNumber(0, 3000)}ms`,
               }}
             ></div>
-          ))}
+          ))} */}
         </div>
         <div className="h-[100%]">
           <FanWin />

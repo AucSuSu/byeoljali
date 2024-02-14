@@ -306,7 +306,7 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
                           {isReceiptModalOpen && (
                             <ApplyReceiptModal
                               onClose={closeReceiptModal}
-                              albumName={propData.albumName}
+                              albumName={data.object.albumName}
                             />
                           )}
                         </div>

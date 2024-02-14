@@ -2,7 +2,7 @@
   position: fixed;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .star {
@@ -12,6 +12,7 @@
   background-color: white;
   border-radius: 50%;
   animation: twinkle linear infinite;
+  overflow-x: hidden;
 }
 
 @keyframes twinkle {
