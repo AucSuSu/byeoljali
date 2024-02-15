@@ -66,7 +66,7 @@ class App extends Component {
     if (this.props.joinFansign !== prevProps.joinFansign) {
       this.Meeting();
     }
-    if (this.state.curUser !== prevState.curUser) {
+    if (this.props.curUser !== prevProps.curUser) {
       console.log(
         'curUser 변경 : ',
         this.state.curUser,
@@ -277,12 +277,7 @@ class App extends Component {
     let cultime = start - now;
     if (cultime <= 0) {
       cultime = 0;
-    }
-    if(this.props.propsData.orders === 1){
-      this.setState({
-        remainingTime: cultime + (this.state.orders - this.state.curUser - 1) * 30000, // * 뒤에 ms 단위
-      })  
-    } else{
+    }{
     this.setState({
       remainingTime: cultime + (this.state.orders - this.state.curUser) * 30000, // * 뒤에 ms 단위
     })
@@ -348,7 +343,7 @@ class App extends Component {
   }
 
   updateWaitTime() {
-    let newRemainingTime = (this.state.orders - this.state.curUser) * 30000;
+    let newRemainingTime = (this.state.orders - this.props.curUser) * 30000;
     if (newRemainingTime <= 0) {
       newRemainingTime = 0;
     }
