@@ -23,7 +23,7 @@ export default function ArtistSocket({
         message.message.nickname !== 'Artist'
       ) {
         console.log('Artist가 SendMessage 실행했어요', '소켓이에용 : ', socket);
-        sendMessage('TALK');
+        sendMessagehandler('TALK');
         console.log('TALk 왜 안보냄? 나 진짜 어이가 없어서 그래 설명좀 해줘');
       }
     };
@@ -33,8 +33,8 @@ export default function ArtistSocket({
       console.log('OPEN Artist 들어왔어요~');
     };
 
-    newSocket.onclose = (event) => {
-      enterMessage(newSocket);
+    newSocket.onclose = async (event) => {
+      await enterMessage(newSocket);
       console.log('CLOSE Artist 나갔어요~', event);
     };
 
@@ -69,6 +69,10 @@ export default function ArtistSocket({
       sendMessage('CLOSE');
     }
   }, [autoData]);
+
+  const sendMessagehandler = (e) => {
+    sendMessage(e);
+  };
 
   // 메시지 전송 함수
   const sendMessage = (messageType) => {
