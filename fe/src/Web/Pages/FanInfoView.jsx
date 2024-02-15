@@ -9,12 +9,12 @@ import Swal from 'sweetalert2';
 
 function FanInfoView() {
   const customAxios = useAxios();
-  const userData = useSelector((state) => state.faninfo.data);
+  let userData = useSelector((state) => state.faninfo.data);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getUserInfoData();
+  useEffect(async () => {
+    await getUserInfoData();
   }, []);
 
   const getUserInfoData = async () => {
@@ -82,7 +82,7 @@ function FanInfoView() {
         });
         setTimeout(() => {
           window.location.reload(true);
-        }, 1500);
+        }, 2500);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
