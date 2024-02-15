@@ -88,6 +88,7 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 ## :bar_chart: 아키텍처 구조
 ![readme_files/architecture.png](./readme_files/architecture.png)
 ## :file_folder: 프로젝트 파일 구조
+```
 fe<br>
  ┣ .vscode<br>
  ┃ ┗ settings.json<br>
@@ -127,7 +128,9 @@ fe<br>
  ┣ README.md<br>
  ┣ tailwind.config.js<br>
  ┗ test_txt.txt<br>
+```
 
+```
 flask<br>
  ┣ .gitignore<br>
  ┣ app.py<br>
@@ -135,7 +138,9 @@ flask<br>
  ┣ Dockerfile<br>
  ┣ life4cut.jpg<br>
  ┗ requirements.txt<br>
+```
 
+```
 BE<br>
  ┣ .gradle<br>
  ┣ build<br>
@@ -175,7 +180,7 @@ BE<br>
  ┣ gradlew<br>
  ┣ gradlew.bat<br>
  ┗ settings.gradle<br>
-
+```
 
 ## :sparkler: 별자리 주요 기능
 ### 1. 팬싸인회 개설
