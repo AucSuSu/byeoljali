@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 
 export default function Header({ title, member, timer, remainingTime }) {
-  const minutes = Math.floor(timer / 60); // 남은 시간 관련 계산
-  const seconds = timer % 60;
+  const minutes = Math.floor(timer / (1000 * 60)); // 남은 시간 관련 계산
+  const seconds = Math.floor((timer % (1000 * 60)) / 1000);
 
   return (
     <AppBar>

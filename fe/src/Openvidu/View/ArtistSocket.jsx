@@ -43,7 +43,7 @@ export default function ArtistSocket({
     setSocket(newSocket);
 
     return async () => {
-      await sendMessage('QUIT');
+      await sendMessage('QUIT', newSocket);
       newSocket.close();
       initSocket();
     };
