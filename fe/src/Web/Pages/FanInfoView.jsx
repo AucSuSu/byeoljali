@@ -80,6 +80,7 @@ function FanInfoView() {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
+        getUserInfoData();
         setTimeout(() => {
           window.location.reload(true);
         }, 2500);
@@ -267,6 +268,7 @@ function FanInfoView() {
                   <FanAuthModal
                     userData={userData}
                     onClose={() => setShowAuthModal(false)}
+                    getUserInfoData={() => getUserInfoData()}
                     // 필요한 경우 다른 props 전달
                   />
                 )}

@@ -3,7 +3,7 @@ import useAxios from '../axios';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
-function FanAuthModal({ onClose, userData }) {
+function FanAuthModal({ onClose, userData, getUserInfoData }) {
   const customAxios = useAxios();
   const [imageFile, setImageFile] = useState(null);
   const [imageSrc, setImageSrc] = useState(userData.certificationImageUrl);
@@ -58,6 +58,7 @@ function FanAuthModal({ onClose, userData }) {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
+        getUserInfoData();
         setTimeout(() => {
           window.location.reload(true);
         }, 2500);
