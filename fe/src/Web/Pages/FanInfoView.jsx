@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function FanInfoView() {
   const customAxios = useAxios();
-  let userData = useSelector((state) => state.faninfo.data);
+  const userData = useSelector((state) => state.faninfo.data);
 
   const dispatch = useDispatch();
 
@@ -23,21 +23,22 @@ function FanInfoView() {
       return res.data.object;
     });
     setTimeout(() => {
+      setLocalUserData({ nickname: data.nickname, name: data.name });
+      setPreviewUrl(data.profileImageUrl);
+      setAuthImageUrl(data.certificationImageUrl);
       dispatch(getUserInfo(data));
     }, 500);
   };
 
   const [localUserData, setLocalUserData] = useState({
-    nickname: userData.nickname,
-    name: userData.name,
+    nickname: '',
+    name: '',
   });
 
   const [profileImage, setProfileImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(userData.profileImageUrl); // 미리보기 URL을 위한 상태
+  const [previewUrl, setPreviewUrl] = useState(''); // 미리보기 URL을 위한 상태
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authImageUrl, setAuthImageUrl] = useState(
-    userData.certificationImageUrl,
-  );
+  const [authImageUrl, setAuthImageUrl] = useState('');
 
   const fileInputRef = useRef(); // 파일 입력을 위한 ref
 
@@ -71,7 +72,7 @@ function FanInfoView() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then(async (response) => {
+      .then((response) => {
         console.log('업로드 성공', response.data);
         Swal.fire({
           icon: 'success',
@@ -81,8 +82,10 @@ function FanInfoView() {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
-        await getUserInfoData();
-        window.location.reload();
+        getUserInfoData();
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 500);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
