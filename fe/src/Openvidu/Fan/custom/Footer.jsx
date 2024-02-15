@@ -31,13 +31,18 @@ export default function Footer({
     if (count > 0) {
       captureArea();
       const captureBounds = document.querySelector('.bounds');
-      captureBounds.style.borderTop = '17px solid white';
-      captureBounds.style.borderBottom = '7px solid white';
-      captureBounds.style.borderRight = '5px solid white';
-      captureBounds.style.borderLeft = '5px solid white';
+      captureBounds.style.borderTop = '17px solid rgba(255, 255, 255, 0.8)';
+      captureBounds.style.borderBottom = '7px solid rgba(255, 255, 255, 0.8)';
+      captureBounds.style.borderRight = '5px solid rgba(255, 255, 255, 0.8)';
+      captureBounds.style.borderLeft = '5px solid rgba(255, 255, 255, 0.8)';
+      captureBounds.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.7)';
+      captureBounds.style.borderRadius = '10px'; // 모서리를 부드럽게
 
       setTimeout(() => {
+        // 테두리 제거 및 스타일 초기화
         captureBounds.style.border = '';
+        captureBounds.style.boxShadow = '';
+        captureBounds.style.borderRadius = '';
 
         audio.play();
         console.log('사진 캡쳐 성공!', count);
