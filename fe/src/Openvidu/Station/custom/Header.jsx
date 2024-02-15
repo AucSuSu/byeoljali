@@ -11,7 +11,7 @@ export default function Header({ title, member, timer }) {
         <p className="pl-4 text-18">{member}</p>
       </div>
       <p className="text-25">
-        남은 시간 : {minutes > 9 ? minutes : `0${minutes}`}분{seconds}초
+        예상 대기 시간 : {minutes > 9 ? minutes : `0${minutes}`}분{seconds}초
       </p>
     </div>
   );

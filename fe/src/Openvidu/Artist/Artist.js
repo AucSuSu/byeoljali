@@ -78,7 +78,6 @@ class VideoRoomComponent extends Component {
     this.leaveSession();
   }
 
-
   onbeforeunload(event) {
     this.leaveSession();
   }
@@ -309,7 +308,7 @@ class VideoRoomComponent extends Component {
       this.deleteSubscriber(event.stream);
       event.preventDefault();
       this.updateLayout();
-      this.setState({ fanData: null });
+      this.props.resetFanData();
     });
   }
 
