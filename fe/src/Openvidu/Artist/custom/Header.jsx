@@ -5,8 +5,8 @@ export default function Header({ title, member, timer, remainingTime }) {
   const minutes = Math.floor(timer / 60); // 남은 시간 관련 계산
   const seconds = timer % 60;
 
-  const startMinutes = Math.floor(timer / (1000 * 60)); // 남은 시간 관련 계산
-  const startSeconds = Math.floor((timer % (1000 * 60)) / 1000);
+  const startMinutes = Math.floor(remainingTime / (1000 * 60)); // 남은 시간 관련 계산
+  const startSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
   return (
     <AppBar>

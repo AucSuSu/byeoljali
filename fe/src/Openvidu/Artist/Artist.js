@@ -29,7 +29,7 @@ class VideoRoomComponent extends Component {
       signTime: 30, // 팬싸인 시간
       orders: 1,
       countTime: 10,
-      remainingTime: 600,
+      remainingTime: 10000,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -136,20 +136,6 @@ class VideoRoomComponent extends Component {
   };
   // 자동 초대 로직 끝
 
-  // 최초 자동 입장 타이머
-  remainingTimer() {
-    this.timer = setInterval(() => {
-      this.setState((prevState) => ({
-        remainingTime: Math.max(prevState.remainingTime - 1000, 0), // 0 이하로 내려가지 않도록
-      }));
-      if (this.state.remainingTime <= 0) {
-        this.inviteCountDown(this.state.orders);
-        clearInterval(this.timer);
-        // checkponit
-      }
-    }, 1000); // 매초마다 실행
-  }
-
   joinSession() {
     this.OV = new OpenVidu();
 
@@ -243,12 +229,35 @@ class VideoRoomComponent extends Component {
     const now = new Date();
     const start = new Date(this.props.propsData.startFansignTime);
     let cultime = start - now;
-    if (cultime < 0) {
-      cultime = 1;
+    console.log(
+      '현재시간 : ',
+      now,
+      '시작시간 : ',
+      start,
+      '계산된 시간 : ',
+      cultime,
+    );
+    if (cultime <= 0) {
+      cultime = 0;
     }
+    console.log('계산 시간 한 번 더 : ', cultime);
     this.setState({
       remainingTime: cultime, // * 뒤에 ms 단위
     });
+  }
+
+  // 최초 자동 입장 타이머
+  remainingTimer() {
+    this.timer = setInterval(() => {
+      this.setState((prevState) => ({
+        remainingTime: Math.max(prevState.remainingTime - 1000, 0), // 0 이하로 내려가지 않도록
+      }));
+      if (this.state.remainingTime <= 0) {
+        this.inviteCountDown(this.state.orders);
+        clearInterval(this.timer);
+        // checkponit
+      }
+    }, 1000); // 매초마다 실행
   }
 
   updateSubscribers() {
