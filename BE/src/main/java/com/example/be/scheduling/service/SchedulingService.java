@@ -65,7 +65,7 @@ public class SchedulingService {
         // 현재 당첨자를 뽑아야 하는 모든 맴버 팬싸인회
         List<MemberFansignInfoDto> list =
         schedulingRepository.getMemberFansignList(formattedDate);
-        System.out.println("MemberFansignInfoDto: " + list);
+        //System.out.println("MemberFansignInfoDto: " + list);
 
         // 현재 당첨자를 뽑아야 하는 멤버 팬싸인회 하나에 해당하는 당첨자들 목록
         List<WinningDto> winnerListForOneMemberFansign = new ArrayList<>();
@@ -75,7 +75,7 @@ public class SchedulingService {
             winnerListForOneMemberFansign =
             schedulingRepository.getWinningInsertDto(dto.getMemberfansignId(), dto.getMode());
 
-            System.out.println("winnerListForOneMemberFansign : "+winnerListForOneMemberFansign);
+            //System.out.println("winnerListForOneMemberFansign : "+winnerListForOneMemberFansign);
 
             for(int i = 0; i < winnerListForOneMemberFansign.size(); i++){
                 WinningDto winningDto = winnerListForOneMemberFansign.get(i);

@@ -67,7 +67,7 @@ public class WebRTCController {
 
         String watingRoomFansignSessionId =
                 redisService.getValues("waitingRoomFansignSession".concat(String.valueOf(memberFansignId)));
-        System.out.println(watingRoomFansignSessionId);
+        //System.out.println(watingRoomFansignSessionId);
         Session waitingRoomSession = openVidu.getActiveSession(watingRoomFansignSessionId);
         if (waitingRoomSession == null) { // 방이 없는 경우
             log.info("*** " + watingRoomFansignSessionId + "번방이 없음 ***");
