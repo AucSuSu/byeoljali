@@ -20,8 +20,6 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
     return response;
   };
 
-
-
   const finishFansign = () => {
     Swal.fire({
       icon: 'warning',
@@ -32,7 +30,7 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
       confirmButtonText: 'OK',
     }).then((result) => {
       if (result.isConfirmed) {
-        navigate('/home');
+        navigate('/artist-profile');
       }
     });
   };

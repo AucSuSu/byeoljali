@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Station from '../Station/Station.js';
 import Fan from '../Fan/Fan.js';
 import FanSocket from './FanSocket.jsx';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAxios from '../../Web/axios.js';
+import Swal from 'sweetalert2';
 
 export default function FanView() {
   const customAxios = useAxios();
@@ -15,7 +16,7 @@ export default function FanView() {
       });
     return response;
   };
-
+  const navigate = useNavigate();
   const location = useLocation();
   const { propsData } = location.state || {};
   console.log('프롭데이터 : ', propsData);
@@ -28,10 +29,24 @@ export default function FanView() {
 
   // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
   const switchToFan = async (data) => {
-    const openviduData = await joinFansign();
-    setFanData(openviduData);
-    setStationData(data);
-    setFlag(!flag);
+    if (data.isSame === true) {
+      const openviduData = await joinFansign();
+      setFanData(openviduData);
+      setStationData(data);
+      setFlag(!flag);
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: '인증 되지 않아 입장에 실패했어요',
+        background: '#222222',
+        confirmButtonColor: '#FF2990',
+        confirmButtonText: 'OK',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/home');
+        }
+      });
+    }
   };
 
   const joinSignal = () => {

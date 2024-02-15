@@ -20,6 +20,10 @@ export default function ArtistView() {
     setFanData(data);
   };
 
+  const resetFanData = () => {
+    setFanData(null);
+  };
+
   return (
     <div>
       <ArtistSocket
@@ -30,6 +34,7 @@ export default function ArtistView() {
       <Artist
         propsData={propsData}
         fanData={fanData}
+        resetFanData={resetFanData}
         inviteFan={inviteFan}
         timeOver={timeOver}
       />

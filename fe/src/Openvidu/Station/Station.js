@@ -275,6 +275,16 @@ class App extends Component {
       this.setState((prevState) => ({
         remainingTime: Math.max(prevState.remainingTime - 1, 0), // 0 이하로 내려가지 않도록
       }));
+      if (this.state.remainingTime === 20) {
+        Swal.fire({
+          icon: 'success',
+          title: '곧 팬싸인이 시작됩니다 ',
+          text: '아직 본인 인증을 안했다면 인증해주세요',
+          background: '#222222',
+          confirmButtonColor: '#FF2990',
+          confirmButtonText: 'OK',
+        });
+      }
     }, 1000); // 매초마다 실행
   }
 
@@ -290,6 +300,7 @@ class App extends Component {
       nickname: this.state.myUserName,
       script: this.state.myScript,
       postit: this.state.myPostit,
+      isSame: this.state.isSamePerson,
     };
 
     clearInterval(this.checkVolume); // 볼륨체크 클리어
