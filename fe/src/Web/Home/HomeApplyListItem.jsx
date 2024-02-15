@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ApplyFormModal from './HomeApplyFormModal';
-import { setMemberId } from '../Stores/homeDetailListReducer';
+import { setAlbumNum, setMemberId } from '../Stores/homeDetailListReducer';
 // Reducer 추가
 import { useDispatch } from 'react-redux';
 import {
@@ -80,6 +80,7 @@ const ListItem = ({ data, status }) => {
   const closeModal = () => {
     dispatch(clearData()); // data를 빈 배열로 초기화하는 액션을 디스패치
     dispatch(setMemberId(null));
+    dispatch(setAlbumNum(0));
     setIsModalOpen(false);
   };
 
