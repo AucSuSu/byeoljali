@@ -48,7 +48,7 @@ function FanAuthModal({ onClose, userData, getUserInfoData }) {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((response) => {
+      .then(async (response) => {
         console.log('업로드 성공', response.data);
         Swal.fire({
           icon: 'success',
@@ -58,11 +58,8 @@ function FanAuthModal({ onClose, userData, getUserInfoData }) {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
-        getUserInfoData();
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 500);
-        // onClose(); // 모달 닫기
+        await getUserInfoData();
+        window.location.reload(true);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
