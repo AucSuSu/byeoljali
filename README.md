@@ -104,5 +104,11 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 - 데일리 스크럼 회의로 애자일 방식 개발 지향
 - 노션, GitLab 적극 활용하여 
 - 의견은 자유롭게!
+### GitLab
+![readme_files/gitlab.png](./readme_files/gitlab.png)
+### Jira
+![readme_files/jira.png](./readme_files/jira.png)
+### Notion
+![readme_files/notion.png](./readme_files/notion.png)
 
 ## :family: 팀원 소개
