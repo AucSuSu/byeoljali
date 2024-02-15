@@ -13,8 +13,8 @@ function FanInfoView() {
 
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    await getUserInfoData();
+  useEffect(() => {
+    getUserInfoData();
   }, []);
 
   const getUserInfoData = async () => {
