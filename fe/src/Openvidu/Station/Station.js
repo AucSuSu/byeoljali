@@ -67,6 +67,12 @@ class App extends Component {
       this.Meeting();
     }
     if (this.state.curUser !== prevState.curUser) {
+      console.log(
+        'curUser 변경 : ',
+        this.state.curUser,
+        '< 전 후 > ',
+        prevProps.curUser,
+      );
       this.updateWaitTime();
     }
   }
@@ -335,17 +341,13 @@ class App extends Component {
       });
   }
 
-  // 타이머 관련 메서드
-  /*updateWaitTime() {
-    // 남은 사람 수에 기반한 대기 시간 계산
-    const remainingUsers = Math.max(this.state.orders - this.state.curUser, 0);
-    this.setState({ remainingTime: remainingUsers * 120 });
-  }*/
   updateWaitTime() {
-    const remainingUsers = Math.max(this.state.orders - this.state.curUser, 0);
-    const newRemainingTime = remainingUsers * 30;
+    let newRemainingTime = (this.state.orders - this.state.curUser) * 30000;
+    if (newRemainingTime <= 0) {
+      newRemainingTime = 0;
+    }
     // 현재 remainingTime 상태와 새로 계산된 값이 다를 때만 setState 호출
-    if (this.state.remainingTime !== newRemainingTime) {
+    if (this.state.remainingTime > newRemainingTime) {
       this.setState({ remainingTime: newRemainingTime });
     }
   }

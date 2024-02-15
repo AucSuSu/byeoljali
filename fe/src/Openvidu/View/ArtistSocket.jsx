@@ -42,21 +42,16 @@ export default function ArtistSocket({
 
     setSocket(newSocket);
 
-    return async () => {
-      await sendMessage('QUIT', newSocket);
-      newSocket.close();
-      initSocket();
+    return () => {
+      sendMessage('QUIT', newSocket);
     };
   };
 
   useEffect(() => {
     initSocket();
 
-    return async () => {
-      if (socket) {
-        await socket.close();
-        initSocket();
-      }
+    return () => {
+      initSocket();
     };
   }, []);
 
