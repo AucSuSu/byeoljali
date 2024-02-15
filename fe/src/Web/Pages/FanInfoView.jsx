@@ -38,7 +38,9 @@ function FanInfoView() {
   const [profileImage, setProfileImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(''); // 미리보기 URL을 위한 상태
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authImageUrl, setAuthImageUrl] = useState('');
+  const [authImageUrl, setAuthImageUrl] = useState(
+    userData.certificationImageUrl,
+  );
 
   const fileInputRef = useRef(); // 파일 입력을 위한 ref
 
