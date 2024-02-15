@@ -24,15 +24,11 @@ function FanSignList({ data }) {
   // startFansignTime을 Date 객체로 변환합니다.
   const startFansignTimeDate = new Date(data.startFansignTime);
 
-
   // 현재 시간과 startFansignTime 사이의 차이(밀리초 단위)를 계산합니다.
   const difference = startFansignTimeDate.getTime() - now.getTime();
 
-
   // 입장하기 버튼
   // 차이가 -30분일 때 버튼 활성화 (시작 시간 30분 전에만 입장 가능하다고 가정)
-
-    
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -104,6 +100,7 @@ function FanSignList({ data }) {
           title: data.artistFansignTitle,
           member: data.memberName,
           artistFansignId: data.artistFansignId,
+          startFansignTime: data.startFansignTime,
         },
       },
     });
