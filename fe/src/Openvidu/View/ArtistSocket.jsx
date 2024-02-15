@@ -8,7 +8,7 @@ export default function ArtistSocket({
 }) {
   const [socket, setSocket] = useState(null);
 
-  useEffect(() => {
+  const initSocket = () => {
     // WebSocket 서버에 연결
     const newSocket = new SockJs('https://i10e104.p.ssafy.io/socket');
 
@@ -42,9 +42,21 @@ export default function ArtistSocket({
 
     setSocket(newSocket);
 
-    return () => {
-      // newSocket.close();
-      sendMessage('QUIT');
+    return async () => {
+      await sendMessage('QUIT');
+      newSocket.close();
+      initSocket();
+    };
+  };
+
+  useEffect(() => {
+    initSocket();
+
+    return async () => {
+      if (socket) {
+        await socket.close();
+        initSocket();
+      }
     };
   }, []);
 
