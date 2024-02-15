@@ -443,7 +443,11 @@ class VideoRoomComponent extends Component {
               </div>
             )}
           <div>
-            {this.state.subscribers.map((sub, i) => (
+            {this.state.count === 1 &&
+            <div className='flex h-[100%] border-2-2 border-dark-gary bg-black opacity-80 text-white font-jamsil text-center items-center justify-center'>
+              <p>팬 입장을 기다리는 중입니다</p>
+              </div>}
+            {this.state.count === 2 && this.state.subscribers.map((sub, i) => (
               <div
                 key={i}
                 className="h-[100%] border-r-2 border-dark-gary"

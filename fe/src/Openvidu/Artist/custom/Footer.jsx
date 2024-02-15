@@ -48,7 +48,9 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
         {/* 중앙 */}
         <div className="flex">
           <div
-            onClick={() => blackList()}
+            onClick={() => {blackList()
+              timeOver(orders, false)
+            }}
             className="flex items-center bg-dark-gray  rounded-md mr-5"
           >
             <IconButton>

@@ -278,9 +278,15 @@ class App extends Component {
     if (cultime <= 0) {
       cultime = 0;
     }
+    if(this.props.propsData.orders === 1){
+      this.setState({
+        remainingTime: cultime + (this.state.orders - this.state.curUser - 1) * 30000, // * 뒤에 ms 단위
+      })  
+    } else{
     this.setState({
       remainingTime: cultime + (this.state.orders - this.state.curUser) * 30000, // * 뒤에 ms 단위
-    });
+    })
+  };
 
     // 타이머 설정
     this.timer = setInterval(() => {
@@ -346,10 +352,8 @@ class App extends Component {
     if (newRemainingTime <= 0) {
       newRemainingTime = 0;
     }
-    // 현재 remainingTime 상태와 새로 계산된 값이 다를 때만 setState 호출
-    if (this.state.remainingTime > newRemainingTime) {
       this.setState({ remainingTime: newRemainingTime });
-    }
+    
   }
 
   // Base64 문자열을 Blob 객체로 변환하는 함수
