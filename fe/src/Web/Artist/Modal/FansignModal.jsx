@@ -73,6 +73,7 @@ export default function FansignModal({ memberFansignId }) {
           title: detailData.object.title,
           member: detailData.object.memberName,
           artistFansignId: detailData.object.artistFansignId,
+          startFansignTime: detailData.object.startFansignTime,
         },
       },
     });
