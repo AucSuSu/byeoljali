@@ -31,12 +31,12 @@ function FanInfoView() {
   };
 
   const [localUserData, setLocalUserData] = useState({
-    nickname: '',
-    name: '',
+    nickname: userData.nickname,
+    name: userData.name,
   });
 
   const [profileImage, setProfileImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(''); // 미리보기 URL을 위한 상태
+  const [previewUrl, setPreviewUrl] = useState(userData.profileImageUrl); // 미리보기 URL을 위한 상태
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authImageUrl, setAuthImageUrl] = useState(
     userData.certificationImageUrl,
