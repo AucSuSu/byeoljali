@@ -199,10 +199,14 @@ const Navbar = ({ bgStyle }) => {
           // Artist일 경우
           <>
             <NavbarItem>
-              <NavbarLink to="/fansign">응모 관리</NavbarLink>
+              <NavbarLink className="cursor-pointer" to="/fansign">
+                응모 관리
+              </NavbarLink>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/readyfansign">팬싸 관리</NavbarLink>
+              <NavbarLink className="cursor-pointer" to="/readyfansign">
+                팬싸 관리
+              </NavbarLink>
             </NavbarItem>
             {/*  */}
             <Dropdown>
@@ -236,17 +240,20 @@ const Navbar = ({ bgStyle }) => {
                 onClick={handleSearchIconClick} // 수정된 부분: 함수를 호출하지 않고 함수 자체를 전달
                 className="hover:text-hot-pink text-white font-bold rounded"
               >
-                <MagnifyingGlassIcon className="h-[30px] w-[30px] border-none" />
+                <MagnifyingGlassIcon className="h-[30px] w-[30px] border-none cursor-pointer" />
               </button>
             </NavbarItem>
             <NavbarItem>
-              <NavbarLink to="/fan-profile">MY PAGE</NavbarLink>
+              <NavbarLink className="cursor-pointer" to="/fan-profile">
+                MY PAGE
+              </NavbarLink>
             </NavbarItem>
             <NavbarItem>
               <Dropdown>
                 {/* <ProfileImage imageUrl={fanProfileImageUrl} /> */}
                 <img
                   src="/Hamburger_icon_white.png"
+                  className="cursor-pointer"
                   style={{
                     width: '30px',
                     height: '30px',
@@ -257,7 +264,7 @@ const Navbar = ({ bgStyle }) => {
                     <img
                       src={fanProfileImageUrl}
                       alt="profileImg"
-                      className="rounded-full h-[70px] w-[70px] mx-auto object-cover"
+                      className="rounded-full h-[70px] w-[70px] mx-auto object-cover cursor-pointer"
                     />
                   </DropdownItem>
                   <DropdownItem onClick={goFanApply}>응모 내역</DropdownItem>
