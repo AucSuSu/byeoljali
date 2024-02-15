@@ -22,10 +22,7 @@ export default function ArtistSocket({
         message.type === 'ENTER' &&
         message.message.nickname !== 'Artist'
       ) {
-        console.log('Artist가 SendMessage 실행했어요', '소켓이에용 : ', socket);
-        sendMessagehandler('TALK');
         sendMessage('TALK', newSocket);
-        console.log('TALk 왜 안보냄? 나 진짜 어이가 없어서 그래 설명좀 해줘');
       }
     };
 
@@ -70,11 +67,6 @@ export default function ArtistSocket({
       sendMessage('CLOSE');
     }
   }, [autoData]);
-
-  const sendMessagehandler = (e) => {
-    console.log('handler 실행 됨', socket);
-    sendMessage(e);
-  };
 
   // 메시지 전송 함수
   const sendMessage = (messageType, newSocket) => {
