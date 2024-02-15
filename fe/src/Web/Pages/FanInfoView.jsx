@@ -82,7 +82,7 @@ function FanInfoView() {
         });
         setTimeout(() => {
           window.location.reload(true);
-        }, 1500);
+        }, 2500);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
