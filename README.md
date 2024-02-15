@@ -85,7 +85,93 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 ## :bar_chart: 아키텍처 구조
 ![readme_files/architecture.png](./readme_files/architecture.png)
 ## :file_folder: 프로젝트 파일 구조
+fe<br>
+ ┣ .vscode<br>
+ ┃ ┗ settings.json<br>
+ ┣ docker<br>
+ ┃ ┣ create_image.sh<br>
+ ┃ ┣ Dockerfile<br>
+ ┃ ┗ entrypoint.sh<br>
+ ┣ node_modules<br>
+ ┣ public<br>
+ ┣ src<br>
+ ┃ ┣ Openvidu<br>
+ ┃ ┃ ┣ Artist<br>
+ ┃ ┃ ┣ Fan<br>
+ ┃ ┃ ┣ Station<br>
+ ┃ ┃ ┣ View<br>
+ ┃ ┃ ┗ Socket.js<br>
+ ┃ ┣ Web<br>
+ ┃ ┃ ┣ Artist<br>
+ ┃ ┃ ┣ Assets<br>
+ ┃ ┃ ┣ Fan<br>
+ ┃ ┃ ┣ Home<br>
+ ┃ ┃ ┣ Pages<br>
+ ┃ ┃ ┣ Stores<br>
+ ┃ ┃ ┣ Utils<br>
+ ┃ ┣ App.js<br>
+ ┃ ┣ AppRoutes.js<br>
+ ┃ ┣ index.css<br>
+ ┃ ┣ index.js<br>
+ ┃ ┗ registerServiceWorker.js<br>
+ ┣ .env<br>
+ ┣ .gitignore<br>
+ ┣ .prettierrc<br>
+ ┣ config-overrides.js<br>
+ ┣ package-lock.json<br>
+ ┣ package.json<br>
+ ┣ postcss.config.js<br>
+ ┣ README.md<br>
+ ┣ tailwind.config.js<br>
+ ┗ test_txt.txt<br>
 
+flask<br>
+ ┣ .gitignore<br>
+ ┣ app.py<br>
+ ┣ dlib-19.22.99-cp39-cp39-win_amd64.whl<br>
+ ┣ Dockerfile<br>
+ ┣ life4cut.jpg<br>
+ ┗ requirements.txt<br>
+
+BE<br>
+ ┣ .gradle<br>
+ ┣ build<br>
+ ┣ out<br>
+ ┣ src<br>
+ ┃ ┣ main<br>
+ ┃ ┃ ┣ java<br>
+ ┃ ┃ ┃ ┗ com<br>
+ ┃ ┃ ┃ ┃ ┗ example<br>
+ ┃ ┃ ┃ ┃ ┃ ┗ be<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ applicant<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ artist<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ artistfansign<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ common<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ config<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ exception<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ fan<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ member<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ memberfansign<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ photo<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ s3<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ scheduling<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ session<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ stmp<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ winning<br>
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ BeApplication.java<br>
+ ┃ ┃ ┗ resources<br>
+ ┃ ┃ ┃ ┣ static<br>
+ ┃ ┃ ┃ ┣ templates<br>
+ ┃ ┃ ┃ ┣ application-oauth.yml<br>
+ ┃ ┃ ┃ ┣ application.properties<br>
+ ┃ ┃ ┃ ┗ application.yml<br>
+ ┃ ┗ test<br>
+ ┣ .gitignore<br>
+ ┣ build.gradle<br>
+ ┣ Dockerfile<br>
+ ┣ gradlew<br>
+ ┣ gradlew.bat<br>
+ ┗ settings.gradle<br>
 
 
 ## :sparkler: 별자리 주요 기능
@@ -112,3 +198,16 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 ![readme_files/notion.PNG](./readme_files/notion.PNG)
 
 ## :family: 팀원 소개
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/ttaho"><img src="../readme_files/윤태호.png" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 윤태호</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/MunsooKang"><img src="./readme_files/강문수.png" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 강문수</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/arim-kim"><img src="./readme_files/김아림.png" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 김아림</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/makie082"><img src="./readme_files/우미경.png" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 우미경</b></sub></a><br /></td>
+     <tr/>
+      <td align="center"><a href="https://github.com/dogfish000"><img src="./readme_files/윤태우.png" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 윤태우</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/RaelJung"><img src="./readme_files/정라엘.png" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 정라엘</b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
