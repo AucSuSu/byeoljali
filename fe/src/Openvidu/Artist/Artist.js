@@ -242,7 +242,10 @@ class VideoRoomComponent extends Component {
 
     const now = new Date();
     const start = new Date(this.props.propsData.startFansignTime);
-    const cultime = start - now;
+    let cultime = start - now;
+    if (cultime < 0) {
+      cultime = 1;
+    }
     this.setState({
       remainingTime: cultime, // * 뒤에 ms 단위
     });
