@@ -13,12 +13,12 @@ function FanInfoView() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getUserInfoData();
+  useEffect(async () => {
+    await getUserInfoData();
   }, []);
 
-  const getUserInfoData = () => {
-    const data = customAxios.get('mypage/').then((res) => {
+  const getUserInfoData = async () => {
+    const data = await customAxios.get('mypage/').then((res) => {
       console.log('데이터 왔어요~', res.data.object);
       return res.data.object;
     });
