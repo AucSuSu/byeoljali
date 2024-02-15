@@ -15,14 +15,14 @@ export default function ArtistSocket({
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
       console.log('아티스트가 메세지 전달받음 : ', message);
+
       if (message.type === 'TALK' && message.message.nickname !== 'Artist') {
         getFanData(message.message);
       } else if (
         message.type === 'ENTER' &&
         message.message.nickname !== 'Artist'
       ) {
-        console.log('Artist가 SendMessage 실행했어요');
-        sendMessage('TALK');
+        sendMessage('TALK', newSocket);
       }
     };
 
@@ -31,8 +31,8 @@ export default function ArtistSocket({
       console.log('OPEN Artist 들어왔어요~');
     };
 
-    newSocket.onclose = (event) => {
-      enterMessage(newSocket);
+    newSocket.onclose = async (event) => {
+      await enterMessage(newSocket);
       console.log('CLOSE Artist 나갔어요~', event);
     };
 
@@ -69,20 +69,23 @@ export default function ArtistSocket({
   }, [autoData]);
 
   // 메시지 전송 함수
-  const sendMessage = (messageType) => {
+  const sendMessage = (messageType, newSocket) => {
+    const myMessage = {
+      type: messageType,
+      roomId: `memberFansignSession${memberFansignId}`,
+      message: {
+        orders: autoData.orders,
+        postit: null,
+        birthday: null,
+        nickname: 'Artist',
+        fanId: null,
+      },
+    };
     if (socket) {
-      const myMessage = {
-        type: messageType,
-        roomId: `memberFansignSession${memberFansignId}`,
-        message: {
-          orders: autoData.orders,
-          postit: null,
-          birthday: null,
-          nickname: 'Artist',
-          fanId: null,
-        },
-      };
       socket.send(JSON.stringify(myMessage));
+    } else if (newSocket) {
+      console.log('newSocket으로 실행 됨');
+      newSocket.send(JSON.stringify(myMessage));
     }
   };
 
@@ -91,7 +94,7 @@ export default function ArtistSocket({
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${memberFansignId}`,
-      message: { orders: null, postit: null, birthday: null, nickname: null },
+      message: { orders: 0, postit: null, birthday: null, nickname: 'Artist' },
     };
     newSocket.send(JSON.stringify(myMessage));
   };

@@ -66,20 +66,20 @@ function FanWin() {
         {data.length === 0 ? (
           <>
             <div className="night z-10 absolute top-0 left-0 right-0 bottom-0 ;">
-            {[...Array(5)].map((_, index) => (
-              <div
-                className="shooting_star"
-                key={index}
-                style={{
-                  top: `${getRandomNumber(0, 100)}%`,
-                  left: `${getRandomNumber(0, 100)}%`,
-                  animationDelay: `-${getRandomNumber(0, 100)}ms`,
-                }}
-              ></div>
-            ))}
-                    </div>
-                    <div>
-            {stars.map((star) => (
+              {[...Array(5)].map((_, index) => (
+                <div
+                  className="shooting_star"
+                  key={index}
+                  style={{
+                    top: `${getRandomNumber(0, 100)}%`,
+                    left: `${getRandomNumber(0, 100)}%`,
+                    animationDelay: `-${getRandomNumber(0, 100)}ms`,
+                  }}
+                ></div>
+              ))}
+            </div>
+            <div>
+              {stars.map((star) => (
                 <div
                   key={star.id}
                   className="star"
@@ -89,7 +89,7 @@ function FanWin() {
                   }}
                 ></div>
               ))}
-                    </div>
+            </div>
             <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-jamsil text-35">
               <div>당첨 내역이 없습니다</div>
               <div
