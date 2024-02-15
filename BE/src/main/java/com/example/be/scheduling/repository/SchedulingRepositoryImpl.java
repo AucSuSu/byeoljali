@@ -190,11 +190,10 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 .join(memberFansign.artistFansign, artistFansign)
                 .join(applicant.fan, fan)
                 .join(memberFansign.member, member)
-                .where(memberFansign.memberfansignId.eq(memberFansignId))
+                .where(memberFansign.memberfansignId.eq(memberFansignId), fan.isBlacklist.eq(false))
                 .orderBy(orderByExpression)
                 .limit(10)
                 .fetch();
-
     }
 
     @Override

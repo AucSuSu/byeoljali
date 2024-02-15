@@ -70,7 +70,7 @@ function FanInfoView() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((response) => {
+      .then(async (response) => {
         console.log('업로드 성공', response.data);
         Swal.fire({
           icon: 'success',
@@ -80,9 +80,9 @@ function FanInfoView() {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
-        getUserInfoData();
+        await getUserInfoData();
         setTimeout(() => {
-          window.location.reload(true);
+          window.location.reload();
         }, 2500);
       })
       .catch((error) => {
