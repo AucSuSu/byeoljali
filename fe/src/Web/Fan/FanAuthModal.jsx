@@ -60,7 +60,7 @@ function FanAuthModal({ onClose, userData, getUserInfoData }) {
         });
         getUserInfoData();
         setTimeout(() => {
-          window.location.reload();
+          window.location.reload(true);
         }, 500);
         // onClose(); // 모달 닫기
       })
