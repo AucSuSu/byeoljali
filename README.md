@@ -1,6 +1,6 @@
 # :stars: 별자리 - 영상통화 팬싸인회 All in One 플랫폼
 
-## :link: 별자리 링크(웹 화면): 웹 도메인/노션 링크
+## :link: 별자리 링크(웹 화면): [별자리로 이동](웹도메인 링크 적어주세요)
 
 ## :clapper: 소개 영상 보기 : 링크
 
@@ -10,10 +10,9 @@
 SSAFY 10기 2학기 공통 프로젝트 - 별자리
 
 ## :star: 별자리 기획 배경
-- 팬싸인회 과정의 분산
-    - 기존) 팬싸인회 응모, 당첨자 선발, 팬싸인회 진행, 본인인증 과정이 다 따로 진행
-- 비대면 소통의 한계
-- 짧은 진행시간으로 인한 아쉬움
+:heavy_check_mark: 팬싸인회 과정의 분산: 기존) 팬싸인회 응모, 당첨자 선발, 팬싸인회 진행, 본인인증 과정이 다 따로 진행<br>
+:heavy_check_mark: 비대면 소통의 한계<br>
+:heavy_check_mark: 짧은 진행시간으로 인한 아쉬움
 
 ## :star2: 별자리 설명
 - All in One 플랫폼으로 모든 서비스를 한 플랫폼에서 제공<br>
@@ -87,28 +86,29 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 ![readme_files/architecture.png](./readme_files/architecture.png)
 ## :file_folder: 프로젝트 파일 구조
 
+
+
 ## :sparkler: 별자리 주요 기능
 
 
 ## :memo: 프로젝트 산출물
-- 와이어프레임
-- 요구사항 명세서
-- API 명세서
+- [프로토타입](https://www.figma.com/file/CWaNMfmbjIx4OU44aDYnfx/%EB%B3%84%EC%9E%90%EB%A6%AC-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85?type=design&node-id=877-101&mode=design&t=tKue4eC84VsZk1pd-0)
+- [요구사항 명세서](https://docs.google.com/spreadsheets/d/19WOuXo1cfLn9-JUh5jZQgVFT3Eol9RZOP_vrdUK_onU/edit#gid=1006392993)
+- [API 명세서](https://www.notion.so/API-c0b714bad22b4587ad1081d8d67c7351)
 - ERD
-- 회의록
-- 포팅 메뉴얼
-- 외부 API 문서
-- 시연 시나리오
+- [회의록](https://www.notion.so/b56165eed27a4313ac10bd94d46028a8?v=bc135a67af31467dbeeffc95980769c4)
+- [포팅 메뉴얼](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12E104/-/blob/master/exec/%ED%8F%AC%ED%8C%85_%EB%A9%94%EB%89%B4%EC%96%BC.md?ref_type=heads)
 
 ## :bulb: 개발 문화
-- 데일리 스크럼 회의로 애자일 방식 개발 지향
-- 노션, GitLab 적극 활용하여 
-- 의견은 자유롭게!
+- 데일리 <b>스크럼</b> 회의로 <b>애자일</b> 방식 개발 지향
+- 노션, GitLab 적극 활용 - <b>문서화, 가시화</b>로 정확한 의사소통
+- Jira로 데일리 일정 관리
+- 의견은 자유롭게!<br>
 ### GitLab
-![readme_files/gitlab.png](./readme_files/gitlab.png)
+![readme_files/gitlab.PNG](./readme_files/gitlab.PNG)
 ### Jira
-![readme_files/jira.png](./readme_files/jira.png)
+![readme_files/jira.PNG](./readme_files/jira.PNG)
 ### Notion
-![readme_files/notion.png](./readme_files/notion.png)
+![readme_files/notion.PNG](./readme_files/notion.PNG)
 
 ## :family: 팀원 소개
