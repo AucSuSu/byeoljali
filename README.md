@@ -89,99 +89,100 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 ![readme_files/architecture.png](./readme_files/architecture.png)
 ## :file_folder: 프로젝트 파일 구조
 ```
-fe<br>
- ┣ .vscode<br>
- ┃ ┗ settings.json<br>
- ┣ docker<br>
- ┃ ┣ create_image.sh<br>
- ┃ ┣ Dockerfile<br>
- ┃ ┗ entrypoint.sh<br>
- ┣ node_modules<br>
- ┣ public<br>
- ┣ src<br>
- ┃ ┣ Openvidu<br>
- ┃ ┃ ┣ Artist<br>
- ┃ ┃ ┣ Fan<br>
- ┃ ┃ ┣ Station<br>
- ┃ ┃ ┣ View<br>
- ┃ ┃ ┗ Socket.js<br>
- ┃ ┣ Web<br>
- ┃ ┃ ┣ Artist<br>
- ┃ ┃ ┣ Assets<br>
- ┃ ┃ ┣ Fan<br>
- ┃ ┃ ┣ Home<br>
- ┃ ┃ ┣ Pages<br>
- ┃ ┃ ┣ Stores<br>
- ┃ ┃ ┣ Utils<br>
- ┃ ┣ App.js<br>
- ┃ ┣ AppRoutes.js<br>
- ┃ ┣ index.css<br>
- ┃ ┣ index.js<br>
- ┃ ┗ registerServiceWorker.js<br>
- ┣ .env<br>
- ┣ .gitignore<br>
- ┣ .prettierrc<br>
- ┣ config-overrides.js<br>
- ┣ package-lock.json<br>
- ┣ package.json<br>
- ┣ postcss.config.js<br>
- ┣ README.md<br>
- ┣ tailwind.config.js<br>
- ┗ test_txt.txt<br>
+flask
+ ┣ .gitignore
+ ┣ app.py
+ ┣ dlib-19.22.99-cp39-cp39-win_amd64.whl
+ ┣ Dockerfile
+ ┣ life4cut.jpg
+ ┗ requirements.txt
+```
+
+
+```
+BE
+ ┣ .gradle
+ ┣ build
+ ┣ out
+ ┣ src
+ ┃ ┣ main
+ ┃ ┃ ┣ java
+ ┃ ┃ ┃ ┗ com
+ ┃ ┃ ┃ ┃ ┗ example
+ ┃ ┃ ┃ ┃ ┃ ┗ be
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ applicant
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ artist
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ artistfansign
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ common
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ config
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ exception
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ fan
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ member
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ memberfansign
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ photo
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ s3
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ scheduling
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ session
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ stmp
+ ┃ ┃ ┃ ┃ ┃ ┃ ┣ winning
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ BeApplication.java
+ ┃ ┃ ┗ resources
+ ┃ ┃ ┃ ┣ static
+ ┃ ┃ ┃ ┣ templates
+ ┃ ┃ ┃ ┣ application-oauth.yml
+ ┃ ┃ ┃ ┣ application.properties
+ ┃ ┃ ┃ ┗ application.yml
+ ┃ ┗ test
+ ┣ .gitignore
+ ┣ build.gradle
+ ┣ Dockerfile
+ ┣ gradlew
+ ┣ gradlew.bat
+ ┗ settings.gradle
 ```
 
 ```
-flask<br>
- ┣ .gitignore<br>
- ┣ app.py<br>
- ┣ dlib-19.22.99-cp39-cp39-win_amd64.whl<br>
- ┣ Dockerfile<br>
- ┣ life4cut.jpg<br>
- ┗ requirements.txt<br>
-```
-
-```
-BE<br>
- ┣ .gradle<br>
- ┣ build<br>
- ┣ out<br>
- ┣ src<br>
- ┃ ┣ main<br>
- ┃ ┃ ┣ java<br>
- ┃ ┃ ┃ ┗ com<br>
- ┃ ┃ ┃ ┃ ┗ example<br>
- ┃ ┃ ┃ ┃ ┃ ┗ be<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ applicant<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ artist<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ artistfansign<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ common<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ config<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ exception<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ fan<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ member<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ memberfansign<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ photo<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ s3<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ scheduling<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ session<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ stmp<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ winning<br>
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ BeApplication.java<br>
- ┃ ┃ ┗ resources<br>
- ┃ ┃ ┃ ┣ static<br>
- ┃ ┃ ┃ ┣ templates<br>
- ┃ ┃ ┃ ┣ application-oauth.yml<br>
- ┃ ┃ ┃ ┣ application.properties<br>
- ┃ ┃ ┃ ┗ application.yml<br>
- ┃ ┗ test<br>
- ┣ .gitignore<br>
- ┣ build.gradle<br>
- ┣ Dockerfile<br>
- ┣ gradlew<br>
- ┣ gradlew.bat<br>
- ┗ settings.gradle<br>
-```
-
+fe
+ ┣ .vscode
+ ┃ ┗ settings.json
+ ┣ docker
+ ┃ ┣ create_image.sh
+ ┃ ┣ Dockerfile
+ ┃ ┗ entrypoint.sh
+ ┣ node_modules
+ ┣ public
+ ┣ src
+ ┃ ┣ Openvidu
+ ┃ ┃ ┣ Artist
+ ┃ ┃ ┣ Fan
+ ┃ ┃ ┣ Station
+ ┃ ┃ ┣ View
+ ┃ ┃ ┗ Socket.js
+ ┃ ┣ Web
+ ┃ ┃ ┣ Artist
+ ┃ ┃ ┣ Assets
+ ┃ ┃ ┣ Fan
+ ┃ ┃ ┣ Home
+ ┃ ┃ ┣ Pages
+ ┃ ┃ ┣ Stores
+ ┃ ┃ ┣ Utils
+ ┃ ┣ App.js
+ ┃ ┣ AppRoutes.js
+ ┃ ┣ index.css
+ ┃ ┣ index.js
+ ┃ ┗ registerServiceWorker.js
+ ┣ .env
+ ┣ .gitignore
+ ┣ .prettierrc
+ ┣ config-overrides.js
+ ┣ package-lock.json
+ ┣ package.json
+ ┣ postcss.config.js
+ ┣ README.md
+ ┣ tailwind.config.js
+ ┗ test_txt.txt
+ ```
+ 
 ## :sparkler: 별자리 주요 기능
 ### 1. 팬싸인회 개설
 - CLOVA AI의 <b>OCR API</b>를 사용하기 위해서, 영수증 내 비교 대상을 확인하기 위해 앨범명을 지정<br>
