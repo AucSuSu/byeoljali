@@ -11,22 +11,9 @@ export default function FanSocket({
 }) {
   const navigate = useNavigate();
   const [socket, setSocket] = useState(null);
-  useEffect(() => {
-    console.log(stationData);
-    console.log(socket);
-    if (stationData) {
-      sendMessage('TALK', {
-        orders: null,
-        postit: stationData.postit,
-        birthday: stationData.birthday,
-        nickname: stationData.nickname,
-        fanId: propsData.fanId,
-      });
-    }
-  }, [stationData]);
 
-  useEffect(() => {
-    // WebSocket 서버에 연결
+  // WebSocket 서버에 연결
+  const initSocket = () => {
     const newSocket = new SockJs('https://i10e104.p.ssafy.io/socket');
 
     newSocket.onmessage = (e) => {
@@ -82,14 +69,41 @@ export default function FanSocket({
 
     setSocket(newSocket);
     // 컴포넌트 언마운트 시 소켓 연결 해제
-    return () => {
-      sendMessage('QUIT', {
+    return async () => {
+      await sendMessage('QUIT', {
         orders: null,
         postit: null,
         birthday: null,
         nickname: null,
         fanId: null,
       });
+      newSocket.close();
+      initSocket();
+    };
+  };
+
+  useEffect(() => {
+    console.log(stationData);
+    console.log(socket);
+    if (stationData) {
+      sendMessage('TALK', {
+        orders: null,
+        postit: stationData.postit,
+        birthday: stationData.birthday,
+        nickname: stationData.nickname,
+        fanId: propsData.fanId,
+      });
+    }
+  }, [stationData]);
+
+  useEffect(() => {
+    initSocket();
+
+    return async () => {
+      if (socket) {
+        await socket.close();
+        initSocket();
+      }
     };
   }, []);
 

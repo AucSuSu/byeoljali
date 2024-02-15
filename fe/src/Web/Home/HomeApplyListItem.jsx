@@ -102,9 +102,9 @@ const ListItem = ({ data, status }) => {
           {isLive ? 'APPLYING' : 'READY'}
         </p>
         <p
-          className={`mr-2 border-2  ${data?.mode ? 'border-sky-blue text-sky-blue' : 'border-neonGreen text-neonGreen'} px-3 rounded-md p-1`}
+          className={`mr-2 border-2  ${data?.mode === 'RANDOM' ? 'border-sky-blue text-sky-blue' : 'border-neonGreen text-neonGreen'} px-3 rounded-md p-1`}
         >
-          {data?.mode ? 'RANDOM' : 'LINE'}
+          {data?.mode === 'RANDOM' ? 'RANDOM' : 'LINE'}
         </p>
       </div>
       <div className=" ml-5 h-[65px] mx-2">{data.title}</div>
