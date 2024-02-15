@@ -18,13 +18,13 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 :heavy_check_mark: 짧은 진행시간으로 인한 아쉬움
 
 ## :star2: 별자리 설명
-- All in One 플랫폼으로 모든 서비스를 한 플랫폼에서 제공<br>
-     :arrow_forward: 팬싸인회 개설, 응모, 당첨, 팬싸인회 진행, 본인 인증, 인생네컷 등 모든 과정을 <b>'별자리'</b>에서
-- 본인인증 자동화 + 구매 내역 인증 자동화<br>
-     :arrow_forward: 불필요한 절차 감소
-- 스크립트/포스트잇 기능 추가 <br>
-     :arrow_forward: 비대면 소통의 불편함 감소
-- 인생네컷 기능 추가 <br>
+:heavy_check_mark: All in One 플랫폼으로 모든 서비스를 한 플랫폼에서 제공 
+     :arrow_forward: 팬싸인회 개설, 응모, 당첨, 팬싸인회 진행, 본인 인증, 인생네컷 등 모든 과정을 <b>'별자리'</b>에서<br>
+:heavy_check_mark: 본인인증 자동화 + 구매 내역 인증 자동화 
+     :arrow_forward: 불필요한 절차 감소<br>
+:heavy_check_mark: 스크립트/포스트잇 기능 추가 
+     :arrow_forward: 비대면 소통의 불편함 감소<br>
+:heavy_check_mark: 인생네컷 기능 추가 
      :arrow_forward: 아티스트와 둘만의 추억 제공
 
 
