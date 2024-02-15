@@ -58,11 +58,8 @@ function FanAuthModal({ onClose, userData, getUserInfoData }) {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
-        getUserInfoData();
 
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 200);
+        window.location.reload(true);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
