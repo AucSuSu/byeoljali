@@ -23,9 +23,6 @@ function FanInfoView() {
       return res.data.object;
     });
     setTimeout(() => {
-      setLocalUserData({ nickname: data.nickname, name: data.name });
-      setPreviewUrl(data.profileImageUrl);
-      setAuthImageUrl(data.certificationImageUrl);
       dispatch(getUserInfo(data));
     }, 500);
   };
