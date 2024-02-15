@@ -22,10 +22,12 @@ function FanInfoView() {
       console.log('데이터 왔어요~', res.data.object);
       return res.data.object;
     });
-    setLocalUserData({ nickname: data.nickname, name: data.name });
-    setPreviewUrl(data.profileImageUrl);
-    setAuthImageUrl(data.certificationImageUrl);
-    dispatch(getUserInfo(data));
+    setTimeout(() => {
+      setLocalUserData({ nickname: data.nickname, name: data.name });
+      setPreviewUrl(data.profileImageUrl);
+      setAuthImageUrl(data.certificationImageUrl);
+      dispatch(getUserInfo(data));
+    }, 500);
   };
 
   const [localUserData, setLocalUserData] = useState({
@@ -70,7 +72,7 @@ function FanInfoView() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then(async (response) => {
+      .then((response) => {
         console.log('업로드 성공', response.data);
         Swal.fire({
           icon: 'success',
@@ -80,10 +82,10 @@ function FanInfoView() {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
-        await getUserInfoData();
+        getUserInfoData();
         setTimeout(() => {
           window.location.reload();
-        }, 2500);
+        }, 500);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
