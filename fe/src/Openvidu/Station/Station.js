@@ -267,7 +267,7 @@ class App extends Component {
 
     // 초기 reaminingTime
     this.setState({
-      remainingTime: (this.state.orders - this.state.curUser) * 120,
+      remainingTime: (this.state.orders - this.state.curUser) * 30,
     });
 
     // 타이머 설정
