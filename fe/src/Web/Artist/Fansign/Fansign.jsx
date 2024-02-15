@@ -38,7 +38,7 @@ export default function Fansign({ handleAddFansign }) {
           </div>
         </>
       ) : (
-        <div className="w-[86%] ml-[7%]">
+        <>
           <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-8 border-4 border-deep-dark rounded-lg mb-8">
             {fansignList.object.map((fansign) => (
               <FansignList
@@ -49,7 +49,7 @@ export default function Fansign({ handleAddFansign }) {
             ))}
           </div>
           <div className="h-8"></div>
-        </div>
+        </>
       )}
     </>
   );
