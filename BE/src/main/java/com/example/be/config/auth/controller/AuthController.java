@@ -27,10 +27,10 @@ public class AuthController {
     @GetMapping("/api/oauth")
     public ResponseEntity<String> getLogin(@RequestParam("code") String code){
 
-        System.out.println(code);
+        //System.out.println(code);
         // 넘어온 인가 코드를 통해 카카오 유저 정보를 얻기위한 access_token 발급
         OauthToken oauthToken = oAuthService.getAccessToken(code);
-        System.out.println("카카오 액세스 토큰 : " + oauthToken.getAccess_token());
+        //System.out.println("카카오 액세스 토큰 : " + oauthToken.getAccess_token());
 
         // 발급받은 accessToken 으로 카카오 회원 정보 DB 저장
         JwtToken jwtToken = oAuthService.saveFanAndGetToken(oauthToken.getAccess_token());
@@ -77,13 +77,13 @@ public class AuthController {
         while (headerNames.hasMoreElements()) {
             String headerName = headerNames.nextElement();
             String headerValue = request.getHeader(headerName);
-            System.out.println(headerName + ": " + headerValue);
+            //System.out.println(headerName + ": " + headerValue);
         }
 
 
-        System.out.println("로그아웃 할때 필요한 access-token : " + accessToken);
+        //System.out.println("로그아웃 할때 필요한 access-token : " + accessToken);
         String kakaoAccessToken = request.getHeader("kakao-authorization");
-        System.out.println("로그아웃 할때 필요한 kakao-access-token : " + kakaoAccessToken);
+        //System.out.println("로그아웃 할때 필요한 kakao-access-token : " + kakaoAccessToken);
         Long logoutId = oAuthService.logout(kakaoAccessToken, accessToken);
         Message message = new Message(HttpStatusEnum.OK, "팬 로그아웃 완료", logoutId);
         return new ResponseEntity<>(message, HttpStatus.OK);

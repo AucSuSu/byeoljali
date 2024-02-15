@@ -58,7 +58,7 @@ public class OAuthService {
         if (profile.getKakao_account().getEmail() == null){
             return null;
         }
-        System.out.println(profile);
+        //System.out.println(profile);
 
         // 팬 회원가입 정보
         String profileImageUrl = profile.getKakao_account().getProfile().getProfile_image_url();
@@ -125,7 +125,7 @@ public class OAuthService {
 
         ObjectMapper objectMapper = new ObjectMapper();
         KakaoProfile kakaoProfile = null;
-        System.out.println(kakaoProfileResponse.getBody());
+        //System.out.println(kakaoProfileResponse.getBody());
         try {
             kakaoProfile = objectMapper.readValue(kakaoProfileResponse.getBody(), KakaoProfile.class);
         } catch (JsonProcessingException e) {

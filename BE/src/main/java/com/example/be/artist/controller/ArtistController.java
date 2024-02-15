@@ -59,7 +59,6 @@ public class ArtistController {
     @PostMapping(value = "/members", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Message> addMember(ArtistMemberAddRequestDto requestDto, @RequestParam(value = "image") MultipartFile image) {
         log.info("*** 아티스트 멤버 추가하기 ***");
-        System.out.println(requestDto.getName());
         Long memberId =
                 artistService.addMember(requestDto, image);
         Message message = new Message(HttpStatusEnum.OK, "회원 추가 성공", memberId);

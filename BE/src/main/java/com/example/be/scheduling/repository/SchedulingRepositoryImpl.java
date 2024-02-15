@@ -46,7 +46,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
-                        System.out.println("inserting : " + subItems.get(i));
+                        //System.out.println("inserting : " + subItems.get(i));
                         ps.setLong(1, subItems.get(i).getOrders());
                         ps.setLong(2, subItems.get(i).getApplicantId());
                         ps.setLong(3, subItems.get(i).getFanId());
@@ -190,11 +190,10 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 .join(memberFansign.artistFansign, artistFansign)
                 .join(applicant.fan, fan)
                 .join(memberFansign.member, member)
-                .where(memberFansign.memberfansignId.eq(memberFansignId))
+                .where(memberFansign.memberfansignId.eq(memberFansignId), fan.isBlacklist.eq(false))
                 .orderBy(orderByExpression)
                 .limit(10)
                 .fetch();
-
     }
 
     @Override
@@ -224,7 +223,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 )
                 .fetch();
 
-        System.out.println(list);
+        //System.out.println(list);
         return list;
     }
 

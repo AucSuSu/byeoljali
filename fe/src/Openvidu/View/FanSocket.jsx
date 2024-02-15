@@ -19,11 +19,11 @@ export default function FanSocket({
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
       console.log('팬이 전달받은 메세지 : ', message);
-      if (
-        message.type === 'JOIN' &&
-        message.message.orders === propsData.orders
-      ) {
-        joinSignal();
+      if (message.type === 'JOIN') {
+        updateCurUser(message.orders);
+        if (message.message.orders === propsData.orders) {
+          joinSignal();
+        }
       } else if (
         message.type === 'CLOSE' &&
         message.message.orders === propsData.orders
