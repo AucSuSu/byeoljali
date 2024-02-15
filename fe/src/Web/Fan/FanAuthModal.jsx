@@ -59,10 +59,10 @@ function FanAuthModal({ onClose, userData, getUserInfoData }) {
           // confirmButtonText: 'OK',
         });
         getUserInfoData();
+
         setTimeout(() => {
           window.location.reload(true);
-        }, 500);
-        // onClose(); // 모달 닫기
+        }, 200);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {

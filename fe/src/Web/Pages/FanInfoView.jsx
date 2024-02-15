@@ -82,10 +82,10 @@ function FanInfoView() {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
-        getUserInfoData(true);
+        getUserInfoData();
         setTimeout(() => {
-          window.location.reload();
-        }, 500);
+          window.location.reload(true);
+        }, 200);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
