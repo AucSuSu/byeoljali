@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function FanInfoView() {
   const customAxios = useAxios();
-  const userData = useSelector((state) => state.faninfo.data);
+  let userData = useSelector((state) => state.faninfo.data);
 
   const dispatch = useDispatch();
 
@@ -72,7 +72,7 @@ function FanInfoView() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((response) => {
+      .then(async (response) => {
         console.log('업로드 성공', response.data);
         Swal.fire({
           icon: 'success',
@@ -82,7 +82,8 @@ function FanInfoView() {
           // confirmButtonColor: '#FF2990',
           // confirmButtonText: 'OK',
         });
-        window.location.reload(true);
+        await getUserInfoData();
+        window.location.reload();
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
