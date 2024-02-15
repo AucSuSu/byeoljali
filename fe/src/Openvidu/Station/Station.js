@@ -277,7 +277,7 @@ class App extends Component {
       }));
       if (this.state.remainingTime === 20) {
         Swal.fire({
-          icon: 'success',
+          icon: 'info',
           title: '곧 팬싸인이 시작됩니다 ',
           text: '아직 본인 인증을 안했다면 인증해주세요',
           background: '#222222',
@@ -390,7 +390,7 @@ class App extends Component {
             console.log('서버에 대기방 사진 전송 완료', response);
             if (response.data.isSamePerson) {
               console.log('얼굴 인증 완료');
-              this.isSamePerson = true;
+              this.setState({ isSamePerson: true });
               Swal.fire({
                 icon: 'success',
                 title: '얼굴 인증 성공!!',
@@ -463,7 +463,7 @@ class App extends Component {
               {/* 캡처 버튼 */}
               <div className="flex flex-row h-[10%] border-2 border-dark-gray items-center justify-between ">
                 <p className="pr-2 ml-10">
-                  {this.isSamePerson
+                  {this.state.isSamePerson
                     ? '본인 인증이 완료되었습니다'
                     : '본인 인증이 필요합니다'}
                 </p>

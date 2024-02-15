@@ -29,14 +29,14 @@ export default function FanView() {
 
   // Station에서 Meeting 버튼을 눌렀을 때 Fan 팬싸방으로 이동할 려고 만든 함수
   const switchToFan = async (data) => {
-    if (data.isSame === true) {
+    if (data.isSame) {
       const openviduData = await joinFansign();
       setFanData(openviduData);
       setStationData(data);
       setFlag(!flag);
     } else {
       Swal.fire({
-        icon: 'warning',
+        icon: 'error',
         title: '인증 되지 않아 입장에 실패했어요',
         background: '#222222',
         confirmButtonColor: '#FF2990',
