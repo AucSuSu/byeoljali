@@ -1,8 +1,8 @@
 # :stars: 별자리 - 영상통화 팬싸인회 All in One 플랫폼
 
-## :link: 별자리 링크(웹 화면): [별자리로 이동](웹도메인 링크 적어주세요)
+## :link: 별자리 링크(웹 화면): [별자리로 이동](https://i10e104.p.ssafy.io/)
 
-## :clapper: 소개 영상 보기 : 링크
+## :clapper: 소개 영상 보기 : [UCC](유씨씨 링크 걸어주세요) | [시연 영상](시연 영상 링크 걸어주세요)
 
 
 ## :date: 프로젝트 진행 기간
@@ -175,13 +175,39 @@ BE<br>
 
 
 ## :sparkler: 별자리 주요 기능
+### 1. 팬싸인회 개설
+- CLOVA AI의 <b>OCR API</b>를 사용하기 위해서, 영수증 내 비교 대상을 확인하기 위해 앨범명을 지정<br>
 
+### 2. 팬싸인회 응모
+- 응모 중인 팬싸인회에 <b>영수증</b> 사진을 첨부하여 구매 내역 확인 절차를 따로 하지 않아도 됨<br>
+
+### 3. 팬싸인회 당첨
+- Scheduler cron을 활용하여 매일 당첨자를 일정 시간에 선정
+- 선정 후, 당첨자에게 메일로 당첨 여부 전송
+
+### 4. 팬싸인회 대기방
+- 본인인증: 저장된 인증 용 사진과 현재 카메라에 있는 얼굴을 대조해 별도의 본인인증 과정 삭제
+- 마이크 테스트: 비대면 팬싸인회 중, 마이크 이상 문제를 예방하기 위한 조치
+- 내 순서 / 대기시간: 순서와 대기 시간을 명시해주어 무한 대기로 인한 피로도 감소
+- 포스트잇: 팬이 아티스트에게 하고 싶은 말 전달 (WebSocket으로 아티스트 세션으로 전달)
+- 스크립트: 팬이 준비한 대본을 같은 화면에 띄워줄 수 있도록 도와주는 기능
+- 채팅방: 팬들끼리 팬싸인회 전, 대기방에서 소통할 수 있는 기능
+
+### 5. 팬 - 팬싸인회 중!
+- 대기방에서 작성한 스크립트가 팬의 팬싸인회 화면에 출력
+- 아티스트와 원하는 포즈로 네 컷의 사진을 찍을 수 있음
+- 남은 시간을 확인할 수 있어 팬싸인회 시간 효율적으로 사용 가능
+
+### 6. 아티스트 - 팬싸인회 중!
+- 팬의 개인 정보(이름, 생년월일)을 전송받아 팬의 기본 정보 확인 가능
+
+### 7. 인생네컷 
 
 ## :memo: 프로젝트 산출물
 - [프로토타입](https://www.figma.com/file/CWaNMfmbjIx4OU44aDYnfx/%EB%B3%84%EC%9E%90%EB%A6%AC-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85?type=design&node-id=877-101&mode=design&t=tKue4eC84VsZk1pd-0)
 - [요구사항 명세서](https://docs.google.com/spreadsheets/d/19WOuXo1cfLn9-JUh5jZQgVFT3Eol9RZOP_vrdUK_onU/edit#gid=1006392993)
 - [API 명세서](https://www.notion.so/API-c0b714bad22b4587ad1081d8d67c7351)
-- ERD
+- [ERD](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12E104/-/blob/master/readme_files/ERD.png?ref_type=heads)
 - [회의록](https://www.notion.so/b56165eed27a4313ac10bd94d46028a8?v=bc135a67af31467dbeeffc95980769c4)
 - [포팅 메뉴얼](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12E104/-/blob/master/exec/%ED%8F%AC%ED%8C%85_%EB%A9%94%EB%89%B4%EC%96%BC.md?ref_type=heads)
 
@@ -201,7 +227,7 @@ BE<br>
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/ttaho"><img src="../readme_files/윤태호.png" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 윤태호</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/ttaho"><img src="./readme_files/윤태호.png" width="100px;" alt=""/><br /><sub><b>BE 팀장 : 윤태호</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/MunsooKang"><img src="./readme_files/강문수.png" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 강문수</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/arim-kim"><img src="./readme_files/김아림.png" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 김아림</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/makie082"><img src="./readme_files/우미경.png" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 우미경</b></sub></a><br /></td>
