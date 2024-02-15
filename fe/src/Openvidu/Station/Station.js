@@ -268,15 +268,10 @@ class App extends Component {
     // 초기 reaminingTime
     const now = new Date();
     const start = new Date(this.props.propsData.startFansignTime);
-    const cultime = start - now;
-    console.log(
-      '현재 시간 : :',
-      now,
-      '시작 시간 : ',
-      start,
-      '계산된 시간 : ',
-      cultime,
-    );
+    let cultime = start - now;
+    if (cultime < 0) {
+      cultime = 1;
+    }
     this.setState({
       remainingTime: cultime + (this.state.orders - this.state.curUser) * 30000, // * 뒤에 ms 단위
     });
