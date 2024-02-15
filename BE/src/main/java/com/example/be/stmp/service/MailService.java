@@ -25,7 +25,7 @@ public class MailService {
 
         for(WinningInsertDto dto : list){
             // dto -> MailDto
-            System.out.println(dto);
+            //System.out.println(dto);
             sendWinningMail(new MailDto(dto.getEmail(),
                     dto.getTitle(), dto.getStartFansignTime(), dto.getName(),
                     dto.getOrders()));

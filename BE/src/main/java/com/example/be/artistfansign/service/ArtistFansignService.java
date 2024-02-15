@@ -59,8 +59,8 @@ public class ArtistFansignService {
             String nowFormattedDate = now.format(formatter);
 
             // 들어온 입력 데이터 날짜
-            System.out.println("입력 날짜 string : " + dto.getStartApplyTime().split(" ")[0]);
-            System.out.println("현재 날짜 string : " + nowFormattedDate);
+//            System.out.println("입력 날짜 string : " + dto.getStartApplyTime().split(" ")[0]);
+//            System.out.println("현재 날짜 string : " + nowFormattedDate);
             String dtoFormattedDate = dto.getStartApplyTime().split(" ")[0];
             FansignStatus status = FansignStatus.READY_APPLYING;
             if(dtoFormattedDate.equals(nowFormattedDate)){
