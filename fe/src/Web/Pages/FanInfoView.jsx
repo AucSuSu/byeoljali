@@ -83,7 +83,9 @@ function FanInfoView() {
           // confirmButtonText: 'OK',
         });
         getUserInfoData();
-        window.location.reload(true);
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 200);
       })
       .catch((error) => {
         if (error.response && error.response.status === 413) {
