@@ -52,9 +52,11 @@ const NavbarLink = styled(Link)`
   text-decoration: none;
   color: inherit;
   font-weight: bold;
+  cursor: pointer
 
   &:hover {
     color: #ff6d79;
+    cursor: pointer
   }
 `;
 
@@ -185,13 +187,12 @@ const Navbar = ({ bgStyle }) => {
     <NavbarContainer
       className={`${isProps ? isProps : `bg-black`}  font-jamsil pb-8`}
     >
-      <NavbarTitle 
-      className='flex justify-center items-center'
-      > 
-      <Link to ="/" className='font-hambuger'> 별자리
+      <NavbarTitle className="flex justify-center items-center">
+        <Link to="/" className="font-hambuger cursor-pointer">
+          {' '}
+          별자리
         </Link>
         <BlinkingText></BlinkingText>
-
       </NavbarTitle>
       <NavbarList>
         {isArtist ? (
