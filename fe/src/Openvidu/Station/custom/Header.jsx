@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default function Header({ title, member, timer }) {
-  const minutes = Math.floor(timer / 60); // 남은 시간 관련 계산
-  const seconds = timer % 60;
+  const minutes = Math.floor(timer / (1000 * 60)); // 남은 시간 관련 계산
+  const seconds = Math.floor((timer % (1000 * 60)) / 1000);
 
   return (
     <div className="bg-black w-full p-4 flex justify-between items-center font-jamsil tracking-wide text-white">

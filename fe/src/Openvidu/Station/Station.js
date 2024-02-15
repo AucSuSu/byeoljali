@@ -32,7 +32,7 @@ class App extends Component {
       publisher: undefined,
       subscribers: [],
       messages: [], // 채팅 메시지 저장
-      remainingTime: 600, // 대기 시간 임시 개발
+      remainingTime: 10000,
       myScript: [], // 스크립트 작성 내용
       myPostit: [], // 포스트잇 작성 내용
       orders: this.props.propsData.orders, // 대기번호
@@ -266,14 +266,25 @@ class App extends Component {
     );
 
     // 초기 reaminingTime
+    const now = new Date();
+    const start = new Date(this.props.propsData.startFansignTime);
+    const cultime = start - now;
+    console.log(
+      '현재 시간 : :',
+      now,
+      '시작 시간 : ',
+      start,
+      '계산된 시간 : ',
+      cultime,
+    );
     this.setState({
-      remainingTime: (this.state.orders - this.state.curUser) * 30,
+      remainingTime: cultime + (this.state.orders - this.state.curUser) * 30000, // * 뒤에 ms 단위
     });
 
     // 타이머 설정
     this.timer = setInterval(() => {
       this.setState((prevState) => ({
-        remainingTime: Math.max(prevState.remainingTime - 1, 0), // 0 이하로 내려가지 않도록
+        remainingTime: Math.max(prevState.remainingTime - 1000, 0), // 0 이하로 내려가지 않도록
       }));
       if (this.state.remainingTime === 20) {
         Swal.fire({

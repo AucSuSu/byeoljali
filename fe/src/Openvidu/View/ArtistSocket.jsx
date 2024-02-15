@@ -15,14 +15,16 @@ export default function ArtistSocket({
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
       console.log('아티스트가 메세지 전달받음 : ', message);
+
       if (message.type === 'TALK' && message.message.nickname !== 'Artist') {
         getFanData(message.message);
       } else if (
         message.type === 'ENTER' &&
         message.message.nickname !== 'Artist'
       ) {
-        console.log('Artist가 SendMessage 실행했어요');
+        console.log('Artist가 SendMessage 실행했어요', '소켓이에용 : ', socket);
         sendMessage('TALK');
+        console.log('TALk 왜 안보냄? 나 진짜 어이가 없어서 그래 설명좀 해줘');
       }
     };
 
@@ -91,7 +93,7 @@ export default function ArtistSocket({
     const myMessage = {
       type: 'ENTER',
       roomId: `memberFansignSession${memberFansignId}`,
-      message: { orders: null, postit: null, birthday: null, nickname: null },
+      message: { orders: 0, postit: null, birthday: null, nickname: 'Artist' },
     };
     newSocket.send(JSON.stringify(myMessage));
   };
