@@ -269,8 +269,8 @@ class App extends Component {
     const now = new Date();
     const start = new Date(this.props.propsData.startFansignTime);
     let cultime = start - now;
-    if (cultime < 0) {
-      cultime = 1;
+    if (cultime <= 0) {
+      cultime = 0;
     }
     this.setState({
       remainingTime: cultime + (this.state.orders - this.state.curUser) * 30000, // * 뒤에 ms 단위

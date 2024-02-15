@@ -142,7 +142,7 @@ class VideoRoomComponent extends Component {
       this.setState((prevState) => ({
         remainingTime: Math.max(prevState.remainingTime - 1000, 0), // 0 이하로 내려가지 않도록
       }));
-      if (this.state.remainingTime === 0) {
+      if (this.state.remainingTime <= 0) {
         this.inviteCountDown(this.state.orders);
         clearInterval(this.timer);
         // checkponit
