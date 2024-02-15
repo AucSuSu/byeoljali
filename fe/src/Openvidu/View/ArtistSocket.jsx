@@ -24,6 +24,7 @@ export default function ArtistSocket({
       ) {
         console.log('Artist가 SendMessage 실행했어요', '소켓이에용 : ', socket);
         sendMessagehandler('TALK');
+        sendMessage('TALK', newSocket);
         console.log('TALk 왜 안보냄? 나 진짜 어이가 없어서 그래 설명좀 해줘');
       }
     };
@@ -71,24 +72,28 @@ export default function ArtistSocket({
   }, [autoData]);
 
   const sendMessagehandler = (e) => {
+    console.log('handler 실행 됨', socket);
     sendMessage(e);
   };
 
   // 메시지 전송 함수
-  const sendMessage = (messageType) => {
+  const sendMessage = (messageType, newSocket) => {
+    const myMessage = {
+      type: messageType,
+      roomId: `memberFansignSession${memberFansignId}`,
+      message: {
+        orders: autoData.orders,
+        postit: null,
+        birthday: null,
+        nickname: 'Artist',
+        fanId: null,
+      },
+    };
     if (socket) {
-      const myMessage = {
-        type: messageType,
-        roomId: `memberFansignSession${memberFansignId}`,
-        message: {
-          orders: autoData.orders,
-          postit: null,
-          birthday: null,
-          nickname: 'Artist',
-          fanId: null,
-        },
-      };
       socket.send(JSON.stringify(myMessage));
+    } else if (newSocket) {
+      console.log('newSocket으로 실행 됨');
+      newSocket.send(JSON.stringify(myMessage));
     }
   };
 
