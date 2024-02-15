@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function FanInfoView() {
   const customAxios = useAxios();
-  let userData = useSelector((state) => state.faninfo.data);
+  const userData = useSelector((state) => state.faninfo.data);
 
   const dispatch = useDispatch();
 
