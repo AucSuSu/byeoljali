@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from './Stores/authReducer';
 
-const API_URL = 'https://i10e104.p.ssafy.io/api/';
-// const API_URL = 'http://localhost:8080/api/';
+// const API_URL = 'https://i10e104.p.ssafy.io/api/';
+const API_URL = 'http://localhost:8080/api/';
 
 export default function useAxios() {
   const accessToken = useSelector((state) => state.auth.token);
