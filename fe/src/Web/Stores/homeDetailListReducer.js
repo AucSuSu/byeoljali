@@ -5,23 +5,26 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 //팬 사인회 응모를 위한 디테일한 정보
-export const detailList = createAsyncThunk('axios/detailList', async (data) => {
-  try {
-    const token = selectToken(thunkAPI.getState().auth);
-    const response = await axios.get(
-      process.env.REACT_APP_BASE_URL + 'mainpage/makeApplyForm/' + data,
-      {
-        headers: {
-          Authorization: token,
+export const detailList = createAsyncThunk(
+  'axios/detailList',
+  async (data, { getState }) => {
+    try {
+      const token = getState().auth.token;
+      const response = await axios.get(
+        process.env.REACT_APP_BASE_URL + 'mainpage/makeApplyForm/' + data,
+        {
+          headers: {
+            authorization: token,
+          },
         },
-      },
-    );
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('팬 사인회 정보 로드 실패: ', error);
-  }
-});
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error('팬 사인회 정보 로드 실패: ', error);
+    }
+  },
+);
 
 const homeDetailListSlice = createSlice({
   name: 'detailList',
