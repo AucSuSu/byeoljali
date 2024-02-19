@@ -52,8 +52,8 @@ public class SecurityConfig {
                 .apply(new CustomFilter()) // 커스텀 필터 추가
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/**") // 여기에 권한추가해줘야함
-                .access("hasRole('ROLE_FAN, ROLE_ARTIST')")
+                .antMatchers("/api/login", "/api/oauth").permitAll() // /api/login과 /api/oauth에 대한 접근을 누구나 할 수 있도록 허용
+                .antMatchers("/api/**").access("hasRole('ROLE_FAN') or hasRole('ROLE_ARTIST')") // 기타 /api/** 경로는 ROLE_FAN, ROLE_ARTIST 역할을 가진 사용자만 접근 가능
                 .anyRequest().permitAll()
                 .and();
 
