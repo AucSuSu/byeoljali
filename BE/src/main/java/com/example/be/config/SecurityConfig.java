@@ -52,21 +52,12 @@ public class SecurityConfig {
                 .apply(new CustomFilter()) // 커스텀 필터 추가
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/fan/**") // 여기에 권한추가해줘야함
-//                .access("hasRole('ROLE_FAN')")
-//                .antMatchers("/artist/**") // 여기에 권한추가해줘야함
-//                .access("hasRole('ROLE_ARTIST')")
+                .antMatchers("/api/**") // 여기에 권한추가해줘야함
+                .access("hasRole('ROLE_FAN, ROLE_ARTIST')")
                 .anyRequest().permitAll()
                 .and();
 
-
         return http.build();
-
-
-//        http.logout() // 로그아웃 기능 작동함
-//                .logoutUrl("/logout") // 로그아웃 처리 URL, default: /logout, 원칙적으로 post 방식만 지원
-//                .logoutSuccessUrl("/logoutSuccess"); // 로그아웃 성공 후 이동페이지
-
     }
 
     public class CustomFilter extends AbstractHttpConfigurer<CustomFilter, HttpSecurity> {
