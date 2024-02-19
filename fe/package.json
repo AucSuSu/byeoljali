@@ -41,7 +41,7 @@
     "build": "react-app-rewired build",
     "build:openvidu-react": "npm install --prefix ../library/ && node library-copy.js && cd ../library && npm run create-library",
     "eject": "react-scripts eject",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom"
   },
   "version": "2.29.0",
