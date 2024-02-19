@@ -73,6 +73,7 @@ const ListItem = ({ data, status }) => {
     // dispatch를 사용하여 detailList 액션을 호출
     dispatch(setFansignId(data.artistfansignId));
     dispatch(detailList(data.artistfansignId));
+    getDetail();
     dispatch(setMemberId(null));
     setIsModalOpen(true);
   };
