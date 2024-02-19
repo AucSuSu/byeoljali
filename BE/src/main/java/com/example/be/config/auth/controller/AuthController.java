@@ -63,15 +63,8 @@ public class AuthController {
     @PostMapping("/api/logout")
     public ResponseEntity<Message> kakaoLogout(HttpServletRequest request){
         String accessToken = request.getHeader("authorization");
-
-        // 전체 헤더 이름과 값을 로그로 출력
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            String headerValue = request.getHeader(headerName);
-        }
-
         String kakaoAccessToken = request.getHeader("kakao-authorization");
+
         Long logoutId = oAuthService.logout(kakaoAccessToken, accessToken);
         Message message = new Message(HttpStatusEnum.OK, "팬 로그아웃 완료", logoutId);
         return new ResponseEntity<>(message, HttpStatus.OK);
