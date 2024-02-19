@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,10 +26,8 @@ public class AuthController {
     @GetMapping("/api/oauth")
     public ResponseEntity<String> getLogin(@RequestParam("code") String code){
 
-        //System.out.println(code);
         // 넘어온 인가 코드를 통해 카카오 유저 정보를 얻기위한 access_token 발급
         OauthToken oauthToken = oAuthService.getAccessToken(code);
-        //System.out.println("카카오 액세스 토큰 : " + oauthToken.getAccess_token());
 
         // 발급받은 accessToken 으로 카카오 회원 정보 DB 저장
         JwtToken jwtToken = oAuthService.saveFanAndGetToken(oauthToken.getAccess_token());
@@ -52,12 +49,6 @@ public class AuthController {
         String refreshToken = request.getHeader("authorization-refresh");
         JwtToken jwtToken = tokenService.verifyRefreshToken(refreshToken);
 
-        // 검증 실패 시 처리
-//        if (jwtToken == null) {
-//            Message errorMessage = new Message(HttpStatusEnum.BAD_REQUEST, "리프레시 토큰 검증 실패", null);
-//            return ResponseEntity.badRequest().body(errorMessage);
-//        }
-
         Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰, 리프레시 토큰 재발급 완료", jwtToken.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
@@ -71,19 +62,8 @@ public class AuthController {
     @PostMapping("/api/logout")
     public ResponseEntity<Message> kakaoLogout(HttpServletRequest request){
         String accessToken = request.getHeader("authorization");
-
-        // 전체 헤더 이름과 값을 로그로 출력
-        Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            String headerValue = request.getHeader(headerName);
-            //System.out.println(headerName + ": " + headerValue);
-        }
-
-
-        //System.out.println("로그아웃 할때 필요한 access-token : " + accessToken);
         String kakaoAccessToken = request.getHeader("kakao-authorization");
-        //System.out.println("로그아웃 할때 필요한 kakao-access-token : " + kakaoAccessToken);
+
         Long logoutId = oAuthService.logout(kakaoAccessToken, accessToken);
         Message message = new Message(HttpStatusEnum.OK, "팬 로그아웃 완료", logoutId);
         return new ResponseEntity<>(message, HttpStatus.OK);
@@ -100,23 +80,4 @@ public class AuthController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-//    @PostMapping("/api/kakaoLogout")
-//    public ResponseEntity<Message> kakaoLogout(){
-//        oAuthService
-//    }
-
-//    @PostMapping("/api/re-agreement")
-//    public ResponseEntity<Message> reAgreement(HttpServletRequest request){
-//
-//        // code가 필요함.
-//        fanService.getAccessToken()
-//
-//
-//        Message message = new Message(HttpStatusEnum.OK, "엑세스 토큰 발급 완료","nothing");
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
-//        headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + accessToken);
-//
-//        return ResponseEntity.ok().headers(headers).body(message);
-//    }
 }
