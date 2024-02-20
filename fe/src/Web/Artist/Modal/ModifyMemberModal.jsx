@@ -23,7 +23,6 @@ function ModifyMemberModal({ onClose, data }) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log(file);
       setImageFile(file);
     }
   };
@@ -56,7 +55,6 @@ function ModifyMemberModal({ onClose, data }) {
         })
         .then((response) => {
           alert('수정이 완료되었습니다.');
-          console.log('업로드 성공', response.data);
           onClose(); // 모달 닫기
           window.location.reload();
         })

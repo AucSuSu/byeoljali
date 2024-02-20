@@ -23,7 +23,6 @@ const CommingSoon = () => {
       .then((res) => {
         return res.data;
       });
-    console.log('응모전', data);
     dispatch(beforeApplyList(data));
   };
 

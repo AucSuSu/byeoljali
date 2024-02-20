@@ -7,10 +7,8 @@ import axios from 'axios';
 import './LoginView.css';
 
 export default function LoginView() {
-  const [stars, setStars] = useState([]);
   const token = useSelector((state) => state.auth.token);
   const isArtist = useSelector((state) => state.auth.isArtist);
-  const isFailed = useSelector((state) => state.auth.status);
   const getRandomNumber = (min, max) => {
     return Math.random() * (max - min) + min;
   };
@@ -40,7 +38,6 @@ export default function LoginView() {
   const [code, setCode] = useState(null);
 
   useEffect(() => {
-
     // 페이지 로딩 시 인가 코드 추출
     const extractedCode = new URL(window.location.href).searchParams.get(
       'code',
@@ -61,7 +58,6 @@ export default function LoginView() {
           code: code,
         },
       });
-      console.log('서버 전송 성공 : ', res); // 받은 데이터 출력
       dispatch(
         setToken({
           token: res.headers['authorization'],
@@ -77,7 +73,7 @@ export default function LoginView() {
   };
 
   const redirect_uri = 'https://i10e104.p.ssafy.io/'; // Redirect URI
-  const REST_API_KEY = '13e2daef357ed33894d3c75e4bb31528';
+  const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${redirect_uri}&prompt=login`;
   const handleFanLogin = () => {
     window.location.href = kakaoURL;
@@ -86,8 +82,6 @@ export default function LoginView() {
   const handleArtistLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(data));
-
-   
   };
 
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -97,7 +91,6 @@ export default function LoginView() {
 
   return (
     <div>
-      
       <div
         className="font-jamsil"
         style={{
@@ -108,7 +101,6 @@ export default function LoginView() {
         }}
         onClick={() => window.location.reload()}
       >
-       
         <div className="mt-4">
           <h1
             className="text-2xl mb-5 text-white font-hambuger"
@@ -120,39 +112,25 @@ export default function LoginView() {
       </div>
 
       <div className="content flex flex-col justify-center items-center font-jamsil bg-black">
-        {/* <img
-          src="/susu.jpg"
-          alt="로고"
-          className="mt-[75px] my-4 rounded-full h-[100px] w-[100px] object-cover"
-        /> */}
-        {/* <div className="mt-4">
-          <h1 className="text-3xl mb-5 text-white">별자리</h1>
-        </div> */}
-          <div className="night"
-          >
-            {[...Array(20)].map((_, index) => (
-              <div className="shooting_star" key={index}
+        <div className="night">
+          {[...Array(20)].map((_, index) => (
+            <div
+              className="shooting_star"
+              key={index}
               style={{
                 top: `${getRandomNumber(0, 100)}%`,
                 left: `${getRandomNumber(0, 100)}%`,
                 animationDelay: `-${getRandomNumber(0, 3000)}ms`,
-              }}></div>
-            ))}
-          </div>
+              }}
+            ></div>
+          ))}
+        </div>
         <div className="login w-full min-h-1/2 p-4 bg-opacity-70 flex flex-col  mb-4">
-       
           <div className="mb-8 flex-grow items-center justify-center text-3xl text-white">
             <div
               className="h-full pt-10 mx-auto"
               style={{ lineHeight: '1.8', letterSpacing: '2.2px' }}
             >
-              
-              
-              {/* 이제 내가 좋아하는 아이돌과의 팬싸인회에 간편하게 참여하고 <br/>
-              만남의 기회를 얻을 수 있어요.
-              <br /> 여러분의 응원에 보답하는 특별한 순간을 즐기고 <br/>
-              소중한 기억을 만들어 보세요.
-              <br /> 아이돌과 둘만의 추억을 간직할 기회를 놓치지 마세요! */}
               간편하게 응모부터 팬싸인회까지 <br />
               한 번에 가능한 영통 팬싸인회 플랫폼 별자리
               <br /> 아이돌과 둘만의 추억을 간직하세요!
@@ -162,7 +140,6 @@ export default function LoginView() {
           <div className="mt-2 mb-3 item flex items-center justify-center">
             <div
               className="cursor-pointer bg-kakao-yellow py-3 px-4 rounded-md w-[400px] h-[50px] text-black"
-              // className="cursor-pointer bg-neon-red py-3 px-4 rounded-md w-[200px] h-[50px] bolder text-white"
               onClick={handleFanLogin}
             >
               카카오톡 로그인

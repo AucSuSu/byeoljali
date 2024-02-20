@@ -19,7 +19,6 @@ export default function FanView() {
   const navigate = useNavigate();
   const location = useLocation();
   const { propsData } = location.state || {};
-  console.log('프롭데이터 : ', propsData);
   const [fanData, setFanData] = useState(null);
 
   const [flag, setFlag] = useState(false);

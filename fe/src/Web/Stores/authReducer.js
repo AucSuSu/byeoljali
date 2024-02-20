@@ -38,7 +38,6 @@ const authSlice = createSlice({
       state.isArtist = null;
       state.kakaoAuthorization = null;
       state.artistId = null;
-      console.log('로그아웃 했어용');
     },
   },
   extraReducers: (builder) => {
@@ -48,17 +47,14 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        console.log('success');
         state.token = action.payload.authorization;
         state.tokenRefresh = action.payload['authorization-refresh'];
         state.isArtist = action.payload.isartist;
         state.artistId = action.payload.artistId;
-        console.log('로그인 데이터 : ', action.payload);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-        console.log('failed');
         Swal.fire({
           icon: 'warning',
           title: '로그인 정보가 틀렸습니다.',

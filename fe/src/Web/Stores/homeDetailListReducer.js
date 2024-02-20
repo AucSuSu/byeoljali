@@ -2,8 +2,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 //팬 사인회 응모를 위한 디테일한 정보
 export const detailList = createAsyncThunk(
   'axios/detailList',
@@ -18,7 +16,6 @@ export const detailList = createAsyncThunk(
           },
         },
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error('팬 사인회 정보 로드 실패: ', error);
@@ -56,10 +53,8 @@ const homeDetailListSlice = createSlice({
     builder
       .addCase(detailList.fulfilled, (state, action) => {
         state.status = 'succeeded'; // 성공
-        console.log('팬 사인회 디테일 정보 로드 성공');
         state.data = action.payload;
         state.token = action.payload.key;
-        console.log('데이터', state.data, '토큰', state.token);
       })
       .addCase(detailList.rejected, (state, action) => {
         state.status = 'failed'; // 실패 => 에러 메세지 전달(UX)

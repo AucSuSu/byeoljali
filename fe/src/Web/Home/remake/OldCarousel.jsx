@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function Carousel({ datas }) {
-  console.log('캐러셀 데이터 : ', datas);
   const newDatas = [...datas, ...datas, ...datas];
   const [imageWidth, setImageWidth] = useState(380);
   const [datasLength, setDatasLength] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [slideLeft, setSlideLeft] = useState(0);
   const [slideCount, setSliceCount] = useState(0);
-  const [isStartTimer, setIsStartTimer] = useState(true);
+  const [_, setIsStartTimer] = useState(true);
 
   const slideRef = useRef(null);
 
@@ -52,14 +51,6 @@ export default function Carousel({ datas }) {
   };
 
   const moveSlide = (newSlideIndex, newSlideCount) => {
-    console.log(
-      '인덱스 : ',
-      newSlideIndex,
-      '카운트 : ',
-      newSlideCount,
-      '현재 길이 : ',
-      slideLeft,
-    );
     setSlideLeft(newSlideIndex * imageWidth);
     if (datasLength === newSlideCount || datasLength === -newSlideCount) {
       setTimeout(() => {
@@ -76,10 +67,8 @@ export default function Carousel({ datas }) {
 
   const styledImage = (data, index) => {
     let style = `w-[150px] h-[200px] object-cover rounded-lg mt-10 opacity-40`;
-    // let style = `w-[${imageWidth}px] h-[550px] object-cover rounded-lg mt-10 opacity-40`;
     if (index === slideIndex + 2) {
       style = `w-[150px] h-[200px] object-cover rounded-lg  mt-10 z-99`;
-      // style = `w-[${imageWidth * 1.25}px] h-[550px] object-cover rounded-lg -mx-20 scale-110 mt-10 z-10`;
     }
 
     return (
@@ -91,23 +80,6 @@ export default function Carousel({ datas }) {
       />
     );
   };
-
-  // useEffect(() => {
-  //   setImageWidth(400); // 화면에 따라 값 변경 가능
-  //   // 자동 슬라이드 기능
-  //   let timer;
-  //   if (isStartTimer) {
-  //     timer = setInterval(() => {
-  //       onClickRight();
-  //     }, 5000); // 5초마다 오른쪽으로 이동
-  //   }
-
-  //   return () => {
-  //     if (timer) {
-  //       clearInterval(timer);
-  //     }
-  //   };
-  // }, [isStartTimer, onClickRight]); // 의존성 배열에 onClickRight 추가
 
   return (
     <div

@@ -11,17 +11,14 @@ const artistInfoSlice = createSlice({
   reducers: {
     getInfo(state, action) {
       state.artistData = action.payload;
-      console.log('아티스트 데이터 : ', state.artistData);
     },
-    addMember(state, action){
-      state.memberData = action.payload
-      console.log('성공')
+    addMember(state, action) {
+      state.memberData = action.payload;
     },
-    modifyMebmer(state, action){
-      state.memberData = action.payload
-      console.log('성공')
-    }
-  }
+    modifyMebmer(state, action) {
+      state.memberData = action.payload;
+    },
+  },
 });
 
 export default artistInfoSlice.reducer;

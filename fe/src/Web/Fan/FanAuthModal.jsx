@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useAxios from '../axios';
-import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
 function FanAuthModal({ onClose, userData, getUserInfoData }) {
@@ -24,7 +23,6 @@ function FanAuthModal({ onClose, userData, getUserInfoData }) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log(file);
       setImageFile(file);
     }
   };
@@ -49,14 +47,11 @@ function FanAuthModal({ onClose, userData, getUserInfoData }) {
         },
       })
       .then(async (response) => {
-        console.log('업로드 성공', response.data);
         Swal.fire({
           icon: 'success',
           title: '성공적으로 수정되었습니다',
           background: '#222222',
           showConfirmButton: false,
-          // confirmButtonColor: '#FF2990',
-          // confirmButtonText: 'OK',
         });
         await getUserInfoData();
         window.location.reload(true);

@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { setAlbumNum } from '../Stores/homeDetailListReducer';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
@@ -30,7 +29,6 @@ function ApplyReceiptModal({ onClose, albumName }) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log(file);
       setImageFile(file);
     }
   };
@@ -49,8 +47,6 @@ function ApplyReceiptModal({ onClose, albumName }) {
     formData.append('image', imageFile);
     formData.append('albumName', albumName);
 
-    console.log(formData);
-
     axios
       .post(`flask/checkreceipt`, formData, {
         headers: {
@@ -58,18 +54,17 @@ function ApplyReceiptModal({ onClose, albumName }) {
         },
       })
       .then((response) => {
-        console.log(response.data);
         dispatch(setAlbumNum(response.data.boughtAlbum));
         Swal.fire({
           icon: 'success',
           title: '영수증 인증 성공',
-          background : '#222222',
-          confirmButtonColor: "#FF2990",   
-          confirmButtonText: "OK",
+          background: '#222222',
+          confirmButtonColor: '#FF2990',
+          confirmButtonText: 'OK',
         }).then((result) => {
           if (result.isConfirmed) {
             closeModal();
-           }
+          }
         });
       })
       .catch((error) => {
@@ -77,19 +72,19 @@ function ApplyReceiptModal({ onClose, albumName }) {
           Swal.fire({
             icon: 'warning',
             title: '이미지 크기를 1mb 보다 낮춰주세요',
-            background : '#222222',
-            confirmButtonColor: "#FF2990",   
-            confirmButtonText: "OK",
-          })
-        }else{
+            background: '#222222',
+            confirmButtonColor: '#FF2990',
+            confirmButtonText: 'OK',
+          });
+        } else {
           Swal.fire({
             icon: 'warning',
             title: '영수증 인증 실패',
-            text: "영수증이 인식되지 않습니다. 선명하게 올려주세요",
-            background : '#222222',
-            confirmButtonColor: "#FF2990",   
-            confirmButtonText: "OK",
-          })
+            text: '영수증이 인식되지 않습니다. 선명하게 올려주세요',
+            background: '#222222',
+            confirmButtonColor: '#FF2990',
+            confirmButtonText: 'OK',
+          });
         }
         console.error('Error uploading the image: ', error);
       });

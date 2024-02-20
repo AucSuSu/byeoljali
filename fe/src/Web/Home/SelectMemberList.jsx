@@ -8,7 +8,6 @@ const SelectList = ({ dataList }) => {
   const dispatch = useDispatch(); // 여기에서 useDispatch 호출
 
   const select = (index, id) => {
-    console.log('데이터 확인 : ', id)
     setSelectedImage(index);
     dispatch(setMemberId(id)); // dispatch 함수 사용
   };
@@ -22,10 +21,8 @@ const SelectList = ({ dataList }) => {
 
     if (container) {
       if (direction === 'left') {
-        console.log('left');
         container.scrollLeft -= scrollAmount;
       } else if (direction === 'right') {
-        console.log('right');
         container.scrollLeft += scrollAmount;
       }
     }

@@ -1,10 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 
 const fanApplyListSlice = createSlice({
   name: 'fanApplyList',
   initialState: {
-    data: [{}],
+    data: [],
   },
   reducers: {
     loadApply(state, action) {

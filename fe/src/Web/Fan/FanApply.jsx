@@ -12,7 +12,6 @@ function FanApply() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector((state) => state.fanapply.data);
-  console.log(data);
   const getRandomNumber = (min, max) => {
     return Math.random() * (max - min) + min;
   };
@@ -38,14 +37,12 @@ function FanApply() {
     const intervalId = setInterval(() => {
       makeStars();
     }, 5000);
-
   }, []);
 
   const loadApplyData = async () => {
     const data = await customAxios.get('applyPage/0').then((res) => {
       return res.data.object;
     });
-    console.log('내가 응모한 리스트 : ', data);
     dispatch(loadApply(data));
   };
 
@@ -69,21 +66,21 @@ function FanApply() {
       <div className="w-[86%] ml-[7%]">
         {data.length === 0 ? (
           <>
-          <div className="night z-10 absolute top-0 left-0 right-0 bottom-0 ;">
-            {[...Array(5)].map((_, index) => (
-              <div
-                className="shooting_star"
-                key={index}
-                style={{
-                  top: `${getRandomNumber(0, 100)}%`,
-                  left: `${getRandomNumber(0, 100)}%`,
-                  animationDelay: `-${getRandomNumber(0, 100)}ms`,
-                }}
-              ></div>
-            ))}
-                    </div>
-                    <div>
-            {stars.map((star) => (
+            <div className="night z-10 absolute top-0 left-0 right-0 bottom-0 ;">
+              {[...Array(5)].map((_, index) => (
+                <div
+                  className="shooting_star"
+                  key={index}
+                  style={{
+                    top: `${getRandomNumber(0, 100)}%`,
+                    left: `${getRandomNumber(0, 100)}%`,
+                    animationDelay: `-${getRandomNumber(0, 100)}ms`,
+                  }}
+                ></div>
+              ))}
+            </div>
+            <div>
+              {stars.map((star) => (
                 <div
                   key={star.id}
                   className="star"
@@ -94,16 +91,16 @@ function FanApply() {
                   }}
                 ></div>
               ))}
-               </div>
-              <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-jamsil text-35">
-            <div>응모 내역이 없습니다</div>
-            <div
-              className="text-25 text-hot-pink cursor-pointer hover:scale-110 transition-transform ease-in-out duration-500"
-              onClick={goToHome}
-            >
-              응모 하러 가기
             </div>
-          </div>
+            <div className="flex flex-col justify-center items-center px-16 py-32 border-4 border-deep-dark rounded-lg text-white font-jamsil text-35">
+              <div>응모 내역이 없습니다</div>
+              <div
+                className="text-25 text-hot-pink cursor-pointer hover:scale-110 transition-transform ease-in-out duration-500"
+                onClick={goToHome}
+              >
+                응모 하러 가기
+              </div>
+            </div>
           </>
         ) : (
           <>

@@ -7,7 +7,6 @@ import useAxios from '../axios';
 import Navbar from '../Utils/NavBar';
 import HomeApplyList from '../Home/HomeApplyList';
 import NewCarousel from '../Home/remake/NewCarousel';
-// import OldCarousel from '../Home/remake/OldCarousel';
 
 // Reducer 추가
 import {
@@ -108,7 +107,6 @@ const HomeView = () => {
       .then((res) => {
         return res.data;
       });
-    console.log('응모중', data);
     dispatch(afterApplyList(data));
   };
 
@@ -118,7 +116,6 @@ const HomeView = () => {
       .then((res) => {
         return res.data;
       });
-    console.log('응모전', data);
     dispatch(beforeApplyList(data));
   };
 
@@ -127,7 +124,6 @@ const HomeView = () => {
     const data = await customAxios.get('artists/logo/').then((res) => {
       return res.data.object;
     });
-    console.log('데이터 받아오기 : ', data);
     dispatch(getArtistLogo(data));
   };
 
@@ -186,7 +182,6 @@ const HomeView = () => {
     const data = await customAxios.get('mainpage/recent').then((res) => {
       return res.data;
     });
-    console.log('캐러셀 데이터', data);
     setCarouselData(data.object);
   };
 

@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginView from './Web/Pages/LoginView.jsx';
 import ArtistInfoView from './Web/Pages/ArtistInfoView.jsx';
 import HomeView from './Web/Pages/HomeView.jsx';
-import Test from './Web/test.js';
 import Artist from './Openvidu/Artist/Artist.js';
-import CounterView from './Web/Pages/CounterView.jsx';
 import FanInfoView from './Web/Pages/FanInfoView.jsx';
 import FanPhoto from './Web/Pages/FanPhotoView.jsx';
 import FanPhotoPayResult from './Web/Fan/FanPhotoPayResult.jsx';
@@ -25,10 +23,8 @@ export default function AppRoutes() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginView />} />
-        <Route path="counter" element={<CounterView />} />
         <Route path="/artist-profile" element={<ArtistInfoView />} />
         <Route path="/home" element={<HomeView />} />
-        <Route path="/test" element={<Test />} />
         <Route path="/fan-profile" element={<FanInfoView />} />
         <Route path="/fan-photo" element={<FanPhoto />} />
         <Route path="/fan-photo/payresult" element={<FanPhotoPayResult />} />

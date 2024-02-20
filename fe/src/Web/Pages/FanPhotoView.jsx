@@ -22,7 +22,6 @@ function FanPhotoView() {
     const data = await customAxios
       .get('myalbum?searchKeyword&payOrNot')
       .then((res) => {
-        console.log('내 모든 인생네컷 조회 성공', res.data);
         return res.data.object;
       });
     dispatch(getUserPhoto(data));
@@ -32,12 +31,6 @@ function FanPhotoView() {
     const data = await customAxios
       .get(`myalbum?searchKeyword=${searchWord}&payOrNot`)
       .then((res) => {
-        console.log(
-          '내 검색키워드 :',
-          searchWord,
-          '인생네컷 조회 성공 :',
-          res.data,
-        );
         return res.data.object;
       });
     dispatch(getUserPhoto(data));
@@ -47,12 +40,6 @@ function FanPhotoView() {
     const data = await customAxios
       .get(`myalbum?searchKeyword&payOrNot=${payStatus}`)
       .then((res) => {
-        console.log(
-          '내 결제여부 :',
-          payStatus,
-          '인생네컷 조회 성공 :',
-          res.data,
-        );
         return res.data.object;
       });
     dispatch(getUserPhoto(data));
@@ -176,7 +163,6 @@ function FanPhotoView() {
       </>
     );
   } else {
-    // Handle the case when photoData is not an array
     return <div>Loading or No photos available...</div>;
   }
 }

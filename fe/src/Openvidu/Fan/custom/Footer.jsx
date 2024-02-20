@@ -45,7 +45,6 @@ export default function Footer({
         captureBounds.style.borderRadius = '';
 
         audio.play();
-        console.log('사진 캡쳐 성공!', count);
       }, 500);
       setCount(count - 1);
     }
@@ -75,24 +74,12 @@ export default function Footer({
 
     const uploadURL = 'flask/makelife4cut';
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
-    customAxios
-      .post(uploadURL, formData, {
-        baseURL: 'https://i10e104.p.ssafy.io/',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        console.log('Success:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    customAxios.post(uploadURL, formData, {
+      baseURL: 'https://i10e104.p.ssafy.io/',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   };
 
   const dataURLtoBlob = (dataUrl) => {

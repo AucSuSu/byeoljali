@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useAxios from '../../axios';
-import { useSelector } from 'react-redux';
 
 function AddMemberModal({ onClose }) {
   const customAxios = useAxios();
@@ -24,7 +23,6 @@ function AddMemberModal({ onClose }) {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      console.log(file);
       setImageFile(file);
     }
   };
@@ -52,8 +50,7 @@ function AddMemberModal({ onClose }) {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((response) => {
-        console.log('업로드 성공', response.data);
+      .then(() => {
         onClose(); // 모달 닫기
         window.location.reload();
       })

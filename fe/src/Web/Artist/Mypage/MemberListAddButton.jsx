@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AddMemberModal from '../Modal/AddMemberModal.jsx';
 
 export default function MemberList() {
   const dispatch = useDispatch();

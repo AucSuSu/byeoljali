@@ -4,15 +4,12 @@ import homeDetailListReducer from './homeDetailListReducer.js';
 import authReducer from './authReducer.js';
 import artistInfoReducer from './artistInfoReducer.js';
 import kakaopayReducer from './kakaopayReducer.js';
-import counterReducer from './counterReducer.js';
 import modalReducer from './modalReducer.js';
 import fanApplyReducer from './fanApplyListReducer.js';
 import joinFansignReducer from './joinFansignReducer.js';
 import fanInfoReducer from './fanInfoReducer.js';
 import fanPhotoReducer from './fanPhotoReducer.js';
 import artistFansignReducer from './artistFansignReducer.js';
-import tokenReducer from './tokenReducer.js';
-import artistLogo from './homeArtistLogoReducer.js'
 // 추가 리듀서
 
 // Persist 구성 정의
@@ -36,15 +33,13 @@ const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalReducer,
   artistInfo: artistInfoReducer,
-  counter: counterReducer,
   kakaopay: kakaopayReducer,
   fanapply: fanApplyReducer,
   joinFansign: joinFansignReducer,
   faninfo: fanInfoReducer,
   fanphoto: fanPhotoReducer,
   artistFansign: artistFansignReducer,
-  token: tokenReducer,
-  artistLogo : homeArtistLogoReducer
+  artistLogo: homeArtistLogoReducer,
   // 추가 리듀서 추가
 });
 

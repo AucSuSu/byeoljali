@@ -100,7 +100,6 @@ export default function FansignModal({ memberFansignId }) {
         onRequestClose={closeModal}
         contentLabel="테스트입니다"
         style={customStyle}
-        // className="overflow-hidden"
       >
         {detailData && (
           <div className="flex h-[100%] font-jamsil bg-black p-6">

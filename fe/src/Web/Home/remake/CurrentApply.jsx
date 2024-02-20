@@ -24,7 +24,6 @@ const CurrentApply = () => {
       .then((res) => {
         return res.data;
       });
-    console.log('응모중', data);
     dispatch(afterApplyList(data));
   };
 

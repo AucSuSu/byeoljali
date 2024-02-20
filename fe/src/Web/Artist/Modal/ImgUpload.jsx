@@ -22,8 +22,6 @@ export default function ImgUpload({ img, uploadImg }) {
   useEffect(() => {
     if (img) {
       setImageSrc(img);
-      // setImageFile(img)
-      console.log('img data : ', img);
     }
   }, [img]);
 

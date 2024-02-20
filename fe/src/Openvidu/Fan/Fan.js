@@ -99,10 +99,7 @@ class VideoRoomComponent extends Component {
 
   async connectToSession() {
     if (this.props.token !== undefined) {
-      console.log('토큰 받았음 : ', this.props.token);
       this.connect(this.props.token);
-    } else {
-      console.log('초비상!!! 토큰없다!!!!!!');
     }
   }
 
