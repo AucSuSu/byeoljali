@@ -247,7 +247,6 @@ fe
       <td align="center"><a href="https://github.com/MunsooKang"><img src="./readme_files/강문수.png" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 강문수</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/arim-kim"><img src="./readme_files/김아림.png" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 김아림</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/makie082"><img src="./readme_files/우미경.png" width="100px;" alt=""/><br /><sub><b>BE 팀원 : 우미경</b></sub></a><br /></td>
-     <tr/>
       <td align="center"><a href="https://github.com/dogfish000"><img src="./readme_files/윤태우.png" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 윤태우</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/RaelJung"><img src="./readme_files/정라엘.png" width="100px;" alt=""/><br /><sub><b>FE 팀원 : 정라엘</b></sub></a><br /></td>
     </tr>
