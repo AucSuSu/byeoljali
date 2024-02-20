@@ -1,7 +1,6 @@
-import React , { useEffect, useState  } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../Utils/NavBar';
 import FanWin from '../Fan/FanWin';
-// import './FanWinView.css';
 
 function FanWinView() {
   const [stars, setStars] = useState([]);
@@ -30,14 +29,13 @@ function FanWinView() {
     const intervalId = setInterval(() => {
       makeStars();
     }, 5000);
-
   }, []);
 
   return (
     <>
       <div className="min-h-screen bg-black overflow-hidden relative z-[11]">
         <NavBar />
-        
+
         <div className="night z-10 absolute top-0 left-0 right-0 bottom-0 ;">
           {[...Array(5)].map((_, index) => (
             <div
@@ -52,16 +50,16 @@ function FanWinView() {
           ))}
         </div>
         {stars.map((star) => (
-            <div
-              key={star.id}
-              className="star"
-              style={{
-                left: star.left,
-                top: star.top,
-                animationDuration: star.animationDuration,
-              }}
-            ></div>
-          ))}
+          <div
+            key={star.id}
+            className="star"
+            style={{
+              left: star.left,
+              top: star.top,
+              animationDuration: star.animationDuration,
+            }}
+          ></div>
+        ))}
         <div className="h-[100%]">
           <FanWin />
         </div>

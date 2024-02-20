@@ -7,17 +7,6 @@ function FanModal({ onClose, onPay, onDelete, data }) {
     }
   };
 
-  // 바로 다운 안되는 방법
-  // const downloadImage = () => {
-  //   const link = document.createElement('a');
-  //   link.href = data.photoUrl;
-  //   // Propose a default filename for the image. You can also extract the filename from data.photoUrl if it contains one.
-  //   link.download = 'downloadedImage.png';
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
-
   // 바로 다운 시도
   const downloadImage = (imageSrc) => {
     fetch(imageSrc)

@@ -67,12 +67,6 @@ class App extends Component {
       this.Meeting();
     }
     if (this.props.curUser !== prevProps.curUser) {
-      console.log(
-        'curUser 변경 : ',
-        this.state.curUser,
-        '< 전 후 > ',
-        prevProps.curUser,
-      );
       this.updateWaitTime();
     }
   }
@@ -106,7 +100,6 @@ class App extends Component {
           analyser.getByteFrequencyData(dataArray);
           const average =
             dataArray.reduce((sum, value) => sum + value, 0) / bufferLength;
-          // console.log('>>>>>>볼륨: ' + average);
 
           const maxVolume = 70;
           const limitedVolume = Math.min(average, maxVolume); // 볼륨 상한선 추가
@@ -206,8 +199,6 @@ class App extends Component {
           this.setState({
             subscribers: subscribers,
           });
-
-          console.log(this.state.subscribers);
         });
 
         mySession.on('streamDestroyed', (event) => {
@@ -259,14 +250,6 @@ class App extends Component {
               mainStreamManager: publisher,
               publisher: publisher,
             });
-          })
-          .catch((error) => {
-            console.log('오픈비두 연결실패');
-            console.log(
-              'There was an error connecting to the session:',
-              error.code,
-              error.message,
-            );
           });
       },
     );
@@ -277,11 +260,13 @@ class App extends Component {
     let cultime = start - now;
     if (cultime <= 0) {
       cultime = 0;
-    }{
-    this.setState({
-      remainingTime: cultime + (this.state.orders - this.state.curUser) * 30000, // * 뒤에 ms 단위
-    })
-  };
+    }
+    {
+      this.setState({
+        remainingTime:
+          cultime + (this.state.orders - this.state.curUser) * 30000, // * 뒤에 ms 단위
+      });
+    }
 
     // 타이머 설정
     this.timer = setInterval(() => {
@@ -329,17 +314,10 @@ class App extends Component {
       nickname: this.state.myUserName,
       text: message,
     };
-    this.state.session
-      .signal({
-        type: 'chat',
-        data: JSON.stringify(messageData),
-      })
-      .then(() => {
-        console.log('Message sent: ' + message);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.state.session.signal({
+      type: 'chat',
+      data: JSON.stringify(messageData),
+    });
   }
 
   updateWaitTime() {
@@ -347,8 +325,9 @@ class App extends Component {
     if (newRemainingTime <= 0) {
       newRemainingTime = 0;
     }
+    if (newRemainingTime <= this.state.remainingTime) {
       this.setState({ remainingTime: newRemainingTime });
-    
+    }
   }
 
   // Base64 문자열을 Blob 객체로 변환하는 함수
@@ -394,9 +373,7 @@ class App extends Component {
           })
           .then((response) => {
             // 요청 성공 시 처리
-            console.log('서버에 대기방 사진 전송 완료', response);
             if (response.data.isSamePerson) {
-              console.log('얼굴 인증 완료');
               this.setState({ isSamePerson: true });
               Swal.fire({
                 icon: 'success',
@@ -406,7 +383,6 @@ class App extends Component {
                 confirmButtonText: 'OK',
               });
             } else {
-              console.log('얼굴 인증 실패!');
               Swal.fire({
                 icon: 'warning',
                 title: '얼굴 인증 실패!',
@@ -423,7 +399,6 @@ class App extends Component {
           });
       });
     } else {
-      console.log('본인 인증을 위한 DOM 요소가 준비되지 않았습니다.');
     }
   };
 

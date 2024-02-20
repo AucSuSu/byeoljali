@@ -1,7 +1,6 @@
 import React from 'react';
 import NavBar from '../Utils/NavBar';
 import FanApply from '../Fan/FanApply';
-import { useSelector } from 'react-redux';
 
 function FanApplyView() {
   return (

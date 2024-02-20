@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 import useAxios from '../../axios';
-import { useSelector } from 'react-redux';
 
 function ArtistImgModal({ onClose, artistImageUrl, logoImageUrl }) {
   const customAxios = useAxios();
@@ -66,8 +65,7 @@ function ArtistImgModal({ onClose, artistImageUrl, logoImageUrl }) {
           'Content-Type': 'multipart/form-data',
         },
       })
-      .then((response) => {
-        console.log('업로드 성공', response.data);
+      .then(() => {
         onClose(); // 모달 닫기
         window.location.reload();
       })

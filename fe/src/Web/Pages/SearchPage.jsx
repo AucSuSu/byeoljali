@@ -100,7 +100,6 @@ function SearchPage() {
       .then((res) => {
         return res.data;
       });
-    console.log('검색어 응모중', data);
     dispatch(searchApplyList(data));
   };
 

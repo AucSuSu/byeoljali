@@ -12,7 +12,6 @@ function FanWin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector((state) => state.fanapply.data);
-  console.log(data);
   const getRandomNumber = (min, max) => {
     return Math.random() * (max - min) + min;
   };
@@ -39,7 +38,6 @@ function FanWin() {
     const data = await customAxios.get('applyPage/1').then((res) => {
       return res.data.object;
     });
-    console.log('내가 당첨된 리스트 : ', data);
     dispatch(loadWin(data));
   };
 

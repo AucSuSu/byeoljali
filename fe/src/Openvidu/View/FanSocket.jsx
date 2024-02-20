@@ -18,12 +18,7 @@ export default function FanSocket({
 
     newSocket.onmessage = (e) => {
       const message = JSON.parse(e.data);
-      console.log('팬이 전달받은 메세지 : ', message);
       if (message.type === 'JOIN') {
-        console.log(
-          'Fan이 아티스트가 보낸 TALk를 받았어요 : ',
-          message.message.orders,
-        );
         updateCurUser(message.message.orders);
         if (message.message.orders === propsData.orders) {
           joinSignal();
@@ -53,19 +48,15 @@ export default function FanSocket({
         message.type === 'TALK' &&
         message.message.nickname === 'Artist'
       ) {
-        console.log('Fan이 아티스트가 보낸 TALk를 받았어요');
         updateCurUser(message.orders);
       }
     };
 
     newSocket.onopen = async () => {
       await enterMessage(newSocket);
-      console.log('OPEN Fan 들어왔어요~');
     };
 
-    newSocket.onclose = (event) => {
-      console.log(' CLOSE Fan 나갔어요~', event);
-    };
+    newSocket.onclose = (event) => {};
 
     newSocket.onerror = (error) => {
       console.error('WebSocket Error:', error);
@@ -87,8 +78,6 @@ export default function FanSocket({
   };
 
   useEffect(() => {
-    console.log(stationData);
-    console.log(socket);
     if (stationData) {
       sendMessage('TALK', {
         orders: null,

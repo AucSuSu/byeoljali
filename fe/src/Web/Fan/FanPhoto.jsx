@@ -10,7 +10,7 @@ function FanPhoto({ data }) {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const SERVICE_APP_ADMIN_KEY = '51198a6f76318c2194379fc0ae87c499';
+  const SERVICE_APP_ADMIN_KEY = process.env.REACT_APP_KAKAO_PAY_API_KEY;
 
   const handleImageClick = () => {
     setIsModalOpen(true);
@@ -21,7 +21,6 @@ function FanPhoto({ data }) {
   };
 
   const handlePayment = () => {
-    console.log('결제 로직 처리');
     setIsModalOpen(false);
     const formData = new URLSearchParams();
     formData.append('cid', 'TC0ONETIME');
@@ -37,16 +36,6 @@ function FanPhoto({ data }) {
     formData.append('fail_url', `${PHOTO_URL}fan-photo/`);
     formData.append('cancel_url', `${PHOTO_URL}fan-photo/`);
 
-    for (const [key, value] of formData) {
-      console.log(`${key}: ${value}`);
-    }
-    // formData.append(
-    //   'approval_url',
-    //   'http://localhost:3000/userphoto/payresult',
-    // );
-    // formData.append('fail_url', 'http://localhost:3000/userphoto');
-    // formData.append('cancel_url', 'http://localhost:3000/userphoto');
-
     axios
       .post('https://kapi.kakao.com/v1/payment/ready', formData, {
         headers: {
@@ -55,31 +44,23 @@ function FanPhoto({ data }) {
         },
       })
       .then((response) => {
-        console.log('Response:', response.data);
         // tid storage 저장
         dispatch(setTid(response.data.tid));
         // Redirect to the payment approval page
         window.location.href = response.data.next_redirect_pc_url;
       })
-      .catch((error) => {
-        console.error('Payment error:', error);
-      });
+      .catch((error) => {});
     // 결제 처리 로직
   };
 
   const handleDelete = () => {
-    console.log('삭제 로직 처리');
     const deletePhotoId = data.photoId;
-    console.log(deletePhotoId);
     axios
       .delete(`${PHOTO_URL}api/myalbum/${deletePhotoId}`)
       .then((res) => {
-        console.log(res);
         setIsModalOpen(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
 
     // 삭제 처리 로직
   };

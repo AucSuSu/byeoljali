@@ -42,7 +42,6 @@ export default function CreateFansignModal({}) {
           return acc;
         }, {});
       setMembers(checkMemberList);
-      console.log('맴버 : ', members);
     }
 
     // 컴포넌트가 언마운트되면 interval 제거
@@ -57,7 +56,6 @@ export default function CreateFansignModal({}) {
         },
       })
       .then((res) => {
-        console.log(res.data);
         Swal.fire({
           icon: 'success',
           title: '성공적으로 개설되었습니다.',
@@ -93,13 +91,11 @@ export default function CreateFansignModal({}) {
 
   const fansignCreate = (e) => {
     e.preventDefault();
-    console.log('가공전 데이터 : ', payload);
     const formData = new FormData();
     for (const key in payload) {
       formData.append(key, payload[key]);
     }
     joinFansign(formData);
-    console.log('팬싸인회 개설 요청');
   };
 
   const uploadImg = (img) => {
@@ -223,18 +219,9 @@ export default function CreateFansignModal({}) {
                       color: 'black', // 텍스트 색상을 검정색으로 지정
                     },
                   }}
-                  onReady={(editor) => {
-                    console.log('Editor is ready to use!', editor);
-                  }}
                   onChange={(event, editor) => {
                     const newData = editor.getData();
                     setInformation(newData);
-                  }}
-                  onBlur={(event, editor) => {
-                    console.log('Blur.', editor);
-                  }}
-                  onFocus={(event, editor) => {
-                    console.log('Focus.', editor);
                   }}
                 />
               </div>
@@ -243,7 +230,7 @@ export default function CreateFansignModal({}) {
                 <input
                   type="text"
                   value={albumName}
-                  className="border-b border-gray-300 focus:border-hot-pink outline-none w-120 text-black p-1  rounded-xl p-1"
+                  className="border-b border-gray-300 focus:border-hot-pink outline-none w-120 text-black rounded-xl p-1"
                   onChange={(e) => setAlbumName(e.target.value)}
                 />
               </div>

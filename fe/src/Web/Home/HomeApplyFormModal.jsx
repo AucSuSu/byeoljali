@@ -18,7 +18,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const [stars, setStars] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    // console.log(propData);
     const makeStars = () => {
       const numStars = 800; // 원하는 별의 개수
 
@@ -53,7 +52,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   const applyForm = async ({ id, data }) => {
     try {
       const resData = await customAxios.post(`mainpage/apply/${id}`, data);
-      console.log('form 제출 완료', resData.data);
       Swal.fire({
         icon: 'success',
         title: '성공적으로 응모되었습니다.',
@@ -85,7 +83,6 @@ const ApplyFormModal = ({ isModalOpen, closeModal, propData }) => {
   };
 
   const handleSubmit = () => {
-    console.log('memberId : ' + currMemberId);
     if (currMemberId == null) {
       Swal.fire({
         icon: 'warning',

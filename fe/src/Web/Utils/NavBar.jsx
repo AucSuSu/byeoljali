@@ -115,14 +115,10 @@ const Navbar = ({ bgStyle }) => {
   const customAxios = useAxios();
   const testLogout = () => {
     if (trueArtist) {
-      customAxios
-        .delete(`logout/`)
-        .then((res) => {
-          console.log('로그아웃 데이터 : ', res);
-          dispatch(logout());
-          navigate('/');
-        })
-        .catch((err) => console.log(err));
+      customAxios.delete(`logout/`).then((res) => {
+        dispatch(logout());
+        navigate('/');
+      });
     } else {
       customAxios
         .post(
@@ -137,8 +133,7 @@ const Navbar = ({ bgStyle }) => {
         .then(() => {
           dispatch(logout());
           navigate('/');
-        })
-        .catch((err) => console.log(err));
+        });
     }
   };
 

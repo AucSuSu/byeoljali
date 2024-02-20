@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloseIcon from '@material-ui/icons/Close';
@@ -11,12 +11,7 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
   const customAxios = useAxios();
   const navigate = useNavigate();
   const blackList = () => {
-    customAxios
-      .post(`blacklist/${fanData.fanId}`)
-      .then((res) => {
-        console.log('블랙리스트 성공 : ', res);
-      })
-      .catch((err) => console.log('블랙리스트 실패 : ', err));
+    customAxios.post(`blacklist/${fanData.fanId}`);
     return response;
   };
 
@@ -48,8 +43,9 @@ export default function Footer({ fanData, timeOver, orders, toggleChat }) {
         {/* 중앙 */}
         <div className="flex">
           <div
-            onClick={() => {blackList()
-              timeOver(orders, false)
+            onClick={() => {
+              blackList();
+              timeOver(orders, false);
             }}
             className="flex items-center bg-dark-gray  rounded-md mr-5"
           >

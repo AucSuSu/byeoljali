@@ -103,22 +103,9 @@ class VideoRoomComponent extends Component {
       return;
     }
 
-    console.log(
-      '카운트 다운 실행~ orders : ',
-      this.state.orders,
-      '카운트 count : ',
-      this.state.count,
-    );
-
     const countTimer = setInterval(() => {
       if (this.state.count !== 1) {
         this.setState({ countTime: 10 });
-        console.log(
-          '카운트 타이머 종료, count : ',
-          this.state.count,
-          'orders : ',
-          this.state.orders,
-        );
         clearInterval(countTimer);
         return;
       }
@@ -167,8 +154,6 @@ class VideoRoomComponent extends Component {
   async connectToSession() {
     if (this.props.propsData.tokenId !== undefined) {
       this.connect(this.props.propsData.tokenId);
-    } else {
-      console.log('초비상!!! 토큰없다!!!!!!');
     }
   }
 
@@ -229,18 +214,9 @@ class VideoRoomComponent extends Component {
     const now = new Date();
     const start = new Date(this.props.propsData.startFansignTime);
     let cultime = start - now;
-    console.log(
-      '현재시간 : ',
-      now,
-      '시작시간 : ',
-      start,
-      '계산된 시간 : ',
-      cultime,
-    );
     if (cultime <= 0) {
       cultime = 0;
     }
-    console.log('계산 시간 한 번 더 : ', cultime);
     this.setState({
       remainingTime: cultime, // * 뒤에 ms 단위
     });
@@ -379,11 +355,9 @@ class VideoRoomComponent extends Component {
   addCount() {
     this.setState(
       (prevState) => {
-        console.log('addCount 증가 전 : ', prevState.count);
         return { count: prevState.count + 1 };
       },
       () => {
-        console.log('addCount 증가 후 : ', this.state.count);
         if (this.state.count === 2) {
           this.setState({ signTime: 30 });
           this.timerEvent();
@@ -393,15 +367,10 @@ class VideoRoomComponent extends Component {
   }
 
   removeCount() {
-    this.setState(
-      (prevState) => {
-        const count = prevState.count;
-        return { count: count - 1 };
-      },
-      () => {
-        console.log('removeCount 실행 : ', this.state.count);
-      },
-    );
+    this.setState((prevState) => {
+      const count = prevState.count;
+      return { count: count - 1 };
+    });
   }
 
   // 자동 입장 및 퇴장 타이머
@@ -443,22 +412,24 @@ class VideoRoomComponent extends Component {
               </div>
             )}
           <div>
-            {this.state.count === 1 &&
-            <div className='flex h-[100%] border-2-2 border-dark-gary bg-black opacity-80 text-white font-jamsil text-center items-center justify-center'>
-              <p>팬 입장을 기다리는 중입니다</p>
-              </div>}
-            {this.state.count === 2 && this.state.subscribers.map((sub, i) => (
-              <div
-                key={i}
-                className="h-[100%] border-r-2 border-dark-gary"
-                id="remoteUsers"
-              >
-                <Video
-                  user={sub}
-                  streamId={sub.streamManager.stream.streamId}
-                />
+            {this.state.count === 1 && (
+              <div className="flex h-[100%] border-2-2 border-dark-gary bg-black opacity-80 text-white font-jamsil text-center items-center justify-center">
+                <p>팬 입장을 기다리는 중입니다</p>
               </div>
-            ))}
+            )}
+            {this.state.count === 2 &&
+              this.state.subscribers.map((sub, i) => (
+                <div
+                  key={i}
+                  className="h-[100%] border-r-2 border-dark-gary"
+                  id="remoteUsers"
+                >
+                  <Video
+                    user={sub}
+                    streamId={sub.streamManager.stream.streamId}
+                  />
+                </div>
+              ))}
           </div>
           {localUser !== undefined &&
             localUser.getStreamManager() !== undefined && (

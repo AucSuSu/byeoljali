@@ -54,9 +54,6 @@ export default function ArtistInfo() {
       .get('artists/fansignCount/-1')
       .then((res) => {
         setArtistCountData(res.data.object);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -65,9 +62,6 @@ export default function ArtistInfo() {
       .get('artists/fansignCount/' + propsData.artistId)
       .then((res) => {
         setArtistCountData(res.data.object);
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -111,7 +105,6 @@ export default function ArtistInfo() {
     const intervalId = setInterval(() => {
       makeStars();
     }, 5000);
-
   }, []);
 
   // 데뷔일로부터 경과한 일수를 계산하는 함수 실행 부분을 별도의 useEffect로 분리
@@ -154,17 +147,17 @@ export default function ArtistInfo() {
   return (
     <div className="flex flex-col justify-center min-h-screen bg-black text-white mt-8">
       <div className="w-[70%] mx-auto">
-      {stars.map((star) => (
-              <div
-                key={star.id}
-                className="star"
-                style={{
-                  left: star.left,
-                  top: star.top,
-                  animationDuration: star.animationDuration,
-                }}
-              ></div>
-            ))}
+        {stars.map((star) => (
+          <div
+            key={star.id}
+            className="star"
+            style={{
+              left: star.left,
+              top: star.top,
+              animationDuration: star.animationDuration,
+            }}
+          ></div>
+        ))}
         <div className="flex justify-between">
           {/* 왼쪽 섹션: 아티스트 이미지 */}
           {artistData && (

@@ -19,7 +19,6 @@ function FanInfoView() {
 
   const getUserInfoData = async () => {
     const data = await customAxios.get('mypage/').then((res) => {
-      console.log('데이터 왔어요~', res.data.object);
       return res.data.object;
     });
     setTimeout(() => {
@@ -75,7 +74,6 @@ function FanInfoView() {
         },
       })
       .then(async (response) => {
-        console.log('업로드 성공', response.data);
         Swal.fire({
           icon: 'success',
           title: '성공적으로 수정되었습니다',
@@ -118,7 +116,6 @@ function FanInfoView() {
     if (profileImage) {
       formData.append('profileImage', profileImage);
     }
-    console.log(formData);
     await editUserInfoData(formData); // 서버에 데이터 전송
   };
 

@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import useAxios from '../axios';
 import { useNavigate } from 'react-router-dom';
 
 function FanSignModal({ data, onClose }) {
-  console.log(data);
   const [stars, setStars] = useState([]);
   const customAxios = useAxios();
 
   // 대기방 참가 로직
-  // const fanInfo = useSelector((state) => state.faninfo.data);
-  // const customAxios = useAxios();
   const navigate = useNavigate();
 
-  // const joinFansign = async () => {
-  //   const response = await customAxios
-  //     .get(`fan/fansigns/enterwaiting/${fanSignId}`)
-  //     .then((res) => {
-  //       return res.data;
-  //     });
-  //   return response;
   // };
 
   // fanSign모달에서 artist 정보를 누르면 artistInfo 페이지로 이동합니다.
@@ -34,31 +22,6 @@ function FanSignModal({ data, onClose }) {
     });
     onClose();
   };
-
-  // const participate = async () => {
-  //   const openviduData = await joinFansign();
-  //   navigate('/fan-fansign', {
-  //     state: {
-  //       propsData: {
-  //         fanId: fanInfo.fanId,
-  //         profileImage: fanInfo.profileImageUrl,
-  //         orders: fanSignDetail.orders,
-  //         nickname: fanInfo.nickname,
-  //         birthday: fanInfo.birth,
-  //         sessionId: openviduData.object.sessionId,
-  //         tokenId: openviduData.object.tokenId,
-  //         memberFansignId: data.memberfansignId,
-  //         title: data.artistFansignTitle,
-  //         member: data.memberName,
-  //         artistFansignId: fanSignDetail.artistfansignId,
-  //       },
-  //     },
-  //   });
-  //   onClose();
-  // };
-  // 대기방 참가 로직 끝
-
-  // css 용 임시 주석
 
   const fanSignId = data.memberfansignId;
 
