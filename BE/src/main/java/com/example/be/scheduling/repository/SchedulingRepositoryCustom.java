@@ -14,7 +14,7 @@ public interface SchedulingRepositoryCustom {
     void updateStatusToFansign(String date);
     void updateStatusToSessionConnected(Long memberFansignId);
     void endFansign(String date);
-    int insertWinner(List<WinningInsertDto> list);
+    void insertWinner(List<WinningInsertDto> list);
     List<WinningDto> getWinningInsertDto(Long memberFansignId, FansignMode orderCondition);
     List<MemberFansignInfoDto> getMemberFansignList(String current_date);
 }

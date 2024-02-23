@@ -89,10 +89,9 @@ public class SchedulingService {
         mailService.sendMail(insertWinnersList);
 
         // insert
-        int batchCount =
         schedulingRepository.insertWinner(insertWinnersList);
 
-        log.info("*** insert 완료 batchCount -> " + batchCount);
+        log.info("*** insert 완료 batchCount -> ");
 
         // 응모 마감으로 상태 바꿔주기
         schedulingRepository.updateStatusToEndApply(formattedDate);
