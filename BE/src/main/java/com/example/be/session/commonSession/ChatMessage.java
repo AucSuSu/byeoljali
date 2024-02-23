@@ -31,7 +31,7 @@ public class ChatMessage {
      * :
      * 3
      * postit
-     * :
+     * :`
      * null
      */
 }

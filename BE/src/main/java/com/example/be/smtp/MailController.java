@@ -1,7 +1,7 @@
-package com.example.be.stmp;
+package com.example.be.smtp;
 
-import com.example.be.stmp.dto.MailDto;
-import com.example.be.stmp.service.MailService;
+import com.example.be.smtp.dto.MailDto;
+import com.example.be.smtp.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

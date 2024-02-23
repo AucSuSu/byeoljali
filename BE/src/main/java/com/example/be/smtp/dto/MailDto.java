@@ -1,4 +1,4 @@
-package com.example.be.stmp.dto;
+package com.example.be.smtp.dto;
 
 import lombok.Data;
 

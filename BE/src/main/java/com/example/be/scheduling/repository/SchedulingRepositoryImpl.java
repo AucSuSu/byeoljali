@@ -41,7 +41,7 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
     // 이후 config 파일로 빼기
     private final int BATCH_SIZE = 100;
 
-    private int batchInsert(int batchSize, int batchCount, List<WinningInsertDto> subItems){
+    private void batchInsert(List<WinningInsertDto> subItems){
         jdbcTemplate.batchUpdate("INSERT INTO winning (orders, applicant_id, fan_id, memberfansign_id) values (?,?,?,?)",
                 new BatchPreparedStatementSetter() {
                     @Override
@@ -60,8 +60,6 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
                 });
 
         subItems.clear();
-        batchCount++;
-        return batchCount;
     }
 
 
@@ -155,9 +153,9 @@ public class SchedulingRepositoryImpl implements SchedulingRepositoryCustom {
     }
 
     @Override
-    public int insertWinner(List<WinningInsertDto> list) {
+    public void insertWinner(List<WinningInsertDto> list) {
         log.info(" *** repository : 당첨자 insert *** ");
-       return batchInsert(BATCH_SIZE, 0, list);
+        batchInsert(list);
     }
 
     @Override

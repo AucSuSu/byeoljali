@@ -2,7 +2,7 @@ package com.example.be.scheduling.service;
 
 import com.example.be.memberfansign.dto.MemberFansignInfoDto;
 import com.example.be.scheduling.repository.SchedulingRepository;
-import com.example.be.stmp.service.MailService;
+import com.example.be.smtp.service.MailService;
 import com.example.be.winning.dto.WinningDto;
 import com.example.be.winning.dto.WinningInsertDto;
 import lombok.RequiredArgsConstructor;
@@ -89,10 +89,9 @@ public class SchedulingService {
         mailService.sendMail(insertWinnersList);
 
         // insert
-        int batchCount =
         schedulingRepository.insertWinner(insertWinnersList);
 
-        log.info("*** insert 완료 batchCount -> " + batchCount);
+        log.info("*** insert 완료 batchCount -> ");
 
         // 응모 마감으로 상태 바꿔주기
         schedulingRepository.updateStatusToEndApply(formattedDate);
