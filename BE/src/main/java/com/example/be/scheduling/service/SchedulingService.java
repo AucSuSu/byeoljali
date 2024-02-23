@@ -2,7 +2,7 @@ package com.example.be.scheduling.service;
 
 import com.example.be.memberfansign.dto.MemberFansignInfoDto;
 import com.example.be.scheduling.repository.SchedulingRepository;
-import com.example.be.stmp.service.MailService;
+import com.example.be.smtp.service.MailService;
 import com.example.be.winning.dto.WinningDto;
 import com.example.be.winning.dto.WinningInsertDto;
 import lombok.RequiredArgsConstructor;
