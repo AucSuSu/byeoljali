@@ -1,6 +1,6 @@
 # :stars: 별자리 - 영상통화 팬싸인회 All in One 플랫폼
-![readme_files/001.png](readme_files//001.png)
-![readme_files/002.png](readme_files//002.png)
+![readme_files/001.png](readme_files/001.png)
+![readme_files/002.png](readme_files/002.png)
 
 ## :link: 별자리 링크(웹 화면): [별자리 :dizzy: 로 이동](https://i10e104.p.ssafy.io/)
 
