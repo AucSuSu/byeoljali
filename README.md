@@ -186,19 +186,23 @@ fe
 ## :sparkler: 별자리 주요 기능
 
 ### 0. 팬, 기업 로그인
+![readme_files/LOGINPAGE.gif](./readme_files/LOGINPAGE.gif)
 - 팬은 카카오 로그인, 기업은 일반 로그인을 진행 JWT 토큰을 사용한 로그인 방식 구현<br>
 
 ### 1. 팬싸인회 개설
+![readme_files/생성.gif](./readme_files/생성.gif)
 - CLOVA AI의 <b>OCR API</b>를 사용하기 위해서, 영수증 내 비교 대상을 확인하기 위해 앨범명을 지정<br>
 
 ### 2. 팬싸인회 응모
 - 응모 중인 팬싸인회에 <b>영수증</b> 사진을 첨부하여 구매 내역 확인 절차를 따로 하지 않아도 됨<br>
 
 ### 3. 팬싸인회 당첨
+![readme_files/메일.PNG](./readme_files/메일.PNG)
 - <b>Scheduler cron</b>을 활용하여 매일 당첨자를 일정 시간에 선정
 - 선정 후, 당첨자에게 메일로 당첨 여부 전송
 
 ### 4. 팬싸인회 대기방
+![readme_files/station.gif](./readme_files/station.gif)
 - <b>본인인증</b>: 저장된 인증 용 사진과 현재 카메라에 있는 얼굴을 대조해 별도의 본인인증 과정 삭제
 - <b>마이크 테스트</b>: 비대면 팬싸인회 중, 마이크 이상 문제를 예방하기 위한 조치
 - <b>내 순서 / 대기시간</b>: 순서와 대기 시간을 명시해주어 무한 대기로 인한 피로도 감소
@@ -212,6 +216,7 @@ fe
 - 남은 시간을 확인할 수 있어 팬싸인회 시간 효율적으로 사용 가능
 
 ### 6. 아티스트 - 팬싸인회 중!
+![readme_files/ArtistFanSignView.gif](./readme_files/ArtistFanSignView.gif)
 - 팬의 개인 정보(이름, 생년월일)을 전송받아 <b>팬의 기본 정보 확인</b> 가능
 - 팬이 보낸 <b>포스트잇</b>은 아티스트의 팬싸인회 화면으로 넘어가서 의사소통 수월
 - <b>블랙리스트 및 강제 종료</b> 기능으로 악성 팬 강제 퇴장 조치
