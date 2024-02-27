@@ -205,7 +205,8 @@ fe
 - 선정 후, 당첨자에게 메일로 당첨 여부 전송
 
 ### 4. 팬싸인회 대기방
-![readme_files/station.gif](./readme_files/station.gif)
+![readme_files/station01.gif](./readme_files/station01.gif)
+![readme_files/station02.gif](./readme_files/station02.gif)
 - <b>본인인증</b>: 저장된 인증 용 사진과 현재 카메라에 있는 얼굴을 대조해 별도의 본인인증 과정 삭제
 - <b>마이크 테스트</b>: 비대면 팬싸인회 중, 마이크 이상 문제를 예방하기 위한 조치
 - <b>내 순서 / 대기시간</b>: 순서와 대기 시간을 명시해주어 무한 대기로 인한 피로도 감소
