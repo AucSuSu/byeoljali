@@ -5,7 +5,7 @@
 
 ## :link: 별자리 링크(웹 화면): [별자리 :dizzy: 로 이동](https://i10e104.p.ssafy.io/)
 
-## :clapper: 소개 영상 보기 : [UCC](유씨씨 링크 걸어주세요) | [시연 영상](시연 영상 링크 걸어주세요)
+## :clapper: 소개 영상 보기 : [UCC](https://youtu.be/St2GZ5kYEzY) | [시연 영상](https://youtu.be/pabd_zTDKx8)
 
 
 ## :date: 프로젝트 진행 기간
