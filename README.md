@@ -1,7 +1,6 @@
 # :stars: 별자리 - 영상통화 팬싸인회 All in One 플랫폼
-![readme_files/mainpage2.PNG](./readme_files/mainpage2.PNG)
-![readme_files/mainpage1.PNG](./readme_files/mainpage1.PNG)
-사진 두 개 중에 하나 선택해서 넣어주세용
+![readme_files/001.png](readme_files//001.png)
+![readme_files/002.png](readme_files//002.png)
 
 ## :link: 별자리 링크(웹 화면): [별자리 :dizzy: 로 이동](https://i10e104.p.ssafy.io/)
 
@@ -13,11 +12,14 @@
 SSAFY 10기 2학기 공통 프로젝트 - 별자리
 
 ## :star: 별자리 기획 배경
+![readme_files/기획배경.png](readme_files/기획배경.png)
 :heavy_check_mark: 팬싸인회 과정의 분산: 기존) 팬싸인회 응모, 당첨자 선발, 팬싸인회 진행, 본인인증 과정이 다 따로 진행<br>
 :heavy_check_mark: 비대면 소통의 한계<br>
 :heavy_check_mark: 짧은 진행시간으로 인한 아쉬움
 
+
 ## :star2: 별자리 설명
+![readme_files/별자리최종.png](readme_files/별자리최종.png)
 :heavy_check_mark: All in One 플랫폼으로 모든 서비스를 한 플랫폼에서 제공 
      :arrow_forward: 팬싸인회 개설, 응모, 당첨, 팬싸인회 진행, 본인 인증, 인생네컷 등 모든 과정을 <b>'별자리'</b>에서<br>
 :heavy_check_mark: 본인인증 자동화 + 구매 내역 인증 자동화 
