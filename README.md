@@ -188,9 +188,10 @@ fe
 ## :sparkler: 별자리 주요 기능
 
 ### 0. 팬, 기업 로그인
+- 팬 로그인: OAuth인 카카오 로그인
 ![readme_files/LOGINPAGE.gif](./readme_files/LOGINPAGE.gif)
-- 팬은 카카오 로그인, 기업은 일반 로그인을 진행 JWT 토큰을 사용한 로그인 방식 구현<br>
-
+- 기업 로그인: 일반 로그인을 진행-JWT 토큰을 사용한 로그인 방식 구현
+![readme_files/ARTISTLOGINPAGE.gif](./readme_files/ARTISTLOGINPAGE.gif)
 ### 1. 팬싸인회 개설
 ![readme_files/생성.gif](./readme_files/생성.gif)
 - CLOVA AI의 <b>OCR API</b>를 사용하기 위해서, 영수증 내 비교 대상을 확인하기 위해 앨범명을 지정<br>
