@@ -88,7 +88,7 @@ SSAFY 10기 2학기 공통 프로젝트 - 별자리
 
 
 ## :bar_chart: 아키텍처 구조
-![readme_files/architecture.png](./readme_files/architecture.png)
+![readme_files/architecture.png](./readme_files/architecture2.png)
 ## :file_folder: 프로젝트 파일 구조
 ```
 flask
