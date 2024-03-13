@@ -34,8 +34,9 @@ public class TokenService {
 
         String accessToken = generateToken(id,role, ACCESS);
         String refreshToken = generateToken(id,role, REFRESH);
-        redisService.setValuesWithTimeout(JwtProperties.REDIS_REFRESH_PREFIX + role + "_" + id, refreshToken,
-                JwtProperties.ACCESS_EXPIRATION_TIME);
+        redisService.setValuesWithTimeout(JwtProperties.REDIS_REFRESH_PREFIX
+                + role + "_" + id, refreshToken,
+                JwtProperties.REFRESH_EXPIRATION_TIME);
 
         return new JwtToken(accessToken, refreshToken, id);
 
