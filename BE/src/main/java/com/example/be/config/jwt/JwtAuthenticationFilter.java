@@ -76,7 +76,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 응답 헤더에 두 개의 토큰 추가
         response.addHeader("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist, artistId"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
         response.addHeader(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
-        response.addHeader(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
+        response.addHeader(JwtProperties.REFRESH_HEADER_STRING, jwtToken.getRefreshToken());
         response.addHeader("isArtist", "true");
         response.addHeader("artistId", artistId.toString());
     }

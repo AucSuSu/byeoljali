@@ -38,7 +38,7 @@ public class AuthController {
         headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh, isArtist, Kakao-Authorization"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
         headers.add(JwtProperties.KAKAO_ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + oauthToken.getAccess_token());
         headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
-        headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
+        headers.add(JwtProperties.REFRESH_HEADER_STRING, jwtToken.getRefreshToken());
         headers.add("isArtist", "false");
         return ResponseEntity.ok().headers(headers).body("success");
     }
@@ -54,7 +54,7 @@ public class AuthController {
         headers.add("Access-Control-Expose-Headers", "Authorization, Authorization-Refresh"); // CORS 정책 때문에 이걸 넣어줘야 프론트에서 header를 꺼내쓸수있음
         // 기존에 accessToken만 넣어주던걸 -> refreshToken도 추가해줌
         headers.add(JwtProperties.ACCESS_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getAccessToken());
-        headers.add(JwtProperties.REFRESH_HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken.getRefreshToken());
+        headers.add(JwtProperties.REFRESH_HEADER_STRING, jwtToken.getRefreshToken());
 
 
         return ResponseEntity.ok().headers(headers).body(message);
