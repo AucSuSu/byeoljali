@@ -5,7 +5,7 @@
 ## :link: 별자리 링크(웹 화면): [별자리 :dizzy: 로 이동](https://i10e104.p.ssafy.io/)
 
 ## :clapper: 소개 영상 보기 : [UCC](https://youtu.be/St2GZ5kYEzY) | [시연 영상](https://youtu.be/pabd_zTDKx8)
-
+## 📓 소개 ppt : [별자리 ppt](https://github.com/AucSuSu/byeoljali/blob/master/exec/10%E1%84%80%E1%85%B5_%E1%84%80%E1%85%A9%E1%86%BC%E1%84%90%E1%85%A9%E1%86%BCPJT_%E1%84%87%E1%85%A1%E1%86%AF%E1%84%91%E1%85%AD%E1%84%8C%E1%85%A1%E1%84%85%E1%85%AD_E104.pdf)
 
 ## :date: 프로젝트 진행 기간
 <b>2024.01.03(수) ~ 2024.02.16(금)</b>: 44일간 진행 <br>
